@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Linkedin, Instagram, ArrowRight, Clock } from "lucide-react";
+import { Mail, MapPin, ArrowRight, Clock } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,6 +7,45 @@ export const metadata: Metadata = {
   description:
     "Objektif Kriter ile iletişime geçin. OOH reklam kampanyalarınız için 24 saat içinde dönüş yapıyoruz.",
 };
+
+// Bu projedeki lucide-react sürümü brand ikonlarını export etmiyor; inline SVG kullanıyoruz.
+function InstagramIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
+
+function LinkedinIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
 
 export default function IletisimPage() {
   return (
@@ -35,7 +74,6 @@ export default function IletisimPage() {
       <section className="py-20">
         <div className="container-narrow">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Email kartı */}
             <a
               href="mailto:satis@objektifkriter.com.tr"
               className="group p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-surface-elevated)] transition-all duration-200"
@@ -54,7 +92,6 @@ export default function IletisimPage() {
               </p>
             </a>
 
-            {/* Konum kartı */}
             <div className="p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)]">
               <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center mb-6">
                 <MapPin size={24} className="text-[var(--color-primary)]" />
@@ -69,7 +106,6 @@ export default function IletisimPage() {
               </p>
             </div>
 
-            {/* Çalışma saatleri kartı */}
             <div className="p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)]">
               <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center mb-6">
                 <Clock size={24} className="text-[var(--color-primary)]" />
@@ -113,7 +149,7 @@ export default function IletisimPage() {
                 aria-label="LinkedIn"
                 className="w-14 h-14 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] flex items-center justify-center hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] text-[var(--color-text-secondary)] transition-all"
               >
-                <Linkedin size={22} />
+                <LinkedinIcon size={22} />
               </a>
               <a
                 href="https://www.instagram.com/objektifkriter"
@@ -122,7 +158,7 @@ export default function IletisimPage() {
                 aria-label="Instagram"
                 className="w-14 h-14 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] flex items-center justify-center hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] text-[var(--color-text-secondary)] transition-all"
               >
-                <Instagram size={22} />
+                <InstagramIcon size={22} />
               </a>
             </div>
           </div>
