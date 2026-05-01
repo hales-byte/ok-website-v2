@@ -1,26 +1,122 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─────────────────────────────────────────────
+   Tema — renkler, fontlar, gradient'ler
+   Tailwind v4 bu değişkenlerden bg-bg, text-primary
+   gibi utility'leri otomatik üretir.
+   ───────────────────────────────────────────── */
+@theme {
+  /* Renkler — Logo paletinden */
+  --color-bg: #0A0E14;
+  --color-surface: #131820;
+  --color-surface-elevated: #1A2028;
+  --color-border-subtle: #2A3340;
+
+  --color-primary: #00E4FF;
+  --color-primary-hover: #00CCE4;
+  --color-primary-deep: #01B5CC;
+
+  --color-text-primary: #E8ECEF;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+
+  /* Fontlar */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-inter), system-ui, sans-serif;
+
+  /* Gradient — logo akışını taklit eder */
+  --background-image-logo-gradient: linear-gradient(
+    to right,
+    #01B5CC,
+    #00CCE4,
+    #00E4FF
+  );
+
+  /* Glow shadow — turkuaz parıltı */
+  --shadow-primary-glow: 0 0 20px rgba(0, 228, 255, 0.4);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ─────────────────────────────────────────────
+   Base styles
+   ───────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  ::selection {
+    background: rgba(0, 228, 255, 0.3);
+    color: var(--color-text-primary);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─────────────────────────────────────────────
+   Components — yeniden kullanılan stiller
+   ───────────────────────────────────────────── */
+@layer components {
+  .container-narrow {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: var(--color-bg);
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: all 200ms ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    font-weight: 500;
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-border-subtle);
+    transition: all 200ms ease;
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-surface-elevated);
+    border-color: rgba(0, 228, 255, 0.4);
+  }
+
+  .text-gradient {
+    background: var(--background-image-logo-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
