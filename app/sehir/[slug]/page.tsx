@@ -219,7 +219,7 @@ export default async function SehirPage({
               <span className="text-gradient">teklif</span> alın
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
-              Hedefinize ve bütçenize uygun lokasyonları 24 saat içinde
+              Hedefinize ve bütçenize uygun lokasyonları 30 dakika içinde
               önerelim.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">

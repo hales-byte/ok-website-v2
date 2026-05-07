@@ -1,15 +1,9 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Square,
-  Smartphone,
-  Monitor,
-  Tv,
-  Maximize2,
-  Flag,
-  Plane,
-} from "lucide-react";
+import { ArrowRight, Briefcase, Users, Sparkles } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { CountUp } from "@/components/CountUp";
+import { FormatShowcase } from "@/components/FormatShowcase";
 
 async function getStats() {
   const supabase = createClient(
@@ -33,65 +27,20 @@ async function getStats() {
   return { sehirSayisi, yuzSayisi };
 }
 
-const formatlar = [
-  {
-    icon: Square,
-    name: "Billboard",
-    desc: "Yüksek görünürlük, geniş etki alanı",
-    href: "/hizmetler#billboard",
-  },
-  {
-    icon: Smartphone,
-    name: "CLP / Raket",
-    desc: "Şehir merkezleri ve duraklarda",
-    href: "/hizmetler#clp",
-  },
-  {
-    icon: Monitor,
-    name: "Megalight",
-    desc: "Aydınlatmalı, premium konumlar",
-    href: "/hizmetler#megalight",
-  },
-  {
-    icon: Tv,
-    name: "LED & Dijital",
-    desc: "Dinamik içerik, gerçek zamanlı",
-    href: "/hizmetler#led",
-  },
-  {
-    icon: Maximize2,
-    name: "Giantboard",
-    desc: "Anıtsal boyut, yüksek etki",
-    href: "/hizmetler#giantboard",
-  },
-  {
-    icon: Flag,
-    name: "Pole Banner",
-    desc: "Cadde ve bulvar boyunca",
-    href: "/hizmetler#pole-banner",
-  },
-  {
-    icon: Plane,
-    name: "Havalimanı LED",
-    desc: "Premium kitleye doğrudan erişim",
-    href: "/hizmetler#havalimani",
-  },
-];
-
 const surec = [
   {
     num: "01",
-    title: "Brief",
-    desc: "Hedefinizi ve kitlenizi anlıyoruz, ihtiyacınızı netleştiriyoruz.",
+    title: "Sizi dinleyelim",
+    desc: "Hedefinizi, hedef kitlenizi ve mesajınızı anlıyoruz, ihtiyacınızı netleştiriyoruz. İlk açıkhava kampanyanız mı? Sıfırdan birlikte planlayalım. Reklam Ajansı mısınız?",
   },
   {
     num: "02",
-    title: "Plan",
+    title: "Planlayalım",
     desc: "Şehir, format ve süreye göre lokasyon önerisi hazırlıyoruz.",
   },
   {
     num: "03",
-    title: "Üretim",
+    title: "Mesajınızı Taşıyalım",
     desc: "Tasarım, baskı ve lojistik süreçlerini biz yönetiyoruz.",
   },
   {
@@ -104,149 +53,262 @@ const surec = [
 export default async function Home() {
   const stats = await getStats();
 
+  const segmentler = [
+    {
+      icon: Briefcase,
+      etiket: "Markalar",
+      slogan: `Markanızın izi ${stats.sehirSayisi}+ şehirde, doğru sokakta.`,
+      desc: "Stratejik medya planlaması, raporlanabilir kampanya yönetimi. Sektörel deneyimle desteklenen lokasyon önerileriyle markanızın görünürlüğünü Anadolu'nun her köşesine taşıyoruz.",
+      cta: "Marka için teklif al",
+    },
+    {
+      icon: Users,
+      etiket: "Reklam Ajansları",
+      slogan: "Brief'iniz 30 dakikada teklife dönsün.",
+      desc: "Hızlı geri dönüş, esnek satın alma, detaylı lokasyon listeleri. Ajansınızın açıkhava operasyonlarındaki güvenilir iş ortağıyız.",
+      cta: "Ajanslar için teklif al",
+    },
+    {
+      icon: Sparkles,
+      etiket: "İlk Açıkhava Kampanyam",
+      slogan: "İlk afişinizi birlikte sokağa çıkaralım.",
+      desc: "Brief'iniz olmasa da olur. Hedefinizi anlatın, ihtiyacınızı birlikte netleştirelim, sıfırdan planlayalım. Şeffaf fiyat, gerçek lokasyon, sürpriz fatura yok.",
+      cta: "Sıfırdan başlayalım",
+    },
+  ];
+
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-[85vh] flex items-center pt-12 pb-20">
-        <div className="container-narrow w-full">
-          <div className="max-w-4xl space-y-8">
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
-              <span className="text-gradient">Türkiye&apos;nin</span>
-              <br />
-              OOH ağı
-            </h1>
-            <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-              Türkiye genelinde {stats.sehirSayisi}+ şehirde,{" "}
-              {stats.yuzSayisi.toLocaleString("tr-TR")}+ reklam yüzü ile
-              markanızı doğru yere konumlandırıyoruz.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="/teklif-al" className="btn-primary">
-                Teklif Al
-                <ArrowRight size={18} />
-              </Link>
-              <Link href="/envanter" className="btn-secondary">
-                Envanteri Gör
-              </Link>
-            </div>
+      {/* HERO — Cinematic + mesh gradient bg */}
+      <section className="relative min-h-[92vh] flex items-center pt-12 pb-20 overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 pointer-events-none overflow-hidden"
+        >
+          <div
+            className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-40 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(1, 181, 204, 0.35) 0%, rgba(1, 181, 204, 0) 70%)",
+            }}
+          />
+          <div
+            className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full opacity-30 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(0, 204, 228, 0.4) 0%, rgba(0, 204, 228, 0) 70%)",
+            }}
+          />
+          <div
+            className="absolute -bottom-40 left-1/3 w-[700px] h-[700px] rounded-full opacity-20 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(1, 122, 138, 0.35) 0%, rgba(1, 122, 138, 0) 70%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(15,23,42,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.4) 1px, transparent 1px)",
+              backgroundSize: "48px 48px",
+            }}
+          />
+        </div>
+
+        <div className="container-narrow w-full relative">
+          <div className="max-w-5xl space-y-10">
+            <ScrollReveal direction="up" delay={100} duration={1000}>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
+                <span className="text-gradient">Doğru lokasyonda</span>,
+                <br />
+                <span className="text-gradient">Doğru zamanda</span>,
+                <br />
+                <span className="text-gradient">Doğru kitleye</span>.
+              </h1>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={400} duration={1000}>
+              <p className="text-xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl leading-relaxed">
+                Türkiye genelinde {stats.sehirSayisi}+ şehirde,{" "}
+                {stats.yuzSayisi.toLocaleString("tr-TR")}+ reklam yüzü ile
+                markanızı doğru yere konumlandırıyoruz.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={700} duration={1000}>
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Link href="/teklif-al" className="btn-primary">
+                  Teklif Al
+                  <ArrowRight size={18} />
+                </Link>
+                <Link href="/envanter" className="btn-secondary">
+                  Envanteri Gör
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* SAYAÇ */}
+      {/* SAYAÇ — 2 sütun */}
       <section className="border-y border-[var(--color-border-subtle)] bg-[var(--color-surface)]">
-        <div className="container-narrow py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="text-center md:text-left">
-              <div className="text-5xl md:text-7xl font-bold text-gradient">
-                {stats.sehirSayisi}+
+        <div className="container-narrow py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto">
+            <ScrollReveal direction="up" delay={0}>
+              <div className="text-center md:text-left">
+                <div className="text-5xl md:text-7xl font-bold text-gradient">
+                  <CountUp end={stats.sehirSayisi} suffix="+" duration={1800} />
+                </div>
+                <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
+                  Şehir
+                </div>
               </div>
-              <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Şehir
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={150}>
+              <div className="text-center md:text-left">
+                <div className="text-5xl md:text-7xl font-bold text-gradient">
+                  <CountUp
+                    end={stats.yuzSayisi}
+                    formatTr
+                    suffix="+"
+                    duration={2200}
+                  />
+                </div>
+                <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
+                  Reklam Yüzü
+                </div>
               </div>
-            </div>
-            <div className="text-center md:text-left">
-              <div className="text-5xl md:text-7xl font-bold text-gradient">
-                {stats.yuzSayisi.toLocaleString("tr-TR")}+
-              </div>
-              <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Reklam Yüzü
-              </div>
-            </div>
-            <div className="text-center md:text-left">
-              <div className="text-5xl md:text-7xl font-bold text-gradient">7</div>
-              <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Ana Format
-              </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* FORMATLAR */}
+      {/* 3 KART SEGMENT */}
       <section className="py-24">
         <div className="container-narrow">
-          <div className="max-w-2xl mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-              Her ihtiyaca özel format
-            </h2>
-            <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-              Klasik dikkat çekiciden dijital dinamiğe, kampanyanız için en
-              uygun çözümü birlikte buluyoruz.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {formatlar.map((format) => {
-              const Icon = format.icon;
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mb-16">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                Kim için biz?
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                Her marka kendi yolunu çizer — biz lokasyonunu kuruyoruz.
+              </h2>
+              <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
+                Kurumsal markalar, reklam ajansları ve sokağa ilk adımını atan
+                girişimler — her birinin hikâyesi farklı, ama hepsi aynı şeyi
+                arıyor: doğru anda, doğru insanın gözüne değen bir mesaj.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {segmentler.map((segment, i) => {
+              const Icon = segment.icon;
               return (
-                <Link
-                  key={format.name}
-                  href={format.href}
-                  className="group p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-surface-elevated)] transition-all duration-200 hover:-translate-y-1"
+                <ScrollReveal
+                  key={segment.etiket}
+                  direction="up"
+                  delay={i * 120}
+                  duration={700}
                 >
-                  <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center mb-4 group-hover:bg-[var(--color-primary)]/20 transition-colors">
-                    <Icon
-                      size={24}
-                      className="text-[var(--color-primary)]"
-                    />
+                  <div className="group h-full p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 flex flex-col">
+                    <div className="w-14 h-14 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-primary)]/20 transition-colors">
+                      <Icon
+                        size={28}
+                        className="text-[var(--color-primary)]"
+                      />
+                    </div>
+                    <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                      {segment.etiket}
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-bold leading-tight mb-4 text-[var(--color-text-primary)]">
+                      {segment.slogan}
+                    </h3>
+                    <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-6 flex-grow">
+                      {segment.desc}
+                    </p>
+                    <Link
+                      href="/teklif-al"
+                      className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group/link"
+                    >
+                      {segment.cta}
+                      <ArrowRight
+                        size={14}
+                        className="group-hover/link:translate-x-1 transition-transform"
+                      />
+                    </Link>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{format.name}</h3>
-                  <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                    {format.desc}
-                  </p>
-                </Link>
+                </ScrollReveal>
               );
             })}
           </div>
         </div>
       </section>
 
+      {/* STICKY SCROLL FORMAT SHOWCASE — Apple-tarzı */}
+      <FormatShowcase />
+
       {/* SÜREÇ */}
-      <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+      <section className="py-24 border-t border-[var(--color-border-subtle)]">
         <div className="container-narrow">
-          <div className="max-w-2xl mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-              4 adımda yayında
-            </h2>
-            <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-              Brief&apos;ten yayına kadar her aşamada yanınızdayız.
-            </p>
-          </div>
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                4 adımda yayında
+              </h2>
+              <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
+                İlk konuşmadan yayına kadar her aşamada yanınızdayız.
+              </p>
+            </div>
+          </ScrollReveal>
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {surec.map((adim) => (
-              <div key={adim.num} className="space-y-4">
-                <div className="text-sm font-mono text-[var(--color-primary)]">
-                  {adim.num}
+            {surec.map((adim, i) => (
+              <ScrollReveal
+                key={adim.num}
+                direction="up"
+                delay={i * 120}
+                duration={700}
+              >
+                <div className="space-y-4">
+                  <div className="text-sm font-mono text-[var(--color-primary)]">
+                    {adim.num}
+                  </div>
+                  <h3 className="text-2xl font-bold">{adim.title}</h3>
+                  <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                    {adim.desc}
+                  </p>
                 </div>
-                <h3 className="text-2xl font-bold">{adim.title}</h3>
-                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                  {adim.desc}
-                </p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ALT CTA */}
-      <section className="py-24 border-t border-[var(--color-border-subtle)]">
+      <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
-          <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-              Kampanyanız için{" "}
-              <span className="text-gradient">lokasyon planı</span> çıkaralım
-            </h2>
-            <p className="text-lg text-[var(--color-text-secondary)]">
-              Sektörünüze, hedefinize ve bütçenize uygun lokasyon önerilerini
-              24 saat içinde alın.
-            </p>
-            <div className="pt-4">
-              <Link href="/teklif-al" className="btn-primary">
-                Teklif Al
-                <ArrowRight size={18} />
-              </Link>
+          <ScrollReveal direction="up">
+            <div className="max-w-3xl mx-auto text-center space-y-8">
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                Kampanyanız için{" "}
+                <span className="text-gradient">lokasyon planı</span> çıkaralım
+              </h2>
+              <p className="text-lg text-[var(--color-text-secondary)]">
+                Sektörünüze, hedefinize ve bütçenize uygun lokasyon önerilerini
+                30 dakika içinde alın.
+              </p>
+              <div className="pt-4">
+                <Link href="/teklif-al" className="btn-primary">
+                  Teklif Al
+                  <ArrowRight size={18} />
+                </Link>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </>

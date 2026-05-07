@@ -3,63 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { ArrowRight, MapPin, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
+import { getFormatByKey } from "@/lib/formats";
 
-// Format meta bilgileri (slug + insan dostu isim + açıklama)
-const FORMAT_META: Record<
-  string,
-  { name: string; tagline: string; description: string }
-> = {
-  billboard: {
-    name: "Billboard",
-    tagline: "Yüksek görünürlük, geniş etki alanı",
-    description:
-      "Ana arterler ve şehir girişlerinde konumlandırılan, yüksek görünürlüklü reklam yüzleri.",
-  },
-  clp: {
-    name: "CLP / Raket",
-    tagline: "Şehir merkezleri ve duraklarda yaya trafiğine yönelik",
-    description:
-      "Aydınlatmalı, dikey reklam panelleri. Yoğun yaya bölgelerinde tekrarlı temas sağlar.",
-  },
-  megalight: {
-    name: "Megalight",
-    tagline: "Premium konumlarda büyük format aydınlatmalı panel",
-    description:
-      "Ana cadde ve kavşaklarda yer alan, gece de aktif aydınlatmalı reklam paneli.",
-  },
-  led: {
-    name: "LED & Dijital",
-    tagline: "Dinamik içerik, gerçek zamanlı yayın",
-    description:
-      "Hareketli görsel ve video desteği ile değişen içerik gösterimi yapan dijital ekranlar.",
-  },
-  giantboard: {
-    name: "Giantboard",
-    tagline: "Anıtsal boyut, maksimum etki",
-    description:
-      "Standart billboard'lardan çok daha büyük, anıtsal ölçekte reklam yüzleri.",
-  },
-  "pole-banner": {
-    name: "Pole Banner",
-    tagline: "Cadde ve bulvar boyunca tekrarlı görünürlük",
-    description:
-      "Aydınlatma direklerine asılan dikey banner reklamlar, kampanya temalarını destekler.",
-  },
-  havalimani: {
-    name: "Havalimanı LED",
-    tagline: "Premium kitleye doğrudan erişim",
-    description:
-      "Havalimanı check-in, gümrük ve gate noktalarındaki dijital ekranlar.",
-  },
-  diger: {
-    name: "Özel Formatlar",
-    tagline: "Otobüs, tramvay, totem ve özel uygulamalar",
-    description:
-      "Standart formatların dışındaki özel reklam alanları ve kreatif uygulamalar.",
-  },
-};
-
-// Türkçe karakterleri slug formatına çevir
 function slugify(str: string): string {
   return str
     .toLocaleLowerCase("tr")
@@ -97,7 +42,6 @@ async function findSehirBySlug(slug: string): Promise<string | null> {
   return sehirler.find((s) => slugify(s) === slug) || null;
 }
 
-// Şehir + format kombinasyonunun gerçek envanteri
 async function getKombinasyon(sehirAdi: string, formatKategori: string) {
   const supabase = getSupabase();
   const { data } = await supabase
@@ -122,7 +66,6 @@ async function getKombinasyon(sehirAdi: string, formatKategori: string) {
   };
 }
 
-// Build time'da tüm gerçek kombinasyonlar için statik sayfa üret
 export async function generateStaticParams() {
   const supabase = getSupabase();
   const { data } = await supabase
@@ -133,7 +76,6 @@ export async function generateStaticParams() {
 
   if (!data) return [];
 
-  // Eşsiz şehir + format kombinasyonları
   const kombinasyonlar = new Set<string>();
   for (const item of data) {
     if (item.sehir && item.format_kategori) {
@@ -150,7 +92,6 @@ export async function generateStaticParams() {
   });
 }
 
-// Dinamik SEO metadata
 export async function generateMetadata({
   params,
 }: {
@@ -158,7 +99,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug, format } = await params;
   const sehir = await findSehirBySlug(slug);
-  const formatMeta = FORMAT_META[format];
+  const formatMeta = getFormatByKey(format);
 
   if (!sehir || !formatMeta) {
     return { title: "Sayfa bulunamadı" };
@@ -166,7 +107,7 @@ export async function generateMetadata({
 
   return {
     title: `${sehir} ${formatMeta.name} Reklam`,
-    description: `${sehir} ilinde ${formatMeta.name} reklam çözümleri. ${formatMeta.description} Hızlı teklif, profesyonel takip.`,
+    description: `${sehir} ilinde ${formatMeta.name} reklam çözümleri. ${formatMeta.description.substring(0, 120)}... Hızlı teklif, profesyonel takip.`,
   };
 }
 
@@ -177,7 +118,7 @@ export default async function SehirFormatPage({
 }) {
   const { slug, format } = await params;
   const sehir = await findSehirBySlug(slug);
-  const formatMeta = FORMAT_META[format];
+  const formatMeta = getFormatByKey(format);
 
   if (!sehir || !formatMeta) {
     notFound();
@@ -190,10 +131,8 @@ export default async function SehirFormatPage({
 
   return (
     <>
-      {/* HERO */}
       <section className="pt-24 pb-16 border-b border-[var(--color-border-subtle)]">
         <div className="container-narrow">
-          {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-6">
             <Link
               href="/hizmetler"
@@ -236,7 +175,6 @@ export default async function SehirFormatPage({
         </div>
       </section>
 
-      {/* SAYAÇ */}
       <section className="border-y border-[var(--color-border-subtle)] bg-[var(--color-surface)]">
         <div className="container-narrow py-12">
           <div className="grid grid-cols-2 gap-8">
@@ -260,12 +198,11 @@ export default async function SehirFormatPage({
         </div>
       </section>
 
-      {/* FORMAT AÇIKLAMASI */}
       <section className="py-20">
         <div className="container-narrow">
           <div className="max-w-3xl space-y-6">
             <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
-              Format hakkında
+              Ünite hakkında
             </div>
             <h2 className="text-3xl md:text-4xl font-bold leading-tight">
               {formatMeta.name} nedir?
@@ -278,7 +215,7 @@ export default async function SehirFormatPage({
                 href={`/hizmetler#${format}`}
                 className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group"
               >
-                {formatMeta.name} formatını detaylı incele
+                {formatMeta.name} ünitesini detaylı incele
                 <ArrowRight
                   size={14}
                   className="group-hover:translate-x-1 transition-transform"
@@ -289,7 +226,6 @@ export default async function SehirFormatPage({
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
           <div className="max-w-3xl mx-auto text-center space-y-8">
@@ -299,7 +235,7 @@ export default async function SehirFormatPage({
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
               Hedefinize ve bütçenize uygun {formatMeta.name.toLowerCase()}{" "}
-              lokasyonlarını 24 saat içinde önerelim.
+              lokasyonlarını 30 dakika içinde önerelim.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/teklif-al" className="btn-primary">

@@ -1,12 +1,33 @@
 import Link from "next/link";
 import { Mail, MapPin, ArrowRight, Clock } from "lucide-react";
+import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "İletişim",
   description:
-    "Objektif Kriter ile iletişime geçin. OOH reklam kampanyalarınız için 24 saat içinde dönüş yapıyoruz.",
+    "Objektif Kriter ile iletişime geçin. OOH reklam kampanyalarınız için 30 dakika içinde dönüş yapıyoruz.",
 };
+
+async function getStats() {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const { data, error } = await supabase
+    .schema("website")
+    .from("envanter")
+    .select("sehir")
+    .eq("aktif", true);
+
+  if (error || !data) {
+    return { sehirSayisi: 0 };
+  }
+
+  const sehirSayisi = new Set(data.map((d) => d.sehir)).size;
+  return { sehirSayisi };
+}
 
 // Bu projedeki lucide-react sürümü brand ikonlarını export etmiyor; inline SVG kullanıyoruz.
 function InstagramIcon({ size = 22 }: { size?: number }) {
@@ -47,7 +68,26 @@ function LinkedinIcon({ size = 22 }: { size?: number }) {
   );
 }
 
-export default function IletisimPage() {
+function WhatsAppIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+  );
+}
+
+export default async function IletisimPage() {
+  const stats = await getStats();
+
   return (
     <>
       {/* HERO */}
@@ -63,8 +103,8 @@ export default function IletisimPage() {
             </h1>
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
               Kampanyanız ne aşamada olursa olsun — fikir aşaması, lokasyon
-              araştırması veya hızlı teklif — bize ulaşın. 24 saat içinde dönüş
-              yapıyoruz.
+              araştırması veya hızlı teklif — bize ulaşın. 30 dakika içinde
+              dönüş yapıyoruz.
             </p>
           </div>
         </div>
@@ -73,7 +113,7 @@ export default function IletisimPage() {
       {/* İLETİŞİM NOKTALARI */}
       <section className="py-20">
         <div className="container-narrow">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <a
               href="mailto:satis@objektifkriter.com.tr"
               className="group p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-surface-elevated)] transition-all duration-200"
@@ -84,11 +124,31 @@ export default function IletisimPage() {
               <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
                 Email
               </div>
-              <div className="text-lg font-semibold mb-3 group-hover:text-[var(--color-primary)] transition-colors">
+              <div className="text-lg font-semibold mb-3 group-hover:text-[var(--color-primary)] transition-colors break-words">
                 satis@objektifkriter.com.tr
               </div>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
                 Teklif talebi, lokasyon önerisi ve tüm sorularınız için.
+              </p>
+            </a>
+
+            <a
+              href="https://wa.me/905529185864?text=Merhaba%2C%20Objektif%20Kriter%20web%20sitesi%20%C3%BCzerinden%20yaz%C4%B1yorum."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-surface-elevated)] transition-all duration-200"
+            >
+              <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-primary)]/20 transition-colors">
+                <WhatsAppIcon size={24} />
+              </div>
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
+                WhatsApp
+              </div>
+              <div className="text-lg font-semibold mb-3 group-hover:text-[var(--color-primary)] transition-colors">
+                +90 552 918 58 64
+              </div>
+              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                Tek tıkla mesaj atın, hızlı geri dönüş için.
               </p>
             </a>
 
@@ -101,8 +161,8 @@ export default function IletisimPage() {
               </div>
               <div className="text-lg font-semibold mb-3">İstanbul, Türkiye</div>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                Türkiye genelinde 80+ lokasyonda saha ekibimizle hizmet
-                veriyoruz.
+                Türkiye genelinde {stats.sehirSayisi}+ şehirde aktif
+                lokasyonlarımızla yanınızdayız.
               </p>
             </div>
 
@@ -175,7 +235,7 @@ export default function IletisimPage() {
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
               Sektörünüzü, hedefinizi ve bütçenizi paylaşın. Size en uygun
-              format ve lokasyon kombinasyonunu 24 saat içinde gönderelim.
+              format ve lokasyon kombinasyonunu 30 dakika içinde gönderelim.
             </p>
             <div className="pt-4">
               <Link href="/teklif-al" className="btn-primary">
