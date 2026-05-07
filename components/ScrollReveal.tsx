@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -14,6 +15,14 @@ interface ScrollRevealProps {
   className?: string;
   /** Bir kez tetiklenince tekrar tetiklenmesin (default: true) */
   once?: boolean;
+  /**
+   * İlk render'da içeriği görünür başlat ve animasyonu mount sonrası
+   * doğrudan tetikle (IntersectionObserver beklemez). Above-the-fold
+   * (hero) içerik için kullan — observer'ın async tetiklemesinin yarattığı
+   * "boş alan flicker"ını önler. SSR'de de görünür gelir, hydration sonrası
+   * animasyonu bir kez oynatır.
+   */
+  priority?: boolean;
 }
 
 /**
@@ -24,6 +33,7 @@ interface ScrollRevealProps {
  *   <ScrollReveal>...</ScrollReveal>
  *   <ScrollReveal delay={150}>...</ScrollReveal>
  *   <ScrollReveal direction="left" delay={300}>...</ScrollReveal>
+ *   <ScrollReveal priority>...</ScrollReveal>  // Hero için
  */
 export function ScrollReveal({
   children,
@@ -32,23 +42,18 @@ export function ScrollReveal({
   duration = 700,
   className = "",
   once = true,
+  priority = false,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  // priority modunda direkt görünür başla; observer beklemez
+  const [visible, setVisible] = useState(priority);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
+    if (priority) return; // priority elementler observer kullanmaz
     const node = ref.current;
     if (!node) return;
-
-    // Reduced motion tercihi varsa animasyon yapma
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (prefersReducedMotion) {
-      setVisible(true);
-      return;
-    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -67,7 +72,11 @@ export function ScrollReveal({
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [once]);
+  }, [once, prefersReducedMotion, priority]);
+
+  // Reduced motion: animasyon yok, içerik direkt görünür
+  // Priority: ilk render'da görünür, animasyon sadece görsel pürüzsüzlük için
+  const isVisible = prefersReducedMotion || visible;
 
   // Başlangıç transform'u (gizli durum)
   const hiddenTransform = {
@@ -79,9 +88,11 @@ export function ScrollReveal({
   }[direction];
 
   const style: React.CSSProperties = {
-    opacity: visible ? 1 : 0,
-    transform: visible ? "translate3d(0,0,0)" : hiddenTransform,
-    transition: `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? "translate3d(0,0,0)" : hiddenTransform,
+    transition: prefersReducedMotion
+      ? "none"
+      : `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
     willChange: "opacity, transform",
   };
 

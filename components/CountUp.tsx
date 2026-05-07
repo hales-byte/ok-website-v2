@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 interface CountUpProps {
   /** Hedef sayı */
@@ -34,23 +35,17 @@ export function CountUp({
   className = "",
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [count, setCount] = useState(0);
+  // İlk render'da ve animasyon başlamadan önce hedef değeri göster.
+  // Animasyon başlayınca tick fonksiyonu count'u 0'dan hedefe doğru animasyonlu güncelliyor.
+  // Bu sayede kullanıcı sayacı hızla geçse bile "0+" şoku görmez, gerçek değeri görür.
+  const [count, setCount] = useState(end);
   const [started, setStarted] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
     const node = ref.current;
     if (!node) return;
-
-    // Reduced motion tercihi varsa animasyon yapma, direkt hedefi göster
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    if (prefersReducedMotion) {
-      setCount(end);
-      setStarted(true);
-      return;
-    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -64,10 +59,10 @@ export function CountUp({
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [end, started]);
+  }, [started, prefersReducedMotion]);
 
   useEffect(() => {
-    if (!started) return;
+    if (!started || prefersReducedMotion) return;
 
     let startTime: number | null = null;
     let animationFrame: number;
@@ -93,11 +88,12 @@ export function CountUp({
 
     animationFrame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(animationFrame);
-  }, [started, end, duration]);
+  }, [started, end, duration, prefersReducedMotion]);
 
+  const displayValue = prefersReducedMotion ? end : count;
   const display = formatTr
-    ? count.toLocaleString("tr-TR")
-    : count.toString();
+    ? displayValue.toLocaleString("tr-TR")
+    : displayValue.toString();
 
   return (
     <span ref={ref} className={className}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Cookie, X, Check, Settings } from "lucide-react";
 
@@ -18,36 +18,40 @@ interface CookieTercihleri {
   tarihTimestamp: number;
 }
 
+// localStorage'dan banner gösterilmesi gerekip gerekmediğini hesaplar.
+// useSyncExternalStore ile render sırasında okunur — useEffect+setState
+// pattern'i yerine. Subscribe no-op çünkü değişikliği biz tetikliyoruz
+// (dismissed state'i ile).
+function getCerezSnapshot(): boolean {
+  try {
+    const kayit = localStorage.getItem(STORAGE_KEY);
+    if (!kayit) return true;
+    const tercihler: CookieTercihleri = JSON.parse(kayit);
+    const sureGecti =
+      Date.now() - tercihler.tarihTimestamp > SAKLAMA_SURESI_MS;
+    const versiyonEski = tercihler.versiyon !== TERCIH_VERSIYONU;
+    return sureGecti || versiyonEski;
+  } catch {
+    return true;
+  }
+}
+
+const subscribeNoOp = () => () => {};
+const getServerSnapshot = () => false;
+
 export function CookieBanner() {
-  const [gosterilsin, setGosterilsin] = useState(false);
+  const banaGoster = useSyncExternalStore(
+    subscribeNoOp,
+    getCerezSnapshot,
+    getServerSnapshot
+  );
+  const [dismissed, setDismissed] = useState(false);
   const [detayMod, setDetayMod] = useState(false);
   const [islevsel, setIslevsel] = useState(true);
   const [analitik, setAnalitik] = useState(false);
   const [pazarlama, setPazarlama] = useState(false);
 
-  useEffect(() => {
-    // Kullanıcı tercihini daha önce kaydetmiş mi kontrol
-    try {
-      const kayit = localStorage.getItem(STORAGE_KEY);
-      if (!kayit) {
-        setGosterilsin(true);
-        return;
-      }
-
-      const tercihler: CookieTercihleri = JSON.parse(kayit);
-
-      // Versiyonu eski veya 6 aydan eski ise tekrar onay iste
-      const sureGecti =
-        Date.now() - tercihler.tarihTimestamp > SAKLAMA_SURESI_MS;
-      const versiyonEski = tercihler.versiyon !== TERCIH_VERSIYONU;
-
-      if (sureGecti || versiyonEski) {
-        setGosterilsin(true);
-      }
-    } catch {
-      setGosterilsin(true);
-    }
-  }, []);
+  const gosterilsin = banaGoster && !dismissed;
 
   const tercihKaydet = (tercihler: Omit<CookieTercihleri, "versiyon" | "tarihTimestamp">) => {
     const data: CookieTercihleri = {
@@ -60,7 +64,7 @@ export function CookieBanner() {
     } catch (err) {
       console.error("Cookie tercihi kaydedilemedi:", err);
     }
-    setGosterilsin(false);
+    setDismissed(true);
   };
 
   const handleHepsiniKabulEt = () => {

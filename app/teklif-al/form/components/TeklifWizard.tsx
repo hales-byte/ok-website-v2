@@ -89,6 +89,7 @@ export function TeklifWizard() {
         });
         // sehir override varsa banner gösterme (kullanıcı yeni akışta)
         if (!sehirPrefill) {
+          // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot hydration: localStorage + URL'i okuyup başlangıç state'ine sokuyoruz, sürekli senkronizasyon yok
           setResumeData(progress);
           setShowBanner(true);
         }
