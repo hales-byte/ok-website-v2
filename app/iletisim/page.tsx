@@ -124,7 +124,7 @@ export default async function IletisimPage() {
               <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
                 Email
               </div>
-              <div className="text-lg font-semibold mb-3 group-hover:text-[var(--color-primary)] transition-colors break-words">
+              <div className="text-base font-semibold mb-3 group-hover:text-[var(--color-primary)] transition-colors break-all">
                 satis@objektifkriter.com.tr
               </div>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
