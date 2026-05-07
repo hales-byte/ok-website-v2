@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, TrendingUp } from "lucide-react";
 import type { Metadata } from "next";
-import { FORMATLAR } from "@/lib/formats";
+import { FORMATLAR, formatPriceBand } from "@/lib/formats";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
@@ -150,6 +150,35 @@ export default function HizmetlerPage() {
                           </li>
                         ))}
                       </ul>
+
+                      {/* İndikatif fiyat bandı */}
+                      <div className="mt-4 p-4 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)]/60">
+                        <div className="flex items-start gap-3">
+                          <div className="mt-0.5 w-7 h-7 rounded-md bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0">
+                            <TrendingUp
+                              size={14}
+                              className="text-[var(--color-primary)]"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                              <span className="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
+                                İndikatif fiyat
+                              </span>
+                              <span className="text-base font-semibold text-[var(--color-text-primary)]">
+                                {formatPriceBand(format.priceBand)}
+                              </span>
+                              <span className="text-xs text-[var(--color-text-muted)]">
+                                · {format.priceBand.unit}
+                              </span>
+                            </div>
+                            <p className="mt-1 text-xs text-[var(--color-text-secondary)] leading-relaxed">
+                              {format.priceBand.context}. Kesin fiyat brief&apos;inize
+                              özel teklifte netleşir.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
 
                       <div className="pt-4 flex flex-col sm:flex-row sm:items-center gap-4">
                         <div className="text-sm">

@@ -2,6 +2,10 @@
  * Tüm site genelinde kullanılan OOH format meta bilgileri.
  * Yeni format eklemek için: bu dosyaya yeni FormatMeta objesi ekle,
  * görselini public/images/formats/ klasörüne koy, hepsi otomatik güncellenir.
+ *
+ * NOT: priceBand alanları indikatiftir, sektör ortalama bantlarına göre
+ * yerleştirilmiştir. **Production öncesi güncel ratecard ile gözden geçir.**
+ * Müşteriye somut fiyat değil "mertebe" iletmek için kullanılır.
  */
 
 import {
@@ -35,6 +39,20 @@ export interface FormatMeta {
   icon: LucideIcon;
   /** public/images/formats/ altında dosya base name (örn. "billboard" → billboard.webp + billboard.jpg) */
   image: string | null;
+  /**
+   * İndikatif fiyat bandı (TL). Müşteriye somut fiyat değil mertebe vermek için.
+   * **TODO: Production öncesi güncel ratecard ile değerleri kontrol et.**
+   */
+  priceBand: {
+    /** Düşük uç (TL) */
+    from: number;
+    /** Üst uç (TL) */
+    to: number;
+    /** "tek yüz / ay" gibi birim açıklaması */
+    unit: string;
+    /** "İstanbul tier-1, sezon ortası" gibi bağlam notu */
+    context: string;
+  };
 }
 
 export const FORMATLAR: FormatMeta[] = [
@@ -54,6 +72,12 @@ export const FORMATLAR: FormatMeta[] = [
     useCases: "Marka bilinirliği, ürün lansmanı, sezonluk kampanyalar",
     icon: Square,
     image: "billboard",
+    priceBand: {
+      from: 8000,
+      to: 18000,
+      unit: "tek yüz / ay",
+      context: "İstanbul ortalama, sezon ortası — premium konumlar üst banda yakın",
+    },
   },
   {
     key: "clp",
@@ -72,6 +96,12 @@ export const FORMATLAR: FormatMeta[] = [
       "Lokal işletmeler, perakende, hizmet sektörü, kentsel kampanyalar",
     icon: Smartphone,
     image: "clp",
+    priceBand: {
+      from: 3000,
+      to: 8000,
+      unit: "tek yüz / ay",
+      context: "Şehir merkezi konumları, gece aydınlatmalı dahil",
+    },
   },
   {
     key: "megalight",
@@ -89,6 +119,12 @@ export const FORMATLAR: FormatMeta[] = [
     useCases: "Premium markalar, lüks ürünler, kurumsal kampanyalar",
     icon: Monitor,
     image: "megalight",
+    priceBand: {
+      from: 12000,
+      to: 25000,
+      unit: "tek yüz / ay",
+      context: "Ana arter ve premium kavşak konumları, aydınlatma dahil",
+    },
   },
   {
     key: "led",
@@ -106,6 +142,12 @@ export const FORMATLAR: FormatMeta[] = [
     useCases: "Promosyonlar, etkinlik duyuruları, gerçek zamanlı kampanyalar",
     icon: Tv,
     image: "led",
+    priceBand: {
+      from: 10000,
+      to: 25000,
+      unit: "tek konum / hafta",
+      context: "Dijital ekran, dönüşümlü yayında 4-6 marka ile paylaşım",
+    },
   },
   {
     key: "giantboard",
@@ -123,6 +165,12 @@ export const FORMATLAR: FormatMeta[] = [
     useCases: "Büyük marka lansmanları, film vizyon, prestij kampanyaları",
     icon: Maximize2,
     image: "giantboard",
+    priceBand: {
+      from: 25000,
+      to: 60000,
+      unit: "tek yüz / ay",
+      context: "Anıtsal ölçek, bina cephesi veya stratejik açık alan",
+    },
   },
   {
     key: "pole-banner",
@@ -140,6 +188,12 @@ export const FORMATLAR: FormatMeta[] = [
     useCases: "Festival ve etkinlikler, kentsel kampanyalar, perakende temaları",
     icon: Flag,
     image: "pole-banner",
+    priceBand: {
+      from: 800,
+      to: 2000,
+      unit: "tek banner / ay",
+      context: "Genelde 20-50 banner'lık paket halinde alınır, cadde boyunca",
+    },
   },
   {
     key: "totem",
@@ -157,6 +211,12 @@ export const FORMATLAR: FormatMeta[] = [
     useCases: "OSB tanıtımları, AVM çevre kampanyaları, bölgesel markalar",
     icon: Layers,
     image: "totem",
+    priceBand: {
+      from: 6000,
+      to: 15000,
+      unit: "tek yüz / ay",
+      context: "OSB ve AVM çevresi, bölgesel görünürlük",
+    },
   },
   {
     key: "havalimani",
@@ -174,6 +234,12 @@ export const FORMATLAR: FormatMeta[] = [
     useCases: "Premium markalar, lüks tüketim, finans, B2B, otomotiv",
     icon: Plane,
     image: null, // Görsel henüz yok, kart fallback design kullanır
+    priceBand: {
+      from: 30000,
+      to: 80000,
+      unit: "tek konum / hafta",
+      context: "Check-in / gate noktaları, premium demografi",
+    },
   },
 ];
 
@@ -202,4 +268,17 @@ export function getFormatLabel(key: string): string {
   if (meta) return meta.name;
   // Bilinmeyen key'i temiz basmak için ilk harfi büyüt
   return key.charAt(0).toLocaleUpperCase("tr") + key.slice(1).toLocaleLowerCase("tr");
+}
+
+/**
+ * Fiyat bandını "8K - 18K TL" gibi okunabilir biçime çevirir.
+ * Bin altı için tam değer ("800 TL"), bin üstü için "K" kısaltması.
+ */
+export function formatPriceBand(band: FormatMeta["priceBand"]): string {
+  const fmt = (n: number): string => {
+    if (n < 1000) return `${n} TL`;
+    if (n % 1000 === 0) return `${n / 1000}K TL`;
+    return `${(n / 1000).toFixed(1)}K TL`;
+  };
+  return `${fmt(band.from)} – ${fmt(band.to)}`;
 }

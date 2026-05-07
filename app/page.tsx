@@ -1,9 +1,19 @@
 import Link from "next/link";
-import { ArrowRight, Briefcase, Users, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Briefcase,
+  Users,
+  Sparkles,
+  Bot,
+  ListChecks,
+  Headphones,
+} from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { FormatShowcase } from "@/components/FormatShowcase";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { CustomerProof } from "@/components/CustomerProof";
 
 async function getStats() {
   const supabase = createClient(
@@ -59,14 +69,16 @@ export default async function Home() {
       etiket: "Markalar",
       slogan: `Markanızın izi ${stats.sehirSayisi}+ şehirde, doğru sokakta.`,
       desc: "Stratejik medya planlaması, raporlanabilir kampanya yönetimi. Sektörel deneyimle desteklenen lokasyon önerileriyle markanızın görünürlüğünü Anadolu'nun her köşesine taşıyoruz.",
-      cta: "Marka için teklif al",
+      cta: "Marka için detaylar",
+      href: "/markalar",
     },
     {
       icon: Users,
       etiket: "Reklam Ajansları",
       slogan: "Brief'iniz 30 dakikada teklife dönsün.",
       desc: "Hızlı geri dönüş, esnek satın alma, detaylı lokasyon listeleri. Ajansınızın açıkhava operasyonlarındaki güvenilir iş ortağıyız.",
-      cta: "Ajanslar için teklif al",
+      cta: "Ajanslar için detaylar",
+      href: "/ajanslar",
     },
     {
       icon: Sparkles,
@@ -74,6 +86,7 @@ export default async function Home() {
       slogan: "İlk afişinizi birlikte sokağa çıkaralım.",
       desc: "Brief'iniz olmasa da olur. Hedefinizi anlatın, ihtiyacınızı birlikte netleştirelim, sıfırdan planlayalım. Şeffaf fiyat, gerçek lokasyon, sürpriz fatura yok.",
       cta: "Sıfırdan başlayalım",
+      href: "/ilk-kampanyaniz",
     },
   ];
 
@@ -118,7 +131,7 @@ export default async function Home() {
 
         <div className="container-narrow w-full relative">
           <div className="max-w-5xl space-y-10">
-            <ScrollReveal direction="up" delay={100} duration={1000}>
+            <ScrollReveal direction="up" delay={100} duration={1000} priority>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
                 <span className="text-gradient">Doğru lokasyonda</span>,
                 <br />
@@ -128,7 +141,7 @@ export default async function Home() {
               </h1>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={400} duration={1000}>
+            <ScrollReveal direction="up" delay={400} duration={1000} priority>
               <p className="text-xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl leading-relaxed">
                 Türkiye genelinde {stats.sehirSayisi}+ şehirde,{" "}
                 {stats.yuzSayisi.toLocaleString("tr-TR")}+ reklam yüzü ile
@@ -136,16 +149,29 @@ export default async function Home() {
               </p>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={700} duration={1000}>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <ScrollReveal direction="up" delay={700} duration={1000} priority>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-4">
                 <Link href="/teklif-al" className="btn-primary">
                   Teklif Al
                   <ArrowRight size={18} />
                 </Link>
+                <a
+                  href="https://wa.me/905529185864?text=Merhaba%2C%20Objektif%20Kriter%20web%20sitesi%20%C3%BCzerinden%20yaz%C4%B1yorum.%20Reklam%20konusunda%20bilgi%20almak%20istiyorum."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary"
+                  aria-label="WhatsApp ile yaz"
+                >
+                  <WhatsAppIcon size={18} />
+                  WhatsApp ile yaz
+                </a>
                 <Link href="/envanter" className="btn-secondary">
                   Envanteri Gör
                 </Link>
               </div>
+              <p className="pt-3 text-sm text-[var(--color-text-muted)]">
+                İlk kez mi açıkhava düşünüyorsun? <span className="text-[var(--color-text-secondary)]">WhatsApp ile yaz, baskı yapmadan konuşalım.</span>
+              </p>
             </ScrollReveal>
           </div>
         </div>
@@ -231,7 +257,7 @@ export default async function Home() {
                       {segment.desc}
                     </p>
                     <Link
-                      href="/teklif-al"
+                      href={segment.href}
                       className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group/link"
                     >
                       {segment.cta}
@@ -250,6 +276,9 @@ export default async function Home() {
 
       {/* STICKY SCROLL FORMAT SHOWCASE — Apple-tarzı */}
       <FormatShowcase />
+
+      {/* SOSYAL KANIT — lib/customers.ts boş ise otomatik gizlenir */}
+      <CustomerProof />
 
       {/* SÜREÇ */}
       <section className="py-24 border-t border-[var(--color-border-subtle)]">
@@ -288,6 +317,71 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* 30 DK NASIL — vaadi destekleyen mekanizma */}
+      <section className="py-24 border-t border-[var(--color-border-subtle)]">
+        <div className="container-narrow">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mb-12">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                30 dakikada nasıl?
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                Hızımızın arkasında bir <span className="text-gradient">akıllı süreç</span> var.
+              </h2>
+              <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
+                30 dakika sözü pazarlama lafı değil — taleplerinizi ön-işleyen
+                otomasyon, hazır lokasyon paketleri ve karar veren kıdemli ekibin
+                birleşiminden çıkıyor.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <ScrollReveal direction="up" delay={0}>
+              <div className="h-full p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center">
+                  <Bot size={22} className="text-[var(--color-primary)]" />
+                </div>
+                <h3 className="text-lg font-semibold">Brief otomatik özetleniyor</h3>
+                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                  Form&apos;dan gelen talep saniyeler içinde özetlenip ekibe iletiliyor.
+                  Sektörünüz, hedefiniz ve bütçeniz daha siz e-mailinize bakmadan
+                  görüşülmüş oluyor.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={120}>
+              <div className="h-full p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center">
+                  <ListChecks size={22} className="text-[var(--color-primary)]" />
+                </div>
+                <h3 className="text-lg font-semibold">Hazır lokasyon paketleri</h3>
+                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                  47+ şehirde format ve sektör bazlı önceden hazırlanmış kombinasyonlar.
+                  Sıfırdan plan çıkarmıyoruz — sizin durumunuza yakın paket üzerinden
+                  başlıyoruz, dakikalar içinde size özelleştiriyoruz.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={240}>
+              <div className="h-full p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] space-y-4">
+                <div className="w-12 h-12 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center">
+                  <Headphones size={22} className="text-[var(--color-primary)]" />
+                </div>
+                <h3 className="text-lg font-semibold">Karar veren kıdemli ekip</h3>
+                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                  Aramanızı bekleyen junior değil, fiyat ve lokasyon önerisini
+                  anında verebilen kıdemli planner. &quot;Müdüre soracağım&quot; turlarına
+                  vakit kaybetmiyorsunuz.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* ALT CTA */}
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
@@ -301,11 +395,20 @@ export default async function Home() {
                 Sektörünüze, hedefinize ve bütçenize uygun lokasyon önerilerini
                 30 dakika içinde alın.
               </p>
-              <div className="pt-4">
+              <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
                 <Link href="/teklif-al" className="btn-primary">
                   Teklif Al
                   <ArrowRight size={18} />
                 </Link>
+                <a
+                  href="https://wa.me/905529185864?text=Merhaba%2C%20Objektif%20Kriter%20web%20sitesi%20%C3%BCzerinden%20yaz%C4%B1yorum."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary"
+                >
+                  <WhatsAppIcon size={18} />
+                  WhatsApp ile yaz
+                </a>
               </div>
             </div>
           </ScrollReveal>

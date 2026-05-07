@@ -58,6 +58,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    // Segment landing'leri (persona bazlı)
+    {
+      url: `${BASE_URL}/markalar`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/ajanslar`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/ilk-kampanyaniz`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     // Hukuki sayfalar
     {
       url: `${BASE_URL}/kvkk-aydinlatma`,
