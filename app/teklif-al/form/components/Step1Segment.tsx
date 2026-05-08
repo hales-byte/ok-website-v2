@@ -8,7 +8,6 @@ import { SEGMENT_LABELS } from "../types";
 type Step1SegmentProps = {
   state: FormState;
   dispatch: React.Dispatch<FormAction>;
-  onForward: () => void;
 };
 
 const segmentler: Array<{
@@ -55,7 +54,6 @@ const segmentler: Array<{
 export function Step1Segment({
   state,
   dispatch,
-  onForward,
 }: Step1SegmentProps) {
   // Klavye desteği: 1, 2, 3 tuşları ile direkt seç
   useEffect(() => {
@@ -83,11 +81,9 @@ export function Step1Segment({
   }, [dispatch]);
 
   function handleSelect(segment: Segment) {
+    // Sadece seçim yap; ileri geçişi kullanıcı "Devam" butonuyla yapsın.
+    // WCAG 3.2.2 (On Input) — beklenmedik bağlam değişikliği yok.
     dispatch({ type: "SET_SEGMENT", segment });
-    // Apple-tarzı UX: seçim sonrası otomatik ileri (350ms gecikme — animasyon görünsün)
-    setTimeout(() => {
-      onForward();
-    }, 350);
   }
 
   return (

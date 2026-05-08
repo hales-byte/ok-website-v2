@@ -82,7 +82,7 @@ export function Footer() {
           <div className="md:col-span-5 space-y-6">
             <Logo size="sm" href={null} />
             <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-sm">
-              Türkiye genelinde 80+ lokasyon, 30.000+ reklam yüzü ile
+              Türkiye genelinde 47+ şehir, 33.812+ reklam yüzü ile
               outdoor reklam çözümleri. Markanızı doğru yerde, doğru zamanda
               gösterin.
             </p>

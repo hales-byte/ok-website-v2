@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Mail, User, Phone, Building2, Briefcase, ChevronDown, Check, AlertCircle } from "lucide-react";
 import type { FormState, FormAction } from "../types";
 import { isValidEmail, isValidPhone } from "../validation";
@@ -56,20 +56,27 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
         validMessage="Geçerli e-posta"
         errorMessage="Geçerli bir e-posta adresi girin"
       >
-        <input
-          type="email"
-          value={state.iletisim.email}
-          onChange={(e) =>
-            dispatch({
-              type: "UPDATE_ILETISIM",
-              field: "email",
-              value: e.target.value,
-            })
-          }
-          placeholder="ahmet@sirket.com"
-          autoComplete="email"
-          className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
-        />
+        {({ inputId, describedById }) => (
+          <input
+            id={inputId}
+            type="email"
+            value={state.iletisim.email}
+            onChange={(e) =>
+              dispatch({
+                type: "UPDATE_ILETISIM",
+                field: "email",
+                value: e.target.value,
+              })
+            }
+            placeholder="ahmet@sirket.com"
+            autoComplete="email"
+            required
+            aria-required="true"
+            aria-invalid={emailValid === false || undefined}
+            aria-describedby={emailValid != null ? describedById : undefined}
+            className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
+          />
+        )}
       </FieldWrapper>
 
       {/* AD SOYAD — Zorunlu */}
@@ -81,20 +88,27 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
         validMessage="✓"
         errorMessage="Lütfen ad ve soyadınızı girin"
       >
-        <input
-          type="text"
-          value={state.iletisim.adsoyad}
-          onChange={(e) =>
-            dispatch({
-              type: "UPDATE_ILETISIM",
-              field: "adsoyad",
-              value: e.target.value,
-            })
-          }
-          placeholder="Ahmet Yılmaz"
-          autoComplete="name"
-          className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
-        />
+        {({ inputId, describedById }) => (
+          <input
+            id={inputId}
+            type="text"
+            value={state.iletisim.adsoyad}
+            onChange={(e) =>
+              dispatch({
+                type: "UPDATE_ILETISIM",
+                field: "adsoyad",
+                value: e.target.value,
+              })
+            }
+            placeholder="Ahmet Yılmaz"
+            autoComplete="name"
+            required
+            aria-required="true"
+            aria-invalid={adsoyadValid === false || undefined}
+            aria-describedby={adsoyadValid != null ? describedById : undefined}
+            className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
+          />
+        )}
       </FieldWrapper>
 
       {/* OPSİYONEL ALANLAR — Collapse */}
@@ -124,60 +138,71 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
               validMessage="✓"
               errorMessage="Geçerli bir telefon numarası girin"
             >
-              <input
-                type="tel"
-                value={state.iletisim.telefon}
-                onChange={(e) =>
-                  dispatch({
-                    type: "UPDATE_ILETISIM",
-                    field: "telefon",
-                    value: e.target.value,
-                  })
-                }
-                placeholder="0532 123 45 67"
-                autoComplete="tel"
-                className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
-              />
+              {({ inputId, describedById }) => (
+                <input
+                  id={inputId}
+                  type="tel"
+                  value={state.iletisim.telefon}
+                  onChange={(e) =>
+                    dispatch({
+                      type: "UPDATE_ILETISIM",
+                      field: "telefon",
+                      value: e.target.value,
+                    })
+                  }
+                  placeholder="0532 123 45 67"
+                  autoComplete="tel"
+                  aria-invalid={telefonValid === false || undefined}
+                  aria-describedby={telefonValid != null ? describedById : undefined}
+                  className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
+                />
+              )}
             </FieldWrapper>
 
             {/* ŞİRKET */}
             <FieldWrapper label="Şirket" icon={Building2}>
-              <input
-                type="text"
-                value={state.iletisim.sirket}
-                onChange={(e) =>
-                  dispatch({
-                    type: "UPDATE_ILETISIM",
-                    field: "sirket",
-                    value: e.target.value,
-                  })
-                }
-                placeholder="Şirketiniz"
-                autoComplete="organization"
-                className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
-              />
+              {({ inputId }) => (
+                <input
+                  id={inputId}
+                  type="text"
+                  value={state.iletisim.sirket}
+                  onChange={(e) =>
+                    dispatch({
+                      type: "UPDATE_ILETISIM",
+                      field: "sirket",
+                      value: e.target.value,
+                    })
+                  }
+                  placeholder="Şirketiniz"
+                  autoComplete="organization"
+                  className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
+                />
+              )}
             </FieldWrapper>
 
             {/* SEKTÖR */}
             <FieldWrapper label="Sektör" icon={Briefcase}>
-              <select
-                value={state.iletisim.sektor}
-                onChange={(e) =>
-                  dispatch({
-                    type: "UPDATE_ILETISIM",
-                    field: "sektor",
-                    value: e.target.value,
-                  })
-                }
-                className="w-full bg-transparent outline-none text-base text-[var(--color-text-primary)] cursor-pointer appearance-none"
-              >
-                <option value="">Sektörünüzü seçin</option>
-                {SEKTORLER.map((sektor) => (
-                  <option key={sektor} value={sektor}>
-                    {sektor}
-                  </option>
-                ))}
-              </select>
+              {({ inputId }) => (
+                <select
+                  id={inputId}
+                  value={state.iletisim.sektor}
+                  onChange={(e) =>
+                    dispatch({
+                      type: "UPDATE_ILETISIM",
+                      field: "sektor",
+                      value: e.target.value,
+                    })
+                  }
+                  className="w-full bg-transparent outline-none text-base text-[var(--color-text-primary)] cursor-pointer appearance-none"
+                >
+                  <option value="">Sektörünüzü seçin</option>
+                  {SEKTORLER.map((sektor) => (
+                    <option key={sektor} value={sektor}>
+                      {sektor}
+                    </option>
+                  ))}
+                </select>
+              )}
             </FieldWrapper>
           </div>
         )}
@@ -210,24 +235,45 @@ function FieldWrapper({
   valid?: boolean | null;
   validMessage?: string;
   errorMessage?: string;
-  children: React.ReactNode;
+  children: (ids: { inputId: string; describedById: string }) => React.ReactNode;
 }) {
+  // Etiketi input'a bağlamak için unique id'ler. WCAG 1.3.1 + 4.1.2.
+  const inputId = useId();
+  const describedById = useId();
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <label className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)]">
+        <label
+          htmlFor={inputId}
+          className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)]"
+        >
           <Icon size={14} className="text-[var(--color-text-muted)]" />
           {label}
-          {required && <span className="text-[var(--color-primary)]">*</span>}
+          {required && (
+            <>
+              <span className="text-[var(--color-primary-deep)]" aria-hidden="true">
+                *
+              </span>
+              <span className="sr-only">(zorunlu)</span>
+            </>
+          )}
         </label>
         {valid === true && validMessage && (
-          <span className="text-xs text-green-600 flex items-center gap-1 animate-fadeIn">
+          <span
+            id={describedById}
+            className="text-xs text-green-700 flex items-center gap-1 animate-fadeIn"
+            aria-live="polite"
+          >
             <Check size={12} strokeWidth={3} />
             {validMessage}
           </span>
         )}
         {valid === false && errorMessage && (
-          <span className="text-xs text-red-500 flex items-center gap-1 animate-fadeIn">
+          <span
+            id={describedById}
+            className="text-xs text-red-600 flex items-center gap-1 animate-fadeIn"
+            role="alert"
+          >
             <AlertCircle size={12} />
             {errorMessage}
           </span>
@@ -242,7 +288,7 @@ function FieldWrapper({
             : "border-[var(--color-border-subtle)] bg-[var(--color-surface)] focus-within:border-[var(--color-primary)] focus-within:bg-[var(--color-bg)]"
         }`}
       >
-        {children}
+        {children({ inputId, describedById })}
       </div>
     </div>
   );

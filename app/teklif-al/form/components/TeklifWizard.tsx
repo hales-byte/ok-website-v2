@@ -251,11 +251,7 @@ export function TeklifWizard() {
         onReset={handleReset}
       >
         {state.currentStep === 1 && (
-          <Step1Segment
-            state={state}
-            dispatch={dispatch}
-            onForward={handleForward}
-          />
+          <Step1Segment state={state} dispatch={dispatch} />
         )}
         {state.currentStep === 2 && (
           <Step2Sehirler state={state} dispatch={dispatch} />
