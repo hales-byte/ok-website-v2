@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
-import { ArrowRight, MapPin, ChevronRight } from "lucide-react";
+import { ArrowRight, MapPin, ChevronRight, Layers } from "lucide-react";
 import type { Metadata } from "next";
-import { getFormatByKey } from "@/lib/formats";
+import { getFormatByKey, getFormatLabel } from "@/lib/formats";
 
 function slugify(str: string): string {
   return str
@@ -64,6 +64,73 @@ async function getKombinasyon(sehirAdi: string, formatKategori: string) {
     toplamYuz,
     lokasyonlar: data,
   };
+}
+
+/**
+ * İç linkleme için: aynı şehirde aktif olan farklı formatlar.
+ * Bu sayfa zaten {sehirAdi, formatKategori} altında; diğer formatları
+ * "kendi sayfasına link" olarak gösteriyoruz.
+ */
+async function getAyniSehirDigerFormatlar(
+  sehirAdi: string,
+  mevcutFormat: string
+) {
+  const supabase = getSupabase();
+  const { data } = await supabase
+    .schema("website")
+    .from("envanter")
+    .select("format_kategori, toplam_face")
+    .eq("sehir", sehirAdi)
+    .eq("aktif", true);
+
+  if (!data) return [];
+
+  const map = new Map<string, { lokasyon: number; yuz: number }>();
+  for (const row of data) {
+    if (!row.format_kategori || row.format_kategori === mevcutFormat) continue;
+    const prev = map.get(row.format_kategori) ?? { lokasyon: 0, yuz: 0 };
+    map.set(row.format_kategori, {
+      lokasyon: prev.lokasyon + 1,
+      yuz: prev.yuz + (row.toplam_face || 0),
+    });
+  }
+  return Array.from(map.entries())
+    .map(([key, v]) => ({ key, ...v }))
+    .sort((a, b) => b.yuz - a.yuz);
+}
+
+/**
+ * İç linkleme için: aynı format farklı şehirlerde — orphan sayfa fix.
+ * En çok reklam yüzü olan ilk N şehir.
+ */
+async function getAyniFormatDigerSehirler(
+  formatKategori: string,
+  mevcutSehir: string,
+  limit = 9
+) {
+  const supabase = getSupabase();
+  const { data } = await supabase
+    .schema("website")
+    .from("envanter")
+    .select("sehir, toplam_face")
+    .eq("format_kategori", formatKategori)
+    .eq("aktif", true);
+
+  if (!data) return [];
+
+  const map = new Map<string, { lokasyon: number; yuz: number }>();
+  for (const row of data) {
+    if (!row.sehir || row.sehir === mevcutSehir) continue;
+    const prev = map.get(row.sehir) ?? { lokasyon: 0, yuz: 0 };
+    map.set(row.sehir, {
+      lokasyon: prev.lokasyon + 1,
+      yuz: prev.yuz + (row.toplam_face || 0),
+    });
+  }
+  return Array.from(map.entries())
+    .map(([sehir, v]) => ({ sehir, ...v }))
+    .sort((a, b) => b.yuz - a.yuz)
+    .slice(0, limit);
 }
 
 export async function generateStaticParams() {
@@ -145,6 +212,12 @@ export default async function SehirFormatPage({
   if (!detay) {
     notFound();
   }
+
+  // İç linkleme için ek veri (paralel)
+  const [digerFormatlar, digerSehirler] = await Promise.all([
+    getAyniSehirDigerFormatlar(sehir, format),
+    getAyniFormatDigerSehirler(format, sehir),
+  ]);
 
   // JSON-LD: Service + BreadcrumbList — SEO rich-result için
   const baseUrl = "https://objektifkriter.com.tr";
@@ -314,6 +387,83 @@ export default async function SehirFormatPage({
           </div>
         </div>
       </section>
+
+      {/* İÇ LİNKLEME — aynı format diğer şehirlerde */}
+      {digerSehirler.length > 0 && (
+        <section className="py-20 border-t border-[var(--color-border-subtle)]">
+          <div className="container-narrow">
+            <div className="max-w-2xl mb-10">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                Aynı format farklı şehirlerde
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+                Diğer şehirlerde {formatMeta.name} reklam
+              </h2>
+              <p className="mt-3 text-base text-[var(--color-text-secondary)]">
+                Kampanyanızı çoklu şehre taşımak ister misiniz? En geniş{" "}
+                {formatMeta.name.toLowerCase()} envanterine sahip diğer
+                şehirler:
+              </p>
+            </div>
+            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {digerSehirler.map((d) => (
+                <li key={d.sehir}>
+                  <Link
+                    href={`/sehir/${slugify(d.sehir)}/${format}`}
+                    className="block p-4 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]/40 hover:shadow-sm transition-all group"
+                  >
+                    <div className="flex items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary-deep)]">
+                      <MapPin size={14} />
+                      {d.sehir}
+                    </div>
+                    <div className="mt-1 text-xs text-[var(--color-text-muted)]">
+                      {d.lokasyon} lokasyon · {d.yuz.toLocaleString("tr-TR")} yüz
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* İÇ LİNKLEME — aynı şehirde diğer formatlar */}
+      {digerFormatlar.length > 0 && (
+        <section className="py-20 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+          <div className="container-narrow">
+            <div className="max-w-2xl mb-10">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                Aynı şehirde diğer üniteler
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+                {sehir}&apos;da {formatMeta.name} dışında format alternatifleri
+              </h2>
+              <p className="mt-3 text-base text-[var(--color-text-secondary)]">
+                Kampanyanızın etkisini farklı temas noktalarıyla artırmak için{" "}
+                {sehir}&apos;daki diğer reklam üniteleri:
+              </p>
+            </div>
+            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {digerFormatlar.map((f) => (
+                <li key={f.key}>
+                  <Link
+                    href={`/sehir/${slug}/${f.key}`}
+                    className="block p-4 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-bg)] hover:border-[var(--color-primary)]/40 hover:shadow-sm transition-all group"
+                  >
+                    <div className="flex items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary-deep)]">
+                      <Layers size={14} />
+                      {getFormatLabel(f.key)}
+                    </div>
+                    <div className="mt-1 text-xs text-[var(--color-text-muted)]">
+                      {f.lokasyon} lokasyon · {f.yuz.toLocaleString("tr-TR")} yüz
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
