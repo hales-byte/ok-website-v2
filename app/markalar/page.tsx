@@ -261,7 +261,7 @@ export default async function MarkalarPage() {
                 {[
                   "Stratejik medya planı",
                   "Raporlanabilir sonuç",
-                  "30 dk yanıt süresi",
+                  "30 dakika yanıt süresi",
                 ].map((item) => (
                   <li
                     key={item}

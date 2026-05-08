@@ -70,7 +70,7 @@ const briefSteps = [
   {
     num: "02",
     title: "Otomatik özetlenir",
-    desc: "Sistemimiz brief'i ekibe işlerken anahtar parametreleri yapılandırır. Ekip 30 dk içinde teklif çıkarır.",
+    desc: "Sistemimiz brief'i ekibe işlerken anahtar parametreleri yapılandırır. Ekip 30 dakika içinde teklif çıkarır.",
   },
   {
     num: "03",
@@ -272,7 +272,7 @@ export default async function AjanslarPage() {
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto text-left">
                 {[
-                  "30 dk yanıt süresi",
+                  "30 dakika yanıt süresi",
                   "White-label raporlama",
                   "Ajans-özel ratecard",
                 ].map((item) => (
