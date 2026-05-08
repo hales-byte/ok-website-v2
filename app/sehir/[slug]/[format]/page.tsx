@@ -105,9 +105,26 @@ export async function generateMetadata({
     return { title: "Sayfa bulunamadı" };
   }
 
+  // Supabase'den şehir-spesifik detay → her sayfaya unique description
+  const detay = await getKombinasyon(sehir, format);
+  const lokasyonText = detay
+    ? `${detay.lokasyonSayisi} lokasyonda ${detay.toplamYuz.toLocaleString("tr-TR")} reklam yüzü`
+    : "aktif lokasyonlar";
+
+  const formatLow = formatMeta.name.toLowerCase();
+
   return {
-    title: `${sehir} ${formatMeta.name} Reklam`,
-    description: `${sehir} ilinde ${formatMeta.name} reklam çözümleri. ${formatMeta.description.substring(0, 120)}... Hızlı teklif, profesyonel takip.`,
+    title: `${sehir} ${formatMeta.name} Reklam — Fiyat ve Lokasyonlar`,
+    description: `${sehir}'da ${formatLow} reklam: ${lokasyonText}. ${formatMeta.tagline}. 30 dakikada teklif, hedeflenmiş lokasyon önerisi.`,
+    alternates: {
+      canonical: `https://objektifkriter.com.tr/sehir/${slug}/${format}`,
+    },
+    openGraph: {
+      title: `${sehir} ${formatMeta.name} Reklam`,
+      description: `${sehir} OOH reklam: ${lokasyonText}. ${formatMeta.tagline}.`,
+      url: `https://objektifkriter.com.tr/sehir/${slug}/${format}`,
+      type: "website",
+    },
   };
 }
 
@@ -129,8 +146,80 @@ export default async function SehirFormatPage({
     notFound();
   }
 
+  // JSON-LD: Service + BreadcrumbList — SEO rich-result için
+  const baseUrl = "https://objektifkriter.com.tr";
+  const pageUrl = `${baseUrl}/sehir/${slug}/${format}`;
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: `${sehir} ${formatMeta.name} Reklam`,
+    serviceType: `${formatMeta.name} OOH Reklam`,
+    description: `${sehir} ilinde ${formatMeta.name.toLowerCase()} reklam çözümleri — ${detay.lokasyonSayisi} lokasyonda ${detay.toplamYuz} reklam yüzü.`,
+    provider: {
+      "@type": "Organization",
+      name: "Objektif Kriter",
+      url: baseUrl,
+    },
+    areaServed: {
+      "@type": "City",
+      name: sehir,
+      address: { "@type": "PostalAddress", addressCountry: "TR" },
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "TRY",
+      priceSpecification: {
+        "@type": "PriceSpecification",
+        priceCurrency: "TRY",
+        minPrice: formatMeta.priceBand.from,
+        maxPrice: formatMeta.priceBand.to,
+        valueAddedTaxIncluded: false,
+      },
+      availability: "https://schema.org/InStock",
+    },
+    url: pageUrl,
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana sayfa",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Hizmetler",
+        item: `${baseUrl}/hizmetler`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: sehir,
+        item: `${baseUrl}/sehir/${slug}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: formatMeta.name,
+        item: pageUrl,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <section className="pt-24 pb-16 border-b border-[var(--color-border-subtle)]">
         <div className="container-narrow">
           <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-6">
