@@ -144,9 +144,12 @@ async function sendNotificationEmail(
 ): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM;
-  const to = process.env.RESEND_TO;
+  // RESEND_TO virgülle ayrılmış birden fazla adres olabilir
+  const toList = process.env.RESEND_TO?.split(",")
+    .map((s) => s.trim())
+    .filter(Boolean) ?? [];
 
-  if (!apiKey || !from || !to) {
+  if (!apiKey || !from || toList.length === 0) {
     // Env eksikse sessizce atla — geliştirme/test ortamında normal
     console.warn(
       "Resend env değişkenleri eksik; mail bildirimi gönderilmedi."
@@ -160,7 +163,7 @@ async function sendNotificationEmail(
 
     const result = await resend.emails.send({
       from,
-      to,
+      to: toList.length === 1 ? toList[0] : toList,
       replyTo: payload.email, // Kullanıcıya direkt yanıt için
       subject,
       html,
