@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 // Aydınlatma metni versiyonu — değişiklik yapılırsa güncellenmeli
 // Form gönderimlerinde bu versiyon DB'ye kaydedilir
-export const AYDINLATMA_VERSIYONU = "v1-2026-05";
+export const AYDINLATMA_VERSIYONU = "v2-2026-05";
 
 export const metadata: Metadata = {
   title: "KVKK Aydınlatma Metni",
@@ -177,23 +177,78 @@ export default function KvkkPage() {
                   baskı/üretim/montaj firmaları)
                 </li>
                 <li>
-                  Bulut hizmet sağlayıcıları ve veri tabanı altyapı
-                  sağlayıcıları (Supabase Inc., Vercel Inc.)
-                </li>
-                <li>
                   Yetkili kamu kurum ve kuruluşlarına, yargı mercilerine, yasal
                   zorunluluk halinde
                 </li>
               </ul>
-              <p className="mt-4">
+
+              <p className="mt-5">
+                <strong className="text-[var(--color-text-primary)]">
+                  Bulut hizmet sağlayıcıları ve veri işleyenler (KVKK m. 9):
+                </strong>
+              </p>
+              <div className="mt-3 overflow-x-auto rounded-lg border border-[var(--color-border-subtle)]">
+                <table className="w-full text-sm">
+                  <thead className="bg-[var(--color-surface)]">
+                    <tr className="text-left">
+                      <th className="px-4 py-2 font-medium text-[var(--color-text-primary)]">
+                        Hizmet
+                      </th>
+                      <th className="px-4 py-2 font-medium text-[var(--color-text-primary)]">
+                        Sağlayıcı
+                      </th>
+                      <th className="px-4 py-2 font-medium text-[var(--color-text-primary)]">
+                        Sunucu konumu
+                      </th>
+                      <th className="px-4 py-2 font-medium text-[var(--color-text-primary)]">
+                        Aktarılan veri
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[var(--color-border-subtle)]">
+                    <tr>
+                      <td className="px-4 py-2">Veri tabanı + form depolama</td>
+                      <td className="px-4 py-2">Supabase Inc. (ABD)</td>
+                      <td className="px-4 py-2">AB (Almanya / İrlanda)</td>
+                      <td className="px-4 py-2">Tüm form alanları + meta</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-2">Site barındırma + CDN</td>
+                      <td className="px-4 py-2">Vercel Inc. (ABD)</td>
+                      <td className="px-4 py-2">AB / Küresel CDN</td>
+                      <td className="px-4 py-2">
+                        Site etkileşim logları, IP, user agent
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-2">E-posta bildirim gönderimi</td>
+                      <td className="px-4 py-2">Resend Inc. (ABD)</td>
+                      <td className="px-4 py-2">AB (İrlanda — eu-west-1)</td>
+                      <td className="px-4 py-2">Ad, e-posta, telefon, talep özeti</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-2">Harita gösterimi</td>
+                      <td className="px-4 py-2">Mapbox Inc. (ABD)</td>
+                      <td className="px-4 py-2">Küresel</td>
+                      <td className="px-4 py-2">
+                        Yalnızca site ziyareti sırasında IP + tile istekleri
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p className="mt-5">
                 <strong className="text-[var(--color-text-primary)]">
                   Yurt dışına aktarım:
                 </strong>{" "}
-                Kullandığımız bulut altyapı sağlayıcıları (Supabase, Vercel)
-                Avrupa Birliği üyesi ülkelerde sunucularını barındırmaktadır.
-                Kişisel verileriniz, KVKK&apos;nın 9. maddesi ve ilgili Kurul
-                kararları çerçevesinde, açık rızanız ya da yeterli koruma
-                bulunan ülkeler kapsamında aktarılmaktadır.
+                Yukarıdaki sağlayıcılar Avrupa Birliği üyesi ülkelerdeki sunucu
+                lokasyonlarını tercih ettiğimiz hizmetlerimiz olup; kişisel
+                verileriniz KVKK&apos;nın 9. maddesi ve ilgili Kurul kararları
+                çerçevesinde, açık rızanız ya da yeterli koruma bulunan ülkeler
+                kapsamında aktarılmaktadır. Tüm sağlayıcılarla standart
+                sözleşme hükümleri (SCC) veya yeterli garantiler sağlayan
+                muadil mekanizmalar uygulanmaktadır.
               </p>
             </Bolum>
 
@@ -282,15 +337,24 @@ export default function KvkkPage() {
               </p>
               <ul className="mt-4 space-y-2 list-disc list-inside">
                 <li>
-                  E-posta:{" "}
+                  KVKK için ayrılmış kanal (önerilen):{" "}
+                  <a
+                    href="mailto:kvkk@objektifkriter.com.tr"
+                    className="text-[var(--color-primary)] hover:underline"
+                  >
+                    kvkk@objektifkriter.com.tr
+                  </a>
+                </li>
+                <li>
+                  Genel iletişim:{" "}
                   <a
                     href="mailto:satis@objektifkriter.com.tr"
                     className="text-[var(--color-primary)] hover:underline"
                   >
                     satis@objektifkriter.com.tr
-                  </a>
+                  </a>{" "}
+                  (konuyu &quot;KVKK Başvurusu&quot; olarak belirtin)
                 </li>
-                <li>Konu satırına &quot;KVKK Başvurusu&quot; yazınız</li>
                 <li>
                   Başvurunuzda kimlik bilgileriniz, talebinizin niteliği ve
                   iletişim bilgilerinize yer veriniz

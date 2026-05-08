@@ -152,19 +152,21 @@ export function Step6Onay({ state, dispatch }: Step6OnayProps) {
           />
           <div className="flex-1 text-sm">
             <div className="text-[var(--color-text-primary)] leading-relaxed">
-              <span className="text-[var(--color-primary)] font-medium">
+              <span className="text-[var(--color-primary-deep)] font-medium">
                 * Zorunlu —{" "}
               </span>
+              KVKK m.10 kapsamında{" "}
               <Link
                 href="/kvkk-aydinlatma"
                 target="_blank"
                 onClick={(e) => e.stopPropagation()}
-                className="text-[var(--color-primary)] hover:underline font-medium"
+                className="text-[var(--color-primary-deep)] hover:underline font-medium"
               >
-                KVKK Aydınlatma Metnini
+                Aydınlatma Metnini
               </Link>{" "}
-              okudum, kişisel verilerimin teklif sürecinin yürütülmesi
-              amacıyla işlenmesine açık rıza veriyorum.
+              okudum <strong>ve</strong> KVKK m.5/1 kapsamında kişisel
+              verilerimin teklif sürecinin yürütülmesi amacıyla işlenmesine{" "}
+              <strong>açık rıza</strong> veriyorum.
             </div>
             <button
               type="button"
