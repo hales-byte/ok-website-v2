@@ -6,7 +6,7 @@ import { getSehirCoordinates } from "@/lib/sehir-koordinatlari";
 export const metadata: Metadata = {
   title: "Envanter — Türkiye Geneli Reklam Lokasyonları",
   description:
-    "Objektif Kriter envanteri: Türkiye genelinde 80+ lokasyon, 30.000+ reklam yüzü. Billboard, CLP, megalight ve dijital OOH lokasyonlarını harita üzerinde keşfedin.",
+    "Objektif Kriter envanteri: Türkiye genelinde 47+ şehir, 33.812+ reklam yüzü. Billboard, CLP, megalight ve dijital OOH lokasyonlarını harita üzerinde keşfedin.",
 };
 
 // Envanter veri sıklığı düşük — 5 dakika revalidate yeterli, statik build'de

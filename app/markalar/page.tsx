@@ -17,7 +17,7 @@ import { CustomerProof } from "@/components/CustomerProof";
 export const metadata: Metadata = {
   title: "Markalar İçin OOH Reklam Çözümleri",
   description:
-    "Kurumsal markalar için Türkiye geneli OOH planlama. Stratejik medya, raporlanabilir kampanyalar, sektörel deneyim. 47+ şehirde 33.000+ reklam yüzü.",
+    "Kurumsal markalar için Türkiye geneli OOH planlama. Stratejik medya, raporlanabilir kampanyalar, sektörel deneyim. 47+ şehirde 33.812+ reklam yüzü.",
 };
 
 async function getStats() {
