@@ -106,6 +106,7 @@ export function Step2Sehirler({ state, dispatch }: Step2SehirlerProps) {
             onFocus={() => setShowSuggestions(true)}
             onKeyDown={handleInputKey}
             placeholder="Şehir ara — örn. İstanbul, Ankara, İzmir..."
+            aria-label="Şehir ara"
             className="flex-1 bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
             autoComplete="off"
           />

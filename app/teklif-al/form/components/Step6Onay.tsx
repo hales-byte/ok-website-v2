@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import Link from "next/link";
 import {
   Edit3,
@@ -27,6 +27,7 @@ type Step6OnayProps = {
 
 export function Step6Onay({ state, dispatch }: Step6OnayProps) {
   const [showFullKvkk, setShowFullKvkk] = useState(false);
+  const mesajId = useId();
 
   const formatNames =
     state.formatlar.length > 0
@@ -114,11 +115,15 @@ export function Step6Onay({ state, dispatch }: Step6OnayProps) {
 
       {/* MESAJ — Opsiyonel */}
       <div>
-        <label className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)] mb-2">
+        <label
+          htmlFor={mesajId}
+          className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)] mb-2"
+        >
           <MessageSquare size={14} className="text-[var(--color-text-muted)]" />
           Eklemek istediğiniz bir şey var mı? (opsiyonel)
         </label>
         <textarea
+          id={mesajId}
           value={state.mesaj}
           onChange={(e) =>
             dispatch({ type: "SET_MESAJ", mesaj: e.target.value })
