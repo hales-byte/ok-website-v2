@@ -1,9 +1,76 @@
 # Çalışma Durumu
 
-> Son güncelleme: 7 Mayıs 2026
+> Son güncelleme: 8 Mayıs 2026
 
 Bu dosya kısa vadeli operasyonel durumu tutar. Faz planı için
 [roadmap.md](./roadmap.md)'ye bak.
+
+---
+
+## Son oturumda yapılanlar (8 Mayıs)
+
+### 🚀 Yayına çıkış
+
+- **Vercel canlı**: [`ok-website-v2.vercel.app`](https://ok-website-v2.vercel.app/) — Next.js 16, 7 env var, 224 sayfa prerender
+- **Form gönderim canlı test ✅** — gmail'e mail düştü (Resend test mode)
+- **Resend domain**: `objektifkriter.com.tr` Resend'de eklendi (Ireland region)
+- **Vercel custom domain stage**: `yeni.objektifkriter.com.tr` eklendi (DNS doğrulanmayı bekliyor)
+- **DNS yöneticisi mektubu**: [`docs/dns-records.md`](./dns-records.md) — 5 kayıt (4 Resend + 1 Vercel CNAME), Cloudflare bulk import için BIND zone file dahil. DNS yöneticisine iletildi, yanıt bekleniyor.
+
+### 🕵️ 5 paralel agent denetimi → Top 5 fix uygulandı
+
+5 paralel uzman ajan: UX/Tasarım, Erişilebilirlik (WCAG), SEO, Code Quality, KVKK. Detay: [`docs/persona-feedback.md`](./persona-feedback.md) (3 persona) + 5 ajan raporu sentezi.
+
+Uygulanan düzeltmeler:
+
+**Erişilebilirlik (WCAG 2.1 AA)**
+- `.btn-primary` kontrast: #01B5CC (~2.55:1) → `#017A8A` (~5.4:1) ✅ AA pass
+- Yeni `--color-primary-darker: #015F6D` (hover, ~7:1)
+- Global `:focus-visible` outline (klavye odağı her yerde görünür)
+- "İçeriğe atla" skip-link (`layout.tsx`, klavye Tab'la görünür)
+- `Step5Iletisim` form etiketleri: `useId` + `htmlFor` + `aria-required` + `aria-invalid` + `aria-describedby` (FieldWrapper render-prop'a çevrildi)
+- Step1Segment 350ms otomatik ileri geçişi kaldırıldı (WCAG 3.2.2)
+
+**SEO**
+- `Organization` JSON-LD (root layout)
+- `Service` + `BreadcrumbList` JSON-LD (158 dynamic /sehir/[slug]/[format] sayfası)
+- Şehir-spesifik meta description'lar (`Ankara'da billboard reklam: 18 lokasyon · 2.946 reklam yüzü...`)
+- Site geneli **OG image** 1200×630 (`app/opengraph-image.tsx`)
+- Per-page **OG image** sehir/format için (158 unique görsel)
+- **İç linkleme grid** sehir/format sayfasında: "Aynı format diğer şehirlerde" + "Aynı şehirde diğer formatlar" (orphan fix)
+- Sitemap `lastmod` sabit revizyon tarihi (`lib/site-meta.ts`) — önceki `now()` her dakika değişiyordu, Google bot crawl bütçesi heba ediyordu
+- Migration SQL: `scripts/migrations/01-add-updated-at.sql` (uygulanırsa sitemap otomatik DB tarihlerini kullanır)
+
+**KVKK Uyumu (v2-2026-05)**
+- Aydınlatma Metni → Bölüm 5: Resend (AB-İrlanda eu-west-1) + Mapbox + Supabase + Vercel sağlayıcılar **tablosu** (hizmet / sağlayıcı / sunucu konumu / aktarılan veri)
+- Bölüm 9: `kvkk@objektifkriter.com.tr` ayrı başvuru kanalı eklendi
+- Form Step6 onay metni: KVKK m.10 (aydınlatma) + m.5/1 (açık rıza) atıfları belirgin
+
+**Marka & İçerik**
+- Sayı tutarlılığı: "80+ lokasyon, 30.000+" → "47+ şehir, 33.812+ reklam yüzü" (4 yerde — layout meta, Footer, envanter meta)
+- Hero priority prop ile flicker yok (önceki ScrollReveal IntersectionObserver gecikmesi)
+- CountUp başlangıç değeri = end (kullanıcı sayacı geçse "0+" şoku görmez)
+
+**Navigation**
+- Header'a **Çözümler ▾** dropdown: Markalar / Reklam Ajansları / İlk Açıkhava Kampanyam → 3 persona landing'ine sitewide link
+
+**Form & Mail**
+- `submit-action.ts`: `RESEND_TO` virgülle ayrılmış multi-recipient destekli (DNS doğrulanınca iki adrese gönderim)
+
+### 🛑 Atlanan / İlerletilmeyen
+
+- **Wix → Vercel cutover + 301 redirect haritası** — `site:objektifkriter.com.tr` Google sonucu = **0 indeks**. Cutover'da gereksiz, basit DNS yönlendirmesi yeterli olacak.
+- **ScrollReveal CSS-only refactor** — büyük scope, marginal performance getiri, sonraya bırakıldı.
+- **`lib/customers.ts`** — boş (gerçek müşteri logo + case study eklendiğinde homepage + 3 landing CustomerProof bölümü otomatik göstermeye başlar; veri yoksa gizli kalır).
+
+### 📋 Bekleyen tek adım
+
+DNS yöneticisi Cloudflare'a 5 kaydı eklesin → Resend ve Vercel domain'leri otomatik doğrulanır → 2 dakika iş kalır:
+
+1. Vercel env: `RESEND_TO=hakan.karacam@objektifkriter.com.tr,yhakan.karacam@gmail.com`
+2. Vercel **Redeploy**
+3. `https://yeni.objektifkriter.com.tr` smoke test
+4. Test mail gönder, iki inbox'ta da görünüyor mu doğrula
 
 ---
 
