@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { createClient } from "@supabase/supabase-js";
+import { CONTENT_REVISION, INVENTORY_REVISION } from "@/lib/site-meta";
 
 const BASE_URL = "https://objektifkriter.com.tr";
 
@@ -18,87 +19,91 @@ function slugify(str: string): string {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
+  // Sabit revizyon tarihleri — Google bot her build'de "değişti" sinyali
+  // almasın diye lib/site-meta.ts'ten geliyor. İçerik gerçekten değiştiğinde
+  // o dosyadaki tarih güncellenir.
+  const contentRev = CONTENT_REVISION;
+  const inventoryRev = INVENTORY_REVISION;
 
   // 1. STATİK SAYFALAR
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${BASE_URL}/hizmetler`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${BASE_URL}/hakkimizda`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${BASE_URL}/iletisim`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${BASE_URL}/teklif-al`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${BASE_URL}/envanter`,
-      lastModified: now,
+      lastModified: inventoryRev,
       changeFrequency: "weekly",
       priority: 0.8,
     },
     // Segment landing'leri (persona bazlı)
     {
       url: `${BASE_URL}/markalar`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${BASE_URL}/ajanslar`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${BASE_URL}/ilk-kampanyaniz`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     // Hukuki sayfalar
     {
       url: `${BASE_URL}/kvkk-aydinlatma`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/gizlilik`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/cerez-politikasi`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/kullanim-kosullari`,
-      lastModified: now,
+      lastModified: contentRev,
       changeFrequency: "yearly",
       priority: 0.3,
     },
@@ -111,10 +116,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
+    // updated_at varsa gerçek değişiklik tarihini sitemap'e koy.
+    // Yoksa Google "her sayfa her gün değişti" sinyali alır → crawl bütçesi heba olur.
     const { data, error } = await supabase
       .schema("website")
       .from("envanter")
-      .select("sehir, format_kategori")
+      .select("sehir, format_kategori, updated_at")
       .eq("aktif", true);
 
     if (error || !data) {
@@ -122,36 +129,46 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       return staticPages;
     }
 
-    // 2a. Şehir landing sayfaları (her şehir için 1 URL)
-    const sehirSet = new Set<string>();
-    const kombinasyonSet = new Set<string>();
+    // 2a. Şehir bazlı son değişiklik (max updated_at per şehir)
+    const sehirLastMod = new Map<string, Date>();
+    const kombinasyonLastMod = new Map<string, Date>();
 
     for (const row of data) {
-      if (row.sehir) {
-        sehirSet.add(row.sehir);
+      if (!row.sehir) continue;
+      // updated_at yoksa lib/site-meta.ts'teki sabit envanter revizyonuna düş
+      const rowDate = row.updated_at ? new Date(row.updated_at) : inventoryRev;
+
+      const prevSehir = sehirLastMod.get(row.sehir);
+      if (!prevSehir || rowDate > prevSehir) {
+        sehirLastMod.set(row.sehir, rowDate);
       }
-      if (row.sehir && row.format_kategori) {
-        kombinasyonSet.add(`${row.sehir}|${row.format_kategori}`);
+
+      if (row.format_kategori) {
+        const key = `${row.sehir}|${row.format_kategori}`;
+        const prevKombo = kombinasyonLastMod.get(key);
+        if (!prevKombo || rowDate > prevKombo) {
+          kombinasyonLastMod.set(key, rowDate);
+        }
       }
     }
 
-    const sehirPages: MetadataRoute.Sitemap = Array.from(sehirSet).map(
-      (sehir) => ({
-        url: `${BASE_URL}/sehir/${slugify(sehir)}`,
-        lastModified: now,
-        changeFrequency: "weekly" as const,
-        priority: 0.7,
-      })
-    );
+    const sehirPages: MetadataRoute.Sitemap = Array.from(
+      sehirLastMod.entries()
+    ).map(([sehir, lastMod]) => ({
+      url: `${BASE_URL}/sehir/${slugify(sehir)}`,
+      lastModified: lastMod,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
 
     // 2b. Şehir + format kombinasyon sayfaları
     const kombinasyonPages: MetadataRoute.Sitemap = Array.from(
-      kombinasyonSet
-    ).map((kombo) => {
+      kombinasyonLastMod.entries()
+    ).map(([kombo, lastMod]) => {
       const [sehir, format] = kombo.split("|");
       return {
         url: `${BASE_URL}/sehir/${slugify(sehir)}/${format}`,
-        lastModified: now,
+        lastModified: lastMod,
         changeFrequency: "weekly" as const,
         priority: 0.6,
       };
