@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   Briefcase,
@@ -14,6 +15,29 @@ import { CountUp } from "@/components/CountUp";
 import { FormatShowcase } from "@/components/FormatShowcase";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { CustomerProof } from "@/components/CustomerProof";
+
+// Ana sayfa: layout default'unun template'ine düşmemesi için title.absolute kullan.
+// Layout'un title.template'i "%s | Objektif Kriter" — homepage'te çift "Objektif Kriter"
+// olmaması için absolute ile override.
+export const metadata: Metadata = {
+  title: {
+    absolute: "Objektif Kriter — Türkiye OOH Reklam | 47+ Şehir, 33.812+ Reklam Yüzü",
+  },
+  description:
+    "Doğru lokasyonda, doğru zamanda, doğru kitleye. Türkiye'nin 47+ şehrinde 33.812+ reklam yüzü ile billboard, CLP, megalight ve dijital OOH reklam çözümleri. 30 dakika içinde teklif.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://objektifkriter.com.tr",
+    siteName: "Objektif Kriter",
+    title: "Objektif Kriter — Türkiye OOH Reklam",
+    description:
+      "Doğru lokasyonda, doğru zamanda, doğru kitleye. 47+ şehir, 33.812+ reklam yüzü. 30 dakika içinde teklif.",
+  },
+};
 
 async function getStats() {
   const supabase = createClient(
