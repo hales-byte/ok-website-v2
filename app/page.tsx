@@ -1,19 +1,16 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import {
-  ArrowRight,
-  Briefcase,
-  Users,
-  Sparkles,
-  Bot,
-  ListChecks,
-  Headphones,
-} from "lucide-react";
+import { ArrowRight, Bot, ListChecks, Headphones } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { FormatShowcase } from "@/components/FormatShowcase";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import {
+  MarkalarIcon,
+  AjanslarIcon,
+  IlkKampanyamIcon,
+} from "@/components/icons/SegmentIcons";
 import { CustomerProof } from "@/components/CustomerProof";
 
 // Ana sayfa: layout default'unun template'ine düşmemesi için title.absolute kullan.
@@ -89,7 +86,7 @@ export default async function Home() {
 
   const segmentler = [
     {
-      icon: Briefcase,
+      icon: MarkalarIcon,
       etiket: "Markalar",
       slogan: `Markanızın izi ${stats.sehirSayisi}+ şehirde, doğru sokakta.`,
       desc: "Stratejik medya planlaması, raporlanabilir kampanya yönetimi. Sektörel deneyimle desteklenen lokasyon önerileriyle markanızın görünürlüğünü Anadolu'nun her köşesine taşıyoruz.",
@@ -97,7 +94,7 @@ export default async function Home() {
       href: "/markalar",
     },
     {
-      icon: Users,
+      icon: AjanslarIcon,
       etiket: "Reklam Ajansları",
       slogan: "Brief'iniz 30 dakikada teklife dönsün.",
       desc: "Hızlı geri dönüş, esnek satın alma, detaylı lokasyon listeleri. Ajansınızın açıkhava operasyonlarındaki güvenilir iş ortağıyız.",
@@ -105,7 +102,7 @@ export default async function Home() {
       href: "/ajanslar",
     },
     {
-      icon: Sparkles,
+      icon: IlkKampanyamIcon,
       etiket: "İlk Açıkhava Kampanyam",
       slogan: "İlk afişinizi birlikte sokağa çıkaralım.",
       desc: "Brief'iniz olmasa da olur. Hedefinizi anlatın, ihtiyacınızı birlikte netleştirelim, sıfırdan planlayalım. Şeffaf fiyat, gerçek lokasyon, sürpriz fatura yok.",
@@ -271,7 +268,7 @@ export default async function Home() {
                         className="text-[var(--color-primary)]"
                       />
                     </div>
-                    <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                    <div className="text-xs uppercase tracking-widest font-semibold text-[var(--color-primary-deep)] mb-3">
                       {segment.etiket}
                     </div>
                     <h3 className="text-xl md:text-2xl font-bold leading-tight mb-4 text-[var(--color-text-primary)]">
