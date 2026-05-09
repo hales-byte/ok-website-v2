@@ -126,6 +126,33 @@ kalitesi tutarlı olmalı. Hakan'ın "yapay zeka teklif önerisini düzelt"
 manuel müdahale oranı %20'nin altına düşmeli ki tam otomasyon mantıklı
 olsun.
 
+### 4.4 "Hakan K." Ana Sayfa AI Ajan Bölümü
+
+Eski "30 dakikada nasıl — akıllı süreç" bölümü 9 Mayıs 2026'da
+kaldırıldı (bkz. `app/page.tsx` ALT CTA üstündeki kaldırma notu).
+Yerine ana sayfada **"Hakan K." adında AI ajan** ile mesajlaşma deneyimi
+gelecek — kullanıcı doğrudan ana sayfada konuşmaya başlayıp brief'ini
+sohbet üzerinden verebilecek, AI ajan format/şehir/bütçe sorularını
+yöneterek form akışına hazırlık yapacak ya da WhatsApp'a aktaracak.
+
+**Bağımlılıklar:**
+- Faz 4.1 (AI ilk yanıt) altyapısı stabilize olmalı — aynı LLM API
+  uçtan-uca konuşma desteklemeli.
+- Faz 4.2 (WhatsApp Business) bağı tercihen mevcut — sohbet ana
+  sayfada başlasın, kullanıcı isterse WhatsApp'a "kesintisiz" geçsin.
+- Konuşma geçmişi Supabase'de saklanmalı (KVKK aydınlatma metnine
+  yeni bölüm eklenmeli — 3rd party LLM sağlayıcı ekleme ile birlikte).
+
+**Persona dağılımı (UI):**
+- Burak için en kritik bölüm — jargonsuz konuşma, sıcak ton, brief'i
+  olmadan başlama.
+- Pelin/Mert için opsiyonel — onlar zaten form/teklif al akışına hızlı
+  girmeyi tercih ediyor.
+
+**Risk:** AI ajan halüsine ederse marka güveni patlar. İlk versiyonda
+çok dar scope (sadece "format ve şehir önerisi", fiyat söz vermeyecek)
++ "kesin fiyat için satış ekibimiz dönecek" disclaimer.
+
 ---
 
 ## Faz 5 — Operasyon & İçgörü
