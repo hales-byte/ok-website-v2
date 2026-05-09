@@ -22,6 +22,7 @@ import { isCurrentStepValid, isFormSubmittable } from "../validation";
 import { TOTAL_STEPS } from "../types";
 import { submitTeklif } from "../submit-action";
 import { titleCaseTr } from "@/lib/sehir-koordinatlari";
+import { getFormatByKey } from "@/lib/formats";
 import { WizardLayout } from "./WizardLayout";
 import { ResumeBanner } from "./ResumeBanner";
 import { Step1Segment } from "./Step1Segment";
@@ -67,10 +68,17 @@ export function TeklifWizard() {
     const sehirFromUrl = searchParams?.get("sehir");
     const sehirPrefill = sehirFromUrl ? [titleCaseTr(sehirFromUrl)] : null;
 
+    // FormatShowcase "Bu formatla teklif al" CTA'sı: ?format=billboard gibi
+    // parametre form'u o formatla başlatır. Bilinmeyen key'ler atılır.
+    const formatFromUrl = searchParams?.get("format");
+    const formatPrefill =
+      formatFromUrl && getFormatByKey(formatFromUrl) ? [formatFromUrl] : null;
+
     if (saved && progress && progress.completedSteps > 0) {
       // localStorage'da kayıt var
-      // URL'de sehir varsa stored şehirleri override et (taze CTA niyeti)
+      // URL'de sehir/format varsa stored seçimleri override et (taze CTA niyeti)
       const mergedSehirler = sehirPrefill ?? saved.sehirler;
+      const mergedFormatlar = formatPrefill ?? saved.formatlar;
       if (validStepFromUrl && stepFromUrl > 1) {
         // URL'de spesifik step → direkt ona git (deep link)
         dispatch({
@@ -78,6 +86,7 @@ export function TeklifWizard() {
           state: {
             ...saved,
             sehirler: mergedSehirler,
+            formatlar: mergedFormatlar,
             currentStep: stepFromUrl,
           },
         });
@@ -85,10 +94,15 @@ export function TeklifWizard() {
         // URL'de step yok → state'i yükle ama Adım 1'den başla, banner göster
         dispatch({
           type: "LOAD_FROM_STORAGE",
-          state: { ...saved, sehirler: mergedSehirler, currentStep: 1 },
+          state: {
+            ...saved,
+            sehirler: mergedSehirler,
+            formatlar: mergedFormatlar,
+            currentStep: 1,
+          },
         });
-        // sehir override varsa banner gösterme (kullanıcı yeni akışta)
-        if (!sehirPrefill) {
+        // sehir/format override varsa banner gösterme (kullanıcı yeni akışta)
+        if (!sehirPrefill && !formatPrefill) {
           // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot hydration: localStorage + URL'i okuyup başlangıç state'ine sokuyoruz, sürekli senkronizasyon yok
           setResumeData(progress);
           setShowBanner(true);
@@ -98,9 +112,14 @@ export function TeklifWizard() {
       // localStorage boş ama URL'de step var → URL geçersiz, Adım 1'e zorla
       isInternalUpdate.current = true;
       router.replace(pathname, { scroll: false });
-    } else if (sehirPrefill) {
-      // localStorage boş ama URL'de sehir var → fresh start, şehri prefill et
-      dispatch({ type: "SET_SEHIRLER", sehirler: sehirPrefill });
+    } else {
+      // localStorage boş; URL'den prefill varsa state'e bas
+      if (sehirPrefill) {
+        dispatch({ type: "SET_SEHIRLER", sehirler: sehirPrefill });
+      }
+      if (formatPrefill) {
+        dispatch({ type: "SET_FORMATLAR", formatlar: formatPrefill });
+      }
     }
 
     setHydrated(true);

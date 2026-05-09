@@ -60,7 +60,7 @@ export const FORMATLAR: FormatMeta[] = [
     key: "billboard",
     name: "Billboard",
     shortDesc: "Yüksek görünürlük, geniş etki alanı",
-    tagline: "Yüksek görünürlük, geniş etki alanı",
+    tagline: "Otoyolda ve şehir girişinde herkesin gördüğü reklam",
     description:
       "Ana arterler, otoyol kavşakları ve şehir girişlerinde konumlandırılan sabit, yüksek görünürlüklü reklam yüzü. Hızlı geçen trafikte bile mesajınızı net bir şekilde iletir.",
     benefits: [
@@ -107,7 +107,7 @@ export const FORMATLAR: FormatMeta[] = [
     key: "megalight",
     name: "Megalight",
     shortDesc: "Aydınlatmalı, premium konumlar",
-    tagline: "Premium konumlarda büyük format aydınlatmalı panel",
+    tagline: "Ana cadde ve kavşakların büyük formatlı, gece de aktif paneli",
     description:
       "Genellikle 8×4m veya 6×3m boyutlarında, ana cadde ve kavşaklarda yer alan aydınlatmalı reklam paneli. Megalight'lar prestij ve görünürlüğü birleştirir.",
     benefits: [
@@ -153,7 +153,7 @@ export const FORMATLAR: FormatMeta[] = [
     key: "giantboard",
     name: "Giantboard",
     shortDesc: "Anıtsal boyut, yüksek etki",
-    tagline: "Anıtsal boyut, maksimum etki",
+    tagline: "Bina cephesinde, kilometrelerce uzaktan görünür",
     description:
       "Standart billboard'lardan çok daha büyük, anıtsal ölçekte reklam yüzü. Bina cepheleri veya stratejik açık alanlarda yer alır. Uzak mesafelerden bile görünür.",
     benefits: [
@@ -199,7 +199,7 @@ export const FORMATLAR: FormatMeta[] = [
     key: "totem",
     name: "Totem",
     shortDesc: "Merkezi konumlarda dikey, yüksek görünürlük",
-    tagline: "Dikey kule formatında konumsal etki",
+    tagline: "AVM ve sanayi bölgelerinin uzaktan görünen dikey reklam kulesi",
     description:
       "Dikey kule formatında reklam yapısı. Genellikle organize sanayi bölgeleri, alışveriş merkezleri ve şehir giriş noktalarında konumlandırılır. Uzaktan görünür anıtsal yapısıyla bölgesel marka anlatımı için ideal.",
     benefits: [

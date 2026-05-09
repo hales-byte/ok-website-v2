@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
-import { FORMATLAR } from "@/lib/formats";
+import { FORMATLAR, formatPriceBand } from "@/lib/formats";
 
 /**
  * Apple-tarzı sticky scroll showcase.
@@ -76,9 +76,9 @@ export function FormatShowcase() {
                 Reklam Üniteleri
               </div>
               <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
-                Her ihtiyaca özel{" "}
-                <span className="text-gradient">{FORMATLAR.length} Farklı</span>{" "}
-                Ünite
+                Marka bilinirliğinden lokal trafiğe —{" "}
+                <span className="text-gradient">{FORMATLAR.length} format</span>,
+                tek envanter
               </h2>
               {/* Progress dots */}
               <div className="flex justify-center gap-1.5">
@@ -168,6 +168,28 @@ export function FormatShowcase() {
                   {active.description}
                 </p>
 
+                {/* İndikatif fiyat bandı + tipik kullanım — Pelin/Mert/Burak
+                 * için #1 ihtiyaç (mertebe + uygunluk). Veri lib/formats.ts. */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <span className="inline-flex items-baseline gap-2 px-3 py-1.5 rounded-lg bg-[var(--color-primary-deep)]/10 text-[var(--color-primary-deep)]">
+                    <span className="text-[10px] uppercase tracking-widest font-semibold">
+                      İndikatif
+                    </span>
+                    <span className="text-sm font-semibold">
+                      {formatPriceBand(active.priceBand)}
+                    </span>
+                    <span className="text-xs opacity-80">
+                      · {active.priceBand.unit}
+                    </span>
+                  </span>
+                  <span className="text-xs text-[var(--color-text-muted)]">
+                    Tipik kullanım:{" "}
+                    <span className="text-[var(--color-text-secondary)]">
+                      {active.useCases}
+                    </span>
+                  </span>
+                </div>
+
                 <ul className="space-y-2 pt-1">
                   {active.benefits.slice(0, 3).map((benefit) => (
                     <li key={benefit} className="flex items-start gap-3">
@@ -184,12 +206,19 @@ export function FormatShowcase() {
                   ))}
                 </ul>
 
-                <div className="pt-3">
+                <div className="pt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  <Link
+                    href={`/teklif-al?format=${active.key}`}
+                    className="btn-primary text-sm py-2.5 px-5"
+                  >
+                    Bu formatla teklif al
+                    <ArrowRight size={16} />
+                  </Link>
                   <Link
                     href={`/hizmetler#${active.key}`}
                     className="text-sm text-[var(--color-primary-deep)] hover:text-[var(--color-primary-darker)] font-medium inline-flex items-center gap-2 group"
                   >
-                    Detaylı incele
+                    Lokasyon ve fiyatları gör
                     <ArrowRight
                       size={14}
                       className="group-hover:translate-x-1 transition-transform"
@@ -210,9 +239,9 @@ export function FormatShowcase() {
               Reklam Üniteleri
             </div>
             <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-              Her ihtiyaca özel{" "}
-              <span className="text-gradient">{FORMATLAR.length} Farklı</span>{" "}
-              Ünite
+              Marka bilinirliğinden lokal trafiğe —{" "}
+              <span className="text-gradient">{FORMATLAR.length} format</span>,
+              tek envanter
             </h2>
           </div>
 

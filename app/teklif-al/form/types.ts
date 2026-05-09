@@ -79,6 +79,7 @@ export type FormAction =
   | { type: "CLEAR_SEHIRLER" }
   // Adım 3
   | { type: "TOGGLE_FORMAT"; format: string }
+  | { type: "SET_FORMATLAR"; formatlar: string[] }
   | { type: "TOGGLE_ONERI" }
   | { type: "CLEAR_FORMATLAR" }
   // Adım 4

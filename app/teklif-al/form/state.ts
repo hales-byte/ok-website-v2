@@ -104,6 +104,15 @@ export function formReducer(
       };
     }
 
+    case "SET_FORMATLAR":
+      // Deep-link prefill için (örn. /teklif-al?format=billboard) — listeyi
+      // doğrudan ayarlar, varsa "öneri istiyorum"u iptal eder.
+      return {
+        ...state,
+        formatlar: action.formatlar,
+        oneriIstiyor: action.formatlar.length > 0 ? false : state.oneriIstiyor,
+      };
+
     case "TOGGLE_ONERI":
       return {
         ...state,
