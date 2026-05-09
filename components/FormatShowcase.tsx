@@ -159,7 +159,7 @@ export function FormatShowcase() {
                   <h3 className="text-4xl xl:text-5xl font-bold leading-tight tracking-tight">
                     {active.name}
                   </h3>
-                  <p className="text-lg text-[var(--color-primary)]">
+                  <p className="text-lg text-[var(--color-primary-deep)] font-medium">
                     {active.tagline}
                   </p>
                 </div>
@@ -187,7 +187,7 @@ export function FormatShowcase() {
                 <div className="pt-3">
                   <Link
                     href={`/hizmetler#${active.key}`}
-                    className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group"
+                    className="text-sm text-[var(--color-primary-deep)] hover:text-[var(--color-primary-darker)] font-medium inline-flex items-center gap-2 group"
                   >
                     Detaylı incele
                     <ArrowRight
@@ -244,7 +244,7 @@ export function FormatShowcase() {
                     </div>
                   </div>
                   <h3 className="text-2xl font-bold">{format.name}</h3>
-                  <p className="text-sm text-[var(--color-primary)]">
+                  <p className="text-sm text-[var(--color-primary-deep)] font-medium">
                     {format.tagline}
                   </p>
                   <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
