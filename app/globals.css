@@ -176,6 +176,30 @@
   animation: fadeIn 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* CTA "belirme" animasyonu — FormatShowcase'de aktif format değişince
+ * primary CTA + 30 dakika mikro-yazısı sırayla beliriyor. Panel textReveal
+ * 500ms sürerken CTA 250ms gecikmeli, mikro-yazı 400ms gecikmeli açılır. */
+@keyframes ctaReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-ctaReveal {
+  opacity: 0;
+  animation: ctaReveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards;
+}
+
+.animate-ctaRevealLate {
+  opacity: 0;
+  animation: ctaReveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards;
+}
+
 /* Reduced motion desteği — vestibüler hassasiyet için animation/transition off.
  * FormatShowcase animate-textReveal, smooth scroll, decoration transition'lar
  * dahil hepsi reduce moda saygı gösterir. WCAG 2.3.3 + 2.2.2 uyumu. */
@@ -186,8 +210,11 @@
   .animate-slideInRight,
   .animate-slideInLeft,
   .animate-fadeIn,
-  .animate-textReveal {
+  .animate-textReveal,
+  .animate-ctaReveal,
+  .animate-ctaRevealLate {
     animation: none !important;
+    opacity: 1 !important;
   }
   /* Ana sayfa FormatShowcase + ScrollReveal genel transition'ları kapat —
    * keskin opacity/transform jest'leri vestibüler tetikleyici olabilir. */

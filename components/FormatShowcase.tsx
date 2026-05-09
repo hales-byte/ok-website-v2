@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
-import { FORMATLAR, formatPriceBand } from "@/lib/formats";
+import { ArrowRight, Check, Clock } from "lucide-react";
+import { FORMATLAR } from "@/lib/formats";
 
 /**
  * Apple-tarzı sticky scroll showcase.
@@ -168,27 +168,14 @@ export function FormatShowcase() {
                   {active.description}
                 </p>
 
-                {/* İndikatif fiyat bandı + tipik kullanım — Pelin/Mert/Burak
-                 * için #1 ihtiyaç (mertebe + uygunluk). Veri lib/formats.ts. */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <span className="inline-flex items-baseline gap-2 px-3 py-1.5 rounded-lg bg-[var(--color-primary-deep)]/10 text-[var(--color-primary-deep)]">
-                    <span className="text-[10px] uppercase tracking-widest font-semibold">
-                      İndikatif
-                    </span>
-                    <span className="text-sm font-semibold">
-                      {formatPriceBand(active.priceBand)}
-                    </span>
-                    <span className="text-xs opacity-80">
-                      · {active.priceBand.unit}
-                    </span>
+                {/* Tipik kullanım — kim için uygun, format-segment eşleşmesi.
+                 * Veri lib/formats.ts useCases. */}
+                <p className="text-xs text-[var(--color-text-muted)]">
+                  Tipik kullanım:{" "}
+                  <span className="text-[var(--color-text-secondary)]">
+                    {active.useCases}
                   </span>
-                  <span className="text-xs text-[var(--color-text-muted)]">
-                    Tipik kullanım:{" "}
-                    <span className="text-[var(--color-text-secondary)]">
-                      {active.useCases}
-                    </span>
-                  </span>
-                </div>
+                </p>
 
                 <ul className="space-y-2 pt-1">
                   {active.benefits.slice(0, 3).map((benefit) => (
@@ -206,25 +193,33 @@ export function FormatShowcase() {
                   ))}
                 </ul>
 
-                <div className="pt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+                {/* CTA + 30 dakika sözü — fiyat bandı kaldırıldı, yerine
+                 * format-spesifik teklif yolu + hız sözü. Fade+Lift belirme
+                 * animasyonu, panel textReveal'in üzerine 250ms/400ms gecikmeli.
+                 * Reduced-motion globals.css'te override ediliyor. */}
+                <div className="pt-3 flex flex-wrap items-center gap-x-5 gap-y-2 animate-ctaReveal">
                   <Link
                     href={`/teklif-al?format=${active.key}`}
                     className="btn-primary text-sm py-2.5 px-5"
                   >
-                    Bu formatla teklif al
+                    {active.name} fiyatı sor
                     <ArrowRight size={16} />
                   </Link>
                   <Link
                     href={`/hizmetler#${active.key}`}
                     className="text-sm text-[var(--color-primary-deep)] hover:text-[var(--color-primary-darker)] font-medium inline-flex items-center gap-2 group"
                   >
-                    Lokasyon ve fiyatları gör
+                    Detayları gör
                     <ArrowRight
                       size={14}
                       className="group-hover:translate-x-1 transition-transform"
                     />
                   </Link>
                 </div>
+                <p className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] animate-ctaRevealLate">
+                  <Clock size={11} aria-hidden="true" />
+                  30 dakika içinde yanıt
+                </p>
               </div>
             </div>
           </div>
@@ -278,6 +273,35 @@ export function FormatShowcase() {
                   </p>
                   <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
                     {format.description}
+                  </p>
+                  <p className="text-xs text-[var(--color-text-muted)]">
+                    Tipik kullanım:{" "}
+                    <span className="text-[var(--color-text-secondary)]">
+                      {format.useCases}
+                    </span>
+                  </p>
+                  <div className="pt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <Link
+                      href={`/teklif-al?format=${format.key}`}
+                      className="btn-primary text-sm py-2.5 px-5"
+                    >
+                      {format.name} fiyatı sor
+                      <ArrowRight size={16} />
+                    </Link>
+                    <Link
+                      href={`/hizmetler#${format.key}`}
+                      className="text-sm text-[var(--color-primary-deep)] hover:text-[var(--color-primary-darker)] font-medium inline-flex items-center gap-2 group"
+                    >
+                      Detayları gör
+                      <ArrowRight
+                        size={14}
+                        className="group-hover:translate-x-1 transition-transform"
+                      />
+                    </Link>
+                  </div>
+                  <p className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
+                    <Clock size={11} aria-hidden="true" />
+                    30 dakika içinde yanıt
                   </p>
                 </div>
               </div>
