@@ -203,7 +203,7 @@ export default async function IletisimPage() {
 
             <div className="flex justify-center gap-4 pt-2">
               <a
-                href="https://www.linkedin.com/company/objektif-kriter"
+                href="https://www.linkedin.com/company/objekti%CC%87fkri%CC%87ter"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -212,7 +212,7 @@ export default async function IletisimPage() {
                 <LinkedinIcon size={22} />
               </a>
               <a
-                href="https://www.instagram.com/objektifkriter"
+                href="https://www.instagram.com/objektifkriter/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"

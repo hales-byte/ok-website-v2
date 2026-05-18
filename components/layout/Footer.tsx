@@ -97,7 +97,7 @@ export function Footer() {
                 <WhatsAppIcon size={20} />
               </a>
               <a
-                href="https://www.linkedin.com/company/objektif-kriter"
+                href="https://www.linkedin.com/company/objekti%CC%87fkri%CC%87ter"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
@@ -106,7 +106,7 @@ export function Footer() {
                 <LinkedinIcon size={20} />
               </a>
               <a
-                href="https://www.instagram.com/objektifkriter"
+                href="https://www.instagram.com/objektifkriter/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"

@@ -89,8 +89,8 @@ export default function RootLayout({
                 addressCountry: "TR",
               },
               sameAs: [
-                "https://www.linkedin.com/company/objektif-kriter",
-                "https://www.instagram.com/objektifkriter",
+                "https://www.linkedin.com/company/objekti%CC%87fkri%CC%87ter",
+                "https://www.instagram.com/objektifkriter/",
               ],
             }),
           }}
