@@ -4,6 +4,27 @@ import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 
+// Türkçe-bilinçli display capitalize: "PAZAR" → "Pazar", "clp" → "CLP" gibi
+// karışık case'leri kullanıcıya gösterilebilir hale getirir.
+//
+// Strateji: 4 harften kısa girişler tamamen büyük (CLP, LED) — kısaltma
+// olma olasılığı yüksek. Daha uzunlar Title Case (Türkçe locale ile,
+// "İstanbul" / "Çarşamba" doğru çıkar). "HERGÜN" gibi tek kelimeler de
+// 4'ten uzun → Title Case → "Hergün".
+function displayCase(str: string | null): string {
+  if (!str) return "—";
+  const trimmed = str.trim();
+  if (!trimmed) return "—";
+  if (trimmed.length <= 4) return trimmed.toLocaleUpperCase("tr");
+  return trimmed
+    .toLocaleLowerCase("tr")
+    .split(/(\s+|-)/)
+    .map((part) =>
+      part.match(/^\s+|-$/) ? part : part.charAt(0).toLocaleUpperCase("tr") + part.slice(1)
+    )
+    .join("");
+}
+
 // Türkçe karakterleri slug formatına çevir
 function slugify(str: string): string {
   return str
@@ -47,10 +68,18 @@ async function findSehirBySlug(slug: string): Promise<string | null> {
 // Bir şehirdeki envanter detayı
 async function getSehirDetay(sehirAdi: string) {
   const supabase = getSupabase();
+  // Açık kolon listesi: birim_fiyat, lat/lng, notlar gibi hassas/internal
+  // kolonlar bilinçli olarak çekilmiyor (network response'una sızmasın).
+  // Ünite tablosu için: unite (format adı), toplam_face (yüz sayısı),
+  // network_adeti (lokasyon ağı sayısı), asim_gunu (min kampanya süresi),
+  // format_kategori (üst kategori) — bunlar persona-3 (switching marka)
+  // için RFP doğrulamasına yetecek granülerlik.
   const { data } = await supabase
     .schema("website")
     .from("envanter")
-    .select("*")
+    .select(
+      "sehir, unite, toplam_face, network_adeti, asim_gunu, format_kategori"
+    )
     .eq("sehir", sehirAdi)
     .eq("aktif", true);
 
@@ -62,12 +91,32 @@ async function getSehirDetay(sehirAdi: string) {
   );
   const lokasyonSayisi = data.length;
 
-  // Format dağılımı (unite alanına göre)
+  // Format dağılımı (unite alanına göre, sayım için)
   const formatlar: Record<string, number> = {};
   for (const item of data) {
     const unite = item.unite || "Diğer";
     formatlar[unite] = (formatlar[unite] || 0) + (item.toplam_face || 0);
   }
+
+  // Ünite detay listesi: format adı, yüz sayısı, network adeti, min süre,
+  // kategori. Tabloda yüz sayısına göre azalan sıralı render.
+  type UniteDetay = {
+    unite: string;
+    toplamYuz: number;
+    networkAdeti: number | null;
+    asimGunu: string | null;
+    kategori: string | null;
+  };
+  const uniteler: UniteDetay[] = data
+    .map((d) => ({
+      unite: d.unite || "Diğer",
+      toplamYuz: d.toplam_face || 0,
+      networkAdeti:
+        typeof d.network_adeti === "number" ? d.network_adeti : null,
+      asimGunu: d.asim_gunu ?? null,
+      kategori: d.format_kategori ?? null,
+    }))
+    .sort((a, b) => b.toplamYuz - a.toplamYuz);
 
   return {
     sehir: sehirAdi,
@@ -75,6 +124,7 @@ async function getSehirDetay(sehirAdi: string) {
     lokasyonSayisi,
     formatlar,
     formatSayisi: Object.keys(formatlar).length,
+    uniteler,
   };
 }
 
@@ -207,6 +257,79 @@ export default async function SehirPage({
                 </div>
               ))}
           </div>
+        </div>
+      </section>
+
+      {/* ÜNİTE DETAY TABLOSU — Persona 3 (switching marka) için RFP cephanesi */}
+      <section className="py-20 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/30">
+        <div className="container-narrow">
+          <div className="max-w-2xl mb-10">
+            <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+              Şeffaf envanter
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+              {sehir} ünite detayları
+            </h2>
+            <p className="mt-4 text-base md:text-lg text-[var(--color-text-secondary)]">
+              {detay.uniteler.length} format kategorisi, asım günü ve
+              lokasyon ağı bilgisiyle birlikte.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg)]">
+            <table className="w-full text-sm md:text-base">
+              <thead>
+                <tr className="border-b border-[var(--color-border-subtle)] bg-[var(--color-surface)]">
+                  <th className="text-left p-4 font-semibold text-[var(--color-text-muted)]">
+                    Format
+                  </th>
+                  <th className="text-right p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap">
+                    Reklam Yüzü
+                  </th>
+                  <th className="text-right p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap hidden md:table-cell">
+                    Network Ağı
+                  </th>
+                  <th className="text-left p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap hidden md:table-cell">
+                    Asım Günü
+                  </th>
+                  <th className="text-left p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap hidden lg:table-cell">
+                    Kategori
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {detay.uniteler.map((u, i) => (
+                  <tr
+                    key={u.unite}
+                    className={`border-b border-[var(--color-border-subtle)] ${
+                      i % 2 === 0 ? "bg-transparent" : "bg-[var(--color-surface)]/30"
+                    } last:border-b-0`}
+                  >
+                    <td className="p-4 font-medium align-top">{u.unite}</td>
+                    <td className="p-4 text-right font-semibold text-[var(--color-primary)] align-top whitespace-nowrap">
+                      {u.toplamYuz.toLocaleString("tr-TR")}
+                    </td>
+                    <td className="p-4 text-right text-[var(--color-text-secondary)] align-top hidden md:table-cell">
+                      {u.networkAdeti != null
+                        ? u.networkAdeti.toLocaleString("tr-TR")
+                        : "—"}
+                    </td>
+                    <td className="p-4 text-[var(--color-text-secondary)] align-top hidden md:table-cell whitespace-nowrap">
+                      {displayCase(u.asimGunu)}
+                    </td>
+                    <td className="p-4 text-[var(--color-text-secondary)] align-top hidden lg:table-cell">
+                      {displayCase(u.kategori)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-[var(--color-text-muted)] mt-3">
+            Ünite-bazlı (sokak/lokasyon) liste teklif aşamasında
+            paylaşılır. Bu tablo format kategorisi düzeyinde kapsama
+            doğrulamanız için açık.
+          </p>
         </div>
       </section>
 

@@ -7,7 +7,20 @@
 export type Segment = "marka" | "ajans" | "ilk";
 
 // Bütçe seçenekleri
+//
+// İlk-kez küçük işletme bantları (`ilk_*`) — kafe, butik, klinik gibi
+// 5K-100K arası kampanyalar. /ilk-kampanyaniz landing'iyle uyumlu.
+//
+// Marka bantları (`100k_*` → `1m_uzeri`) — D2C ve kurumsal markalar.
+// Mevcut. 100K altı en küçük kademe; "100K altı"nı görmek bir küçük
+// işletmede küçültücü olduğu için segment === "ilk" iken
+// `ilk_*` bantları gösterilir (Step4ButceZaman.tsx).
 export type ButceSecimi =
+  // Küçük işletme (ilk-kez) bantları
+  | "ilk_5_15k"
+  | "ilk_15_40k"
+  | "ilk_40_100k"
+  // Marka / ajans bantları (orta-büyük)
   | "100k_alti"
   | "100_250k"
   | "250_500k"
@@ -32,6 +45,24 @@ export type IletisimBilgileri = {
   sektor: string;
 };
 
+// Ajans-spesifik ek bilgiler (segment === "ajans" iken Step5'in başında
+// toplanır). DB'de ayrı kolonu yok — `mesaj` alanına embed edilerek
+// taşınır (submit-action.ts buildMesaj). Bu sayede tablo şeması
+// değişmeden ajans triage bilgisi ekibe ulaşır.
+export type KreatifDurum = "hazir" | "yardim" | null;
+export type DogrudanIletisimTercihi = "evet" | "hayir" | null;
+
+export type AjansBilgisi = {
+  // Hangi marka için teklif istiyor — opsiyonel, satış triage için faydalı
+  musteriMarka: string;
+  // Tasarımı kendi yaptılar mı, yoksa OK'ten yardım mı bekliyorlar
+  kreatifDurum: KreatifDurum;
+  // Marka müşterisi ile direkt iletişim kurulmasını istiyorlar mı
+  // (kanal hırsızlığı kaygısının ters tarafı: bazıları hızlı çözüm için
+  // direkt iletişim ister)
+  dogrudanIletisim: DogrudanIletisimTercihi;
+};
+
 // Tüm form state'i
 export type FormState = {
   // Navigasyon
@@ -53,6 +84,9 @@ export type FormState = {
 
   // Adım 5: İletişim
   iletisim: IletisimBilgileri;
+
+  // Adım 5 (ek): Ajans bilgileri — segment === "ajans" iken doldurulur
+  ajansBilgisi: AjansBilgisi;
 
   // Adım 6: Mesaj + KVKK + Pazarlama
   mesaj: string;
@@ -87,6 +121,10 @@ export type FormAction =
   | { type: "SET_ZAMAN"; zaman: ZamanSecimi }
   // Adım 5
   | { type: "UPDATE_ILETISIM"; field: keyof IletisimBilgileri; value: string }
+  // Adım 5 (ajans-spesifik)
+  | { type: "SET_AJANS_MUSTERI_MARKA"; value: string }
+  | { type: "SET_AJANS_KREATIF"; value: KreatifDurum }
+  | { type: "SET_AJANS_DOGRUDAN_ILETISIM"; value: DogrudanIletisimTercihi }
   // Adım 6
   | { type: "SET_MESAJ"; mesaj: string }
   | { type: "SET_KVKK"; value: boolean }
@@ -124,12 +162,48 @@ export type TalepPayload = {
 
 // Bütçe seçeneklerinin etiketleri (UI'da gösterilecek)
 export const BUTCE_LABELS: Record<ButceSecimi, string> = {
+  // İlk-kez küçük işletme bantları
+  ilk_5_15k: "5.000 — 15.000 TL",
+  ilk_15_40k: "15.000 — 40.000 TL",
+  ilk_40_100k: "40.000 — 100.000 TL",
+  // Marka / ajans bantları
   "100k_alti": "100.000 TL altı",
   "100_250k": "100.000 — 250.000 TL",
   "250_500k": "250.000 — 500.000 TL",
   "500k_1m": "500.000 TL — 1.000.000 TL",
   "1m_uzeri": "1.000.000 TL üzeri",
   belirsiz: "Henüz net değil",
+};
+
+// Bütçe seçeneklerinin segment-bazlı kümeleri.
+// Step4ButceZaman.tsx, state.segment'e göre bu listeyi seçer; segment yoksa
+// veya tanımsız bir değer gelirse `default` listesi gösterilir.
+//
+// Kararlar:
+//   - "ilk" segmentinde 100K+ bantları gizleniyor — küçük işletme için
+//     "100K altı" en küçük seçenek ezici / küçültücü; 5-15K-40K-100K
+//     bantları daha kalibre.
+//   - "ajans" ve "marka" segmentlerinde aynı liste; ajansların
+//     müşterileri için 100K-altı küçük testler de olabiliyor.
+//   - "belirsiz" her listede var (hâlâ keşif aşamasındakileri kaybetme).
+export const BUTCE_BANTLARI_SEGMENT: Record<Segment, ButceSecimi[]> = {
+  ilk: ["ilk_5_15k", "ilk_15_40k", "ilk_40_100k", "belirsiz"],
+  marka: [
+    "100k_alti",
+    "100_250k",
+    "250_500k",
+    "500k_1m",
+    "1m_uzeri",
+    "belirsiz",
+  ],
+  ajans: [
+    "100k_alti",
+    "100_250k",
+    "250_500k",
+    "500k_1m",
+    "1m_uzeri",
+    "belirsiz",
+  ],
 };
 
 // Zaman seçeneklerinin etiketleri

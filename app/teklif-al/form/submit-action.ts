@@ -3,18 +3,91 @@
 import { headers } from "next/headers";
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
+import { z } from "zod";
 import type { FormState, TalepPayload } from "./types";
 import {
   BUTCE_LABELS,
   ZAMAN_LABELS,
 } from "./types";
 import { buildNotificationEmail } from "./email-template";
+import { AYDINLATMA_VERSIYONU } from "@/lib/kvkk";
 
 /**
- * Aydınlatma metni versiyonu — KVKK kaydı için.
- * Aydınlatma metni güncellendiğinde bu değer de güncellenmeli.
+ * Hata loglarında PII echo'sunu engellemek için Supabase/Resend hata
+ * objesinden sadece kod + mesaj çekilir. Saldırgan recon değeri en aza
+ * indirilir, KVKK m.12 veri güvenliği prensibine uyum sağlanır.
  */
-const AYDINLATMA_VERSIYONU = "v1-2026-05";
+function safeErrorInfo(err: unknown): string {
+  if (err && typeof err === "object") {
+    const e = err as { code?: string; message?: string; status?: number };
+    const parts: string[] = [];
+    if (e.code) parts.push(`code=${e.code}`);
+    if (typeof e.status === "number") parts.push(`status=${e.status}`);
+    if (e.message) parts.push(`message=${e.message.slice(0, 200)}`);
+    return parts.length > 0 ? parts.join(" ") : "unknown error";
+  }
+  return String(err).slice(0, 200);
+}
+
+/**
+ * Defense-in-depth: server-side payload schema. Gerçek browser kullanıcısı
+ * bu sınırlardan rahat geçer; saldırgan/bot devasa string veya kötü tip
+ * gönderirse erken kapı kapanır. Sınırlar UI maxLength ile uyumlu — UI
+ * client-side aynı disiplini uygular ama bypass edilebilir.
+ */
+const TalepSchema = z.object({
+  segment: z.enum(["marka", "ajans", "ilk"]).nullable(),
+  sehirler: z.array(z.string().min(1).max(80)).max(50),
+  formatlar: z.array(z.string().min(1).max(40)).max(20),
+  oneriIstiyor: z.boolean(),
+  butce: z
+    .enum([
+      // İlk-kez küçük işletme bantları (segment === "ilk")
+      "ilk_5_15k",
+      "ilk_15_40k",
+      "ilk_40_100k",
+      // Marka / ajans bantları
+      "100k_alti",
+      "100_250k",
+      "250_500k",
+      "500k_1m",
+      "1m_uzeri",
+      "belirsiz",
+    ])
+    .nullable(),
+  zaman: z.enum(["acil", "bu_ay", "1_3_ay", "3_6_ay", "belirsiz"]).nullable(),
+  iletisim: z.object({
+    adsoyad: z.string().trim().min(2).max(120),
+    email: z.string().trim().toLowerCase().email().max(254),
+    telefon: z.string().trim().max(25),
+    sirket: z.string().trim().max(160),
+    sektor: z.string().trim().max(80),
+  }),
+  // Ajans-spesifik mini-blok (Step5'te yalnızca segment === "ajans"
+  // iken görünür). DB'de ayrı sütunu yok — buildMesaj mesaj alanına
+  // embed eder. Schema burada üç alanı doğrular: marka adı text,
+  // kreatif & iletişim enum (null olabilir).
+  ajansBilgisi: z.object({
+    musteriMarka: z.string().trim().max(120),
+    kreatifDurum: z.enum(["hazir", "yardim"]).nullable(),
+    dogrudanIletisim: z.enum(["evet", "hayir"]).nullable(),
+  }),
+  mesaj: z.string().max(2000),
+  kvkk: z.literal(true),
+  pazarlama: z.boolean(),
+});
+
+/**
+ * Spam koruma metası — client'tan gelir ama doğrulanır:
+ * - honeypot: gizli input (görünmez); bot doldurursa reject
+ * - formStartTime: form mount unix timestamp; submit < 3sn sonraysa bot
+ */
+export type SubmitMeta = {
+  honeypot?: string;
+  formStartTime?: number;
+};
+
+const MIN_FORM_DURATION_MS = 3000;
 
 export type SubmitResult =
   | { success: true }
@@ -23,31 +96,41 @@ export type SubmitResult =
 /**
  * Form'u Supabase'e kaydeden Server Action.
  * Server-side çalışır, IP/user-agent bilgilerini güvenli şekilde alır.
+ *
+ * `meta` parametresi spam korumalarını içerir (honeypot + form-fill duration).
+ * Eski çağrı imzası (`submitTeklif(state)`) hâlâ çalışır — meta opsiyonel.
  */
 export async function submitTeklif(
-  state: FormState
+  state: FormState,
+  meta?: SubmitMeta
 ): Promise<SubmitResult> {
-  // ─── Server-side validation ───
-  if (!state.kvkk) {
-    return {
-      success: false,
-      error: "KVKK onayı zorunludur.",
-    };
+  // ─── Honeypot: gizli input boş gelmiyorsa bot ───
+  // Generic mesaj — saldırgan hangi kontrolün yakaladığını anlamasın.
+  if (meta?.honeypot && meta.honeypot.length > 0) {
+    return { success: false, error: "Talep işlenemedi. Lütfen tekrar deneyin." };
   }
 
-  if (!state.iletisim.email || !state.iletisim.adsoyad) {
-    return {
-      success: false,
-      error: "Ad soyad ve e-posta zorunludur.",
-    };
+  // ─── Min duration: form mount → submit < 3sn ise bot ───
+  if (meta?.formStartTime && typeof meta.formStartTime === "number") {
+    const elapsed = Date.now() - meta.formStartTime;
+    if (elapsed >= 0 && elapsed < MIN_FORM_DURATION_MS) {
+      return { success: false, error: "Talep işlenemedi. Lütfen tekrar deneyin." };
+    }
   }
 
-  // E-posta format kontrolü (server-side de)
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(state.iletisim.email.trim())) {
+  // ─── Schema validation: tip + uzunluk + KVKK literal kontrolü ───
+  const parsed = TalepSchema.safeParse(state);
+  if (!parsed.success) {
+    // Generic kullanıcı mesajı; detay sadece log'a (PII içerebilir, kısıt 200 char).
+    const issue = parsed.error.issues[0];
+    console.error(
+      "Form schema validation hatası:",
+      `path=${issue?.path.join(".")} code=${issue?.code}`
+    );
     return {
       success: false,
-      error: "Geçerli bir e-posta adresi girin.",
+      error:
+        "Form bilgilerinde geçersiz bir alan var. Lütfen kontrol edip tekrar deneyin.",
     };
   }
 
@@ -115,7 +198,7 @@ export async function submitTeklif(
     .insert(payload);
 
   if (error) {
-    console.error("Supabase insert hatası:", error);
+    console.error("Supabase insert hatası:", safeErrorInfo(error));
     return {
       success: false,
       error:
@@ -171,19 +254,55 @@ async function sendNotificationEmail(
     });
 
     if (result.error) {
-      console.error("Resend gönderim hatası:", result.error);
+      console.error("Resend gönderim hatası:", safeErrorInfo(result.error));
     }
   } catch (e) {
-    console.error("Mail bildirim hatası (catch):", e);
+    console.error("Mail bildirim hatası (catch):", safeErrorInfo(e));
   }
 }
 
 /**
  * Kullanıcının yazdığı mesaja meta bilgi (öneri istiyor mu vs.) ekler.
  * Form'da görünmeyen ama backend için faydalı bilgileri buraya yedirir.
+ *
+ * Ajans bilgisi (segment === "ajans" iken) DB'de ayrı kolon olmadığı için
+ * buraya embed edilir — satış ekibinin tek bakışta triage edebilmesi için
+ * mesajın başında etiketli bir blok olarak görünür.
  */
 function buildMesaj(state: FormState): string | null {
   const parts: string[] = [];
+
+  // Ajans bilgisi bloğu — yalnızca segment === "ajans" ve en az bir alan
+  // doldurulmuşsa eklenir. Boş bir ajansBilgisi mesaja gürültü katmasın.
+  if (state.segment === "ajans") {
+    const a = state.ajansBilgisi;
+    const hasAnyData =
+      a.musteriMarka.trim().length > 0 ||
+      a.kreatifDurum !== null ||
+      a.dogrudanIletisim !== null;
+
+    if (hasAnyData) {
+      const ajansLines: string[] = ["[Ajans Bilgisi]"];
+      if (a.musteriMarka.trim()) {
+        ajansLines.push(`- Müşteri marka: ${a.musteriMarka.trim()}`);
+      }
+      if (a.kreatifDurum) {
+        const kreatifLabel =
+          a.kreatifDurum === "hazir"
+            ? "Tasarım hazır"
+            : "Tasarım için yardım istiyor";
+        ajansLines.push(`- Kreatif: ${kreatifLabel}`);
+      }
+      if (a.dogrudanIletisim) {
+        const iletisimLabel =
+          a.dogrudanIletisim === "evet"
+            ? "Müşteriyle DİREKT iletişim isteniyor"
+            : "Sadece ajans üzerinden iletişim (varsayılan)";
+        ajansLines.push(`- Müşteri ile iletişim: ${iletisimLabel}`);
+      }
+      parts.push(ajansLines.join("\n"));
+    }
+  }
 
   if (state.oneriIstiyor) {
     parts.push("[Format konusunda öneri istiyor — bütçe ve hedefe göre planlanacak]");

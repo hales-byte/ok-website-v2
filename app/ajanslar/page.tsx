@@ -7,6 +7,8 @@ import {
   Lock,
   Map,
   Check,
+  ShieldCheck,
+  Download,
 } from "lucide-react";
 import type { Metadata } from "next";
 import { createClient } from "@supabase/supabase-js";
@@ -14,6 +16,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { CustomerProof } from "@/components/CustomerProof";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { BriefModal } from "./BriefModal";
 
 export const metadata: Metadata = {
   title: "Reklam Ajansları İçin OOH Tedarikçi",
@@ -109,10 +112,15 @@ export default async function AjanslarPage() {
                 gitmek için partneriniz, müşteriniz arkasında değil.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-4">
-                <Link href="/teklif-al" className="btn-primary">
-                  Brief Gönder
-                  <ArrowRight size={18} />
-                </Link>
+                <BriefModal triggerClassName="btn-primary" />
+                <a
+                  href="/ratecard.pdf"
+                  download="objektifkriter-ratecard-2026.pdf"
+                  className="btn-secondary"
+                >
+                  <Download size={18} />
+                  Ratecard&apos;ı İndir (PDF)
+                </a>
                 <a
                   href="https://wa.me/905529185864?text=Merhaba%2C%20Reklam%20ajans%C4%B1ndan%20yaz%C4%B1yorum.%20Ratecard%20payla%C5%9Fabilir%20misiniz%3F"
                   target="_blank"
@@ -120,9 +128,13 @@ export default async function AjanslarPage() {
                   className="btn-secondary"
                 >
                   <WhatsAppIcon size={18} />
-                  Ratecard iste
+                  WhatsApp ile iste
                 </a>
               </div>
+              <p className="text-xs text-[var(--color-text-muted)] pt-1">
+                İndikatif fiyat bantları içerir. Net teklif briefiniz
+                üzerinden 30 dakikada hazırlanır.
+              </p>
             </div>
           </ScrollReveal>
         </div>
@@ -178,6 +190,59 @@ export default async function AjanslarPage() {
               </div>
             </ScrollReveal>
           </div>
+        </div>
+      </section>
+
+      {/* AJANS GÜVENCESİ — Müşteriyle direkt iletişim kurmuyoruz */}
+      <section className="py-20 border-b border-[var(--color-border-subtle)]">
+        <div className="container-narrow">
+          <ScrollReveal direction="up">
+            <div className="rounded-3xl border-2 border-[var(--color-primary)]/15 bg-gradient-to-br from-[var(--color-primary)]/[0.04] to-transparent p-8 md:p-12">
+              <div className="flex flex-col md:flex-row gap-8 md:items-start">
+                <div className="shrink-0">
+                  <div className="w-16 h-16 rounded-2xl bg-[var(--color-primary)]/15 flex items-center justify-center">
+                    <ShieldCheck
+                      size={28}
+                      className="text-[var(--color-primary)]"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1 space-y-4">
+                  <div className="text-xs uppercase tracking-widest text-[var(--color-primary)] font-medium">
+                    Ajans Güvencesi
+                  </div>
+                  <h2 className="text-2xl md:text-4xl font-bold leading-tight">
+                    Müşterinizle direkt iletişim kurmuyoruz
+                  </h2>
+                  <p className="text-base md:text-lg text-[var(--color-text-secondary)] leading-relaxed">
+                    Brief sizden gelir, teklif size döner, kampanya
+                    raporu ajansınızın brand&apos;i altında teslim edilir.
+                    Müşteri kanalı tamamen sizinle — bizden onlara
+                    doğrudan e-posta, telefon ya da satış teklifi
+                    gitmez.
+                  </p>
+                  <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+                    {[
+                      "Brief & teklif kanalı sadece ajans",
+                      "White-label rapor müşteriye sizden",
+                      "İstisna: form Step 5'te direkt iletişim talep edilebilir",
+                    ].map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"
+                      >
+                        <Check
+                          size={16}
+                          className="text-[var(--color-primary)] shrink-0 mt-0.5"
+                        />
+                        <span className="leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -286,10 +351,7 @@ export default async function AjanslarPage() {
                 ))}
               </ul>
               <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
-                <Link href="/teklif-al" className="btn-primary">
-                  Brief Gönder
-                  <ArrowRight size={18} />
-                </Link>
+                <BriefModal triggerClassName="btn-primary" />
                 <a
                   href="https://wa.me/905529185864?text=Merhaba%2C%20Reklam%20ajans%C4%B1ndan%20yaz%C4%B1yorum."
                   target="_blank"

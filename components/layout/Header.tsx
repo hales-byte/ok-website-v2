@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Menu, X, ChevronDown, Briefcase, Users, Sparkles } from "lucide-react";
+import { Menu, X, ChevronDown, Briefcase, Users, Sparkles, ArrowRight } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { Logo } from "@/components/Logo";
 
 const navLinks = [
@@ -15,20 +16,23 @@ const navLinks = [
 const cozumler = [
   {
     href: "/markalar",
+    tag: "MARKA",
     label: "Markalar",
-    desc: "Stratejik medya planlaması, raporlanabilir kampanya",
+    desc: "Kurumsal disiplinle açıkhava — stratejik planlama, şeffaf süreç, sektörel deneyim.",
     icon: Briefcase,
   },
   {
     href: "/ajanslar",
+    tag: "AJANS",
     label: "Reklam Ajansları",
-    desc: "30 dakika teklif, white-label rapor, ajansa özel ratecard",
+    desc: "30 dakika teklif, ajansa özel ratecard, white-label raporlama.",
     icon: Users,
   },
   {
     href: "/ilk-kampanyaniz",
+    tag: "YENİ BAŞLAYAN",
     label: "İlk Açıkhava Kampanyam",
-    desc: "Brief'iniz olmasa da olur, sıfırdan rehberlik",
+    desc: "Brief'iniz olmasa da olur — sıfırdan rehberlik, baskısız konuşma.",
     icon: Sparkles,
   },
 ];
@@ -92,9 +96,17 @@ export function Header() {
             {cozumlerOpen && (
               <div
                 role="menu"
-                className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-80 rounded-2xl bg-[var(--color-bg)] border border-[var(--color-border-subtle)] shadow-2xl overflow-hidden animate-fadeIn"
+                className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[min(92vw,760px)] rounded-2xl bg-[var(--color-bg)] border border-[var(--color-border-subtle)] shadow-2xl overflow-hidden animate-fadeIn"
               >
-                <ul className="p-2">
+                {/* Üst başlık */}
+                <div className="px-6 pt-5 pb-2 border-b border-[var(--color-border-subtle)]">
+                  <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
+                    Sizi ne tanımlar?
+                  </div>
+                </div>
+
+                {/* 3 sütun kart grid */}
+                <ul className="grid grid-cols-1 md:grid-cols-3 gap-2 p-3">
                   {cozumler.map((c) => {
                     const Icon = c.icon;
                     return (
@@ -103,27 +115,54 @@ export function Header() {
                           href={c.href}
                           role="menuitem"
                           onClick={() => setCozumlerOpen(false)}
-                          className="flex gap-3 p-3 rounded-xl hover:bg-[var(--color-surface)] transition-colors group"
+                          className="h-full flex flex-col p-5 rounded-xl border border-transparent hover:border-[var(--color-primary)]/40 hover:bg-[var(--color-surface)] transition-all group"
                         >
-                          <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0 group-hover:bg-[var(--color-primary)]/20 transition-colors">
+                          <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center mb-4 group-hover:bg-[var(--color-primary)]/20 group-hover:scale-105 transition-all">
                             <Icon
-                              size={18}
+                              size={22}
                               className="text-[var(--color-primary-deep)]"
                             />
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm font-semibold text-[var(--color-text-primary)]">
-                              {c.label}
-                            </div>
-                            <div className="mt-0.5 text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                              {c.desc}
-                            </div>
+                          <div className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-primary-deep)] mb-1">
+                            {c.tag}
+                          </div>
+                          <div className="text-base font-semibold text-[var(--color-text-primary)] mb-2">
+                            {c.label}
+                          </div>
+                          <div className="text-xs text-[var(--color-text-secondary)] leading-relaxed flex-grow">
+                            {c.desc}
+                          </div>
+                          <div className="mt-4 flex items-center gap-1 text-xs font-medium text-[var(--color-primary-deep)] opacity-0 group-hover:opacity-100 transition-opacity">
+                            İncele
+                            <ArrowRight size={12} />
                           </div>
                         </Link>
                       </li>
                     );
                   })}
                 </ul>
+
+                {/* Alt CTA */}
+                <div className="px-6 py-4 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+                  <a
+                    href="https://wa.me/905529185864?text=Merhaba%2C%20a%C3%A7%C4%B1khava%20reklam%C4%B1%20i%C3%A7in%20bilgi%20almak%20istiyorum."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setCozumlerOpen(false)}
+                    className="flex items-center justify-between gap-3 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors group"
+                  >
+                    <span>
+                      Hangisi olduğunuza emin değilseniz,{" "}
+                      <span className="text-[var(--color-text-primary)] font-medium">
+                        WhatsApp&apos;tan konuşalım
+                      </span>
+                    </span>
+                    <WhatsAppIcon
+                      size={16}
+                      className="text-[var(--color-primary-deep)] shrink-0 group-hover:scale-110 transition-transform"
+                    />
+                  </a>
+                </div>
               </div>
             )}
           </div>
@@ -167,9 +206,9 @@ export function Header() {
             </Link>
 
             {/* Çözümler — accordion */}
-            <div className="border-y border-[var(--color-border-subtle)] py-2 my-1">
-              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] py-2">
-                Çözümler
+            <div className="border-y border-[var(--color-border-subtle)] py-3 my-1">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] py-2 mb-1">
+                Sizi ne tanımlar?
               </div>
               {cozumler.map((c) => {
                 const Icon = c.icon;
@@ -178,13 +217,25 @@ export function Header() {
                     key={c.href}
                     href={c.href}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-3 py-3 text-[var(--color-text-primary)]"
+                    className="flex items-start gap-3 py-3 text-[var(--color-text-primary)]"
                   >
-                    <Icon
-                      size={16}
-                      className="text-[var(--color-primary-deep)]"
-                    />
-                    <span className="text-base font-medium">{c.label}</span>
+                    <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0">
+                      <Icon
+                        size={18}
+                        className="text-[var(--color-primary-deep)]"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-primary-deep)]">
+                        {c.tag}
+                      </div>
+                      <div className="text-base font-medium text-[var(--color-text-primary)]">
+                        {c.label}
+                      </div>
+                      <div className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
+                        {c.desc}
+                      </div>
+                    </div>
                   </Link>
                 );
               })}

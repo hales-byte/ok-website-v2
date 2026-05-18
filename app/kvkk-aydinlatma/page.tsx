@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, FileText, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
+import { AYDINLATMA_VERSIYONU } from "@/lib/kvkk";
 
-// Aydınlatma metni versiyonu — değişiklik yapılırsa güncellenmeli
-// Form gönderimlerinde bu versiyon DB'ye kaydedilir
-export const AYDINLATMA_VERSIYONU = "v2-2026-05";
+// Aydınlatma metni versiyonu lib/kvkk.ts'te tek kaynak. Form submit-action
+// aynı sabiti import ediyor → DB'ye yazılan kayıt + kullanıcı okuduğu metin
+// otomatik aynı versiyonda kalır (KVKK m.10 ispat yükü).
+export { AYDINLATMA_VERSIYONU };
 
 export const metadata: Metadata = {
   title: "KVKK Aydınlatma Metni",
@@ -257,6 +259,13 @@ export default function KvkkPage() {
                 Kişisel verileriniz; web sitemiz üzerindeki formlar, e-posta,
                 telefon görüşmeleri, çerezler ve benzeri otomatik veya yarı
                 otomatik yöntemlerle elektronik ortamda toplanmaktadır.
+              </p>
+              <p className="mt-3">
+                Teklif formunu yarım bırakmanız halinde, formda doldurduğunuz
+                seçimler (segment, şehir, format, bütçe ve zaman) en fazla 3
+                gün süreyle tarayıcınızın yerel depolamasında (localStorage)
+                saklanır; sunucularımıza gönderilmez. İletişim bilgileriniz
+                ve mesajınız bu yerel kayıtta tutulmaz.
               </p>
             </Bolum>
 

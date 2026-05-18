@@ -1,5 +1,5 @@
 import type { FormState, FormAction } from "./types";
-import { TOTAL_STEPS } from "./types";
+import { TOTAL_STEPS, BUTCE_BANTLARI_SEGMENT } from "./types";
 
 /**
  * Form'un başlangıç durumu.
@@ -29,6 +29,14 @@ export const initialState: FormState = {
     telefon: "",
     sirket: "",
     sektor: "",
+  },
+
+  // Adım 5 (ek): Ajans bilgileri — Step1'de "ajans" seçildiyse Step5'in
+  // başında doldurulur, başka segmentlerde dokunulmaz.
+  ajansBilgisi: {
+    musteriMarka: "",
+    kreatifDurum: null,
+    dogrudanIletisim: null,
   },
 
   // Adım 6
@@ -71,8 +79,17 @@ export function formReducer(
       };
 
     // ═══ ADIM 1: SEGMENT ═══
-    case "SET_SEGMENT":
-      return { ...state, segment: action.segment };
+    case "SET_SEGMENT": {
+      // Edge: Kullanıcı Step4'te bir bütçe seçtikten sonra Step1'e dönüp
+      // segmenti değiştirebilir. Yeni segment ile uyumsuz bütçe seçimi
+      // sessizce kalırsa kullanıcı UI'da o seçeneği görmez ama state'te
+      // hâlâ valid sayılır (Step4 "İleri" aktif kalır). Bu kafa karıştırır.
+      // Çözüm: Yeni segmentin bantlarında olmayan bütçeyi null'a çek.
+      const allowedBudgets = new Set(BUTCE_BANTLARI_SEGMENT[action.segment]);
+      const butce =
+        state.butce && allowedBudgets.has(state.butce) ? state.butce : null;
+      return { ...state, segment: action.segment, butce };
+    }
 
     // ═══ ADIM 2: ŞEHİRLER ═══
     case "TOGGLE_SEHIR": {
@@ -138,6 +155,28 @@ export function formReducer(
         iletisim: {
           ...state.iletisim,
           [action.field]: action.value,
+        },
+      };
+
+    // ═══ ADIM 5: AJANS BİLGİLERİ (segment === "ajans" iken) ═══
+    case "SET_AJANS_MUSTERI_MARKA":
+      return {
+        ...state,
+        ajansBilgisi: { ...state.ajansBilgisi, musteriMarka: action.value },
+      };
+
+    case "SET_AJANS_KREATIF":
+      return {
+        ...state,
+        ajansBilgisi: { ...state.ajansBilgisi, kreatifDurum: action.value },
+      };
+
+    case "SET_AJANS_DOGRUDAN_ILETISIM":
+      return {
+        ...state,
+        ajansBilgisi: {
+          ...state.ajansBilgisi,
+          dogrudanIletisim: action.value,
         },
       };
 

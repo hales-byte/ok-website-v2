@@ -98,7 +98,6 @@ export type SehirFeature = {
     unite: string;
     format: string;
     toplam_face: number;
-    birim_fiyat: number | null;
     donem: string | null;
   }>;
 };

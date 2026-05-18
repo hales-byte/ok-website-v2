@@ -44,10 +44,12 @@ async function findSehirBySlug(slug: string): Promise<string | null> {
 
 async function getKombinasyon(sehirAdi: string, formatKategori: string) {
   const supabase = getSupabase();
+  // Açık kolon listesi: birim_fiyat ve internal not kolonlarının network
+  // response'una sızmasını engeller. UI'da sadece sayım kullanılıyor.
   const { data } = await supabase
     .schema("website")
     .from("envanter")
-    .select("*")
+    .select("toplam_face")
     .eq("sehir", sehirAdi)
     .eq("format_kategori", formatKategori)
     .eq("aktif", true);
@@ -62,7 +64,6 @@ async function getKombinasyon(sehirAdi: string, formatKategori: string) {
   return {
     lokasyonSayisi: data.length,
     toplamYuz,
-    lokasyonlar: data,
   };
 }
 
@@ -238,16 +239,13 @@ export default async function SehirFormatPage({
       name: sehir,
       address: { "@type": "PostalAddress", addressCountry: "TR" },
     },
+    // priceBand spesifik rakamları kaldırıldı (UI'da "fiyatı sor" stratejisiyle
+    // tutarlı olsun); priceRange ile yine "fiyat aralığı var" sinyali
+    // korunur — Google rich snippet için yeterli.
     offers: {
       "@type": "Offer",
       priceCurrency: "TRY",
-      priceSpecification: {
-        "@type": "PriceSpecification",
-        priceCurrency: "TRY",
-        minPrice: formatMeta.priceBand.from,
-        maxPrice: formatMeta.priceBand.to,
-        valueAddedTaxIncluded: false,
-      },
+      priceRange: "$$",
       availability: "https://schema.org/InStock",
     },
     url: pageUrl,

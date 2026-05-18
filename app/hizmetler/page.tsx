@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check, Clock } from "lucide-react";
+import { ArrowRight, Check, Clock, Download } from "lucide-react";
 import type { Metadata } from "next";
 import { FORMATLAR } from "@/lib/formats";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -30,6 +30,24 @@ export default function HizmetlerPage() {
                 Klasik billboard&apos;dan dijital LED&apos;e, premium havalimanı
                 ekranından yaya seviyesindeki CLP&apos;ye kadar — kampanyanız için
                 doğru görünürlüğü birlikte buluyoruz.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <a
+                  href="/ratecard.pdf"
+                  download="objektifkriter-ratecard-2026.pdf"
+                  className="btn-secondary"
+                >
+                  <Download size={18} />
+                  Ratecard&apos;ı İndir (PDF)
+                </a>
+                <Link href="/teklif-al" className="btn-primary">
+                  Teklif Al
+                  <ArrowRight size={18} />
+                </Link>
+              </div>
+              <p className="text-xs text-[var(--color-text-muted)]">
+                İndikatif fiyat bantları içerir; net teklif briefiniz
+                üzerinden 30 dakikada hazırlanır.
               </p>
             </div>
           </ScrollReveal>

@@ -20,24 +20,14 @@ export const metadata: Metadata = {
 
 const endiseler = [
   {
-    soru: "Hiçbir şey bilmiyorum, başlayabilir miyim?",
+    soru: "Benim büyüklüğümde işletmeler de mi çalışıyor sizinle?",
     cevap:
-      "Evet, en sık karşılaştığımız müşteri profiliniz. Brief'iniz, jargonunuz, format adlarınız olmasa bile sorun değil. Hedefinizi anlatın yeter — reklam ne için yapacaksınız? Biz format, lokasyon ve sürenin kararını birlikte veriyoruz.",
+      "Evet. Mahalle kafesinden e-ticaret KOBİ'sine, klinikten butik mağazaya — küçük-orta işletmeler müşterimizin yarısından fazlası. İsteğinize göre benzer örnekler paylaşırız.",
   },
   {
-    soru: "Bütçem küçük, beni baştan savar mısınız?",
+    soru: "Yayında sorun olursa kime ulaşırım, ne kadar sürede dönüş alırım?",
     cevap:
-      "Hayır. 5K-15K TL bandında küçük işletme paketleri var (CLP/Raket veya Pole Banner ağırlıklı). Büyük markalar için 100K+ kampanyalar, ama küçük işletmeler için ekonomik girişler de standart işimizin parçası.",
-  },
-  {
-    soru: "Beni gereksiz şeylere ikna mı edeceksiniz?",
-    cevap:
-      "İkna yok. \"Sizin için billboard değil, kafenin önündeki direğe asılan banner daha mantıklı\" demek bizim de işimize geliyor — küçük başlayıp memnun kalan müşteri tekrar geliyor. Kısa vadeli upsell yerine uzun vadeli güven.",
-  },
-  {
-    soru: "İlk konuşmadan sonra baskı yapacak mısınız?",
-    cevap:
-      "Hayır. WhatsApp veya telefonda ilk konuşma bilgilendirme — kararı siz veriyorsunuz, kendi vaktinizde. Geri dönmek istemediğinizde mesaj atmanız yeter, takip etmiyoruz.",
+      "Size atanmış tek temas noktası var — WhatsApp ve telefon ile direkt ulaşırsınız. Mesai içi 30 dakika, mesai dışı ertesi gün ilk yarısı içinde dönüş veriyoruz.",
   },
 ];
 
@@ -169,8 +159,8 @@ export default function IlkKampanyanizPage() {
         </div>
       </section>
 
-      {/* BÜTÇE REHBERİ */}
-      <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+      {/* BÜTÇE REHBERİ — geçici olarak gizli, canlıya alındıktan sonra revize edilip açılacak */}
+      <section className="hidden py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
           <ScrollReveal direction="up">
             <div className="max-w-2xl mb-16">
@@ -225,7 +215,7 @@ export default function IlkKampanyanizPage() {
                 Süreç
               </div>
               <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                Yalnız bırakmıyoruz, baskı yapmıyoruz
+                Baskı yapmıyor olabiliriz ama işinde iyi baskı merkezleri sizin için listeleyebiliriz
               </h2>
             </div>
           </ScrollReveal>

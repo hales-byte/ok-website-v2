@@ -7,6 +7,8 @@ import {
   Layers,
   MapPin,
   Check,
+  Download,
+  X,
 } from "lucide-react";
 import type { Metadata } from "next";
 import { createClient } from "@supabase/supabase-js";
@@ -44,11 +46,6 @@ const valueProps = [
     desc: "Marmara'dan Doğu Anadolu'ya 47+ şehirde aktif lokasyon. Tier-1 illerin yanında tier-2 ve tier-3 şehirlerde de varız — markanızın izi metropolün dışına da çıkar.",
   },
   {
-    icon: BarChart3,
-    title: "Raporlanabilir kampanya",
-    desc: "Yayın takip, fotoğraflı yerinde kontrol, kapsama ve maruziyet metrikleri. Pazarlama ekibinize gösterebileceğiniz somut çıktılarla bitiriyoruz.",
-  },
-  {
     icon: Layers,
     title: "Stratejik medya planlaması",
     desc: "Format kombinasyonu (billboard + CLP + LED) ile farklı temas noktalarında frekans kuruyoruz. Tek format yerine optimal mix.",
@@ -76,11 +73,6 @@ const sureclar = [
     title: "Üretim & yayın",
     desc: "Tasarım onayından baskıya, lojistikten asıma kadar süreç bizde. Pazarlama ekibinizin tek temas noktası.",
   },
-  {
-    num: "04",
-    title: "Yayın raporu",
-    desc: "Fotoğraflı yerinde kontrol, kampanya boyunca sürekli rapor, kapanışta pazarlamaya sunulabilir özet.",
-  },
 ];
 
 export default async function MarkalarPage() {
@@ -107,11 +99,19 @@ export default async function MarkalarPage() {
                 sektörel deneyimle desteklenen lokasyon önerileri — kurumsal
                 markaların açıkhava operasyonunda aradığı disipline buluşalım.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-4">
                 <Link href="/teklif-al" className="btn-primary">
                   Teklif Al
                   <ArrowRight size={18} />
                 </Link>
+                <a
+                  href="/ratecard.pdf"
+                  download="objektifkriter-ratecard-2026.pdf"
+                  className="btn-secondary"
+                >
+                  <Download size={18} />
+                  Ratecard&apos;ı İndir (PDF)
+                </a>
                 <Link href="/envanter" className="btn-secondary">
                   Envanteri İnceleyin
                 </Link>
@@ -178,7 +178,7 @@ export default async function MarkalarPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {valueProps.map((vp, i) => {
               const Icon = vp.icon;
               return (
@@ -204,6 +204,136 @@ export default async function MarkalarPage() {
         </div>
       </section>
 
+      {/* KARŞILAŞTIRMA TABLOSU — Tipik OOH ajansı vs. Objektif Kriter */}
+      <section className="py-24 border-t border-[var(--color-border-subtle)]">
+        <div className="container-narrow">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mb-12">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                Şeffaflık karşılaştırması
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
+                Tipik OOH ajansı vs. Objektif Kriter
+              </h2>
+              <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
+                Sektördeki tipik bir tedarikçinin sunduğu görünürlüğü
+                karşılaştırın — neyin değiştiğini somut görün.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal direction="up" delay={120}>
+            <div className="overflow-x-auto rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)]">
+              <table className="w-full text-sm md:text-base">
+                <thead>
+                  <tr className="border-b border-[var(--color-border-subtle)] bg-[var(--color-bg)]/50">
+                    <th className="text-left p-4 md:p-5 font-semibold text-[var(--color-text-muted)]">
+                      Kriter
+                    </th>
+                    <th className="text-left p-4 md:p-5 font-semibold text-[var(--color-text-muted)]">
+                      Tipik OOH ajansı
+                    </th>
+                    <th className="text-left p-4 md:p-5 font-semibold text-[var(--color-primary)]">
+                      Objektif Kriter
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      kriter: "Şehir kapsamı",
+                      tipik: "&ldquo;Türkiye geneli&rdquo; lafı, sayı yok",
+                      ok: "47+ şehir, canlı sayım",
+                      okIyi: true,
+                    },
+                    {
+                      kriter: "Reklam yüzü envanteri",
+                      tipik: "Genelde teklif sırasında PDF",
+                      ok: "33.812+ yüz, public görünür",
+                      okIyi: true,
+                    },
+                    {
+                      kriter: "Şehir-bazlı detay sayfası",
+                      tipik: "Yok",
+                      ok: "47 ayrı şehir sayfası, format dağılımı dahil",
+                      okIyi: true,
+                    },
+                    {
+                      kriter: "Yanıt süresi taahhüdü",
+                      tipik: "&ldquo;Hızlı dönüş&rdquo; lafı",
+                      ok: "30 dakika SLA, yazılı",
+                      okIyi: true,
+                    },
+                    {
+                      kriter: "Ratecard erişimi",
+                      tipik: "Sözleşme sonrası",
+                      ok: "İndikatif PDF tek tıkla indirilebilir",
+                      okIyi: true,
+                    },
+                    {
+                      kriter: "Format çeşitliliği",
+                      tipik: "Genelde 3-5 format",
+                      ok: "8 format (klasik + dijital + havalimanı)",
+                      okIyi: true,
+                    },
+                    {
+                      kriter: "Raporlama",
+                      tipik: "Özet PDF, kampanya sonu",
+                      ok: "Yayın takibi + fotoğraflı kontrol + kapsama metriği",
+                      okIyi: true,
+                    },
+                    {
+                      kriter: "İletişim kanalı",
+                      tipik: "E-posta + tel; 1-2 gün cevap",
+                      ok: "WhatsApp + form + e-posta; 30 dk",
+                      okIyi: true,
+                    },
+                  ].map((row, i) => (
+                    <tr
+                      key={row.kriter}
+                      className={`border-b border-[var(--color-border-subtle)] ${
+                        i % 2 === 0 ? "bg-transparent" : "bg-[var(--color-bg)]/30"
+                      } last:border-b-0`}
+                    >
+                      <td className="p-4 md:p-5 font-medium align-top">
+                        {row.kriter}
+                      </td>
+                      <td className="p-4 md:p-5 text-[var(--color-text-secondary)] align-top">
+                        <span className="inline-flex items-start gap-2">
+                          <X
+                            size={16}
+                            className="text-[var(--color-text-muted)] shrink-0 mt-0.5"
+                          />
+                          <span
+                            dangerouslySetInnerHTML={{ __html: row.tipik }}
+                          />
+                        </span>
+                      </td>
+                      <td className="p-4 md:p-5 align-top">
+                        <span className="inline-flex items-start gap-2">
+                          {row.okIyi ? (
+                            <Check
+                              size={16}
+                              className="text-[var(--color-primary)] shrink-0 mt-0.5"
+                              strokeWidth={2.5}
+                            />
+                          ) : null}
+                          <span className="font-medium">{row.ok}</span>
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-[var(--color-text-muted)] mt-3 text-center">
+              Karşılaştırma sektördeki yaygın uygulamaları temsil eder;
+              her ajansın hizmet seviyesi farklılık gösterebilir.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* SÜREÇ */}
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
@@ -219,7 +349,7 @@ export default async function MarkalarPage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {sureclar.map((adim, i) => (
               <ScrollReveal
                 key={adim.num}

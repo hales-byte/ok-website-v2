@@ -1,7 +1,19 @@
 "use client";
 
 import { useId, useState } from "react";
-import { Mail, User, Phone, Building2, Briefcase, ChevronDown, Check, AlertCircle } from "lucide-react";
+import {
+  Mail,
+  User,
+  Phone,
+  Building2,
+  Briefcase,
+  ChevronDown,
+  Check,
+  AlertCircle,
+  Users,
+  PenTool,
+  ShieldOff,
+} from "lucide-react";
 import type { FormState, FormAction } from "../types";
 import { isValidEmail, isValidPhone } from "../validation";
 
@@ -45,8 +57,145 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
       ? null
       : isValidPhone(state.iletisim.telefon);
 
+  // Ajans-spesifik mini blok yalnızca segment === "ajans" iken görünür.
+  // Üç bilgi (müşteri marka, kreatif durumu, doğrudan iletişim tercihi)
+  // satış triage'i için kıymetli ama hepsi opsiyonel — form'u uzatmasın.
+  const isAjans = state.segment === "ajans";
+
   return (
     <div className="max-w-xl space-y-6">
+      {/* AJANS MİNİ BLOK — yalnızca segment === "ajans" iken */}
+      {isAjans && (
+        <div className="rounded-2xl border-2 border-[var(--color-primary)]/15 bg-[var(--color-primary)]/[0.04] p-5 space-y-5 animate-fadeIn">
+          <div className="flex items-start gap-3">
+            <div className="shrink-0 w-9 h-9 rounded-lg bg-[var(--color-primary)]/15 flex items-center justify-center">
+              <Users size={16} className="text-[var(--color-primary)]" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold leading-tight">
+                Ajansa özel kısa bilgi
+              </h3>
+              <p className="text-xs text-[var(--color-text-secondary)] mt-1 leading-relaxed">
+                Üç soruyla teklifinizi triage ekibimize doğrudan
+                yönlendirelim. Hepsi opsiyonel.
+              </p>
+            </div>
+          </div>
+
+          {/* Müşteri marka adı */}
+          <FieldWrapper label="Müşteri marka adı (opsiyonel)" icon={Briefcase}>
+            {({ inputId }) => (
+              <input
+                id={inputId}
+                type="text"
+                value={state.ajansBilgisi.musteriMarka}
+                onChange={(e) =>
+                  dispatch({
+                    type: "SET_AJANS_MUSTERI_MARKA",
+                    value: e.target.value,
+                  })
+                }
+                placeholder="Örn. Kahve Dünyası"
+                autoComplete="off"
+                maxLength={120}
+                className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
+              />
+            )}
+          </FieldWrapper>
+
+          {/* Kreatif durumu */}
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-sm font-medium text-[var(--color-text-secondary)]">
+              <PenTool size={14} className="text-[var(--color-text-muted)]" />
+              Kreatif (görsel) durumu
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { key: "hazir" as const, label: "Tasarımımız hazır" },
+                { key: "yardim" as const, label: "Tasarım için yardım istiyoruz" },
+              ].map((opt) => {
+                const isSelected = state.ajansBilgisi.kreatifDurum === opt.key;
+                return (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    onClick={() =>
+                      dispatch({ type: "SET_AJANS_KREATIF", value: opt.key })
+                    }
+                    className={`text-left px-3 py-2.5 rounded-xl border-2 text-sm transition-all ${
+                      isSelected
+                        ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 font-medium"
+                        : "border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]/40"
+                    }`}
+                    aria-pressed={isSelected}
+                  >
+                    {isSelected && (
+                      <Check
+                        size={12}
+                        strokeWidth={3}
+                        className="inline-block mr-1.5 text-[var(--color-primary)]"
+                      />
+                    )}
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Doğrudan iletişim tercihi */}
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-sm font-medium text-[var(--color-text-secondary)]">
+              <ShieldOff size={14} className="text-[var(--color-text-muted)]" />
+              Müşteri ile iletişim
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                {
+                  key: "hayir" as const,
+                  label: "Sadece bizimle (varsayılan)",
+                },
+                { key: "evet" as const, label: "Müşterimle direkt konuşun" },
+              ].map((opt) => {
+                const isSelected =
+                  state.ajansBilgisi.dogrudanIletisim === opt.key;
+                return (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    onClick={() =>
+                      dispatch({
+                        type: "SET_AJANS_DOGRUDAN_ILETISIM",
+                        value: opt.key,
+                      })
+                    }
+                    className={`text-left px-3 py-2.5 rounded-xl border-2 text-sm transition-all ${
+                      isSelected
+                        ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 font-medium"
+                        : "border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]/40"
+                    }`}
+                    aria-pressed={isSelected}
+                  >
+                    {isSelected && (
+                      <Check
+                        size={12}
+                        strokeWidth={3}
+                        className="inline-block mr-1.5 text-[var(--color-primary)]"
+                      />
+                    )}
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-xs text-[var(--color-text-muted)] mt-2">
+              Varsayılan olarak müşterinizle direkt iletişime geçmiyoruz —
+              kanal sizinle.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* EMAIL — Zorunlu, ilk öne */}
       <FieldWrapper
         label="E-posta adresiniz"
@@ -71,6 +220,7 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
             placeholder="ahmet@sirket.com"
             autoComplete="email"
             required
+            maxLength={254}
             aria-required="true"
             aria-invalid={emailValid === false || undefined}
             aria-describedby={emailValid != null ? describedById : undefined}
@@ -103,6 +253,7 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
             placeholder="Ahmet Yılmaz"
             autoComplete="name"
             required
+            maxLength={120}
             aria-required="true"
             aria-invalid={adsoyadValid === false || undefined}
             aria-describedby={adsoyadValid != null ? describedById : undefined}
@@ -152,6 +303,7 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
                   }
                   placeholder="0532 123 45 67"
                   autoComplete="tel"
+                  maxLength={25}
                   aria-invalid={telefonValid === false || undefined}
                   aria-describedby={telefonValid != null ? describedById : undefined}
                   className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
@@ -175,6 +327,7 @@ export function Step5Iletisim({ state, dispatch }: Step5IletisimProps) {
                   }
                   placeholder="Şirketiniz"
                   autoComplete="organization"
+                  maxLength={160}
                   className="w-full bg-transparent outline-none text-base placeholder:text-[var(--color-text-muted)]"
                 />
               )}

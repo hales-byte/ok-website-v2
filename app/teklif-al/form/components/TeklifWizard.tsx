@@ -46,6 +46,13 @@ export function TeklifWizard() {
   const [resumeData, setResumeData] = useState<StoredProgress | null>(null);
   const [showBanner, setShowBanner] = useState(false);
 
+  // Spam koruması: honeypot ref (gizli input controlled value, gerçek kullanıcı
+  // dolduramaz) + form mount unix timestamp (server-side <3sn submit'leri reddeder).
+  // useState lazy init Date.now()'u sadece mount'ta bir kez çağırır — saf değer
+  // sonraki render'larda korunur. (useRef'te initializer impure sayılır.)
+  const honeypotRef = useRef<HTMLInputElement>(null);
+  const [formStartTime] = useState(() => Date.now());
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -185,7 +192,11 @@ export function TeklifWizard() {
     dispatch({ type: "SUBMITTING" });
 
     try {
-      const result = await submitTeklif(state);
+      const meta = {
+        honeypot: honeypotRef.current?.value ?? "",
+        formStartTime,
+      };
+      const result = await submitTeklif(state, meta);
 
       if (result.success) {
         dispatch({ type: "SUBMITTED" });
@@ -200,7 +211,7 @@ export function TeklifWizard() {
           : "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.";
       dispatch({ type: "SUBMIT_ERROR", error: errorMsg });
     }
-  }, [state]);
+  }, [state, formStartTime]);
 
   // ─── KLAVYE ───
   useEffect(() => {
@@ -287,6 +298,37 @@ export function TeklifWizard() {
         {state.currentStep === 6 && (
           <Step6Onay state={state} dispatch={dispatch} />
         )}
+
+        {/*
+         * Honeypot input — bot spam koruması.
+         * Görünmez (left:-9999px), klavye odaklanamaz (tabIndex=-1),
+         * screen reader gizli (aria-hidden), şifre yöneticisi doldurmasın
+         * diye autoComplete=off + name="website" (klişe alan).
+         * Gerçek kullanıcı dolduramaz; bot otomatik form doldurma yaparken
+         * bu alanı dolduracaktır → server-side reject.
+         */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: "-9999px",
+            top: "-9999px",
+            width: 1,
+            height: 1,
+            overflow: "hidden",
+          }}
+        >
+          <label htmlFor="hp-website">Website (boş bırakın)</label>
+          <input
+            ref={honeypotRef}
+            id="hp-website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            defaultValue=""
+          />
+        </div>
 
         {state.error && (
           <div className="mt-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3 animate-fadeIn">

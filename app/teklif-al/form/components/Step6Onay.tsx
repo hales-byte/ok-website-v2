@@ -130,6 +130,7 @@ export function Step6Onay({ state, dispatch }: Step6OnayProps) {
           }
           placeholder="Kampanya hedefiniz, hedef kitleniz veya eklemek istediğiniz başka bir bilgi varsa buraya yazabilirsiniz..."
           rows={4}
+          maxLength={2000}
           className="w-full px-4 py-3 rounded-xl border-2 border-[var(--color-border-subtle)] bg-[var(--color-surface)] focus:border-[var(--color-primary)] focus:bg-[var(--color-bg)] outline-none transition-colors text-sm placeholder:text-[var(--color-text-muted)] resize-none"
         />
       </div>

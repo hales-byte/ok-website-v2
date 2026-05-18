@@ -16,25 +16,43 @@ import type {
   ButceSecimi,
   ZamanSecimi,
 } from "../types";
-import { BUTCE_LABELS, ZAMAN_LABELS } from "../types";
+import { BUTCE_LABELS, ZAMAN_LABELS, BUTCE_BANTLARI_SEGMENT } from "../types";
 
 type Step4ButceZamanProps = {
   state: FormState;
   dispatch: React.Dispatch<FormAction>;
 };
 
-const butceSecenekleri: Array<{
+// Her bütçe key'i için ipucu metni. Segment-bağımsız sabit liste; render
+// sırasında BUTCE_BANTLARI_SEGMENT ile filtrelenip sadece o segmentin
+// görmesi gereken bantlar gösterilir.
+const BUTCE_HINTS: Record<ButceSecimi, string> = {
+  ilk_5_15k: "Tek lokasyon / yerel görünürlük",
+  ilk_15_40k: "İlk kampanya, kapsamlı test",
+  ilk_40_100k: "Çoklu lokasyon, bölgesel",
+  "100k_alti": "Test / lokal kampanya",
+  "100_250k": "Bölgesel kampanya",
+  "250_500k": "Çok şehirli orta ölçek",
+  "500k_1m": "Geniş kapsamlı",
+  "1m_uzeri": "Premium / ulusal",
+  belirsiz: "Birlikte değerlendirelim",
+};
+
+// state.segment'e göre Step4'te gösterilecek bütçe bantları. Segment
+// seçilmemişse (edge case — Step1 tamamlanmadan deep-link ile gelinmişse)
+// orta-ölçek bantları default'tur.
+function getButceSecenekleri(state: FormState): Array<{
   key: ButceSecimi;
   ikon: typeof Wallet;
-  hint?: string;
-}> = [
-  { key: "100k_alti", ikon: Wallet, hint: "Test / lokal kampanya" },
-  { key: "100_250k", ikon: Wallet, hint: "Bölgesel kampanya" },
-  { key: "250_500k", ikon: Wallet, hint: "Çok şehirli orta ölçek" },
-  { key: "500k_1m", ikon: Wallet, hint: "Geniş kapsamlı" },
-  { key: "1m_uzeri", ikon: Wallet, hint: "Premium / ulusal" },
-  { key: "belirsiz", ikon: HelpCircle, hint: "Birlikte değerlendirelim" },
-];
+  hint: string;
+}> {
+  const segment = state.segment ?? "marka";
+  return BUTCE_BANTLARI_SEGMENT[segment].map((key) => ({
+    key,
+    ikon: key === "belirsiz" ? HelpCircle : Wallet,
+    hint: BUTCE_HINTS[key],
+  }));
+}
 
 const zamanSecenekleri: Array<{
   key: ZamanSecimi;
@@ -49,6 +67,10 @@ const zamanSecenekleri: Array<{
 ];
 
 export function Step4ButceZaman({ state, dispatch }: Step4ButceZamanProps) {
+  // Segment-koşullu bütçe seçenekleri. İlk-kez küçük işletme için
+  // 5K-100K bantları; marka/ajans için 100K-1M+ bantları.
+  const butceSecenekleri = getButceSecenekleri(state);
+
   return (
     <div className="space-y-12">
       {/* BÜTÇE */}

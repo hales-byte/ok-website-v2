@@ -14,15 +14,11 @@ export const metadata: Metadata = {
 export const revalidate = 300;
 
 type EnvanterRow = {
-  id: number;
   sehir: string;
   unite: string | null;
   format_kategori: string;
   toplam_face: number | null;
-  birim_fiyat: number | null;
   donem: string | null;
-  network_adeti: number | null;
-  asim_gunu: string | null;
 };
 
 type EksikSehir = { sehir: string; lokasyon_sayisi: number };
@@ -47,12 +43,12 @@ async function getSehirFeatures(): Promise<{
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
+  // Açık kolon listesi: birim_fiyat (rekabet açığı), id, network_adeti,
+  // asim_gunu — UI'da kullanılmıyor, network'e sızdırmıyoruz.
   const { data, error } = await supabase
     .schema("website")
     .from("envanter")
-    .select(
-      "id, sehir, unite, format_kategori, toplam_face, birim_fiyat, donem, network_adeti, asim_gunu"
-    )
+    .select("sehir, unite, format_kategori, toplam_face, donem")
     .eq("aktif", true);
 
   if (error) {
@@ -77,7 +73,6 @@ async function getSehirFeatures(): Promise<{
       unite: string;
       format: string;
       toplam_face: number;
-      birim_fiyat: number | null;
       donem: string | null;
     }>;
   };
@@ -109,7 +104,6 @@ async function getSehirFeatures(): Promise<{
       unite: r.unite ?? "",
       format: fmt,
       toplam_face: r.toplam_face ?? 0,
-      birim_fiyat: r.birim_fiyat,
       donem: r.donem,
     });
   }
