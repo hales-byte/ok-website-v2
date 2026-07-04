@@ -33,7 +33,7 @@ const segmentler: Array<{
     description:
       "Reklam ajansındayım, hızlı ve esnek iş ortağı arıyorum.",
     bullets: [
-      "30 dakikada teklif",
+      "15 dakikada teklif",
       "Detaylı lokasyon listesi",
       "Esnek satın alma",
     ],

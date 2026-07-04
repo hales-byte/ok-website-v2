@@ -3,7 +3,7 @@
  *
  * Üçü ortak dilde: dikdörtgen geometrik iskelet + tek organik jest.
  * - MarkalarIcon: pin damlası içinde hedef halkaları (kurumsal + ROI)
- * - AjanslarIcon: brief belgesi + sağa hızlı ok (30 dakika çevrimi)
+ * - AjanslarIcon: brief belgesi + sağa hızlı ok (15 dakika çevrimi)
  * - IlkKampanyamIcon: küçük billboard çerçevesi + filizlenen sürgün (sıcaklık)
  *
  * Lucide drop-in: `size` ve `className` prop'larını destekler, `currentColor`
@@ -43,7 +43,7 @@ export function MarkalarIcon({ size = 28, className }: IconProps) {
 /**
  * Reklam Ajansları (Mert) — Brief → Teklif Oku
  * Sol üstte köşeli brief belgesi (sayfa katlanma detayıyla), sağ alta
- * uzanan hızlı ok. "30 dakikada teklif" sloganının görsel çevirisi.
+ * uzanan hızlı ok. "15 dakikada teklif" sloganının görsel çevirisi.
  */
 export function AjanslarIcon({ size = 28, className }: IconProps) {
   return (

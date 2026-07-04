@@ -5,7 +5,7 @@ import { TeklifWizard } from "./form/components/TeklifWizard";
 export const metadata: Metadata = {
   title: "Teklif Al",
   description:
-    "OOH reklam kampanyanız için 30 dakika içinde özel lokasyon planı ve teklif. Şehir, format ve bütçenizi paylaşın.",
+    "OOH reklam kampanyanız için 15 dakika içinde özel lokasyon planı ve teklif. Şehir, format ve bütçenizi paylaşın.",
 };
 
 export default function TeklifAlPage() {

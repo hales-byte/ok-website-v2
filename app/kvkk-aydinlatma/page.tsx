@@ -6,7 +6,6 @@ import { AYDINLATMA_VERSIYONU } from "@/lib/kvkk";
 // Aydınlatma metni versiyonu lib/kvkk.ts'te tek kaynak. Form submit-action
 // aynı sabiti import ediyor → DB'ye yazılan kayıt + kullanıcı okuduğu metin
 // otomatik aynı versiyonda kalır (KVKK m.10 ispat yükü).
-export { AYDINLATMA_VERSIYONU };
 
 export const metadata: Metadata = {
   title: "KVKK Aydınlatma Metni",

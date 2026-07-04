@@ -1,7 +1,6 @@
 "use server";
 
 import { headers } from "next/headers";
-import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { z } from "zod";
 import type { FormState, TalepPayload } from "./types";
@@ -13,7 +12,7 @@ import { buildNotificationEmail } from "./email-template";
 import { AYDINLATMA_VERSIYONU } from "@/lib/kvkk";
 
 /**
- * Hata loglarında PII echo'sunu engellemek için Supabase/Resend hata
+ * Hata loglarında PII echo'sunu engellemek için Resend/FormSubmit hata
  * objesinden sadece kod + mesaj çekilir. Saldırgan recon değeri en aza
  * indirilir, KVKK m.12 veri güvenliği prensibine uyum sağlanır.
  */
@@ -94,7 +93,7 @@ export type SubmitResult =
   | { success: false; error: string };
 
 /**
- * Form'u Supabase'e kaydeden Server Action.
+ * Formu e-postayla satış ekibine ileten Server Action (Supabase kaldırıldı — lead hattı: Resend, yedek: FormSubmit).
  * Server-side çalışır, IP/user-agent bilgilerini güvenli şekilde alır.
  *
  * `meta` parametresi spam korumalarını içerir (honeypot + form-fill duration).
@@ -150,22 +149,7 @@ export async function submitTeklif(
     // Headers alınamazsa devam et, kritik değil
   }
 
-  // ─── Supabase client (anon key) ───
-  // RLS policy talepler INSERT'e izin veriyor olmalı
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseKey) {
-    console.error("Supabase env değişkenleri eksik");
-    return {
-      success: false,
-      error: "Sistem hatası. Lütfen bizi e-posta ile bilgilendirin.",
-    };
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseKey);
-
-  // ─── Payload hazırla ───
+  // ─── Payload hazırla (e-posta şablonunun beklediği yapı) ───
   const payload: TalepPayload = {
     ad_soyad: state.iletisim.adsoyad.trim(),
     email: state.iletisim.email.trim().toLowerCase(),
@@ -187,30 +171,18 @@ export async function submitTeklif(
     aydinlatma_versiyonu: AYDINLATMA_VERSIYONU,
   };
 
-  // ─── Insert ───
-  // NOT: .select() / .single() KASITLI olarak kullanılmıyor.
-  // anon role'a column-level INSERT verilmiş ama SELECT yok; RETURNING SELECT
-  // gerektirir ve "permission denied for table talepler" (42501) hatası fırlatır.
-  // talep_id istemcide kullanılmıyor, INSERT yeterli.
-  const { error } = await supabase
-    .schema("website")
-    .from("talepler")
-    .insert(payload);
+  // ─── LEAD HATTI (kritik yol): Resend → satis@ · yedek: FormSubmit ───
+  // Veritabanı YOK — talep ancak e-posta ulaşırsa "alındı" sayılır.
+  // Bu yüzden gönderim hatası kullanıcıya açıkça bildirilir.
+  const gonderildi = await sendNotificationEmail(state, payload);
 
-  if (error) {
-    console.error("Supabase insert hatası:", safeErrorInfo(error));
+  if (!gonderildi) {
     return {
       success: false,
       error:
-        "Talebiniz kaydedilemedi. Lütfen tekrar deneyin veya bize e-posta gönderin.",
+        "Talebiniz şu anda iletilemedi. Lütfen tekrar deneyin veya bize WhatsApp / satis@objektifkriter.com.tr üzerinden ulaşın.",
     };
   }
-
-  // ─── Bildirim maili (best-effort) ───
-  // DB insert başarılı oldu — talep kaydı güvende. Mail gönderimi başarısız
-  // olursa kullanıcıya success dönmeye devam ederiz; sadece sunucu log'una
-  // hata düşer ki manuel takip edebilelim.
-  await sendNotificationEmail(state, payload);
 
   return {
     success: true,
@@ -218,47 +190,74 @@ export async function submitTeklif(
 }
 
 /**
- * Resend ile bildirim mailini gönderir. Hata olursa sessizce yutar — DB'de
- * talep zaten var, kullanıcı deneyimi bozulmasın. Sunucu log'una düşer.
+ * Bildirim mailini gönderir — dönüş değeri lead'in ulaşıp ulaşmadığıdır.
+ *
+ * 1. RESEND_API_KEY varsa Resend ile gönderir.
+ *    - RESEND_TO verilmemişse varsayılan alıcı: satis@objektifkriter.com.tr
+ *    - RESEND_FROM verilmemişse Resend'in onboarding göndericisi kullanılır
+ *      (domain doğrulaması cutover randevusunda yapılacak — o güne kadar
+ *      default gönderici NORMALDİR, bkz. docs/plan Plan 1 / T5 notu).
+ * 2. API anahtarı yoksa veya Resend hata verirse FormSubmit yedeği devreye
+ *    girer (ek hesap/servis gerektirmez, e-posta relay'idir).
  */
+const VARSAYILAN_ALICI = "satis@objektifkriter.com.tr";
+
 async function sendNotificationEmail(
   state: FormState,
   payload: TalepPayload
-): Promise<void> {
+): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM;
-  // RESEND_TO virgülle ayrılmış birden fazla adres olabilir
-  const toList = process.env.RESEND_TO?.split(",")
+  const from = process.env.RESEND_FROM || "Objektif Kriter <onboarding@resend.dev>";
+  const toList = (process.env.RESEND_TO || VARSAYILAN_ALICI)
+    .split(",")
     .map((s) => s.trim())
-    .filter(Boolean) ?? [];
+    .filter(Boolean);
 
-  if (!apiKey || !from || toList.length === 0) {
-    // Env eksikse sessizce atla — geliştirme/test ortamında normal
-    console.warn(
-      "Resend env değişkenleri eksik; mail bildirimi gönderilmedi."
-    );
-    return;
-  }
+  const { subject, html, text } = buildNotificationEmail(state, payload);
 
-  try {
-    const resend = new Resend(apiKey);
-    const { subject, html, text } = buildNotificationEmail(state, payload);
-
-    const result = await resend.emails.send({
-      from,
-      to: toList.length === 1 ? toList[0] : toList,
-      replyTo: payload.email, // Kullanıcıya direkt yanıt için
-      subject,
-      html,
-      text,
-    });
-
-    if (result.error) {
+  // ── 1) Resend (birincil) ──
+  if (apiKey) {
+    try {
+      const resend = new Resend(apiKey);
+      const result = await resend.emails.send({
+        from,
+        to: toList.length === 1 ? toList[0] : toList,
+        replyTo: payload.email, // Kullanıcıya direkt yanıt için
+        subject,
+        html,
+        text,
+      });
+      if (!result.error) return true;
       console.error("Resend gönderim hatası:", safeErrorInfo(result.error));
+    } catch (e) {
+      console.error("Resend hatası (catch):", safeErrorInfo(e));
     }
-  } catch (e) {
-    console.error("Mail bildirim hatası (catch):", safeErrorInfo(e));
+  } else {
+    console.warn("RESEND_API_KEY yok — FormSubmit yedeğine geçiliyor.");
   }
+
+  // ── 2) FormSubmit (yedek) ──
+  try {
+    const res = await fetch(
+      `https://formsubmit.co/ajax/${VARSAYILAN_ALICI}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: subject,
+          _template: "box",
+          _replyto: payload.email,
+          mesaj: text,
+        }),
+      }
+    );
+    if (res.ok) return true;
+    console.error("FormSubmit hatası: status=" + res.status);
+  } catch (e) {
+    console.error("FormSubmit hatası (catch):", safeErrorInfo(e));
+  }
+
+  return false;
 }
 
 /**

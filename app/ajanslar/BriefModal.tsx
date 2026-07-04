@@ -155,7 +155,7 @@ export function BriefModal({
                 </div>
 
                 <p className="mt-6 text-xs text-[var(--color-text-muted)] text-center">
-                  30 dakikada teklif. Brief gizliliği KVKK uyumlu.
+                  15 dakikada teklif. Brief gizliliği KVKK uyumlu.
                 </p>
               </div>
             )}
@@ -176,7 +176,7 @@ export function BriefModal({
                 </h2>
                 <p className="text-sm text-[var(--color-text-secondary)] mb-8">
                   PDF, Word ya da Excel — fark etmez. İki kanaldan birinden
-                  iletebilirsiniz, biz 30 dakika içinde değerlendirip dönüş
+                  iletebilirsiniz, biz 15 dakika içinde değerlendirip dönüş
                   yapıyoruz.
                 </p>
 

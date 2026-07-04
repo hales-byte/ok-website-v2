@@ -1,32 +1,17 @@
 import Link from "next/link";
+import { TOPLAM } from "@/src/data/envanter";
 import { Mail, MapPin, ArrowRight, Clock } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "İletişim",
   description:
-    "Objektif Kriter ile iletişime geçin. OOH reklam kampanyalarınız için 30 dakika içinde dönüş yapıyoruz.",
+    "Objektif Kriter ile iletişime geçin. OOH reklam kampanyalarınız için 15 dakika içinde dönüş yapıyoruz.",
 };
 
-async function getStats() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
-  const { data, error } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir")
-    .eq("aktif", true);
-
-  if (error || !data) {
-    return { sehirSayisi: 0 };
-  }
-
-  const sehirSayisi = new Set(data.map((d) => d.sehir)).size;
-  return { sehirSayisi };
+function getStats() {
+  // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
+  return { sehirSayisi: TOPLAM.il };
 }
 
 // Bu projedeki lucide-react sürümü brand ikonlarını export etmiyor; inline SVG kullanıyoruz.
@@ -86,7 +71,7 @@ function WhatsAppIcon({ size = 22 }: { size?: number }) {
 }
 
 export default async function IletisimPage() {
-  const stats = await getStats();
+  const stats = getStats();
 
   return (
     <>
@@ -103,7 +88,7 @@ export default async function IletisimPage() {
             </h1>
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
               Kampanyanız ne aşamada olursa olsun — fikir aşaması, lokasyon
-              araştırması veya hızlı teklif — bize ulaşın. 30 dakika içinde
+              araştırması veya hızlı teklif — bize ulaşın. 15 dakika içinde
               dönüş yapıyoruz.
             </p>
           </div>
@@ -203,7 +188,7 @@ export default async function IletisimPage() {
 
             <div className="flex justify-center gap-4 pt-2">
               <a
-                href="https://www.linkedin.com/company/objekti%CC%87fkri%CC%87ter"
+                href="https://www.linkedin.com/company/objektifkriter/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -235,7 +220,7 @@ export default async function IletisimPage() {
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
               Sektörünüzü, hedefinizi ve bütçenizi paylaşın. Size en uygun
-              format ve lokasyon kombinasyonunu 30 dakika içinde gönderelim.
+              format ve lokasyon kombinasyonunu 15 dakika içinde gönderelim.
             </p>
             <div className="pt-4">
               <Link href="/teklif-al" className="btn-primary">

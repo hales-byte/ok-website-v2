@@ -1,0 +1,560 @@
+{
+  "guncelleme": "2026-07-02",
+  "kaynak": "OBJ ENVANTER objenv.xlsx (Network Adeti hariç)",
+  "toplam": {
+    "il": 45,
+    "unite": 35919
+  },
+  "iller": [
+    {
+      "il": "Gaziantep",
+      "toplam": 3490,
+      "ilceler": [
+        "Nizip",
+        "Gaziantep Üniversitesi",
+        "OSB",
+        "Havalimanı Kavşağı",
+        "Primall AVM",
+        "Iconova Cadde",
+        "Era AVM"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 1684,
+        "POLE BANNER": 1000,
+        "BILLBOARD": 550,
+        "MEGALIGHT": 116,
+        "BIGBOARD": 50,
+        "TRAMVAY KAPLAMA": 40,
+        "LED": 40,
+        "KULEBOARD": 4,
+        "MEGABOARD": 4,
+        "OTOBÜS KAPLAMA": 2
+      }
+    },
+    {
+      "il": "Ankara",
+      "toplam": 2946,
+      "ilceler": [
+        "Güvenpark Metro Çıkışı",
+        "Soysal İş Mrk. Çatı",
+        "Soysal İş Mrk. Duvar",
+        "Yaka Beytepe",
+        "Beytepe Necdet Et",
+        "Beşevler Metro Çıkışı",
+        "Yozgat Bulvarı",
+        "Keçiören FTZ",
+        "Kocatepe Kültür Mrk.",
+        "AŞTİ Bağlantı Tüneli"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 1951,
+        "BILLBOARD": 342,
+        "ALINLIK": 215,
+        "GIANTBOARD": 168,
+        "LUNA": 140,
+        "MEGALIGHT": 64,
+        "KULEBOARD": 26,
+        "PARAPET": 26,
+        "LED": 14
+      }
+    },
+    {
+      "il": "Balıkesir",
+      "toplam": 2714,
+      "ilceler": [
+        "Bandırma",
+        "Ayvalık",
+        "Edremit",
+        "Burhaniye-Altınoluk-Güre-Altınkum"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 2146,
+        "BILLBOARD": 509,
+        "LED": 31,
+        "MEGALIGHT": 28
+      }
+    },
+    {
+      "il": "Adana",
+      "toplam": 2677,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 1500,
+        "BILLBOARD": 900,
+        "MEGALIGHT": 230,
+        "GIANTBOARD": 20,
+        "LED": 16,
+        "SİLİNDİR KULE": 6,
+        "MEGABOARD": 5
+      }
+    },
+    {
+      "il": "Mersin",
+      "toplam": 2611,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 1133,
+        "BILLBOARD": 1100,
+        "BILLBOARD PLUS": 111,
+        "MEGALIGHT": 106,
+        "GIANTBOARD": 70,
+        "MEGABOARD": 48,
+        "RAKET LED": 16,
+        "LED": 14,
+        "SÜPER LED EKRAN": 12,
+        "PRİZMA LED": 1
+      }
+    },
+    {
+      "il": "Tekirdağ",
+      "toplam": 2063,
+      "ilceler": [
+        "Çorlu",
+        "Silivri",
+        "Marmara Ereğlisi",
+        "Namık Kemal Üniversitesi",
+        "Ergene",
+        "Kapaklı",
+        "Saray",
+        "Çerkezköy"
+      ],
+      "formatlar": {
+        "POLE BANNER": 1975,
+        "CLP RAKET-DURAK": 80,
+        "LED": 4,
+        "GIANTBOARD": 3,
+        "RAKET LED": 1
+      }
+    },
+    {
+      "il": "Erzurum",
+      "toplam": 1970,
+      "ilceler": [
+        "Atatürk Üniversitesi",
+        "Teknik Üniversitesi"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 1170,
+        "POLE BANNER": 530,
+        "BILLBOARD": 120,
+        "GIANTBOARD": 120,
+        "MEGALIGHT": 30
+      }
+    },
+    {
+      "il": "Eskişehir",
+      "toplam": 1493,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 974,
+        "BILLBOARD": 466,
+        "MEGALIGHT": 26,
+        "GIANTBOARD": 20,
+        "LED": 7
+      }
+    },
+    {
+      "il": "Diyarbakır",
+      "toplam": 1354,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 700,
+        "BILLBOARD": 500,
+        "MEGALIGHT": 120,
+        "MEGABOARD": 22,
+        "GIANTBOARD": 11,
+        "LED": 1
+      }
+    },
+    {
+      "il": "Trabzon",
+      "toplam": 1324,
+      "ilceler": [
+        "Akçaabat",
+        "Beşikdüzü",
+        "Maçka",
+        "Of",
+        "Havalimanı"
+      ],
+      "formatlar": {
+        "POLE BANNER": 1058,
+        "CLP RAKET-DURAK": 161,
+        "BILLBOARD": 99,
+        "MEGALIGHT": 4,
+        "LED": 2
+      }
+    },
+    {
+      "il": "Sakarya",
+      "toplam": 1255,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 700,
+        "BILLBOARD": 500,
+        "MEGALIGHT": 50,
+        "GIANTBOARD": 5
+      }
+    },
+    {
+      "il": "Samsun",
+      "toplam": 1164,
+      "ilceler": [
+        "Çarşamba Havalimanı"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 652,
+        "BILLBOARD": 481,
+        "MEGALIGHT": 16,
+        "RAKET LED": 12,
+        "LED": 3
+      }
+    },
+    {
+      "il": "Van",
+      "toplam": 869,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 540,
+        "BILLBOARD": 255,
+        "MEGALIGHT": 38,
+        "GIANTBOARD": 23,
+        "TOTEM": 9,
+        "LED": 4
+      }
+    },
+    {
+      "il": "Kars",
+      "toplam": 860,
+      "ilceler": [
+        "Sarıkamış"
+      ],
+      "formatlar": {
+        "POLE BANNER": 460,
+        "CLP RAKET-DURAK": 250,
+        "BILLBOARD": 150
+      }
+    },
+    {
+      "il": "Hatay",
+      "toplam": 837,
+      "ilceler": [
+        "İskenderun"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 550,
+        "BILLBOARD": 250,
+        "MEGALIGHT": 36,
+        "LED": 1
+      }
+    },
+    {
+      "il": "Batman",
+      "toplam": 725,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 500,
+        "BILLBOARD": 175,
+        "MEGALIGHT": 26,
+        "GIANTBOARD": 24
+      }
+    },
+    {
+      "il": "Denizli",
+      "toplam": 705,
+      "ilceler": [],
+      "formatlar": {
+        "BILLBOARD": 519,
+        "CLP RAKET-DURAK": 186
+      }
+    },
+    {
+      "il": "Ağrı",
+      "toplam": 600,
+      "ilceler": [],
+      "formatlar": {
+        "POLE BANNER": 300,
+        "CLP RAKET-DURAK": 222,
+        "BILLBOARD": 78
+      }
+    },
+    {
+      "il": "Malatya",
+      "toplam": 565,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 300,
+        "BILLBOARD": 250,
+        "OTOBÜS KAPLAMA": 15
+      }
+    },
+    {
+      "il": "Karabük",
+      "toplam": 508,
+      "ilceler": [
+        "Safranbolu"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 350,
+        "BILLBOARD": 136,
+        "MEGALIGHT": 20,
+        "LED": 2
+      }
+    },
+    {
+      "il": "Elazığ",
+      "toplam": 448,
+      "ilceler": [],
+      "formatlar": {
+        "BILLBOARD": 200,
+        "CLP RAKET-DURAK": 200,
+        "GIANTBOARD": 25,
+        "MEGALIGHT": 10,
+        "TOTEM": 10,
+        "LED": 3
+      }
+    },
+    {
+      "il": "Osmaniye",
+      "toplam": 410,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 250,
+        "BILLBOARD": 150,
+        "MEGALIGHT": 10
+      }
+    },
+    {
+      "il": "Edirne",
+      "toplam": 410,
+      "ilceler": [],
+      "formatlar": {
+        "POLE BANNER": 410
+      }
+    },
+    {
+      "il": "Erzincan",
+      "toplam": 400,
+      "ilceler": [],
+      "formatlar": {
+        "POLE BANNER": 400
+      }
+    },
+    {
+      "il": "Zonguldak",
+      "toplam": 372,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 240,
+        "BILLBOARD": 120,
+        "GIANTBOARD": 10,
+        "MEGALIGHT": 2
+      }
+    },
+    {
+      "il": "Adıyaman",
+      "toplam": 359,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 214,
+        "BILLBOARD": 102,
+        "BILLBOARD PLUS": 28,
+        "MEGABOARD": 15
+      }
+    },
+    {
+      "il": "Afyonkarahisar",
+      "toplam": 353,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 186,
+        "BILLBOARD": 167
+      }
+    },
+    {
+      "il": "Kırklareli",
+      "toplam": 304,
+      "ilceler": [
+        "Lüleburgaz"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 170,
+        "BILLBOARD": 128,
+        "MEGALIGHT": 6
+      }
+    },
+    {
+      "il": "Iğdır",
+      "toplam": 300,
+      "ilceler": [],
+      "formatlar": {
+        "POLE BANNER": 300
+      }
+    },
+    {
+      "il": "Kilis",
+      "toplam": 298,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 200,
+        "BILLBOARD": 90,
+        "MEGALIGHT": 6,
+        "MEGABOARD": 2
+      }
+    },
+    {
+      "il": "Uşak",
+      "toplam": 295,
+      "ilceler": [],
+      "formatlar": {
+        "BILLBOARD": 178,
+        "CLP RAKET-DURAK": 84,
+        "GIANTBOARD": 20,
+        "RAKET LED": 10,
+        "LED": 2,
+        "MEGABOARD": 1
+      }
+    },
+    {
+      "il": "Rize",
+      "toplam": 259,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 146,
+        "BILLBOARD": 103,
+        "MEGALIGHT": 10
+      }
+    },
+    {
+      "il": "Ordu",
+      "toplam": 255,
+      "ilceler": [
+        "Fatsa",
+        "Ordu-Giresun Havalimanı"
+      ],
+      "formatlar": {
+        "POLE BANNER": 250,
+        "LED": 5
+      }
+    },
+    {
+      "il": "Yozgat",
+      "toplam": 162,
+      "ilceler": [],
+      "formatlar": {
+        "BILLBOARD": 100,
+        "CLP RAKET-DURAK": 60,
+        "LED": 2
+      }
+    },
+    {
+      "il": "Düzce",
+      "toplam": 150,
+      "ilceler": [
+        "OSB"
+      ],
+      "formatlar": {
+        "BILLBOARD": 102,
+        "CLP RAKET-DURAK": 20,
+        "TOTEM": 16,
+        "MEGALIGHT": 7,
+        "GIANTBOARD": 5
+      }
+    },
+    {
+      "il": "Bilecik",
+      "toplam": 128,
+      "ilceler": [],
+      "formatlar": {
+        "BILLBOARD": 64,
+        "CLP RAKET-DURAK": 64
+      }
+    },
+    {
+      "il": "Ardahan",
+      "toplam": 100,
+      "ilceler": [],
+      "formatlar": {
+        "POLE BANNER": 100
+      }
+    },
+    {
+      "il": "Bayburt",
+      "toplam": 100,
+      "ilceler": [],
+      "formatlar": {
+        "POLE BANNER": 100
+      }
+    },
+    {
+      "il": "Artvin",
+      "toplam": 48,
+      "ilceler": [
+        "Hopa",
+        "Borçka"
+      ],
+      "formatlar": {
+        "BILLBOARD": 22,
+        "CLP RAKET-DURAK": 21,
+        "GIANTBOARD": 5
+      }
+    },
+    {
+      "il": "Çanakkale",
+      "toplam": 30,
+      "ilceler": [
+        "Gelibolu"
+      ],
+      "formatlar": {
+        "BILLBOARD": 30
+      }
+    },
+    {
+      "il": "Kocaeli",
+      "toplam": 3,
+      "ilceler": [],
+      "formatlar": {
+        "LED": 3
+      }
+    },
+    {
+      "il": "Tokat",
+      "toplam": 2,
+      "ilceler": [
+        "Havalimanı"
+      ],
+      "formatlar": {
+        "LED": 2
+      }
+    },
+    {
+      "il": "Amasya",
+      "toplam": 1,
+      "ilceler": [
+        "Merzifon Havalimanı"
+      ],
+      "formatlar": {
+        "LED": 1
+      }
+    },
+    {
+      "il": "Sivas",
+      "toplam": 1,
+      "ilceler": [
+        "Havalimanı"
+      ],
+      "formatlar": {
+        "LED": 1
+      }
+    },
+    {
+      "il": "İzmir",
+      "toplam": 1,
+      "ilceler": [
+        "Adnan Menderes Havalimanı"
+      ],
+      "formatlar": {
+        "LED": 1
+      }
+    }
+  ]
+}

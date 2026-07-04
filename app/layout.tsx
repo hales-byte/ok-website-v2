@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TOPLAM, sayiTr } from "@/src/data/envanter";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Objektif Kriter",
   },
   description:
-    "Türkiye genelinde 47+ şehir, 33.812+ reklam yüzü. Billboard, CLP, megalight ve dijital OOH çözümleri.",
+    `Türkiye genelinde ${TOPLAM.il} il, ${sayiTr(TOPLAM.unite)} reklam ünitesi. Billboard, CLP, megalight ve dijital OOH çözümleri.`,
   keywords: [
     "OOH reklam",
     "outdoor reklam",
@@ -36,13 +37,13 @@ export const metadata: Metadata = {
     siteName: "Objektif Kriter",
     title: "Objektif Kriter — Türkiye OOH Reklam",
     description:
-      "Türkiye genelinde 47+ şehir, 33.812+ reklam yüzü için OOH çözümleri.",
+      `Türkiye genelinde ${TOPLAM.il} il, ${sayiTr(TOPLAM.unite)} reklam ünitesi için OOH çözümleri.`,
   },
   twitter: {
     card: "summary_large_image",
     title: "Objektif Kriter — Türkiye OOH Reklam",
     description:
-      "Türkiye genelinde 47+ şehir, 33.812+ reklam yüzü için OOH çözümleri.",
+      `Türkiye genelinde ${TOPLAM.il} il, ${sayiTr(TOPLAM.unite)} reklam ünitesi için OOH çözümleri.`,
   },
 };
 
@@ -74,7 +75,7 @@ export default function RootLayout({
               url: "https://objektifkriter.com.tr",
               logo: "https://objektifkriter.com.tr/logo.png",
               description:
-                "Türkiye genelinde 47+ şehirde billboard, CLP, megalight, LED ve dijital OOH reklam çözümleri.",
+                `Türkiye genelinde ${TOPLAM.il} ilde billboard, CLP, megalight, LED ve dijital OOH reklam çözümleri.`,
               contactPoint: {
                 "@type": "ContactPoint",
                 telephone: "+90-552-918-58-64",
@@ -89,9 +90,36 @@ export default function RootLayout({
                 addressCountry: "TR",
               },
               sameAs: [
-                "https://www.linkedin.com/company/objekti%CC%87fkri%CC%87ter",
+                "https://www.linkedin.com/company/objektifkriter/",
                 "https://www.instagram.com/objektifkriter/",
               ],
+            }),
+          }}
+        />
+        {/* LocalBusiness JSON-LD — yerel arama görünürlüğü (T6) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "@id": "https://objektifkriter.com.tr/#localbusiness",
+              name: "Objektif Kriter Reklamcılık ve Danışmanlık",
+              image: "https://objektifkriter.com.tr/logo.png",
+              url: "https://objektifkriter.com.tr",
+              telephone: "+905529185864",
+              email: "satis@objektifkriter.com.tr",
+              priceRange: "$$",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Gümüşsuyu Mah. İnönü Cad. Zampak Apt. No: 7/5",
+                addressLocality: "Beyoğlu",
+                addressRegion: "İstanbul",
+                addressCountry: "TR",
+              },
+              areaServed: { "@type": "Country", name: "Türkiye" },
+              description:
+                `Türkiye genelinde ${TOPLAM.il} il, ${TOPLAM.mecra} mecra türü, ${sayiTr(TOPLAM.unite)} reklam ünitesi ile açıkhava reklam ve mecra planlama.`,
             }),
           }}
         />

@@ -1,157 +1,61 @@
 import { notFound } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowRight, MapPin, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
+import {
+  getIller,
+  getIl,
+  getFormatlarByIl,
+  formatAdi,
+  FORMAT_PAGE_KEY,
+  MIN_FORMAT_PAGE_UNITE,
+  sayiTr,
+  slugifyTr,
+  lokatifEk,
+  ilSirasi,
+  TOPLAM,
+} from "@/src/data/envanter";
 
-// Türkçe-bilinçli display capitalize: "PAZAR" → "Pazar", "clp" → "CLP" gibi
-// karışık case'leri kullanıcıya gösterilebilir hale getirir.
-//
-// Strateji: 4 harften kısa girişler tamamen büyük (CLP, LED) — kısaltma
-// olma olasılığı yüksek. Daha uzunlar Title Case (Türkçe locale ile,
-// "İstanbul" / "Çarşamba" doğru çıkar). "HERGÜN" gibi tek kelimeler de
-// 4'ten uzun → Title Case → "Hergün".
-function displayCase(str: string | null): string {
-  if (!str) return "—";
-  const trimmed = str.trim();
-  if (!trimmed) return "—";
-  if (trimmed.length <= 4) return trimmed.toLocaleUpperCase("tr");
-  return trimmed
-    .toLocaleLowerCase("tr")
-    .split(/(\s+|-)/)
-    .map((part) =>
-      part.match(/^\s+|-$/) ? part : part.charAt(0).toLocaleUpperCase("tr") + part.slice(1)
-    )
-    .join("");
+/**
+ * Bilinmeyen parametreler için GERÇEK 404 (Next 16 akışlı metadata,
+ * runtime notFound/redirect'i HTTP koduna yansıtamıyor — QA bulgusu).
+ * Tüm geçerli sayfalar build'de üretilir; gerisi router'da 404.
+ */
+export const dynamicParams = false;
+
+// Build time'da envanter.json'daki 45 ilin hepsi için statik sayfa üret
+export function generateStaticParams() {
+  return getIller().map((il) => ({ slug: slugifyTr(il.il) }));
 }
 
-// Türkçe karakterleri slug formatına çevir
-function slugify(str: string): string {
-  return str
-    .toLocaleLowerCase("tr")
-    .replace(/ı/g, "i")
-    .replace(/ğ/g, "g")
-    .replace(/ü/g, "u")
-    .replace(/ş/g, "s")
-    .replace(/ö/g, "o")
-    .replace(/ç/g, "c")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function getSupabase() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-}
-
-// Aktif şehir listesini çek
-async function getSehirler(): Promise<string[]> {
-  const supabase = getSupabase();
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir")
-    .eq("aktif", true);
-
-  if (!data) return [];
-  return [...new Set(data.map((d) => d.sehir))].filter(Boolean) as string[];
-}
-
-// Slug'tan orijinal şehir adını bul
-async function findSehirBySlug(slug: string): Promise<string | null> {
-  const sehirler = await getSehirler();
-  return sehirler.find((s) => slugify(s) === slug) || null;
-}
-
-// Bir şehirdeki envanter detayı
-async function getSehirDetay(sehirAdi: string) {
-  const supabase = getSupabase();
-  // Açık kolon listesi: birim_fiyat, lat/lng, notlar gibi hassas/internal
-  // kolonlar bilinçli olarak çekilmiyor (network response'una sızmasın).
-  // Ünite tablosu için: unite (format adı), toplam_face (yüz sayısı),
-  // network_adeti (lokasyon ağı sayısı), asim_gunu (min kampanya süresi),
-  // format_kategori (üst kategori) — bunlar persona-3 (switching marka)
-  // için RFP doğrulamasına yetecek granülerlik.
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select(
-      "sehir, unite, toplam_face, network_adeti, asim_gunu, format_kategori"
-    )
-    .eq("sehir", sehirAdi)
-    .eq("aktif", true);
-
-  if (!data || data.length === 0) return null;
-
-  const toplamYuz = data.reduce(
-    (sum, d) => sum + (d.toplam_face || 0),
-    0
-  );
-  const lokasyonSayisi = data.length;
-
-  // Format dağılımı (unite alanına göre, sayım için)
-  const formatlar: Record<string, number> = {};
-  for (const item of data) {
-    const unite = item.unite || "Diğer";
-    formatlar[unite] = (formatlar[unite] || 0) + (item.toplam_face || 0);
-  }
-
-  // Ünite detay listesi: format adı, yüz sayısı, network adeti, min süre,
-  // kategori. Tabloda yüz sayısına göre azalan sıralı render.
-  type UniteDetay = {
-    unite: string;
-    toplamYuz: number;
-    networkAdeti: number | null;
-    asimGunu: string | null;
-    kategori: string | null;
-  };
-  const uniteler: UniteDetay[] = data
-    .map((d) => ({
-      unite: d.unite || "Diğer",
-      toplamYuz: d.toplam_face || 0,
-      networkAdeti:
-        typeof d.network_adeti === "number" ? d.network_adeti : null,
-      asimGunu: d.asim_gunu ?? null,
-      kategori: d.format_kategori ?? null,
-    }))
-    .sort((a, b) => b.toplamYuz - a.toplamYuz);
-
-  return {
-    sehir: sehirAdi,
-    toplamYuz,
-    lokasyonSayisi,
-    formatlar,
-    formatSayisi: Object.keys(formatlar).length,
-    uniteler,
-  };
-}
-
-// Build time'da tüm şehirler için statik sayfa üret
-export async function generateStaticParams() {
-  const sehirler = await getSehirler();
-  return sehirler.map((sehir) => ({
-    slug: slugify(sehir),
-  }));
-}
-
-// Her sayfa için dinamik SEO metadata
+// Her sayfa için dinamik SEO metadata — rakamlar envanter.json'dan
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const sehir = await findSehirBySlug(slug);
+  const il = getIl(slug);
 
-  if (!sehir) {
-    return { title: "Sayfa bulunamadı" };
+  // 404 kararı burada (metadata aşaması) verilir ki HTTP durum kodu
+  // gövde akışı başlamadan doğru (404) dönsün.
+  if (!il) {
+    notFound();
   }
 
+  const mecraSayisi = Object.keys(il.formatlar).length;
   return {
-    title: `${sehir} OOH Reklam`,
-    description: `${sehir} ilinde billboard, CLP, megalight ve dijital OOH reklam çözümleri. Geniş lokasyon ağı, hızlı teklif, profesyonel takip.`,
+    title: `${il.il} Açıkhava Reklam — ${sayiTr(il.toplam)} Reklam Ünitesi`,
+    description: `${il.il}${lokatifEk(il.il)} ${sayiTr(il.toplam)} reklam ünitesi, ${mecraSayisi} mecra türü: billboard, CLP, megalight ve dijital açıkhava çözümleri. Hızlı teklif, profesyonel takip.`,
+    alternates: {
+      canonical: `https://objektifkriter.com.tr/sehir/${slug}`,
+    },
+    openGraph: {
+      title: `${il.il} Açıkhava Reklam — ${sayiTr(il.toplam)} Reklam Ünitesi`,
+      description: `${il.il}${lokatifEk(il.il)} ${mecraSayisi} mecra türünde ${sayiTr(il.toplam)} reklam ünitesi. Hızlı teklif, foto-raporlu uygulama.`,
+      url: `https://objektifkriter.com.tr/sehir/${slug}`,
+      type: "website",
+    },
   };
 }
 
@@ -161,16 +65,17 @@ export default async function SehirPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const sehir = await findSehirBySlug(slug);
+  const il = getIl(slug);
 
-  if (!sehir) {
+  if (!il) {
     notFound();
   }
 
-  const detay = await getSehirDetay(sehir);
-  if (!detay) {
-    notFound();
-  }
+  const sehir = il.il;
+  const ek = lokatifEk(sehir);
+  const formatlar = getFormatlarByIl(slug);
+  const mecraSayisi = formatlar.length;
+  const sira = ilSirasi(slug);
 
   return (
     <>
@@ -184,14 +89,12 @@ export default async function SehirPage({
             </div>
             <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight">
               <span className="text-gradient">{sehir}</span>
-              &apos;da OOH Reklam
+              {ek} Açıkhava Reklam
             </h1>
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
-              {sehir}&apos;daki{" "}
-              {detay.toplamYuz.toLocaleString("tr-TR")}+ reklam yüzü ile
-              markanızı şehrin doğru noktalarında konumlandırın.{" "}
-              {detay.lokasyonSayisi} lokasyondan oluşan envanterimizle
-              billboard, CLP, megalight ve dijital format seçenekleri hazır.
+              {sehir}{ek} {sayiTr(il.toplam)} reklam ünitesi ile markanızı
+              şehrin doğru noktalarında konumlandırın. {mecraSayisi} farklı
+              mecra türünden oluşan envanterimiz kampanyanız için hazır.
             </p>
           </div>
         </div>
@@ -203,26 +106,26 @@ export default async function SehirPage({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center md:text-left">
               <div className="text-5xl md:text-6xl font-bold text-gradient">
-                {detay.toplamYuz.toLocaleString("tr-TR")}+
+                {sayiTr(il.toplam)}
               </div>
               <div className="mt-2 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Reklam Yüzü
+                Reklam Ünitesi
               </div>
             </div>
             <div className="text-center md:text-left">
               <div className="text-5xl md:text-6xl font-bold text-gradient">
-                {detay.lokasyonSayisi}
+                {mecraSayisi}
               </div>
               <div className="mt-2 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Lokasyon
+                Mecra Türü
               </div>
             </div>
             <div className="text-center md:text-left">
               <div className="text-5xl md:text-6xl font-bold text-gradient">
-                {detay.formatSayisi}
+                #{sira}
               </div>
               <div className="mt-2 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Format Tipi
+                {TOPLAM.il} İllik Ağdaki Sırası
               </div>
             </div>
           </div>
@@ -237,101 +140,74 @@ export default async function SehirPage({
               {sehir} envanteri
             </h2>
             <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-              Format bazında reklam yüzü dağılımı.
+              Mecra türü bazında reklam ünitesi dağılımı — rakamlar güncel
+              envanterden otomatik gelir.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(detay.formatlar)
-              .sort((a, b) => b[1] - a[1])
-              .map(([format, sayi]) => (
+            {formatlar.map(({ format, adet }) => {
+              const pageKey = FORMAT_PAGE_KEY[format];
+              const sayfasiVar =
+                pageKey !== null &&
+                pageKey !== undefined &&
+                adet >= MIN_FORMAT_PAGE_UNITE;
+              const kart = (
                 <div
-                  key={format}
-                  className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)]"
+                  className={`p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] h-full ${
+                    sayfasiVar
+                      ? "transition-colors hover:border-[var(--color-primary)]"
+                      : ""
+                  }`}
                 >
                   <div className="text-3xl font-bold text-[var(--color-primary)]">
-                    {sayi.toLocaleString("tr-TR")}
+                    {sayiTr(adet)}
                   </div>
-                  <div className="mt-2 text-sm text-[var(--color-text-secondary)]">
-                    {format}
+                  <div className="mt-2 text-sm text-[var(--color-text-secondary)] flex items-center gap-1">
+                    {formatAdi(format)}
+                    {sayfasiVar && <ChevronRight size={14} />}
                   </div>
                 </div>
-              ))}
+              );
+              return sayfasiVar ? (
+                <Link key={format} href={`/sehir/${slug}/${pageKey}`}>
+                  {kart}
+                </Link>
+              ) : (
+                <div key={format}>{kart}</div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ÜNİTE DETAY TABLOSU — Persona 3 (switching marka) için RFP cephanesi */}
-      <section className="py-20 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/30">
-        <div className="container-narrow">
-          <div className="max-w-2xl mb-10">
-            <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
-              Şeffaf envanter
+      {/* İLÇE / BÖLGELER */}
+      {il.ilceler.length > 0 && (
+        <section className="py-20 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/30">
+          <div className="container-narrow">
+            <div className="max-w-2xl mb-8">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                Kapsama alanı
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+                {sehir} içinde envanterin bulunduğu noktalar
+              </h2>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-              {sehir} ünite detayları
-            </h2>
-            <p className="mt-4 text-base md:text-lg text-[var(--color-text-secondary)]">
-              {detay.uniteler.length} format kategorisi, asım günü ve
-              lokasyon ağı bilgisiyle birlikte.
+            <div className="flex flex-wrap gap-3">
+              {il.ilceler.map((ilce) => (
+                <span
+                  key={ilce}
+                  className="px-4 py-2 rounded-full bg-[var(--color-surface)] border border-[var(--color-border-subtle)] text-sm text-[var(--color-text-secondary)]"
+                >
+                  {ilce}
+                </span>
+              ))}
+            </div>
+            <p className="text-xs text-[var(--color-text-muted)] mt-4">
+              Nokta (sokak/lokasyon) bazlı liste teklif aşamasında paylaşılır.
             </p>
           </div>
-
-          <div className="overflow-x-auto rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-bg)]">
-            <table className="w-full text-sm md:text-base">
-              <thead>
-                <tr className="border-b border-[var(--color-border-subtle)] bg-[var(--color-surface)]">
-                  <th className="text-left p-4 font-semibold text-[var(--color-text-muted)]">
-                    Format
-                  </th>
-                  <th className="text-right p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap">
-                    Reklam Yüzü
-                  </th>
-                  <th className="text-right p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap hidden md:table-cell">
-                    Network Ağı
-                  </th>
-                  <th className="text-left p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap hidden md:table-cell">
-                    Asım Günü
-                  </th>
-                  <th className="text-left p-4 font-semibold text-[var(--color-text-muted)] whitespace-nowrap hidden lg:table-cell">
-                    Kategori
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {detay.uniteler.map((u, i) => (
-                  <tr
-                    key={u.unite}
-                    className={`border-b border-[var(--color-border-subtle)] ${
-                      i % 2 === 0 ? "bg-transparent" : "bg-[var(--color-surface)]/30"
-                    } last:border-b-0`}
-                  >
-                    <td className="p-4 font-medium align-top">{u.unite}</td>
-                    <td className="p-4 text-right font-semibold text-[var(--color-primary)] align-top whitespace-nowrap">
-                      {u.toplamYuz.toLocaleString("tr-TR")}
-                    </td>
-                    <td className="p-4 text-right text-[var(--color-text-secondary)] align-top hidden md:table-cell">
-                      {u.networkAdeti != null
-                        ? u.networkAdeti.toLocaleString("tr-TR")
-                        : "—"}
-                    </td>
-                    <td className="p-4 text-[var(--color-text-secondary)] align-top hidden md:table-cell whitespace-nowrap">
-                      {displayCase(u.asimGunu)}
-                    </td>
-                    <td className="p-4 text-[var(--color-text-secondary)] align-top hidden lg:table-cell">
-                      {displayCase(u.kategori)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="text-xs text-[var(--color-text-muted)] mt-3">
-            Ünite-bazlı (sokak/lokasyon) liste teklif aşamasında
-            paylaşılır. Bu tablo format kategorisi düzeyinde kapsama
-            doğrulamanız için açık.
-          </p>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
@@ -342,7 +218,7 @@ export default async function SehirPage({
               <span className="text-gradient">teklif</span> alın
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
-              Hedefinize ve bütçenize uygun lokasyonları 30 dakika içinde
+              Hedefinize ve bütçenize uygun lokasyonları 15 dakika içinde
               önerelim.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">

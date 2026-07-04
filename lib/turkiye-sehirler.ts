@@ -154,3 +154,16 @@ export function sehirAra(query: string, hariç: string[] = []): string[] {
     return normalize(sehir).startsWith(q);
   }).slice(0, 8); // En fazla 8 öneri
 }
+
+/**
+ * Türkçe-bilinçli Title Case ("ANKARA" → "Ankara", "İSTANBUL" → "İstanbul").
+ * (Eski lib/sehir-koordinatlari.ts dosyasından taşındı — o dosya Mapbox
+ * sökümüyle birlikte kaldırıldı.)
+ */
+export function titleCaseTr(input: string): string {
+  return input
+    .toLocaleLowerCase("tr")
+    .split(" ")
+    .map((w) => (w ? w.charAt(0).toLocaleUpperCase("tr") + w.slice(1) : w))
+    .join(" ");
+}

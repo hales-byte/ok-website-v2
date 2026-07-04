@@ -8,7 +8,7 @@ interface CountUpProps {
   end: number;
   /** Animasyon süresi (ms) — default 2000ms */
   duration?: number;
-  /** Türkçe ondalık ayırıcı kullansın mı (örn. 33.812) */
+  /** Türkçe ondalık ayırıcı kullansın mı (örn. 35.919) */
   formatTr?: boolean;
   /** Sayıdan önceki prefix (örn. "₺") */
   prefix?: string;
@@ -24,7 +24,7 @@ interface CountUpProps {
  *
  * Kullanım:
  *   <CountUp end={47} suffix="+" />
- *   <CountUp end={33812} formatTr suffix="+" />
+ *   <CountUp end={35919} formatTr suffix="+" />
  */
 export function CountUp({
   end,

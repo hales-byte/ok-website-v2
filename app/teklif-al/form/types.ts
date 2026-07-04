@@ -137,7 +137,7 @@ export type FormAction =
   | { type: "RESET" }
   | { type: "LOAD_FROM_STORAGE"; state: FormState };
 
-// Supabase'e gönderilecek payload (talepler tablosu şemasıyla uyumlu)
+// Bildirim e-postasına gömülen talep verisi (eski DB şemasıyla aynı alanlar)
 export type TalepPayload = {
   ad_soyad: string;
   email: string;

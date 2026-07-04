@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
-import { createClient } from "@supabase/supabase-js";
 import { getFormatByKey } from "@/lib/formats";
+import { getIl, getIlFormatAdet, sayiTr } from "@/src/data/envanter";
 
 /**
  * /sehir/[slug]/[format] sayfası için unique OG image (1200×630).
@@ -13,46 +13,12 @@ export const alt = "Şehir + format reklam çözümleri — Objektif Kriter";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-function slugify(str: string): string {
-  return str
-    .toLocaleLowerCase("tr")
-    .replace(/ı/g, "i")
-    .replace(/ğ/g, "g")
-    .replace(/ü/g, "u")
-    .replace(/ş/g, "s")
-    .replace(/ö/g, "o")
-    .replace(/ç/g, "c")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-async function getDetay(slug: string, format: string) {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  );
-  const { data: sehirler } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir")
-    .eq("aktif", true);
-  const sehir = (sehirler ?? []).map((d) => d.sehir).find((s) => s && slugify(s) === slug);
-  if (!sehir) return null;
-
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("toplam_face")
-    .eq("sehir", sehir)
-    .eq("format_kategori", format)
-    .eq("aktif", true);
-  if (!data || data.length === 0) return null;
-
-  return {
-    sehir,
-    lokasyonSayisi: data.length,
-    toplamYuz: data.reduce((sum, d) => sum + (d.toplam_face || 0), 0),
-  };
+function getDetay(slug: string, format: string) {
+  const il = getIl(slug);
+  if (!il) return null;
+  const adet = getIlFormatAdet(slug, format);
+  if (adet <= 0) return null;
+  return { sehir: il.il, adet };
 }
 
 export default async function Image({
@@ -61,13 +27,13 @@ export default async function Image({
   params: { slug: string; format: string };
 }) {
   const formatMeta = getFormatByKey(params.format);
-  const detay = await getDetay(params.slug, params.format);
+  const detay = getDetay(params.slug, params.format);
 
   // Veri yoksa default brand görseli
   const sehirAdi = detay?.sehir ?? "—";
   const formatAdi = formatMeta?.name ?? params.format;
   const lokasyonText = detay
-    ? `${detay.lokasyonSayisi} lokasyon · ${detay.toplamYuz.toLocaleString("tr-TR")} reklam yüzü`
+    ? `${sayiTr(detay.adet)} reklam ünitesi`
     : "Türkiye OOH";
 
   return new ImageResponse(

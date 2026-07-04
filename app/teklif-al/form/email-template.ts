@@ -6,9 +6,6 @@
 import type { FormState, TalepPayload } from "./types";
 import { SEGMENT_LABELS } from "./types";
 
-const SUPABASE_DASHBOARD_BASE =
-  "https://supabase.com/dashboard/project/fkagnwhljbkjxihfuccv/editor";
-
 /**
  * HTML escape — özel karakterler (&, <, >, ", ') bozulmasın.
  */
@@ -52,7 +49,7 @@ export function buildNotificationEmail(
     ? SEGMENT_LABELS[state.segment]
     : "Belirsiz";
 
-  const subject = `Yeni Teklif: ${payload.ad_soyad} — ${segmentLabel}`;
+  const subject = `Yeni Teklif Talebi — ${payload.ad_soyad}${payload.sirket ? ` / ${payload.sirket}` : ""}`;
 
   const sehirlerStr = payload.sehirler.length
     ? payload.sehirler.join(", ")
@@ -81,7 +78,7 @@ export function buildNotificationEmail(
     <div style="padding:24px 28px;background:linear-gradient(135deg,#0f766e 0%,#14b8a6 100%);color:#ffffff;">
       <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;">Objektif Kriter</div>
       <h1 style="margin:6px 0 0;font-size:22px;font-weight:600;line-height:1.3;">Yeni teklif talebi geldi</h1>
-      <div style="margin-top:6px;font-size:13px;opacity:0.9;">⏱ 30 dakika içinde geri dönüş vaadi var</div>
+      <div style="margin-top:6px;font-size:13px;opacity:0.9;">⏱ 15 dakika içinde geri dönüş vaadi var</div>
     </div>
 
     <div style="padding:24px 28px;">
@@ -154,9 +151,7 @@ export function buildNotificationEmail(
     </div>
 
     <div style="padding:16px 28px 24px;text-align:center;font-size:12px;color:#94a3b8;">
-      <a href="${SUPABASE_DASHBOARD_BASE}" style="color:#0f766e;text-decoration:none;">Supabase'te aç</a>
-      <span style="margin:0 6px;color:#cbd5e1;">·</span>
-      Objektif Kriter — Otomatik bildirim
+      Objektif Kriter — Otomatik bildirim (yanıtla: doğrudan müşteriye gider)
     </div>
   </div>
 </body>
@@ -165,7 +160,7 @@ export function buildNotificationEmail(
   // ─── Plain text fallback ───
   const text = [
     "YENİ TEKLİF TALEBİ",
-    "30 dakika içinde geri dönüş vaadi var.",
+    "15 dakika içinde geri dönüş vaadi var.",
     "",
     "İLETİŞİM",
     `  Ad Soyad: ${payload.ad_soyad}`,
@@ -186,8 +181,6 @@ export function buildNotificationEmail(
     `  Onay: ${kvkkOnayTarihi} (v${payload.aydinlatma_versiyonu ?? "—"})`,
     `  Pazarlama izni: ${payload.pazarlama_onay ? "Verdi" : "Vermedi"}`,
     payload.ip_address ? `  IP: ${payload.ip_address}` : null,
-    "",
-    "Supabase: " + SUPABASE_DASHBOARD_BASE,
   ]
     .filter((line) => line !== null)
     .join("\n");

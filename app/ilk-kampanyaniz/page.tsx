@@ -27,7 +27,7 @@ const endiseler = [
   {
     soru: "Yayında sorun olursa kime ulaşırım, ne kadar sürede dönüş alırım?",
     cevap:
-      "Size atanmış tek temas noktası var — WhatsApp ve telefon ile direkt ulaşırsınız. Mesai içi 30 dakika, mesai dışı ertesi gün ilk yarısı içinde dönüş veriyoruz.",
+      "Size atanmış tek temas noktası var — WhatsApp ve telefon ile direkt ulaşırsınız. Mesai içi 15 dakika, mesai dışı ertesi gün ilk yarısı içinde dönüş veriyoruz.",
   },
 ];
 
@@ -259,7 +259,7 @@ export default function IlkKampanyanizPage() {
                 Önce konuşalım, formu sonra dolduruz
               </h2>
               <p className="text-lg text-[var(--color-text-secondary)]">
-                Mesai içi 30 dakika, mesai dışı en geç ertesi sabah dönüş
+                Mesai içi 15 dakika, mesai dışı en geç ertesi sabah dönüş
                 yapıyoruz. Sorularınızı sormak için WhatsApp en rahat yol.
               </p>
               <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">

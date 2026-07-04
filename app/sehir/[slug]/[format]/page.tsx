@@ -1,163 +1,59 @@
-import { notFound } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, MapPin, ChevronRight, Layers } from "lucide-react";
 import type { Metadata } from "next";
 import { getFormatByKey, getFormatLabel } from "@/lib/formats";
-
-function slugify(str: string): string {
-  return str
-    .toLocaleLowerCase("tr")
-    .replace(/ı/g, "i")
-    .replace(/ğ/g, "g")
-    .replace(/ü/g, "u")
-    .replace(/ş/g, "s")
-    .replace(/ö/g, "o")
-    .replace(/ç/g, "c")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function getSupabase() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-}
-
-async function getSehirler(): Promise<string[]> {
-  const supabase = getSupabase();
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir")
-    .eq("aktif", true);
-
-  if (!data) return [];
-  return [...new Set(data.map((d) => d.sehir))].filter(Boolean) as string[];
-}
-
-async function findSehirBySlug(slug: string): Promise<string | null> {
-  const sehirler = await getSehirler();
-  return sehirler.find((s) => slugify(s) === slug) || null;
-}
-
-async function getKombinasyon(sehirAdi: string, formatKategori: string) {
-  const supabase = getSupabase();
-  // Açık kolon listesi: birim_fiyat ve internal not kolonlarının network
-  // response'una sızmasını engeller. UI'da sadece sayım kullanılıyor.
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("toplam_face")
-    .eq("sehir", sehirAdi)
-    .eq("format_kategori", formatKategori)
-    .eq("aktif", true);
-
-  if (!data || data.length === 0) return null;
-
-  const toplamYuz = data.reduce(
-    (sum, d) => sum + (d.toplam_face || 0),
-    0
-  );
-
-  return {
-    lokasyonSayisi: data.length,
-    toplamYuz,
-  };
-}
+import {
+  getIl,
+  getIlFormatAdet,
+  getIllerByFormat,
+  getFormatlarByIl,
+  getKombinasyonlar,
+  FORMAT_PAGE_KEY,
+  MIN_FORMAT_PAGE_UNITE,
+  sayiTr,
+  slugifyTr,
+  lokatifEk,
+} from "@/src/data/envanter";
 
 /**
- * İç linkleme için: aynı şehirde aktif olan farklı formatlar.
- * Bu sayfa zaten {sehirAdi, formatKategori} altında; diğer formatları
- * "kendi sayfasına link" olarak gösteriyoruz.
+ * SAYFA ÜRETİM KURALI (SEO ince içerik önlemi):
+ * - İl×format sayfası SADECE o ilde o format ≥ 5 ünite ise üretilir.
+ * - 5'in altındaki kombinasyonlar il sayfasına kalıcı yönlendirilir (308).
+ * - Bilinmeyen format + geçerli il → il sayfasına yönlendirme (eski URL'ler kırılmasın).
  */
-async function getAyniSehirDigerFormatlar(
-  sehirAdi: string,
-  mevcutFormat: string
-) {
-  const supabase = getSupabase();
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("format_kategori, toplam_face")
-    .eq("sehir", sehirAdi)
-    .eq("aktif", true);
+/**
+ * Bilinmeyen parametreler için GERÇEK 404 (Next 16 akışlı metadata,
+ * runtime notFound/redirect'i HTTP koduna yansıtamıyor — QA bulgusu).
+ * Tüm geçerli sayfalar build'de üretilir; gerisi router'da 404.
+ */
+export const dynamicParams = false;
 
-  if (!data) return [];
-
-  const map = new Map<string, { lokasyon: number; yuz: number }>();
-  for (const row of data) {
-    if (!row.format_kategori || row.format_kategori === mevcutFormat) continue;
-    const prev = map.get(row.format_kategori) ?? { lokasyon: 0, yuz: 0 };
-    map.set(row.format_kategori, {
-      lokasyon: prev.lokasyon + 1,
-      yuz: prev.yuz + (row.toplam_face || 0),
-    });
-  }
-  return Array.from(map.entries())
-    .map(([key, v]) => ({ key, ...v }))
-    .sort((a, b) => b.yuz - a.yuz);
+export function generateStaticParams() {
+  return getKombinasyonlar().map(({ slug, format }) => ({ slug, format }));
 }
 
-/**
- * İç linkleme için: aynı format farklı şehirlerde — orphan sayfa fix.
- * En çok reklam yüzü olan ilk N şehir.
- */
-async function getAyniFormatDigerSehirler(
-  formatKategori: string,
-  mevcutSehir: string,
-  limit = 9
-) {
-  const supabase = getSupabase();
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir, toplam_face")
-    .eq("format_kategori", formatKategori)
-    .eq("aktif", true);
-
-  if (!data) return [];
-
-  const map = new Map<string, { lokasyon: number; yuz: number }>();
-  for (const row of data) {
-    if (!row.sehir || row.sehir === mevcutSehir) continue;
-    const prev = map.get(row.sehir) ?? { lokasyon: 0, yuz: 0 };
-    map.set(row.sehir, {
-      lokasyon: prev.lokasyon + 1,
-      yuz: prev.yuz + (row.toplam_face || 0),
-    });
+/** Aynı şehirde sayfası olan diğer formatlar (iç linkleme) */
+function getAyniSehirDigerFormatlar(slug: string, mevcutFormat: string) {
+  const il = getIl(slug);
+  if (!il) return [];
+  const agg = new Map<string, number>();
+  for (const { format, adet } of getFormatlarByIl(slug)) {
+    const key = FORMAT_PAGE_KEY[format];
+    if (!key || key === mevcutFormat) continue;
+    agg.set(key, (agg.get(key) ?? 0) + adet);
   }
-  return Array.from(map.entries())
-    .map(([sehir, v]) => ({ sehir, ...v }))
-    .sort((a, b) => b.yuz - a.yuz)
+  return Array.from(agg.entries())
+    .map(([key, adet]) => ({ key, adet }))
+    .filter((f) => f.adet >= MIN_FORMAT_PAGE_UNITE)
+    .sort((a, b) => b.adet - a.adet);
+}
+
+/** Aynı format diğer şehirlerde (orphan sayfa önlemi) */
+function getAyniFormatDigerSehirler(formatKey: string, mevcutSlug: string, limit = 9) {
+  return getIllerByFormat(formatKey)
+    .filter((x) => x.slug !== mevcutSlug && x.adet >= MIN_FORMAT_PAGE_UNITE)
     .slice(0, limit);
-}
-
-export async function generateStaticParams() {
-  const supabase = getSupabase();
-  const { data } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir, format_kategori")
-    .eq("aktif", true);
-
-  if (!data) return [];
-
-  const kombinasyonlar = new Set<string>();
-  for (const item of data) {
-    if (item.sehir && item.format_kategori) {
-      kombinasyonlar.add(`${item.sehir}|${item.format_kategori}`);
-    }
-  }
-
-  return Array.from(kombinasyonlar).map((kombo) => {
-    const [sehir, format] = kombo.split("|");
-    return {
-      slug: slugify(sehir),
-      format,
-    };
-  });
 }
 
 export async function generateMetadata({
@@ -166,30 +62,33 @@ export async function generateMetadata({
   params: Promise<{ slug: string; format: string }>;
 }): Promise<Metadata> {
   const { slug, format } = await params;
-  const sehir = await findSehirBySlug(slug);
-  const formatMeta = getFormatByKey(format);
+  const il = getIl(slug);
 
-  if (!sehir || !formatMeta) {
-    return { title: "Sayfa bulunamadı" };
+  // Durum kodu kararları metadata aşamasında — gövde akışından ÖNCE —
+  // verilir; aksi halde 404/308 yerine 200 sızar (QA bulgusu).
+  if (!il) {
+    notFound();
   }
 
-  // Supabase'den şehir-spesifik detay → her sayfaya unique description
-  const detay = await getKombinasyon(sehir, format);
-  const lokasyonText = detay
-    ? `${detay.lokasyonSayisi} lokasyonda ${detay.toplamYuz.toLocaleString("tr-TR")} reklam yüzü`
-    : "aktif lokasyonlar";
+  const formatMeta = getFormatByKey(format);
+  const adet = formatMeta ? getIlFormatAdet(slug, format) : 0;
 
+  if (!formatMeta || adet < MIN_FORMAT_PAGE_UNITE) {
+    permanentRedirect(`/sehir/${slug}`);
+  }
+
+  const ek = lokatifEk(il.il);
   const formatLow = formatMeta.name.toLowerCase();
 
   return {
-    title: `${sehir} ${formatMeta.name} Reklam — Fiyat ve Lokasyonlar`,
-    description: `${sehir}'da ${formatLow} reklam: ${lokasyonText}. ${formatMeta.tagline}. 30 dakikada teklif, hedeflenmiş lokasyon önerisi.`,
+    title: `${il.il} ${formatMeta.name} Reklam — ${sayiTr(adet)} Ünite`,
+    description: `${il.il}${ek} ${formatLow} reklam: ${sayiTr(adet)} reklam ünitesi. ${formatMeta.tagline}. 15 dakikada teklif, hedeflenmiş lokasyon önerisi.`,
     alternates: {
       canonical: `https://objektifkriter.com.tr/sehir/${slug}/${format}`,
     },
     openGraph: {
-      title: `${sehir} ${formatMeta.name} Reklam`,
-      description: `${sehir} OOH reklam: ${lokasyonText}. ${formatMeta.tagline}.`,
+      title: `${il.il} ${formatMeta.name} Reklam`,
+      description: `${il.il} açıkhava reklam: ${sayiTr(adet)} ${formatLow} ünitesi. ${formatMeta.tagline}.`,
       url: `https://objektifkriter.com.tr/sehir/${slug}/${format}`,
       type: "website",
     },
@@ -202,23 +101,29 @@ export default async function SehirFormatPage({
   params: Promise<{ slug: string; format: string }>;
 }) {
   const { slug, format } = await params;
-  const sehir = await findSehirBySlug(slug);
+  const il = getIl(slug);
+
+  if (!il) {
+    notFound();
+  }
+
   const formatMeta = getFormatByKey(format);
+  const adet = formatMeta ? getIlFormatAdet(slug, format) : 0;
 
-  if (!sehir || !formatMeta) {
-    notFound();
+  // Eski/ince sayfa koruması: bilinmeyen format veya eşik altı adet →
+  // il sayfasına kalıcı yönlendirme (301 sınıfı). Sayfa hiç üretilmez.
+  if (!formatMeta || adet < MIN_FORMAT_PAGE_UNITE) {
+    permanentRedirect(`/sehir/${slug}`);
   }
 
-  const detay = await getKombinasyon(sehir, format);
-  if (!detay) {
-    notFound();
-  }
+  const sehir = il.il;
+  const ek = lokatifEk(sehir);
+  const digerFormatlar = getAyniSehirDigerFormatlar(slug, format);
+  const digerSehirler = getAyniFormatDigerSehirler(format, slug);
 
-  // İç linkleme için ek veri (paralel)
-  const [digerFormatlar, digerSehirler] = await Promise.all([
-    getAyniSehirDigerFormatlar(sehir, format),
-    getAyniFormatDigerSehirler(format, sehir),
-  ]);
+  // Bu formatta ilin ağdaki sırası (iç zenginlik, elle rakam yok)
+  const formatIlleri = getIllerByFormat(format);
+  const buFormatSira = formatIlleri.findIndex((x) => x.slug === slug) + 1;
 
   // JSON-LD: Service + BreadcrumbList — SEO rich-result için
   const baseUrl = "https://objektifkriter.com.tr";
@@ -227,8 +132,8 @@ export default async function SehirFormatPage({
     "@context": "https://schema.org",
     "@type": "Service",
     name: `${sehir} ${formatMeta.name} Reklam`,
-    serviceType: `${formatMeta.name} OOH Reklam`,
-    description: `${sehir} ilinde ${formatMeta.name.toLowerCase()} reklam çözümleri — ${detay.lokasyonSayisi} lokasyonda ${detay.toplamYuz} reklam yüzü.`,
+    serviceType: `${formatMeta.name} Açıkhava Reklam`,
+    description: `${sehir} ilinde ${formatMeta.name.toLowerCase()} reklam çözümleri — ${sayiTr(adet)} reklam ünitesi.`,
     provider: {
       "@type": "Organization",
       name: "Objektif Kriter",
@@ -239,9 +144,6 @@ export default async function SehirFormatPage({
       name: sehir,
       address: { "@type": "PostalAddress", addressCountry: "TR" },
     },
-    // priceBand spesifik rakamları kaldırıldı (UI'da "fiyatı sor" stratejisiyle
-    // tutarlı olsun); priceRange ile yine "fiyat aralığı var" sinyali
-    // korunur — Google rich snippet için yeterli.
     offers: {
       "@type": "Offer",
       priceCurrency: "TRY",
@@ -254,30 +156,10 @@ export default async function SehirFormatPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Ana sayfa",
-        item: baseUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Hizmetler",
-        item: `${baseUrl}/hizmetler`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: sehir,
-        item: `${baseUrl}/sehir/${slug}`,
-      },
-      {
-        "@type": "ListItem",
-        position: 4,
-        name: formatMeta.name,
-        item: pageUrl,
-      },
+      { "@type": "ListItem", position: 1, name: "Ana sayfa", item: baseUrl },
+      { "@type": "ListItem", position: 2, name: "Hizmetler", item: `${baseUrl}/hizmetler` },
+      { "@type": "ListItem", position: 3, name: sehir, item: `${baseUrl}/sehir/${slug}` },
+      { "@type": "ListItem", position: 4, name: formatMeta.name, item: pageUrl },
     ],
   };
 
@@ -320,16 +202,14 @@ export default async function SehirFormatPage({
             </div>
             <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight">
               <span className="text-gradient">{sehir}</span>
-              &apos;da {formatMeta.name} Reklam
+              {ek} {formatMeta.name} Reklam
             </h1>
             <p className="text-lg text-[var(--color-primary)]">
               {formatMeta.tagline}
             </p>
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
-              {sehir}&apos;daki {detay.lokasyonSayisi} {formatMeta.name}{" "}
-              lokasyonunda toplam{" "}
-              {detay.toplamYuz.toLocaleString("tr-TR")} reklam yüzü ile
-              kampanyanız için doğru görünürlüğü hazırlıyoruz.
+              {sehir}{ek} toplam {sayiTr(adet)} {formatMeta.name} reklam
+              ünitesi ile kampanyanız için doğru görünürlüğü hazırlıyoruz.
             </p>
           </div>
         </div>
@@ -340,18 +220,18 @@ export default async function SehirFormatPage({
           <div className="grid grid-cols-2 gap-8">
             <div className="text-center md:text-left">
               <div className="text-5xl md:text-6xl font-bold text-gradient">
-                {detay.toplamYuz.toLocaleString("tr-TR")}
+                {sayiTr(adet)}
               </div>
               <div className="mt-2 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Reklam Yüzü
+                Reklam Ünitesi
               </div>
             </div>
             <div className="text-center md:text-left">
               <div className="text-5xl md:text-6xl font-bold text-gradient">
-                {detay.lokasyonSayisi}
+                #{buFormatSira}
               </div>
               <div className="mt-2 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                Lokasyon
+                Bu Formatta Ağdaki Sırası
               </div>
             </div>
           </div>
@@ -405,17 +285,17 @@ export default async function SehirFormatPage({
             </div>
             <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {digerSehirler.map((d) => (
-                <li key={d.sehir}>
+                <li key={d.slug}>
                   <Link
-                    href={`/sehir/${slugify(d.sehir)}/${format}`}
+                    href={`/sehir/${d.slug}/${format}`}
                     className="block p-4 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]/40 hover:shadow-sm transition-all group"
                   >
                     <div className="flex items-center gap-2 text-sm font-semibold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary-deep)]">
                       <MapPin size={14} />
-                      {d.sehir}
+                      {d.il}
                     </div>
                     <div className="mt-1 text-xs text-[var(--color-text-muted)]">
-                      {d.lokasyon} lokasyon · {d.yuz.toLocaleString("tr-TR")} yüz
+                      {sayiTr(d.adet)} ünite
                     </div>
                   </Link>
                 </li>
@@ -434,11 +314,11 @@ export default async function SehirFormatPage({
                 Aynı şehirde diğer üniteler
               </div>
               <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-                {sehir}&apos;da {formatMeta.name} dışında format alternatifleri
+                {sehir}{ek} {formatMeta.name} dışında format alternatifleri
               </h2>
               <p className="mt-3 text-base text-[var(--color-text-secondary)]">
                 Kampanyanızın etkisini farklı temas noktalarıyla artırmak için{" "}
-                {sehir}&apos;daki diğer reklam üniteleri:
+                {sehir}{ek}ki diğer reklam üniteleri:
               </p>
             </div>
             <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -453,7 +333,7 @@ export default async function SehirFormatPage({
                       {getFormatLabel(f.key)}
                     </div>
                     <div className="mt-1 text-xs text-[var(--color-text-muted)]">
-                      {f.lokasyon} lokasyon · {f.yuz.toLocaleString("tr-TR")} yüz
+                      {sayiTr(f.adet)} ünite
                     </div>
                   </Link>
                 </li>
@@ -472,7 +352,7 @@ export default async function SehirFormatPage({
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
               Hedefinize ve bütçenize uygun {formatMeta.name.toLowerCase()}{" "}
-              lokasyonlarını 30 dakika içinde önerelim.
+              lokasyonlarını 15 dakika içinde önerelim.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/teklif-al" className="btn-primary">

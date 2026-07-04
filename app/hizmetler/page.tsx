@@ -47,7 +47,7 @@ export default function HizmetlerPage() {
               </div>
               <p className="text-xs text-[var(--color-text-muted)]">
                 İndikatif fiyat bantları içerir; net teklif briefiniz
-                üzerinden 30 dakikada hazırlanır.
+                üzerinden 15 dakikada hazırlanır.
               </p>
             </div>
           </ScrollReveal>
@@ -191,7 +191,7 @@ export default function HizmetlerPage() {
                       </div>
                       <p className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] pt-1">
                         <Clock size={11} aria-hidden="true" />
-                        30 dakika içinde yanıt
+                        15 dakika içinde yanıt
                       </p>
                     </div>
                   </ScrollReveal>

@@ -1,170 +1,65 @@
 import type { Metadata } from "next";
-import { createClient } from "@supabase/supabase-js";
-import EnvanterMap, { type SehirFeature } from "./EnvanterMap";
-import { getSehirCoordinates } from "@/lib/sehir-koordinatlari";
+import TurkiyeHaritasi, { type HaritaIl } from "./TurkiyeHaritasi";
+import { SEHIRLER } from "@/lib/turkiye-sehirler";
+import {
+  getIller,
+  formatAdi,
+  slugifyTr,
+  sayiTr,
+  TOPLAM,
+} from "@/src/data/envanter";
 
 export const metadata: Metadata = {
   title: "Envanter — Türkiye Geneli Reklam Lokasyonları",
-  description:
-    "Objektif Kriter envanteri: Türkiye genelinde 47+ şehir, 33.812+ reklam yüzü. Billboard, CLP, megalight ve dijital OOH lokasyonlarını harita üzerinde keşfedin.",
+  description: `Objektif Kriter envanteri: Türkiye genelinde ${TOPLAM.il} il, ${TOPLAM.mecra} mecra türü, ${sayiTr(TOPLAM.unite)} reklam ünitesi. Lokasyonları harita üzerinde keşfedin.`,
 };
-
-// Envanter veri sıklığı düşük — 5 dakika revalidate yeterli, statik build'de
-// kayıtlanmasın diye PPR/SSR-friendly.
-export const revalidate = 300;
-
-type EnvanterRow = {
-  sehir: string;
-  unite: string | null;
-  format_kategori: string;
-  toplam_face: number | null;
-  donem: string | null;
-};
-
-type EksikSehir = { sehir: string; lokasyon_sayisi: number };
 
 /**
- * Envanteri şehir bazında agreg eder. Her şehir için:
- *  - Toplam lokasyon sayısı (ünite kayıt sayısı)
- *  - Toplam reklam yüzü
- *  - Format dağılımı (kaç farklı format, her format için sayı + yüz)
- *  - Ünite listesi (UI'da liste için)
- *
- * Koordinatı sözlükte olmayan şehirler `eksikSehirler`'e düşer (uyarı/log için).
+ * Envanter sayfası — tamamen statik (Supabase + Mapbox kaldırıldı).
+ * Harita verisi build anında envanter.json'dan hazırlanır; sayfa
+ * prerender edilir, dış servis/token bağımlılığı yoktur.
  */
-async function getSehirFeatures(): Promise<{
-  features: SehirFeature[];
-  eksikSehirler: EksikSehir[];
-  toplamLokasyon: number;
-  toplamYuz: number;
-}> {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+export default function EnvanterPage() {
+  const bolgeByAd = new Map(SEHIRLER.map((s) => [s.ad, s.bolge as string]));
 
-  // Açık kolon listesi: birim_fiyat (rekabet açığı), id, network_adeti,
-  // asim_gunu — UI'da kullanılmıyor, network'e sızdırmıyoruz.
-  const { data, error } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir, unite, format_kategori, toplam_face, donem")
-    .eq("aktif", true);
-
-  if (error) {
-    console.error("Envanter fetch hatası:", error);
-    return {
-      features: [],
-      eksikSehirler: [],
-      toplamLokasyon: 0,
-      toplamYuz: 0,
-    };
-  }
-
-  const rows = (data ?? []) as EnvanterRow[];
-
-  // Şehir bazlı toplama
-  type Acc = {
-    sehir: string;
-    lokasyon_sayisi: number;
-    toplam_yuz: number;
-    formatlar: Map<string, { count: number; yuz: number }>;
-    uniteler: Array<{
-      unite: string;
-      format: string;
-      toplam_face: number;
-      donem: string | null;
-    }>;
-  };
-
-  const bySehir = new Map<string, Acc>();
-
-  for (const r of rows) {
-    const key = r.sehir;
-    if (!bySehir.has(key)) {
-      bySehir.set(key, {
-        sehir: key,
-        lokasyon_sayisi: 0,
-        toplam_yuz: 0,
-        formatlar: new Map(),
-        uniteler: [],
-      });
-    }
-    const agg = bySehir.get(key)!;
-    agg.lokasyon_sayisi += 1;
-    agg.toplam_yuz += r.toplam_face ?? 0;
-
-    const fmt = r.format_kategori;
-    const cur = agg.formatlar.get(fmt) ?? { count: 0, yuz: 0 };
-    cur.count += 1;
-    cur.yuz += r.toplam_face ?? 0;
-    agg.formatlar.set(fmt, cur);
-
-    agg.uniteler.push({
-      unite: r.unite ?? "",
-      format: fmt,
-      toplam_face: r.toplam_face ?? 0,
-      donem: r.donem,
-    });
-  }
-
-  const features: SehirFeature[] = [];
-  const eksikSehirler: EksikSehir[] = [];
-
-  for (const agg of bySehir.values()) {
-    const coords = getSehirCoordinates(agg.sehir);
-    if (!coords) {
-      eksikSehirler.push({
-        sehir: agg.sehir,
-        lokasyon_sayisi: agg.lokasyon_sayisi,
-      });
-      continue;
-    }
-
-    features.push({
-      sehir: agg.sehir,
-      lng: coords[0],
-      lat: coords[1],
-      lokasyon_sayisi: agg.lokasyon_sayisi,
-      toplam_yuz: agg.toplam_yuz,
-      formatlar: Array.from(agg.formatlar.entries()).map(([format, v]) => ({
-        format,
-        count: v.count,
-        yuz: v.yuz,
-      })),
-      uniteler: agg.uniteler,
-    });
-  }
-
-  // Büyük şehirler önce görünsün (lokasyon sayısına göre)
-  features.sort((a, b) => b.lokasyon_sayisi - a.lokasyon_sayisi);
-
-  const toplamLokasyon = features.reduce(
-    (s, f) => s + f.lokasyon_sayisi,
-    0
-  );
-  const toplamYuz = features.reduce((s, f) => s + f.toplam_yuz, 0);
-
-  if (eksikSehirler.length > 0) {
-    console.warn(
-      "Koordinatı eksik şehirler (sehir-koordinatlari.ts'e ekle):",
-      eksikSehirler
-    );
-  }
-
-  return { features, eksikSehirler, toplamLokasyon, toplamYuz };
-}
-
-export default async function EnvanterPage() {
-  const { features, toplamLokasyon, toplamYuz } = await getSehirFeatures();
+  const iller: HaritaIl[] = getIller().map((il) => ({
+    slug: slugifyTr(il.il),
+    il: il.il,
+    bolge: bolgeByAd.get(il.il) ?? "İç Anadolu",
+    toplam: il.toplam,
+    ilceler: il.ilceler,
+    formatlar: Object.entries(il.formatlar)
+      .map(([format, adet]) => ({ label: formatAdi(format), adet }))
+      .sort((a, b) => b.adet - a.adet),
+  }));
 
   return (
-    <div className="h-[calc(100vh-65px)] w-full">
-      <EnvanterMap
-        features={features}
-        toplamLokasyon={toplamLokasyon}
-        toplamYuz={toplamYuz}
-      />
-    </div>
+    <>
+      {/* BAŞLIK + KPI */}
+      <section className="pt-24 pb-10 border-b border-[var(--color-border-subtle)]">
+        <div className="container-narrow">
+          <div className="max-w-3xl space-y-4">
+            <div className="text-xs uppercase tracking-widest text-[var(--color-primary)] font-medium">
+              Mecra Ağımız
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
+              Türkiye genelinde{" "}
+              <span className="text-gradient">{TOPLAM.il} ilde</span> envanter
+            </h1>
+            <p className="text-lg text-[var(--color-text-secondary)]">
+              {TOPLAM.mecra} mecra türü, {sayiTr(TOPLAM.unite)} reklam ünitesi
+              — bölge veya mecra seçin, ile tıklayın.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* HARİTA */}
+      <section className="py-12">
+        <div className="container-narrow">
+          <TurkiyeHaritasi iller={iller} />
+        </div>
+      </section>
+    </>
   );
 }

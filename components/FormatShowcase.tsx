@@ -193,7 +193,7 @@ export function FormatShowcase() {
                   ))}
                 </ul>
 
-                {/* CTA + 30 dakika sözü — fiyat bandı kaldırıldı, yerine
+                {/* CTA + 15 dakika sözü — fiyat bandı kaldırıldı, yerine
                  * format-spesifik teklif yolu + hız sözü. Fade+Lift belirme
                  * animasyonu, panel textReveal'in üzerine 250ms/400ms gecikmeli.
                  * Reduced-motion globals.css'te override ediliyor. */}
@@ -218,7 +218,7 @@ export function FormatShowcase() {
                 </div>
                 <p className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] animate-ctaRevealLate">
                   <Clock size={11} aria-hidden="true" />
-                  30 dakika içinde yanıt
+                  15 dakika içinde yanıt
                 </p>
               </div>
             </div>
@@ -301,7 +301,7 @@ export function FormatShowcase() {
                   </div>
                   <p className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
                     <Clock size={11} aria-hidden="true" />
-                    30 dakika içinde yanıt
+                    15 dakika içinde yanıt
                   </p>
                 </div>
               </div>

@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { TOPLAM, sayiTr } from "@/src/data/envanter";
 
 /**
  * Site geneli Open Graph image (1200×630).
@@ -103,7 +104,7 @@ export default async function OpengraphImage() {
           <span style={{ color: "#017A8A" }}>Doğru kitleye.</span>
         </div>
 
-        {/* Alt etiket — "47+ şehir, 33.812+ reklam yüzü" */}
+        {/* Alt etiket — rakamlar envanter.json'dan */}
         <div
           style={{
             display: "flex",
@@ -115,9 +116,9 @@ export default async function OpengraphImage() {
             zIndex: 1,
           }}
         >
-          <span>47+ şehir</span>
+          <span>{TOPLAM.il} il</span>
           <span style={{ color: "#94A3B8" }}>•</span>
-          <span>33.812+ reklam yüzü</span>
+          <span>{sayiTr(TOPLAM.unite)} reklam ünitesi</span>
           <span style={{ color: "#94A3B8" }}>•</span>
           <span>Türkiye OOH Reklam</span>
         </div>

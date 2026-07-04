@@ -126,8 +126,8 @@ export default function CerezPoliticasiPage() {
 
             <Bolum baslik="Üçüncü Taraf Çerezler">
               <p>
-                Sitemizin altyapı sağlayıcıları (Vercel, Supabase, Mapbox)
-                sınırlı teknik çerezler ve istek verileri kullanabilir. Bu
+                Sitemizin altyapı sağlayıcıları (Vercel barındırma, Resend e-posta
+                iletimi) sınırlı teknik çerezler ve istek verileri kullanabilir. Bu
                 sağlayıcıların kendi gizlilik politikalarına bağlı kalınmaktadır:
               </p>
               <ul className="mt-3 space-y-2 list-disc list-inside">
@@ -143,27 +143,15 @@ export default function CerezPoliticasiPage() {
                   </a>
                 </li>
                 <li>
-                  Supabase:{" "}
+                  Resend (yalnızca teklif formu gönderiminde e-posta iletimi
+                  için; tarayıcınıza çerez BIRAKMAZ):{" "}
                   <a
-                    href="https://supabase.com/privacy"
+                    href="https://resend.com/legal/privacy-policy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[var(--color-primary)] hover:underline"
                   >
-                    supabase.com/privacy
-                  </a>
-                </li>
-                <li>
-                  Mapbox (yalnızca <code>/envanter</code> ve şehir sayfalarında
-                  harita yüklenirken; IP adresi ve tile URL&apos;i Mapbox
-                  sunucularına gider, çerez kullanmaz):{" "}
-                  <a
-                    href="https://www.mapbox.com/legal/privacy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--color-primary)] hover:underline"
-                  >
-                    mapbox.com/legal/privacy
+                    resend.com/legal/privacy-policy
                   </a>
                 </li>
               </ul>

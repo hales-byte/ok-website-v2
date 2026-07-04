@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TOPLAM, sayiTr } from "@/src/data/envanter";
 import {
   ArrowRight,
   Briefcase,
@@ -11,7 +12,6 @@ import {
   X,
 } from "lucide-react";
 import type { Metadata } from "next";
-import { createClient } from "@supabase/supabase-js";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { CustomerProof } from "@/components/CustomerProof";
@@ -19,31 +19,19 @@ import { CustomerProof } from "@/components/CustomerProof";
 export const metadata: Metadata = {
   title: "Markalar İçin OOH Reklam Çözümleri",
   description:
-    "Kurumsal markalar için Türkiye geneli OOH planlama. Stratejik medya, raporlanabilir kampanyalar, sektörel deneyim. 47+ şehirde 33.812+ reklam yüzü.",
+    `Kurumsal markalar için Türkiye geneli OOH planlama. Stratejik medya, raporlanabilir kampanyalar, sektörel deneyim. ${TOPLAM.il} ilde ${sayiTr(TOPLAM.unite)} reklam ünitesi.`,
 };
 
-async function getStats() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-  const { data, error } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir, toplam_face")
-    .eq("aktif", true);
-  if (error || !data) return { sehirSayisi: 0, yuzSayisi: 0 };
-  return {
-    sehirSayisi: new Set(data.map((d) => d.sehir)).size,
-    yuzSayisi: data.reduce((sum, d) => sum + (d.toplam_face || 0), 0),
-  };
+function getStats() {
+  // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
+  return { sehirSayisi: TOPLAM.il, yuzSayisi: TOPLAM.unite };
 }
 
 const valueProps = [
   {
     icon: MapPin,
     title: "Türkiye geneli kapsam",
-    desc: "Marmara'dan Doğu Anadolu'ya 47+ şehirde aktif lokasyon. Tier-1 illerin yanında tier-2 ve tier-3 şehirlerde de varız — markanızın izi metropolün dışına da çıkar.",
+    desc: "Marmara'dan Doğu Anadolu'ya 45 ilde aktif lokasyon. Tier-1 illerin yanında tier-2 ve tier-3 şehirlerde de varız — markanızın izi metropolün dışına da çıkar.",
   },
   {
     icon: Layers,
@@ -76,7 +64,7 @@ const sureclar = [
 ];
 
 export default async function MarkalarPage() {
-  const stats = await getStats();
+  const stats = getStats();
 
   return (
     <>
@@ -128,7 +116,7 @@ export default async function MarkalarPage() {
             <ScrollReveal direction="up" delay={0}>
               <div>
                 <div className="text-4xl md:text-6xl font-bold text-gradient">
-                  <CountUp end={stats.sehirSayisi} suffix="+" duration={1800} />
+                  <CountUp end={stats.sehirSayisi} duration={1800} />
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
                   Aktif Şehir
@@ -141,12 +129,11 @@ export default async function MarkalarPage() {
                   <CountUp
                     end={stats.yuzSayisi}
                     formatTr
-                    suffix="+"
                     duration={2200}
                   />
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Reklam Yüzü
+                  Reklam Ünitesi
                 </div>
               </div>
             </ScrollReveal>
@@ -243,13 +230,13 @@ export default async function MarkalarPage() {
                     {
                       kriter: "Şehir kapsamı",
                       tipik: "&ldquo;Türkiye geneli&rdquo; lafı, sayı yok",
-                      ok: "47+ şehir, canlı sayım",
+                      ok: `${TOPLAM.il} il, canlı sayım`,
                       okIyi: true,
                     },
                     {
                       kriter: "Reklam yüzü envanteri",
                       tipik: "Genelde teklif sırasında PDF",
-                      ok: "33.812+ yüz, public görünür",
+                      ok: `${sayiTr(TOPLAM.unite)} ünite, public görünür`,
                       okIyi: true,
                     },
                     {
@@ -261,7 +248,7 @@ export default async function MarkalarPage() {
                     {
                       kriter: "Yanıt süresi taahhüdü",
                       tipik: "&ldquo;Hızlı dönüş&rdquo; lafı",
-                      ok: "30 dakika SLA, yazılı",
+                      ok: "15 dakika SLA, yazılı",
                       okIyi: true,
                     },
                     {
@@ -273,7 +260,7 @@ export default async function MarkalarPage() {
                     {
                       kriter: "Format çeşitliliği",
                       tipik: "Genelde 3-5 format",
-                      ok: "8 format (klasik + dijital + havalimanı)",
+                      ok: `${TOPLAM.mecra} mecra türü (klasik + dijital + havalimanı)`,
                       okIyi: true,
                     },
                     {
@@ -285,7 +272,7 @@ export default async function MarkalarPage() {
                     {
                       kriter: "İletişim kanalı",
                       tipik: "E-posta + tel; 1-2 gün cevap",
-                      ok: "WhatsApp + form + e-posta; 30 dk",
+                      ok: "WhatsApp + form + e-posta; 15 dk",
                       okIyi: true,
                     },
                   ].map((row, i) => (
@@ -384,14 +371,14 @@ export default async function MarkalarPage() {
                 Markanızın bir sonraki kampanyasını birlikte planlayalım
               </h2>
               <p className="text-lg text-[var(--color-text-secondary)]">
-                Sektörünüzü, hedefinizi ve bütçenizi paylaşın. 30 dakika içinde
+                Sektörünüzü, hedefinizi ve bütçenizi paylaşın. 15 dakika içinde
                 stratejik bir öneriyle dönelim.
               </p>
               <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto pt-2 text-left">
                 {[
                   "Stratejik medya planı",
                   "Raporlanabilir sonuç",
-                  "30 dakika yanıt süresi",
+                  "15 dakika yanıt süresi",
                 ].map((item) => (
                   <li
                     key={item}

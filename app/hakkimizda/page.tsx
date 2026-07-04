@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TOPLAM } from "@/src/data/envanter";
 import {
   ArrowRight,
   Layers,
@@ -8,7 +9,6 @@ import {
   Target,
   Users,
 } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
 import type { Metadata } from "next";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
@@ -19,27 +19,9 @@ export const metadata: Metadata = {
     "Objektif Kriter — Türkiye genelinde aktif lokasyonlar ve binlerce reklam yüzü ile OOH reklam çözümleri sunan lokasyon odaklı bir ajans.",
 };
 
-async function getStats() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
-  const { data, error } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir, toplam_face")
-    .eq("aktif", true);
-
-  if (error || !data) {
-    return { sehirSayisi: 0, yuzSayisi: 0, lokasyonSayisi: 0 };
-  }
-
-  const sehirSayisi = new Set(data.map((d) => d.sehir)).size;
-  const yuzSayisi = data.reduce((sum, d) => sum + (d.toplam_face || 0), 0);
-  const lokasyonSayisi = data.length;
-
-  return { sehirSayisi, yuzSayisi, lokasyonSayisi };
+function getStats() {
+  // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
+  return { sehirSayisi: TOPLAM.il, yuzSayisi: TOPLAM.unite, lokasyonSayisi: TOPLAM.mecra };
 }
 
 const yaklasimlar = [
@@ -56,7 +38,7 @@ const yaklasimlar = [
   {
     icon: Zap,
     title: "Hızlı yanıt",
-    desc: "Brief'inizi aldıktan 30 dakika içinde teklifiniz hazır. Uzmanlarımız tüm karar süreçlerinizde yanınızda.",
+    desc: "Brief'inizi aldıktan 15 dakika içinde teklifiniz hazır. Uzmanlarımız tüm karar süreçlerinizde yanınızda.",
   },
 ];
 
@@ -79,7 +61,7 @@ const degerler = [
 ];
 
 export default async function HakkimizdaPage() {
-  const stats = await getStats();
+  const stats = getStats();
 
   return (
     <>
@@ -179,10 +161,10 @@ export default async function HakkimizdaPage() {
             <ScrollReveal direction="up" delay={0}>
               <div>
                 <div className="text-4xl md:text-6xl font-bold text-gradient">
-                  <CountUp end={stats.sehirSayisi} suffix="+" duration={1800} />
+                  <CountUp end={stats.sehirSayisi} duration={1800} />
                 </div>
                 <div className="mt-3 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Şehir
+                  İl
                 </div>
               </div>
             </ScrollReveal>
@@ -190,10 +172,10 @@ export default async function HakkimizdaPage() {
             <ScrollReveal direction="up" delay={120}>
               <div>
                 <div className="text-4xl md:text-6xl font-bold text-gradient">
-                  <CountUp end={stats.yuzSayisi} formatTr suffix="+" duration={2200} />
+                  <CountUp end={stats.yuzSayisi} formatTr duration={2200} />
                 </div>
                 <div className="mt-3 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Reklam Yüzü
+                  Reklam Ünitesi
                 </div>
               </div>
             </ScrollReveal>
@@ -201,10 +183,10 @@ export default async function HakkimizdaPage() {
             <ScrollReveal direction="up" delay={240}>
               <div>
                 <div className="text-4xl md:text-6xl font-bold text-gradient">
-                  <CountUp end={7} duration={1500} />
+                  <CountUp end={TOPLAM.mecra} duration={1500} />
                 </div>
                 <div className="mt-3 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Ana Format
+                  Mecra Türü
                 </div>
               </div>
             </ScrollReveal>
@@ -212,7 +194,7 @@ export default async function HakkimizdaPage() {
             <ScrollReveal direction="up" delay={360}>
               <div>
                 <div className="text-4xl md:text-6xl font-bold text-gradient">
-                  <CountUp end={30} suffix=" dk" duration={1800} />
+                  <CountUp end={15} suffix=" dk" duration={1800} />
                 </div>
                 <div className="mt-3 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
                   Yanıt Süresi

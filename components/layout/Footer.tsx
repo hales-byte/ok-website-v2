@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RAKAM_METNI } from "@/src/data/envanter";
 import { Mail, MapPin } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
@@ -82,7 +83,7 @@ export function Footer() {
           <div className="md:col-span-5 space-y-6">
             <Logo size="sm" href={null} />
             <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-sm">
-              Türkiye genelinde 47+ şehir, 33.812+ reklam yüzü ile
+              Türkiye genelinde {RAKAM_METNI.ozet} ile
               outdoor reklam çözümleri. Markanızı doğru yerde, doğru zamanda
               gösterin.
             </p>
@@ -97,7 +98,7 @@ export function Footer() {
                 <WhatsAppIcon size={20} />
               </a>
               <a
-                href="https://www.linkedin.com/company/objekti%CC%87fkri%CC%87ter"
+                href="https://www.linkedin.com/company/objektifkriter/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"

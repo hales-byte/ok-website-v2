@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { TOPLAM, sayiTr } from "@/src/data/envanter";
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { FormatShowcase } from "@/components/FormatShowcase";
@@ -18,10 +18,10 @@ import { CustomerProof } from "@/components/CustomerProof";
 // olmaması için absolute ile override.
 export const metadata: Metadata = {
   title: {
-    absolute: "Objektif Kriter — Türkiye OOH Reklam | 47+ Şehir, 33.812+ Reklam Yüzü",
+    absolute: `Objektif Kriter — Türkiye OOH Reklam | ${TOPLAM.il} İl, ${sayiTr(TOPLAM.unite)} Reklam Ünitesi`,
   },
   description:
-    "Doğru lokasyonda, doğru zamanda, doğru kitleye. Türkiye'nin 47+ şehrinde 33.812+ reklam yüzü ile billboard, CLP, megalight ve dijital OOH reklam çözümleri. 30 dakika içinde teklif.",
+    `Doğru lokasyonda, doğru zamanda, doğru kitleye. Türkiye'nin ${TOPLAM.il} ilinde ${sayiTr(TOPLAM.unite)} reklam ünitesi ile billboard, CLP, megalight ve dijital OOH reklam çözümleri. 15 dakika içinde teklif.`,
   alternates: {
     canonical: "/",
   },
@@ -32,30 +32,13 @@ export const metadata: Metadata = {
     siteName: "Objektif Kriter",
     title: "Objektif Kriter — Türkiye OOH Reklam",
     description:
-      "Doğru lokasyonda, doğru zamanda, doğru kitleye. 47+ şehir, 33.812+ reklam yüzü. 30 dakika içinde teklif.",
+      `Doğru lokasyonda, doğru zamanda, doğru kitleye. ${TOPLAM.il} il, ${sayiTr(TOPLAM.unite)} reklam ünitesi. 15 dakika içinde teklif.`,
   },
 };
 
-async function getStats() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-
-  const { data, error } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir, toplam_face")
-    .eq("aktif", true);
-
-  if (error || !data) {
-    return { sehirSayisi: 0, yuzSayisi: 0 };
-  }
-
-  const sehirSayisi = new Set(data.map((d) => d.sehir)).size;
-  const yuzSayisi = data.reduce((sum, d) => sum + (d.toplam_face || 0), 0);
-
-  return { sehirSayisi, yuzSayisi };
+function getStats() {
+  // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
+  return { sehirSayisi: TOPLAM.il, yuzSayisi: TOPLAM.unite };
 }
 
 const surec = [
@@ -82,13 +65,13 @@ const surec = [
 ];
 
 export default async function Home() {
-  const stats = await getStats();
+  const stats = getStats();
 
   const segmentler = [
     {
       icon: MarkalarIcon,
       etiket: "Markalar",
-      slogan: `Markanızın izi ${stats.sehirSayisi}+ şehirde, doğru sokakta.`,
+      slogan: `Markanızın izi ${stats.sehirSayisi} ilde, doğru sokakta.`,
       desc: "Stratejik medya planlaması, raporlanabilir kampanya yönetimi. Sektörel deneyimle desteklenen lokasyon önerileriyle markanızın görünürlüğünü Anadolu'nun her köşesine taşıyoruz.",
       cta: "Marka için detaylar",
       href: "/markalar",
@@ -96,7 +79,7 @@ export default async function Home() {
     {
       icon: AjanslarIcon,
       etiket: "Reklam Ajansları",
-      slogan: "Brief'iniz 30 dakikada teklife dönsün.",
+      slogan: "Brief'iniz 15 dakikada teklife dönsün.",
       desc: "Hızlı geri dönüş, esnek satın alma, detaylı lokasyon listeleri. Ajansınızın açıkhava operasyonlarındaki güvenilir iş ortağıyız.",
       cta: "Ajanslar için detaylar",
       href: "/ajanslar",
@@ -164,8 +147,8 @@ export default async function Home() {
 
             <ScrollReveal direction="up" delay={400} duration={1000} priority>
               <p className="text-xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl leading-relaxed">
-                Türkiye genelinde {stats.sehirSayisi}+ şehirde,{" "}
-                {stats.yuzSayisi.toLocaleString("tr-TR")}+ reklam yüzü ile
+                Türkiye genelinde {stats.sehirSayisi} ilde,{" "}
+                {sayiTr(stats.yuzSayisi)} reklam ünitesi ile
                 markanızı doğru yere konumlandırıyoruz.
               </p>
             </ScrollReveal>
@@ -205,10 +188,10 @@ export default async function Home() {
             <ScrollReveal direction="up" delay={0}>
               <div className="text-center md:text-left">
                 <div className="text-5xl md:text-7xl font-bold text-gradient">
-                  <CountUp end={stats.sehirSayisi} suffix="+" duration={1800} />
+                  <CountUp end={stats.sehirSayisi} duration={1800} />
                 </div>
                 <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Şehir
+                  İl
                 </div>
               </div>
             </ScrollReveal>
@@ -219,12 +202,11 @@ export default async function Home() {
                   <CountUp
                     end={stats.yuzSayisi}
                     formatTr
-                    suffix="+"
                     duration={2200}
                   />
                 </div>
                 <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Reklam Yüzü
+                  Reklam Ünitesi
                 </div>
               </div>
             </ScrollReveal>
@@ -339,7 +321,7 @@ export default async function Home() {
       </section>
 
       {/*
-       * NOT: "30 dakikada nasıl" mekanizma bölümü kaldırıldı (akıllı süreç +
+       * NOT: "15 dakikada nasıl" mekanizma bölümü kaldırıldı (akıllı süreç +
        * 3 kart: Brief otomatik özetleniyor / Hazır lokasyon paketleri /
        * Karar veren kıdemli ekip). İleride yapay zeka destekli "Hakan K."
        * isimli AI ajan ile mesajlaşma deneyimine evrilecek — Faz 4 kapsamı.
@@ -357,7 +339,7 @@ export default async function Home() {
               </h2>
               <p className="text-lg text-[var(--color-text-secondary)]">
                 Sektörünüze, hedefinize ve bütçenize uygun lokasyon önerilerini
-                30 dakika içinde alın.
+                15 dakika içinde alın.
               </p>
               <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
                 <Link href="/teklif-al" className="btn-primary">

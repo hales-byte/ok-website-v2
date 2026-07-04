@@ -21,7 +21,7 @@ import {
 import { isCurrentStepValid, isFormSubmittable } from "../validation";
 import { TOTAL_STEPS } from "../types";
 import { submitTeklif } from "../submit-action";
-import { titleCaseTr } from "@/lib/sehir-koordinatlari";
+import { titleCaseTr } from "@/lib/turkiye-sehirler";
 import { getFormatByKey } from "@/lib/formats";
 import { WizardLayout } from "./WizardLayout";
 import { ResumeBanner } from "./ResumeBanner";
@@ -385,7 +385,7 @@ function getStepInfo(step: number): { title: string; subtitle: string } {
       return {
         title: "Sizinle nasıl iletişime geçelim?",
         subtitle:
-          "30 dakika içinde geri dönüş yapacağız. Sadece zorunlu alanları doldurmanız yeterli.",
+          "15 dakika içinde geri dönüş yapacağız. Sadece zorunlu alanları doldurmanız yeterli.",
       };
     case 6:
       return {
@@ -413,7 +413,7 @@ function SuccessScreen() {
             Talebiniz <span className="text-gradient">ulaştı</span>
           </h2>
           <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed">
-            30 dakika içinde Satış Uzmanımız sizinle iletişime geçecek.
+            15 dakika içinde Satış Uzmanımız sizinle iletişime geçecek.
           </p>
           <p className="text-base text-[var(--color-text-secondary)] leading-relaxed">
             Soru ve talepleriniz için:{" "}

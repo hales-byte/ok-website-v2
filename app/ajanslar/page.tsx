@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TOPLAM } from "@/src/data/envanter";
 import {
   ArrowRight,
   Users,
@@ -11,7 +12,6 @@ import {
   Download,
 } from "lucide-react";
 import type { Metadata } from "next";
-import { createClient } from "@supabase/supabase-js";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { CustomerProof } from "@/components/CustomerProof";
@@ -21,30 +21,18 @@ import { BriefModal } from "./BriefModal";
 export const metadata: Metadata = {
   title: "Reklam Ajansları İçin OOH Tedarikçi",
   description:
-    "Brief'iniz 30 dakikada teklife dönüşsün. Ajanslar için Türkiye geneli OOH envanter, white-label raporlama, ajansa özel ratecard ve hızlı teslimat.",
+    "Brief'iniz 15 dakikada teklife dönüşsün. Ajanslar için Türkiye geneli OOH envanter, white-label raporlama, ajansa özel ratecard ve hızlı teslimat.",
 };
 
-async function getStats() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-  const { data, error } = await supabase
-    .schema("website")
-    .from("envanter")
-    .select("sehir, toplam_face")
-    .eq("aktif", true);
-  if (error || !data) return { sehirSayisi: 0, yuzSayisi: 0 };
-  return {
-    sehirSayisi: new Set(data.map((d) => d.sehir)).size,
-    yuzSayisi: data.reduce((sum, d) => sum + (d.toplam_face || 0), 0),
-  };
+function getStats() {
+  // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
+  return { sehirSayisi: TOPLAM.il, yuzSayisi: TOPLAM.unite };
 }
 
 const features = [
   {
     icon: Zap,
-    title: "30 dakika brief → teklif",
+    title: "15 dakika brief → teklif",
     desc: "Brief'inizi gönderin, teklif kıdemli planner'dan, mesaiye sığdırılarak çıkar. \"Müdüre soracağım\" turları yok.",
   },
   {
@@ -60,7 +48,7 @@ const features = [
   {
     icon: Map,
     title: "Türkiye geneli envanter",
-    desc: "Tier-1 metropoller + tier-2 şehirler + Doğu/Güneydoğu kapsama. Tek tedarikçiyle 47+ şehirde paralel yürütme.",
+    desc: "Tier-1 metropoller + tier-2 şehirler + Doğu/Güneydoğu kapsama. Tek tedarikçiyle 45 ilde paralel yürütme.",
   },
 ];
 
@@ -73,7 +61,7 @@ const briefSteps = [
   {
     num: "02",
     title: "Otomatik özetlenir",
-    desc: "Sistemimiz brief'i ekibe işlerken anahtar parametreleri yapılandırır. Ekip 30 dakika içinde teklif çıkarır.",
+    desc: "Sistemimiz brief'i ekibe işlerken anahtar parametreleri yapılandırır. Ekip 15 dakika içinde teklif çıkarır.",
   },
   {
     num: "03",
@@ -88,7 +76,7 @@ const briefSteps = [
 ];
 
 export default async function AjanslarPage() {
-  const stats = await getStats();
+  const stats = getStats();
 
   return (
     <>
@@ -103,7 +91,7 @@ export default async function AjanslarPage() {
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
                 Brief&apos;iniz{" "}
-                <span className="text-gradient">30 dakikada</span> teklife
+                <span className="text-gradient">15 dakikada</span> teklife
                 dönsün.
               </h1>
               <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed max-w-3xl">
@@ -133,7 +121,7 @@ export default async function AjanslarPage() {
               </div>
               <p className="text-xs text-[var(--color-text-muted)] pt-1">
                 İndikatif fiyat bantları içerir. Net teklif briefiniz
-                üzerinden 30 dakikada hazırlanır.
+                üzerinden 15 dakikada hazırlanır.
               </p>
             </div>
           </ScrollReveal>
@@ -147,10 +135,10 @@ export default async function AjanslarPage() {
             <ScrollReveal direction="up" delay={0}>
               <div>
                 <div className="text-3xl md:text-5xl font-bold text-gradient">
-                  <CountUp end={stats.sehirSayisi} suffix="+" duration={1800} />
+                  <CountUp end={stats.sehirSayisi} duration={1800} />
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Şehir
+                  İl
                 </div>
               </div>
             </ScrollReveal>
@@ -160,12 +148,11 @@ export default async function AjanslarPage() {
                   <CountUp
                     end={stats.yuzSayisi}
                     formatTr
-                    suffix="+"
                     duration={2200}
                   />
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Reklam Yüzü
+                  Reklam Ünitesi
                 </div>
               </div>
             </ScrollReveal>
@@ -337,7 +324,7 @@ export default async function AjanslarPage() {
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto text-left">
                 {[
-                  "30 dakika yanıt süresi",
+                  "15 dakika yanıt süresi",
                   "White-label raporlama",
                   "Ajans-özel ratecard",
                 ].map((item) => (
