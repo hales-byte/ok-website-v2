@@ -85,7 +85,7 @@ export default async function Image({
             display: "flex",
             alignItems: "center",
             gap: 16,
-            color: "#017A8A",
+            color: "#0369A1",
             fontSize: 26,
             fontWeight: 600,
             letterSpacing: 4,
@@ -108,7 +108,7 @@ export default async function Image({
             gap: 12,
             padding: "10px 24px",
             background: "rgba(1,122,138,0.1)",
-            color: "#017A8A",
+            color: "#0369A1",
             fontSize: 26,
             fontWeight: 600,
             borderRadius: 999,
@@ -124,7 +124,7 @@ export default async function Image({
             height={26}
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#017A8A"
+            stroke="#0369A1"
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -149,7 +149,7 @@ export default async function Image({
           }}
         >
           <span>
-            <span style={{ color: "#017A8A" }}>{formatAdi}</span>
+            <span style={{ color: "#0369A1" }}>{formatAdi}</span>
             <span> Reklam</span>
           </span>
         </div>

@@ -6,7 +6,7 @@ import { TOPLAM, sayiTr } from "@/src/data/envanter";
  * Sosyal paylaşımlarda (LinkedIn, WhatsApp, X, Slack) görünür.
  *
  * Brand renkleri (`globals.css`'teki CSS değişkenleriyle aynı):
- *   primary-deep #017A8A → primary #01B5CC → light #00CCE4
+ *   primary-deep #0369A1 → primary #01B5CC → light #00CCE4
  *   bg #FFFFFF, text-primary #0F172A
  */
 
@@ -64,7 +64,7 @@ export default async function OpengraphImage() {
             display: "flex",
             alignItems: "center",
             gap: 16,
-            color: "#017A8A",
+            color: "#0369A1",
             fontSize: 28,
             fontWeight: 600,
             letterSpacing: 4,
@@ -95,13 +95,13 @@ export default async function OpengraphImage() {
         >
           <span>
             Doğru lokasyonda
-            <span style={{ color: "#017A8A" }}>,</span>
+            <span style={{ color: "#0369A1" }}>,</span>
           </span>
           <span>
             Doğru zamanda
-            <span style={{ color: "#017A8A" }}>,</span>
+            <span style={{ color: "#0369A1" }}>,</span>
           </span>
-          <span style={{ color: "#017A8A" }}>Doğru kitleye.</span>
+          <span style={{ color: "#0369A1" }}>Doğru kitleye.</span>
         </div>
 
         {/* Alt etiket — rakamlar envanter.json'dan */}

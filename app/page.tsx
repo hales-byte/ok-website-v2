@@ -12,6 +12,7 @@ import {
   IlkKampanyamIcon,
 } from "@/components/icons/SegmentIcons";
 import { CustomerProof } from "@/components/CustomerProof";
+import { Chevrons } from "@/components/Chevrons";
 
 // Ana sayfa: layout default'unun template'ine düşmemesi için title.absolute kullan.
 // Layout'un title.template'i "%s | Objektif Kriter" — homepage'te çift "Objektif Kriter"
@@ -96,8 +97,8 @@ export default async function Home() {
 
   return (
     <>
-      {/* HERO — Cinematic + mesh gradient bg */}
-      <section className="relative min-h-[92vh] flex items-center pt-12 pb-20 overflow-hidden">
+      {/* HERO — koyu bant (band-dark) + cyan mesh gradient */}
+      <section className="band-dark relative min-h-[92vh] flex items-center pt-12 pb-20 overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute inset-0 -z-10 pointer-events-none overflow-hidden"
@@ -106,28 +107,28 @@ export default async function Home() {
             className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-40 blur-3xl"
             style={{
               background:
-                "radial-gradient(circle, rgba(1, 181, 204, 0.35) 0%, rgba(1, 181, 204, 0) 70%)",
+                "radial-gradient(circle, rgba(0, 228, 255, 0.30) 0%, rgba(0, 228, 255, 0) 70%)",
             }}
           />
           <div
             className="absolute top-1/3 -right-40 w-[500px] h-[500px] rounded-full opacity-30 blur-3xl"
             style={{
               background:
-                "radial-gradient(circle, rgba(0, 204, 228, 0.4) 0%, rgba(0, 204, 228, 0) 70%)",
+                "radial-gradient(circle, rgba(0, 204, 228, 0.35) 0%, rgba(0, 204, 228, 0) 70%)",
             }}
           />
           <div
-            className="absolute -bottom-40 left-1/3 w-[700px] h-[700px] rounded-full opacity-20 blur-3xl"
+            className="absolute -bottom-40 left-1/3 w-[700px] h-[700px] rounded-full opacity-25 blur-3xl"
             style={{
               background:
-                "radial-gradient(circle, rgba(1, 122, 138, 0.35) 0%, rgba(1, 122, 138, 0) 70%)",
+                "radial-gradient(circle, rgba(3, 105, 161, 0.40) 0%, rgba(3, 105, 161, 0) 70%)",
             }}
           />
           <div
-            className="absolute inset-0 opacity-[0.04]"
+            className="absolute inset-0 opacity-[0.06]"
             style={{
               backgroundImage:
-                "linear-gradient(rgba(15,23,42,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.4) 1px, transparent 1px)",
+                "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
               backgroundSize: "48px 48px",
             }}
           />
@@ -135,6 +136,9 @@ export default async function Home() {
 
         <div className="container-narrow w-full relative">
           <div className="max-w-5xl space-y-10">
+            <ScrollReveal direction="up" delay={0} duration={1000} priority>
+              <Chevrons count={6} width={280} />
+            </ScrollReveal>
             <ScrollReveal direction="up" delay={100} duration={1000} priority>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
                 <span className="text-gradient">Doğru lokasyonda</span>,

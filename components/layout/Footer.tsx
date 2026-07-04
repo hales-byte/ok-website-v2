@@ -76,7 +76,7 @@ function WhatsAppIcon({ size = 20 }: { size?: number }) {
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)] mt-24">
+    <footer className="band-dark border-t border-[var(--color-border-subtle)] mt-24">
       <div className="container-narrow py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           {/* Sol: Logo + tanıtım */}

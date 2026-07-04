@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { TOPLAM, sayiTr } from "@/src/data/envanter";
-import { Inter } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
@@ -11,6 +11,14 @@ const inter = Inter({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-inter",
+});
+
+// Display serif — SADECE h1/h2 ve büyük rakamlarda kullanılır (bkz. globals.css)
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext"],
+  weight: ["600", "700"],
+  display: "swap",
+  variable: "--font-cormorant",
 });
 
 export const metadata: Metadata = {
@@ -53,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" className={inter.variable}>
+    <html lang="tr" className={`${inter.variable} ${cormorant.variable}`}>
       <body className="flex flex-col min-h-screen">
         <a href="#main" className="skip-link">
           İçeriğe atla

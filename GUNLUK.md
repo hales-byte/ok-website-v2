@@ -14,6 +14,18 @@
 
 ---
 
+### 2026-07-04 — G1: Sitenin yüzü yeni kimliğe geçti (Seçenek B — aydınlık gövde + koyu vurgu)
+**Ne yapıldı:** Site rengi eski petrol-turkuazdan canlı "cyan" vurguya taşındı; başlıklar zarif bir serif yazı tipine (Cormorant) geçti; ana giriş bölümü ve alt bilgi (footer) koyu banda alınıp aradaki gövde aydınlık bırakıldı; giriş bölümüne akan ">>>" ok motifi eklendi; ileride bölüm başlıklarında kullanılacak hazır bir başlık bileşeni üretildi.
+**Neden:** İki eski sitenin en beğenilen görsel dili (koyu vurgu + serif + cyan) yeni siteye taşınacaktı; G0'da bu yön (Seçenek B) kesinleşti.
+**Ne işe yaradı:** Site artık tek ve tutarlı bir marka görünümüne sahip; okunabilirlik korundu (açık zeminde küçük yazılar koyu tonda, parlak cyan sadece büyük vurgularda — görme erişilebilirliği/WCAG bozulmadı). Sayfaların içeriği/düzeni değişmedi, sadece görünüm değişti. **Denetimden geçti ve repoya işlendi.**
+**Sırada:** Bu kimlik tek tek sayfa bölümlerine yayılacak (G2 ve sonrası).
+
+### 2026-07-04 — Uygulama: v3 teknik paket repoya indi, önizleme yayında
+**Ne yapıldı:** Cowork'ün ürettiği teknik paket (T0-T6) siteye uygulandı, doğrulandı (envanter 7/7, 186 sayfa sorunsuz üretildi) ve önizleme olarak yayınlandı; ayrıca LinkedIn adresindeki bozuk bağlantı iki sayfada düzeltildi. Hepsi tek bir kayıt olarak proje deposuna gönderildi.
+**Neden:** Sandbox'ta hazırlanan değişikliklerin gerçek projeye taşınıp canlıya çok benzer bir ortamda görülmesi gerekiyordu.
+**Ne işe yaradı:** Artık çalışan, gezilebilir bir önizleme adresi var; rakamlar ve sayfa üretimi teyit edildi; site deposu güncel.
+**Sırada:** Görsel kimlik (G1) çalışması.
+
 ### 2026-07-04 — T0-T6: Sitenin motoru tek seferde değişti (Cowork otonom tur)
 **Ne yapıldı:** Sitenin tüm sayfaları kırık veritabanından koparılıp tek envanter dosyasına bağlandı; bozuk boş harita yerine bağımsız Türkiye haritası kuruldu; teklif formu kaybolmayan e-posta hattına geçirildi; her yerdeki eski rakamlar (39/18/35.861 ve 47/33.812) 45 il · 20 mecra · 35.919 ünite olarak eşitlendi.
 **Neden:** Veritabanı hesabı kaybolduğu için şehir sayfaları ve harita boş geliyordu; üç farklı rakam evreni vardı; form mailleri güvencesizdi.

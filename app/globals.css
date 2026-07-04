@@ -7,38 +7,66 @@
    gibi utility'leri otomatik üretir.
    ───────────────────────────────────────────── */
 @theme {
-  /* Renkler — Light tema */
+  /* ── Kimlik: Seçenek B — aydınlık gövde + koyu vurgu (Temmuz 2026) ──
+     Vurgu cyan #00E4FF koyu bantlarda parlar; açık gövdede küçük metin/link
+     WCAG AA için #0369A1 ailesine düşer. Koyu bant zemini #0A1220. */
+
+  /* Renkler — açık gövde */
   --color-bg: #FFFFFF;
-  --color-surface: #F8FAFC;
+  --color-surface: #F7FAFC;
   --color-surface-elevated: #F1F5F9;
   --color-border-subtle: #E2E8F0;
 
-  /* Primary — light temada biraz daha koyu turkuaz (kontrast için) */
-  --color-primary: #01B5CC;
-  --color-primary-hover: #019AAD;
-  --color-primary-deep: #017A8A;
-  /* En koyu ton — buton hover ve odak için (beyaz üzerinde ~7:1 kontrast, AAA) */
-  --color-primary-darker: #015F6D;
+  /* Koyu bant zemini — sadece hero + footer */
+  --color-ink: #0A1220;
+
+  /* Parlak cyan vurgu — koyu bant + dekoratif glow (küçük metinde kullanma) */
+  --color-cyan: #00E4FF;
+
+  /* Primary — açık gövdede AA-safe cyan/mavi.
+     .band-dark scope'unda #00E4FF'e yükselir (aşağıda). */
+  --color-primary: #0369A1;         /* beyaz üzerinde ~4.9:1 — normal metin AA */
+  --color-primary-hover: #075985;
+  --color-primary-deep: #0369A1;    /* buton zemini, beyaz metinle AA */
+  --color-primary-darker: #075985;  /* hover/odak — beyaz üzerinde ~7:1, AAA */
 
   /* Yazı renkleri — koyu lacivert tonları */
   --color-text-primary: #0F172A;
   --color-text-secondary: #475569;
-  --color-text-muted: #94A3B8;
+  --color-text-muted: #64748B;
 
-  /* Fontlar */
+  /* Fontlar — başlık serif (Cormorant), gövde sans (Inter) */
   --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
 
-  /* Gradient — logo akışını taklit eder (light temada koyu→açık turkuaz) */
+  /* Gradient — açık zeminde büyük başlık/rakam (koyu→orta cyan, büyük metin AA) */
   --background-image-logo-gradient: linear-gradient(
     to right,
-    #017A8A,
-    #01B5CC,
-    #00CCE4
+    #075985,
+    #0369A1,
+    #0891B2
   );
 
-  /* Glow shadow — light temada hafif gölge */
-  --shadow-primary-glow: 0 0 20px rgba(1, 181, 204, 0.25);
+  /* Glow shadow — cyan hafif gölge */
+  --shadow-primary-glow: 0 0 20px rgba(0, 228, 255, 0.25);
+}
+
+/* ── Koyu bant scope: token'ları koyu-zemin karşılıklarıyla yeniden tanımlar.
+   Hero + Footer'a `band-dark` class'ı eklemek yeterli — içindeki tüm
+   text-[var(--color-text-*)], primary, surface, border utility'leri
+   otomatik açık/parlak-cyan tonlarına döner. DOM yapısına dokunulmaz. */
+.band-dark {
+  background: var(--color-ink);
+  color: #E2E8F0;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #94A3B8;
+  --color-border-subtle: rgba(255, 255, 255, 0.12);
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-surface-elevated: rgba(255, 255, 255, 0.09);
+  /* Koyu zeminde vurgu (link/ikon hover) parlak cyan'a yükselir */
+  --color-primary: var(--color-cyan);
+  --color-primary-hover: #7DEEFF;
 }
 
 /* ─────────────────────────────────────────────
@@ -57,14 +85,21 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4 {
+  /* Display serif SADECE h1/h2'de (Cormorant Garamond). h3/h4 gövde sans kalır. */
+  h1, h2 {
     font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  h3, h4 {
+    font-family: var(--font-sans);
     font-weight: 700;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
   }
 
   ::selection {
-    background: rgba(1, 181, 204, 0.25);
+    background: rgba(0, 228, 255, 0.28);
     color: var(--color-text-primary);
   }
 }
@@ -124,6 +159,62 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Koyu bantta gradient başlık parlak cyan'a döner (koyu zeminde AA) */
+  .band-dark .text-gradient {
+    background-image: linear-gradient(to right, #67E8F9, #00E4FF, #A5F3FC);
+  }
+
+  /* Koyu bantta primary CTA parlak cyan zemin + koyu metin (cyan üzerinde ~10:1) */
+  .band-dark .btn-primary {
+    background: var(--color-cyan);
+    color: #06121F;
+  }
+  .band-dark .btn-primary:hover {
+    background: #7DEEFF;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Chevron akış motifi — components/Chevrons.tsx
+   ">>>" cyan akış; kaynak: ok-iframe hero.
+   ───────────────────────────────────────────── */
+.chev-flow {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  color: var(--color-cyan);
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 1) 100%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+.chev-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: chev-flow 2s linear infinite;
+}
+
+.chev {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 28px;
+  margin-right: -6px;
+}
+
+.chev path {
+  stroke-width: 4;
+}
+
+@keyframes chev-flow {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chev-track {
+    animation: none;
   }
 }
 /* Form Wizard için CSS animations.
