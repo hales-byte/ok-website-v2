@@ -2,13 +2,13 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-04 · Claude Code (G1 denetlendi + commit + push · sırada G2)
+**Son güncelleme:** 2026-07-04 · Claude Code (G2 hero + KPI bandı kodlandı, preview'da)
 
 ## Şu an
-- **Aktif paket:** G1 ✅ KAPANDI — Seçenek B görsel kimliği (aydınlık gövde + koyu vurgu) denetimden geçti (Cowork onayı), commit'lendi ve `origin/v3`'e push edildi
-- **Durum:** İki commit `origin/v3`'te — b956893 (T0-T6 + LinkedIn), + G1 kimlik commit'i (tema token, Cormorant, chevron, koyu bantlar)
-- **Sonraki:** G2+ (kimliği sayfalara yay: SectionHeader'ı bölümlere, alt sayfa hero'ları) → T5 uçtan uca mail testi
-- **Bu hafta hedefi:** ✅ Faz 1 (veri katmanı) + G0 kararı + G1 temel kimlik tamam — sayfalara yayma (G2+) kaldı
+- **Aktif paket:** G2 TESLİM (preview) — hero eyebrow + 4 KPI bandı + envanter-türevi aylık erişim metriği (42,4M); Cowork denetimi + Hakan onayı bekleniyor
+- **Durum:** `origin/v3`'te iki commit push'lu (b956893 T0-T6, 3fef044 G1). G2 değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
+- **Sonraki:** G2 onayı → commit → G3+ (kimliği diğer bölümlere/alt sayfalara yay) → T5 uçtan uca mail testi
+- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1 + G2 hero/KPI tamam — kalan görsel yayma (G3+)
 
 ## Paket durumu
 
@@ -23,8 +23,9 @@
 | T6 | SEO teknik (sitemap, meta, JSON-LD) | ✅ Kod hazır — FAQPage G6'ya bırakıldı (SSS henüz yok) |
 | T7 | QA + deploy | 🟡 Build 186 sayfa ✓ + Vercel preview ✓ (2 tur) — Lighthouse kaldı |
 | G0 | Tasarım kimliği kararı | ✅ Seçenek B — aydınlık gövde + koyu vurgu (cyan #00E4FF) |
-| G1 | Tema token + tipografi + chevron + SectionHeader | ✅ Denetlendi + commit'lendi — sayfalara yayma G2+ |
-| G2-G7 | Görsel revizyonlar (kimliği sayfalara yay) | ⬜ G1 onayı bekliyor |
+| G1 | Tema token + tipografi + chevron + SectionHeader | ✅ Denetlendi + commit'lendi (3fef044) |
+| G2 | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
+| G3-G7 | Görsel revizyonlar (kimliği diğer bölümlere/sayfalara yay) | ⬜ G2 onayı bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
 | O2-O4 | Cutover hazırlık → cutover → sonrası | ⬜ Bekliyor |
@@ -41,6 +42,7 @@
 ## Kilit gerçekler (değişmez — tereddütte buraya bak)
 
 - Rakamlar: **45 il · 20 mecra · 35.919 ünite** — tek kaynak `src/data/envanter.json`
+- **Aylık erişim: 42.400.011 (42,4M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.145.295) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer).
 - Lead: Resend → satis@objektifkriter.com.tr (cutover'a kadar Resend default göndericisi — normaldir; API key yoksa FormSubmit yedeği devrede)
 - MX kayıtlarına DOKUNULMAZ (şirket maili)
 - İl×format sayfası: adet ≥ 5 ise üret; altındakiler il sayfasına 301 (next.config.ts otomatik üretir)
@@ -59,3 +61,4 @@
 | 2026-07-04 | A5 LinkedIn | Bozuk slug (objekti%CC%87...) Footer + iletişim'de düzeltildi; b956893'e dahil |
 | 2026-07-04 | G0 + G1 | Seçenek B kesinleşti; cyan #00E4FF + Cormorant serif teması, hero/footer koyu bant, Chevrons + SectionHeader bileşenleri; preview'da |
 | 2026-07-04 | G1 kapanış | Cowork denetimi geçti; kimlik commit'lendi + origin/v3'e push edildi |
+| 2026-07-04 | G2 (preview) | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) kodlandı; check 8 kontrol ✓; build 186; preview |

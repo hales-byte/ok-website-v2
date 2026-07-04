@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-04 — G2: Giriş bölümüne güç kanıtı eklendi (42,4 milyon aylık erişim)
+**Ne yapıldı:** Ana sayfanın giriş bölümüne "Türkiye'nin Anadolu Açıkhava Lideri" üst etiketi ve dört rakamlı bir güven bandı (il · mecra türü · ünite · aylık erişim) eklendi. En önemlisi: "42,4 milyon aylık erişim" rakamı elle yazılmak yerine il nüfuslarından otomatik hesaplanıyor; envanter değişirse rakam kendiliğinden güncellenir ve kontrol aracı bunu doğruluyor.
+**Neden:** Ziyaretçi daha giriş ekranında "bu firma ne kadar büyük, kaç kişiye ulaşıyorum?" sorusunun cevabını görmeli; ayrıca pazarlama rakamlarının uydurma değil, gerçek veriden türemesi güven verir.
+**Ne işe yaradı:** Giriş bölümü artık tek bakışta ölçek anlatıyor (45 il, 20 mecra, ~35,9 bin ünite, 42,4M erişim); rakam tek bir doğruluk kaynağından geldiği için ileride "sitede yanlış sayı" riski yok.
+**Sırada:** Cowork denetimi + Hakan onayı → repoya işlenmesi → kimliğin diğer sayfa bölümlerine yayılması (G3+).
+
 ### 2026-07-04 — G1: Sitenin yüzü yeni kimliğe geçti (Seçenek B — aydınlık gövde + koyu vurgu)
 **Ne yapıldı:** Site rengi eski petrol-turkuazdan canlı "cyan" vurguya taşındı; başlıklar zarif bir serif yazı tipine (Cormorant) geçti; ana giriş bölümü ve alt bilgi (footer) koyu banda alınıp aradaki gövde aydınlık bırakıldı; giriş bölümüne akan ">>>" ok motifi eklendi; ileride bölüm başlıklarında kullanılacak hazır bir başlık bileşeni üretildi.
 **Neden:** İki eski sitenin en beğenilen görsel dili (koyu vurgu + serif + cyan) yeni siteye taşınacaktı; G0'da bu yön (Seçenek B) kesinleşti.

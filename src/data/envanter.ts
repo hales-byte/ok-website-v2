@@ -227,3 +227,39 @@ export function ilSirasi(slug: string): number {
   const idx = sirali.findIndex((i) => slugifyTr(i.il) === slug);
   return idx + 1;
 }
+
+/* ─────────────── Aylık erişim (envanter-türevi dinamik metrik) ─────────────── */
+
+import ilNufusData from "./il-nufus.json";
+
+const IL_NUFUS: Record<string, number> = (ilNufusData as { nufus: Record<string, number> }).nufus;
+
+/**
+ * KALİBRASYON SABİTİ — Hakan kararı, 2026-07-04.
+ * Mevcut 45-il seti tam 42,4M aylık erişim verecek şekilde sabitlendi:
+ * 42.400.000 / 44.145.295 (o günkü TÜİK nüfus toplamı) = 0.960465.
+ * İl nüfusu + günlük şehir ziyaretçisi modelinin NET katsayısıdır.
+ * İl seti değişince ERİŞİM otomatik değişir; KATSAYI DEĞİŞMEZ —
+ * yeniden kalibre etmeye kalkma (rakamın oynaması tasarım gereği).
+ */
+export const ERISIM_KATSAYISI = 0.960465;
+
+/** Envanterdeki illerin nüfus toplamı × katsayı → aylık tekrarsız erişim */
+export function getAylikErisim(): number {
+  let toplamNufus = 0;
+  for (const il of ENVANTER.iller) {
+    const n = IL_NUFUS[il.il];
+    if (n === undefined) {
+      console.warn(`il-nufus.json'da eksik il: ${il.il} — erişim hesabına katılmadı`);
+      continue;
+    }
+    toplamNufus += n;
+  }
+  return Math.round(toplamNufus * ERISIM_KATSAYISI);
+}
+
+/** "42,4M" biçiminde etiket (milyon, 1 ondalık, TR virgül) */
+export function erisimEtiketi(): string {
+  const milyon = getAylikErisim() / 1_000_000;
+  return `${milyon.toLocaleString("tr-TR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+}

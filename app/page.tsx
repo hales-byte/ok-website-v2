@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TOPLAM, sayiTr } from "@/src/data/envanter";
+import { TOPLAM, sayiTr, erisimEtiketi } from "@/src/data/envanter";
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 function getStats() {
   // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
-  return { sehirSayisi: TOPLAM.il, yuzSayisi: TOPLAM.unite };
+  return { sehirSayisi: TOPLAM.il, mecraSayisi: TOPLAM.mecra, yuzSayisi: TOPLAM.unite };
 }
 
 const surec = [
@@ -139,6 +139,11 @@ export default async function Home() {
             <ScrollReveal direction="up" delay={0} duration={1000} priority>
               <Chevrons count={6} width={280} />
             </ScrollReveal>
+            <ScrollReveal direction="up" delay={60} duration={800} priority>
+              <div className="text-xs md:text-sm uppercase tracking-[0.2em] font-medium text-[var(--color-primary)]">
+                Türkiye&apos;nin Anadolu Açıkhava Lideri
+              </div>
+            </ScrollReveal>
             <ScrollReveal direction="up" delay={100} duration={1000} priority>
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
                 <span className="text-gradient">Doğru lokasyonda</span>,
@@ -151,16 +156,16 @@ export default async function Home() {
 
             <ScrollReveal direction="up" delay={400} duration={1000} priority>
               <p className="text-xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl leading-relaxed">
-                Türkiye genelinde {stats.sehirSayisi} ilde,{" "}
-                {sayiTr(stats.yuzSayisi)} reklam ünitesi ile
-                markanızı doğru yere konumlandırıyoruz.
+                Türkiye genelinde {stats.sehirSayisi} il, {stats.mecraSayisi}{" "}
+                mecra türü, {sayiTr(stats.yuzSayisi)} ünite — Anadolu&apos;nun
+                her köşesinde markanızın yanındayız.
               </p>
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={700} duration={1000} priority>
               <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-4">
                 <Link href="/teklif-al" className="btn-primary">
-                  Teklif Al
+                  Ücretsiz Mecra Planı Al
                   <ArrowRight size={18} />
                 </Link>
                 <a
@@ -185,13 +190,13 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* SAYAÇ — 2 sütun */}
+      {/* SAYAÇ — 4 KPI (G2) */}
       <section className="border-y border-[var(--color-border-subtle)] bg-[var(--color-surface)]">
         <div className="container-narrow py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8">
             <ScrollReveal direction="up" delay={0}>
               <div className="text-center md:text-left">
-                <div className="text-5xl md:text-7xl font-bold text-gradient">
+                <div className="text-4xl md:text-6xl font-bold text-gradient">
                   <CountUp end={stats.sehirSayisi} duration={1800} />
                 </div>
                 <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
@@ -200,21 +205,43 @@ export default async function Home() {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={150}>
+            <ScrollReveal direction="up" delay={120}>
               <div className="text-center md:text-left">
-                <div className="text-5xl md:text-7xl font-bold text-gradient">
-                  <CountUp
-                    end={stats.yuzSayisi}
-                    formatTr
-                    duration={2200}
-                  />
+                <div className="text-4xl md:text-6xl font-bold text-gradient">
+                  <CountUp end={stats.mecraSayisi} duration={1800} />
+                </div>
+                <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
+                  Mecra Türü
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={240}>
+              <div className="text-center md:text-left">
+                <div className="text-4xl md:text-6xl font-bold text-gradient">
+                  <CountUp end={stats.yuzSayisi} formatTr duration={2200} />
                 </div>
                 <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
                   Reklam Ünitesi
                 </div>
               </div>
             </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={360}>
+              <div className="text-center md:text-left">
+                <div className="text-4xl md:text-6xl font-bold text-gradient">
+                  {erisimEtiketi()}
+                </div>
+                <div className="mt-3 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
+                  Aylık Erişim*
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
+          <p className="mt-8 text-xs text-[var(--color-text-muted)] text-center md:text-left">
+            * Aylık erişim; il nüfusları (TÜİK ADNKS 2025) ve günlük şehir
+            ziyaretçileri üzerinden envantere bağlı hesaplanır.
+          </p>
         </div>
       </section>
 

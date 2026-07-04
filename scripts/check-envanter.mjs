@@ -40,5 +40,18 @@ const bozukIller = iller.filter(
 check("İl toplam = format toplamı tutarlılığı (bozuk il sayısı)", bozukIller.length, 0);
 if (bozukIller.length) console.log("  Bozuk:", bozukIller.map((i) => i.il).join(", "));
 
+
+// ── Erişim modeli kontrolleri (G2) ──
+const nufusData = JSON.parse(readFileSync(join(root, "src/data/il-nufus.json"), "utf8"));
+const nufus = nufusData.nufus;
+const nufussuz = iller.filter((i) => nufus[i.il] === undefined);
+check("Nüfus kaydı olmayan envanter ili", nufussuz.length, 0);
+if (nufussuz.length) console.log("  Eksik:", nufussuz.map((i) => i.il).join(", "));
+
+const ERISIM_KATSAYISI = 0.960465; // src/data/envanter.ts ile aynı — değişirse ikisini birden güncelle
+const nufusToplam = iller.reduce((s, i) => s + (nufus[i.il] ?? 0), 0);
+const erisim = Math.round(nufusToplam * ERISIM_KATSAYISI);
+console.log(`ℹ Nüfus toplamı: ${nufusToplam.toLocaleString("tr-TR")} → aylık erişim: ${erisim.toLocaleString("tr-TR")} (${(erisim / 1e6).toLocaleString("tr-TR", { maximumFractionDigits: 1 })}M)`);
+
 if (fail > 0) { console.error(`\n${fail} kontrol BAŞARISIZ`); process.exit(1); }
 console.log("\nTüm kontroller geçti — envanter.json tutarlı.");
