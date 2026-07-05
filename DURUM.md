@@ -2,11 +2,11 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-05 · Claude Code (G4a mecra fotoğrafları kodlandı, preview'da)
+**Son güncelleme:** 2026-07-05 · Claude Code (G4a mecra fotoğrafları commit'lendi + push'landı)
 
 ## Şu an
-- **Aktif paket:** G4a TESLİM (preview) — Gemini mecra fotoğrafları: 6 kart yenilendi + havalimanı ilk kez gerçek görsele bağlandı; Hakan onayı bekleniyor
-- **Durum:** `origin/v3`'te üç commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2). G4a değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
+- **Aktif paket:** G4a KAPANDI — Gemini mecra fotoğrafları: 6 kart yenilendi + havalimanı ilk kez gerçek görsele bağlandı; commit'lenip origin/v3'e push'landı, preview yayında
+- **Durum:** `origin/v3`'te dört commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a).
 - **Sonraki:** G4a onayı → commit → G3 (kimliği diğer bölümlere yay) / kalan format görselleri → T5 uçtan uca mail testi
 - **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2 + G4a görseller tamam — kalan görsel yayma (G3) + tramvay-kaplama formatı kararı
 
@@ -25,7 +25,7 @@
 | G0 | Tasarım kimliği kararı | ✅ Seçenek B — aydınlık gövde + koyu vurgu (cyan #00E4FF) |
 | G1 | Tema token + tipografi + chevron + SectionHeader | ✅ Denetlendi + commit'lendi (3fef044) |
 | G2 | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
-| G4a | Mecra fotoğrafları (Gemini) — 6 kart + havalimanı | 🟡 Kod hazır (preview) — onay bekliyor |
+| G4a | Mecra fotoğrafları (Gemini) — 6 kart + havalimanı | ✅ Commit'lendi + push (9e41714) |
 | G3/G4b-G7 | Görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ G4a onayı bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
@@ -66,3 +66,4 @@
 | 2026-07-04 | G2 (preview) | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) kodlandı; check 8 kontrol ✓; build 186; preview |
 | 2026-07-04 | G2 kapanış | Onaylandı; commit f8f01e6 + origin/v3'e push |
 | 2026-07-05 | G4a (preview) | 6 mecra fotoğrafı yenilendi + havalimanı ilk kez gerçek görsele bağlandı; build 186; preview |
+| 2026-07-05 | G4a kapanış | Commit 9e41714 + origin/v3'e push; preview: web-v2-4vg8eg2ma |
