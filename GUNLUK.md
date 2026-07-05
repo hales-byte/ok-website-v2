@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-05 — G4a: Mecra kartlarına gerçek fotoğraflar geldi (havalimanı ilk kez)
+**Ne yapıldı:** Ana sayfadaki reklam formatı kartlarının fotoğrafları yenilendi (6 kart); havalimanı formatı ilk kez gerçek bir görsele kavuştu (önceden boş/yer tutucu tasarımla görünüyordu). Görseller marka kimliğiyle uyumlu (cyan ok motifi işlenmiş). Ayrıca ileride açılabilecek bir "tramvay giydirme" formatı için hazır bir görsel de klasöre eklendi ama henüz bir karta bağlanmadı.
+**Neden:** Yer tutucu/eski görseller yerine, her formatın nasıl göründüğünü net gösteren gerçek sahneler ziyaretçinin "ürünü" anlamasını kolaylaştırır; havalimanı premium bir format olduğu için görselsiz durması eksiklikti.
+**Ne işe yaradı:** 8 format kartının hepsi artık gerçek görselle sunuluyor; havalimanı kartı tamamlandı. Sayfa yapısı değişmedi, sadece görseller güçlendi.
+**Sırada:** Hakan onayı → repoya işlenmesi → kimliğin diğer bölümlere yayılması (G3) ve tramvay formatının açılıp açılmayacağı kararı.
+
 ### 2026-07-04 — G2: Giriş bölümüne güç kanıtı eklendi (42,4 milyon aylık erişim)
 **Ne yapıldı:** Ana sayfanın giriş bölümüne "Türkiye'nin Anadolu Açıkhava Lideri" üst etiketi ve dört rakamlı bir güven bandı (il · mecra türü · ünite · aylık erişim) eklendi. En önemlisi: "42,4 milyon aylık erişim" rakamı elle yazılmak yerine il nüfuslarından otomatik hesaplanıyor; envanter değişirse rakam kendiliğinden güncellenir ve kontrol aracı bunu doğruluyor.
 **Neden:** Ziyaretçi daha giriş ekranında "bu firma ne kadar büyük, kaç kişiye ulaşıyorum?" sorusunun cevabını görmeli; ayrıca pazarlama rakamlarının uydurma değil, gerçek veriden türemesi güven verir.

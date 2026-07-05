@@ -233,7 +233,7 @@ export const FORMATLAR: FormatMeta[] = [
     ],
     useCases: "Premium markalar, lüks tüketim, finans, B2B, otomotiv",
     icon: Plane,
-    image: null, // Görsel henüz yok, kart fallback design kullanır
+    image: "havalimani",
     priceBand: {
       from: 30000,
       to: 80000,
