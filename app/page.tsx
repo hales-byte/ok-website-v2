@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { FormatShowcase } from "@/components/FormatShowcase";
+import { EkMecraGrid } from "@/components/EkMecraGrid";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import {
   MarkalarIcon,
@@ -386,6 +387,13 @@ export default async function Home() {
 
       {/* STICKY SCROLL FORMAT SHOWCASE — Apple-tarzı */}
       <FormatShowcase />
+
+      {/* G4b: +12 EK MECRA — adetler envanter.json'dan, fiyat YOK (Hakan kararı) */}
+      <section className="py-16 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+        <div className="container-narrow">
+          <EkMecraGrid />
+        </div>
+      </section>
 
       {/* SOSYAL KANIT — lib/customers.ts boş ise otomatik gizlenir */}
       <CustomerProof />

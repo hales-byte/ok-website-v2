@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { FORMATLAR } from "@/lib/formats";
+import { TOPLAM } from "@/src/data/envanter";
 
 /**
  * Apple-tarzı sticky scroll showcase.
@@ -77,7 +78,7 @@ export function FormatShowcase() {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
                 Marka bilinirliğinden lokal trafiğe —{" "}
-                <span className="text-gradient">{FORMATLAR.length} format</span>,
+                <span className="text-gradient">{TOPLAM.mecra} mecra türü</span>,
                 tek envanter
               </h2>
               {/* Progress dots */}
@@ -235,7 +236,7 @@ export function FormatShowcase() {
             </div>
             <h2 className="text-3xl md:text-4xl font-bold leading-tight">
               Marka bilinirliğinden lokal trafiğe —{" "}
-              <span className="text-gradient">{FORMATLAR.length} format</span>,
+              <span className="text-gradient">{TOPLAM.mecra} mecra türü</span>,
               tek envanter
             </h2>
           </div>

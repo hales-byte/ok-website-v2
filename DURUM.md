@@ -2,13 +2,13 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-06 · Claude Code (G3.1 logo akışı/marquee commit'lendi + push'landı, prod'da)
+**Son güncelleme:** 2026-07-06 · Claude Code (G4b +12 mecra grid'i kodlandı, prod'da — commit bekliyor)
 
 ## Şu an
-- **Aktif paket:** G3.1 KAPANDI — ana sayfa İş Birlikleri bölümü **logo akışına (marquee)** geçti: 30 logo iki zıt satırda akar (20sn/24sn), hover'da durur, 2 cyan glow gezinir (22/28sn), reduced-motion'da statik ızgara. İki düzeltme: (1) hover-pause bug'ı (inline `animation` shorthand hover CSS'i eziyordu) → hover kuralına `!important`; (2) dikiş hizası → track iki eş yarım (her biri `pr-4`) + track `gap:0` → `-50%` sapması 0px (canlı ölçüm: total 4980 = 2×2490). Commit'lenip origin/v3'e push'landı, prod'da.
-- **Durum:** `origin/v3`'te sekiz commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6, abd9243 FIX-legal, c258cfe G3.1).
-- **Sonraki:** G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
-- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G3.1/G6 + hukuki tutarlılık tamam — kalan görsel yayma (G4b-G7)
+- **Aktif paket:** G4b TESLİM (prod alias) — ana sayfada FormatShowcase altına **"+12 mecra" açılır grid'i** eklendi (native details): 12 ek mecra kartı, adetler envanter.json'dan türetilir (Luna 140, Megaboard 97, Tramvay Kaplama 40 görselli…), fiyat YOK. FormatShowcase başlığı "20 mecra türü, tek envanter". Ayrıca **tüm fiyat verisi (priceBand + formatPriceBand) söküldü** (Hakan kararı — sitede fiyat gösterilmiyor) ve **totem tanımı düzeltildi** (yanlış "dikey kule" → doğru "direk üstünde ışıklı kutu pano"). Tramvay-kaplama öksüz görseli artık kullanılıyor. Hakan onayı bekleniyor.
+- **Durum:** `origin/v3`'te sekiz commit push'lu (…c258cfe G3.1). G4b değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
+- **Sonraki:** G4b onayı → commit → G5/G7 (kalan görsel/kimlik) → T5 uçtan uca mail testi
+- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G3.1/G6/G4b + hukuki tutarlılık tamam
 
 ## Paket durumu
 
@@ -30,7 +30,8 @@
 | G3.1 | Logo akışı (marquee) + arka plan cyan glow — ana sayfa | ✅ Commit'lendi + push (c258cfe) |
 | G6 | SSS + FAQPage JSON-LD + footer tam iletişim + sabit WhatsApp | ✅ Commit'lendi + push (edd0753) |
 | FIX-legal | KVKK/gizlilik'ten kaldırılmış servis (Supabase/Mapbox) temizliği + 3 hukuki sayfa tutarlılığı | ✅ Commit'lendi + push (abd9243) |
-| G4b-G7 | Kalan görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ Onay bekliyor |
+| G4b | +12 mecra grid'i (envanter-türevi adet) + fiyat söküm + totem düzeltme | 🟡 Kod hazır (prod alias) — denetim + onay bekliyor |
+| G5/G7 | Kalan görsel revizyonlar (kimliği yay) | ⬜ Onay bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
 | O2-O4 | Cutover hazırlık → cutover → sonrası | ⬜ Bekliyor |
@@ -48,7 +49,8 @@
 
 - Rakamlar: **45 il · 20 mecra · 35.919 ünite** — tek kaynak `src/data/envanter.json`
 - **Aylık erişim: 42.400.011 (42,4M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.145.295) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer).
-- **Format kartları: 8 adet**, hepsi gerçek görsele bağlı (billboard, clp, megalight, led, giantboard, pole-banner, totem, havalimanı). ⚠️ `public/images/formats/tramvay-kaplama.{jpg,webp}` G4a'da eklendi ama HİÇBİR karta bağlı değil (formats.ts'te referansı yok) — yeni bir "tramvay/transit" formatı açılırsa kullanılacak; şu an sitede görünmüyor.
+- **Mecralar (ana sayfa): 8 showcase kartı** (FormatShowcase: billboard, clp, megalight, led, giantboard, pole-banner, totem, havalimanı — hepsi görselli) **+ 12 ek mecra grid'i** (G4b, `EkMecraGrid` + `src/data/content/ek-mecralar.ts`) = **20 mecra**. Ek grid adetleri envanter.json'dan `getFormatToplam(envanterAd)` ile türer (Luna 140, Megaboard 97, Tramvay Kaplama 40…), adet 0 olan kart gizlenir. Tramvay-kaplama görseli artık bu grid'de kullanılıyor (öksüz değil). `totem` tanımı G4b'de düzeltildi (direk üstünde ışıklı kutu pano).
+- **FİYAT GÖSTERİLMEZ (Hakan kararı, G4b):** `priceBand` + `formatPriceBand` `lib/formats.ts`'ten tamamen söküldü. Sitede hiçbir yerde fiyat yok; teklif akışı fiyatı konuşma/teklifle verir. grep `priceBand` → sıfır olmalı.
 - **Logo duvarı (G3):** 30 marka logosu `public/logos/*.png` (dosya adları slug). İçerik/veri `src/data/content/is-birlikleri.ts`'te — projenin İLK content dosyası; kural: kullanıcıya görünen metin/veri koda gömülmez, buraya toplanır. Bileşen `components/LogoWall.tsx` (her iki temada beyaz kart). /markalar 30 tam grid (LogoWall). Soluk logolar (VakıfBank, Nissan, Paulmark, Hatemoğlu, Arçelik) A1'de koyu varyantla yenilenecek — şimdilik olduğu gibi.
 - **Logo akışı (G3.1):** ANA SAYFA'da LogoWall yerine `components/LogoMarquee.tsx` — 30 logo iki zıt satırda akar (salt CSS, server component; ≤40 logo→2 satır, >40→3). Animasyon keyframe'leri + hover-pause + reduced-motion statik kuralı `app/globals.css`'te (`ok-marquee-*`, `ok-glow-*`). İki kritik kural: (1) animasyon inline `style` ile veriliyor → hover-pause CSS'i `!important` OLMADAN çalışmaz (inline shorthand ezer); (2) dikişsizlik için track iki ÖZDEŞ yarım (`<div class="flex gap-4 pr-4">`×2, ikincisi `ok-marquee-dup`) + track `gap:0` → `-50%` tam oturur (canlı ölçüm 0px sapma). reduced-motion'da `.ok-marquee-track > div` de sarmalı (chip'ler yarımların çocuğu). /markalar hâlâ LogoWall (grid).
 - **SSS (G6):** 9 soru `src/data/content/sss.ts`'te (2. content dosyası; kaynak ok-iframe canlı sitesi). Rakamlar TOPLAM'dan türetilir (elle yazılmaz). Bileşen `components/FAQ.tsx` — native `<details>/<summary>` (JS'siz, erişilebilir). Ana sayfada süreç ile alt-CTA arasında + FAQPage JSON-LD (`sssJsonLd()`). ⚠️ Angarya A2'de gerçek müşteri sorularıyla güncellenecek.
@@ -87,3 +89,4 @@
 | 2026-07-06 | Ekran görüntüleri v2 | 15 sayfa yeniden çekildi (çerez ön-onay + reduced-motion + gerçek-son scroll); artefaktlar bitti |
 | 2026-07-06 | G3.1 (prod alias) | Logo marquee patch'i uygulandı; hover-pause bug'ı (inline animation) globals.css !important ile düzeltildi; akış/hover/glow programatik doğrulandı; build ✓; prod alias web-v2-seven-rho; commit onay bekliyor |
 | 2026-07-06 | G3.1 dikiş + kapanış | Dikişsizlik: iki eş yarım (pr-4) + track gap:0 → -50% sapması 0px (canlı ölçüm); reduced-motion statik doğrulandı; commit c258cfe + origin/v3'e push; prod |
+| 2026-07-06 | G4b (prod alias) | +12 mecra grid'i (envanter-türevi: Luna 140/Megaboard 97/Tramvay 40) + priceBand söküm (grep 0) + totem düzeltme; başlık "20 mecra türü"; check 8/8; build ✓; grid canlı doğrulandı (12 kart); prod web-v2-seven-rho; commit onay bekliyor |

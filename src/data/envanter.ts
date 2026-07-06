@@ -263,3 +263,11 @@ export function erisimEtiketi(): string {
   const milyon = getAylikErisim() / 1_000_000;
   return `${milyon.toLocaleString("tr-TR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
 }
+
+/** Bir mecranın (envanter yazımıyla) Türkiye toplamı — örn. "LUNA" → 140 */
+export function getFormatToplam(envanterAd: string): number {
+  return ENVANTER.iller.reduce(
+    (s, il) => s + (il.formatlar[envanterAd] ?? 0),
+    0
+  );
+}
