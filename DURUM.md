@@ -2,12 +2,12 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-06 · Claude Code (G6 SSS + footer + WhatsApp float kodlandı, preview'da — commit bekliyor)
+**Son güncelleme:** 2026-07-06 · Claude Code (G6 SSS + footer + WhatsApp float commit'lendi + push'landı)
 
 ## Şu an
-- **Aktif paket:** G6 TESLİM (preview) — SSS bölümü (9 soru, native details akordeon) + FAQPage JSON-LD + footer tam iletişim (telefon + açık adres) + tüm sayfalarda sabit WhatsApp düğmesi; patch temiz uygulandı; Hakan onayı bekleniyor
-- **Durum:** `origin/v3`'te beş commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3). G6 değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
-- **Sonraki:** G6 onayı → commit → G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
+- **Aktif paket:** G6 KAPANDI — SSS bölümü (9 soru, native details akordeon) + FAQPage JSON-LD + footer tam iletişim (telefon + açık adres) + tüm sayfalarda sabit WhatsApp düğmesi; commit'lenip origin/v3'e push'landı, preview yayında
+- **Durum:** `origin/v3`'te altı commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6).
+- **Sonraki:** G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
 - **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G6 tamam — kalan görsel yayma (G4b-G7)
 
 ## Paket durumu
@@ -27,7 +27,7 @@
 | G2 | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
 | G4a | Mecra fotoğrafları (Gemini) — 6 kart + havalimanı | ✅ Commit'lendi + push (9e41714) |
 | G3 | Logo duvarı — "Güçlü İş Birlikleri" + /markalar entegrasyonu | ✅ Commit'lendi + push (a7b56a6) |
-| G6 | SSS + FAQPage JSON-LD + footer tam iletişim + sabit WhatsApp | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
+| G6 | SSS + FAQPage JSON-LD + footer tam iletişim + sabit WhatsApp | ✅ Commit'lendi + push (edd0753) |
 | G4b-G7 | Kalan görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ Onay bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
@@ -74,4 +74,5 @@
 | 2026-07-05 | G4a kapanış | Commit 9e41714 + origin/v3'e push; preview: web-v2-4vg8eg2ma |
 | 2026-07-06 | G3 (preview) | Logo duvarı: 30 logo kopyalandı + ilk content dosyası (is-birlikleri.ts) + LogoWall + ana sayfa & /markalar entegrasyonu; build 186; preview: web-v2-1nqoi5pat |
 | 2026-07-06 | G3 revize + kapanış | KPI 3→2 öğe (8 KÖO kaldırıldı, 21→180+ ajans; 890+ marka aynı), 2'li ortalanmış grid; build ✓; commit a7b56a6 + origin/v3'e push |
-| 2026-07-06 | G6 (preview) | SSS (9 soru, details akordeon) + FAQPage JSON-LD + footer telefon/adres + sabit WhatsApp; patch temiz; build ✓; preview: web-v2-4c7h4x9gu — commit onay bekliyor |
+| 2026-07-06 | G6 (preview) | SSS (9 soru, details akordeon) + FAQPage JSON-LD + footer telefon/adres + sabit WhatsApp; patch temiz; build ✓; preview: web-v2-4c7h4x9gu |
+| 2026-07-06 | G6 kapanış | Onaylandı; commit edd0753 + origin/v3'e push |
