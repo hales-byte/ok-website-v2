@@ -2,12 +2,12 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-06 · Claude Code (İçerik düzeltme: KVKK/gizlilik servis kalıntıları temizlendi, preview'da — commit bekliyor)
+**Son güncelleme:** 2026-07-06 · Claude Code (İçerik düzeltme: KVKK/gizlilik servis kalıntıları temizlendi, commit'lendi + push'landı)
 
 ## Şu an
-- **Aktif paket:** FIX-legal TESLİM (preview) — KVKK + gizlilik hukuki metinlerinden kaldırılmış servisler (Supabase, Mapbox) temizlendi; üç hukuki sayfa artık aynı sağlayıcı setini söylüyor (Vercel + Resend). Hakan onayı bekleniyor. NOT: Hakkımızda "44/35.632" ihlali GERÇEK DEĞİLDİ — kod zaten TOPLAM'a bağlı; ekran görüntüsündeki değerler CountUp animasyonunun ara karesiydi.
-- **Durum:** `origin/v3`'te altı commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6). FIX-legal değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
-- **Sonraki:** FIX-legal onayı → commit → G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
+- **Aktif paket:** FIX-legal KAPANDI — KVKK + gizlilik hukuki metinlerinden kaldırılmış servisler (Supabase, Mapbox) temizlendi; üç hukuki sayfa artık aynı sağlayıcı setini söylüyor (Vercel + Resend); commit'lenip origin/v3'e push'landı. NOT: Hakkımızda "44/35.632" ihlali GERÇEK DEĞİLDİ — kod zaten TOPLAM'a bağlı; ekran görüntüsündeki değerler CountUp animasyonunun ara karesiydi (dokunulmadı).
+- **Durum:** `origin/v3`'te yedi commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6, abd9243 FIX-legal).
+- **Sonraki:** G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
 - **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G6 + hukuki tutarlılık tamam — kalan görsel yayma (G4b-G7)
 
 ## Paket durumu
@@ -28,7 +28,7 @@
 | G4a | Mecra fotoğrafları (Gemini) — 6 kart + havalimanı | ✅ Commit'lendi + push (9e41714) |
 | G3 | Logo duvarı — "Güçlü İş Birlikleri" + /markalar entegrasyonu | ✅ Commit'lendi + push (a7b56a6) |
 | G6 | SSS + FAQPage JSON-LD + footer tam iletişim + sabit WhatsApp | ✅ Commit'lendi + push (edd0753) |
-| FIX-legal | KVKK/gizlilik'ten kaldırılmış servis (Supabase/Mapbox) temizliği + 3 hukuki sayfa tutarlılığı | 🟡 Kod hazır (preview) — onay bekliyor |
+| FIX-legal | KVKK/gizlilik'ten kaldırılmış servis (Supabase/Mapbox) temizliği + 3 hukuki sayfa tutarlılığı | ✅ Commit'lendi + push (abd9243) |
 | G4b-G7 | Kalan görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ Onay bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
@@ -81,3 +81,4 @@
 | 2026-07-06 | G6 kapanış | Onaylandı; commit edd0753 + origin/v3'e push |
 | 2026-07-06 | Ekran görüntüleri | 15 sayfa full-page çekildi (Desktop/…/ekran-goruntuleri); prod alias web-v2-seven-rho üzerinden |
 | 2026-07-06 | FIX-legal (preview) | KVKK'dan Supabase+Mapbox satırları, gizlilik'ten Supabase+RLS kaldırıldı → 3 hukuki sayfa Vercel+Resend'de hizalandı; KVKK v2026.07.06; hakkımızda ihlali gerçek değildi (CountUp artefaktı); check 8/8; build ✓; preview: web-v2-3gomp07mq |
+| 2026-07-06 | FIX-legal kapanış | Onaylandı; commit abd9243 + origin/v3'e push |
