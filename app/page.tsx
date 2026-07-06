@@ -14,7 +14,7 @@ import {
 import { CustomerProof } from "@/components/CustomerProof";
 import { Chevrons } from "@/components/Chevrons";
 import { SectionHeader } from "@/components/SectionHeader";
-import { LogoWall } from "@/components/LogoWall";
+import { LogoMarquee } from "@/components/LogoMarquee";
 import { FAQ } from "@/components/FAQ";
 import { SSS_BASLIK, SSS_LISTESI, sssJsonLd } from "@/src/data/content/sss";
 import {
@@ -318,7 +318,26 @@ export default async function Home() {
       </section>
 
       {/* GÜÇLÜ İŞ BİRLİKLERİ — logo duvarı (G3) */}
-      <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+      <section className="relative overflow-hidden py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+        {/* G3.1: arka planda yavaşça gezinen cyan ışımalar (hero diliyle) */}
+        <div
+          aria-hidden="true"
+          className="ok-glow pointer-events-none absolute -left-16 -top-24 h-[340px] w-[340px] rounded-full blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(0, 228, 255, 0.20) 0%, rgba(0, 228, 255, 0) 70%)",
+            animation: "ok-glow-a 22s ease-in-out infinite",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="ok-glow pointer-events-none absolute -bottom-32 -right-24 h-[400px] w-[400px] rounded-full blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(3, 105, 161, 0.15) 0%, rgba(3, 105, 161, 0) 70%)",
+            animation: "ok-glow-b 28s ease-in-out infinite",
+          }}
+        />
         <div className="container-narrow space-y-14">
           <ScrollReveal direction="up">
             <SectionHeader
@@ -344,8 +363,9 @@ export default async function Home() {
             </div>
           </ScrollReveal>
 
-          {/* LOGO DUVARI — ilk 15 + tamamı linki */}
-          <LogoWall logolar={IS_BIRLIKLERI_LOGOLARI} limit={15} />
+          {/* G3.1: LOGO AKIŞI — tüm logolar iki zıt satırda akar (20sn/24sn),
+              hover'da durur, reduced-motion'da statik ızgara */}
+          <LogoMarquee logolar={IS_BIRLIKLERI_LOGOLARI} />
 
           <ScrollReveal direction="up">
             <div className="text-center">

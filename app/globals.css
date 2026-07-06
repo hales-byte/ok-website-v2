@@ -351,3 +351,61 @@
 .skip-link:focus {
   transform: translateY(0.5rem) translateX(0.5rem);
 }
+
+/* ─── G3.1: Logo akışı (marquee) + arka plan ışıması ───
+ * Davranış (Hakan onayı, 2026-07-06): satırlar zıt yönde sürekli akar
+ * (20sn/24sn/tur), fareyle üzerine gelince durur, prefers-reduced-motion
+ * tercihinde animasyonlar kapanır ve şerit statik ızgaraya dönüşür
+ * (yinelenen logo kopyaları gizlenir). Işımalar 22-28sn'de yavaşça gezinir. */
+
+@keyframes ok-marquee-sol {
+  to { transform: translateX(-50%); }
+}
+@keyframes ok-marquee-sag {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+@keyframes ok-glow-a {
+  0%   { transform: translate(-12%, -8%) scale(1); }
+  50%  { transform: translate(14%, 10%) scale(1.15); }
+  100% { transform: translate(-12%, -8%) scale(1); }
+}
+@keyframes ok-glow-b {
+  0%   { transform: translate(10%, 12%) scale(1.1); }
+  50%  { transform: translate(-14%, -10%) scale(0.95); }
+  100% { transform: translate(10%, 12%) scale(1.1); }
+}
+
+.ok-marquee-track {
+  display: flex;
+  width: max-content;
+  /* Boşluk artık yarımların içinde (gap-4 + pr-4); track gap'i 0 olmalı ki
+   * iki eş yarım bitişik dursun ve translateX(-50%) dikişsiz otursun. */
+  gap: 0;
+}
+/* Not: animasyon track'e inline style ile verildiği için (animation shorthand,
+ * örtük play-state:running), hover kuralının inline'ı ezmesi için !important şart. */
+.ok-marquee-band:hover .ok-marquee-track {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ok-marquee-track,
+  .ok-glow {
+    animation: none !important;
+  }
+  /* Statik moda dönüş: şerit sarar, yinelenen kopyalar gizlenir.
+   * Chip'ler artık yarım-sarmalayıcının çocuğu → görünen yarım da sarmalı. */
+  .ok-marquee-track {
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+  }
+  .ok-marquee-track > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .ok-marquee-dup {
+    display: none;
+  }
+}
