@@ -2,12 +2,12 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-06 · Claude Code (G4b +12 mecra grid'i kodlandı, prod'da — commit bekliyor)
+**Son güncelleme:** 2026-07-06 · Claude Code (G4b +12 mecra grid'i commit'lendi + push'landı, prod'da)
 
 ## Şu an
-- **Aktif paket:** G4b TESLİM (prod alias) — ana sayfada FormatShowcase altına **"+12 mecra" açılır grid'i** eklendi (native details): 12 ek mecra kartı, adetler envanter.json'dan türetilir (Luna 140, Megaboard 97, Tramvay Kaplama 40 görselli…), fiyat YOK. FormatShowcase başlığı "20 mecra türü, tek envanter". Ayrıca **tüm fiyat verisi (priceBand + formatPriceBand) söküldü** (Hakan kararı — sitede fiyat gösterilmiyor) ve **totem tanımı düzeltildi** (yanlış "dikey kule" → doğru "direk üstünde ışıklı kutu pano"). Tramvay-kaplama öksüz görseli artık kullanılıyor. Hakan onayı bekleniyor.
-- **Durum:** `origin/v3`'te sekiz commit push'lu (…c258cfe G3.1). G4b değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
-- **Sonraki:** G4b onayı → commit → G5/G7 (kalan görsel/kimlik) → T5 uçtan uca mail testi
+- **Aktif paket:** G4b KAPANDI — ana sayfada FormatShowcase altına **"+12 mecra" açılır grid'i** eklendi (native details): 12 ek mecra kartı, adetler envanter.json'dan türetilir (Luna 140, Megaboard 97, Tramvay Kaplama 40 görselli…), fiyat YOK. FormatShowcase başlığı "20 mecra türü, tek envanter". Ayrıca **tüm fiyat verisi (priceBand + formatPriceBand) söküldü** (Hakan kararı) ve **totem tanımı düzeltildi** ("dikey kule" → "direk üstünde ışıklı kutu pano"). Tramvay-kaplama öksüz görseli artık kullanılıyor. Commit'lenip origin/v3'e push'landı, prod'da.
+- **Durum:** `origin/v3`'te dokuz commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6, abd9243 FIX-legal, c258cfe G3.1, 799fb06 G4b).
+- **Sonraki:** G5/G7 (kalan görsel/kimlik yayma) → T5 uçtan uca mail testi
 - **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G3.1/G6/G4b + hukuki tutarlılık tamam
 
 ## Paket durumu
@@ -30,7 +30,7 @@
 | G3.1 | Logo akışı (marquee) + arka plan cyan glow — ana sayfa | ✅ Commit'lendi + push (c258cfe) |
 | G6 | SSS + FAQPage JSON-LD + footer tam iletişim + sabit WhatsApp | ✅ Commit'lendi + push (edd0753) |
 | FIX-legal | KVKK/gizlilik'ten kaldırılmış servis (Supabase/Mapbox) temizliği + 3 hukuki sayfa tutarlılığı | ✅ Commit'lendi + push (abd9243) |
-| G4b | +12 mecra grid'i (envanter-türevi adet) + fiyat söküm + totem düzeltme | 🟡 Kod hazır (prod alias) — denetim + onay bekliyor |
+| G4b | +12 mecra grid'i (envanter-türevi adet) + fiyat söküm + totem düzeltme | ✅ Commit'lendi + push (799fb06) |
 | G5/G7 | Kalan görsel revizyonlar (kimliği yay) | ⬜ Onay bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
@@ -90,3 +90,4 @@
 | 2026-07-06 | G3.1 (prod alias) | Logo marquee patch'i uygulandı; hover-pause bug'ı (inline animation) globals.css !important ile düzeltildi; akış/hover/glow programatik doğrulandı; build ✓; prod alias web-v2-seven-rho; commit onay bekliyor |
 | 2026-07-06 | G3.1 dikiş + kapanış | Dikişsizlik: iki eş yarım (pr-4) + track gap:0 → -50% sapması 0px (canlı ölçüm); reduced-motion statik doğrulandı; commit c258cfe + origin/v3'e push; prod |
 | 2026-07-06 | G4b (prod alias) | +12 mecra grid'i (envanter-türevi: Luna 140/Megaboard 97/Tramvay 40) + priceBand söküm (grep 0) + totem düzeltme; başlık "20 mecra türü"; check 8/8; build ✓; grid canlı doğrulandı (12 kart); prod web-v2-seven-rho; commit onay bekliyor |
+| 2026-07-06 | G4b kapanış | Onaylandı; commit 799fb06 + origin/v3'e push; prod |
