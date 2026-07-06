@@ -29,7 +29,7 @@ export default function KvkkPage() {
               <span className="text-gradient">Aydınlatma Metni</span>
             </h1>
             <p className="text-base text-[var(--color-text-muted)]">
-              Versiyon: {AYDINLATMA_VERSIYONU} • Son güncelleme: Mayıs 2026
+              Versiyon: {AYDINLATMA_VERSIYONU} • Son güncelleme: Temmuz 2026
             </p>
           </div>
         </div>
@@ -208,12 +208,6 @@ export default function KvkkPage() {
                   </thead>
                   <tbody className="divide-y divide-[var(--color-border-subtle)]">
                     <tr>
-                      <td className="px-4 py-2">Veri tabanı + form depolama</td>
-                      <td className="px-4 py-2">Supabase Inc. (ABD)</td>
-                      <td className="px-4 py-2">AB (Almanya / İrlanda)</td>
-                      <td className="px-4 py-2">Tüm form alanları + meta</td>
-                    </tr>
-                    <tr>
                       <td className="px-4 py-2">Site barındırma + CDN</td>
                       <td className="px-4 py-2">Vercel Inc. (ABD)</td>
                       <td className="px-4 py-2">AB / Küresel CDN</td>
@@ -222,18 +216,12 @@ export default function KvkkPage() {
                       </td>
                     </tr>
                     <tr>
-                      <td className="px-4 py-2">E-posta bildirim gönderimi</td>
+                      <td className="px-4 py-2">
+                        E-posta bildirim gönderimi (yalnızca teklif formu)
+                      </td>
                       <td className="px-4 py-2">Resend Inc. (ABD)</td>
                       <td className="px-4 py-2">AB (İrlanda — eu-west-1)</td>
                       <td className="px-4 py-2">Ad, e-posta, telefon, talep özeti</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-2">Harita gösterimi</td>
-                      <td className="px-4 py-2">Mapbox Inc. (ABD)</td>
-                      <td className="px-4 py-2">Küresel</td>
-                      <td className="px-4 py-2">
-                        Yalnızca site ziyareti sırasında IP + tile istekleri
-                      </td>
                     </tr>
                   </tbody>
                 </table>

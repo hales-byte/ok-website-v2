@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-06 — Düzeltme: Hukuki metinler artık gerçek durumu anlatıyor
+**Ne yapıldı:** KVKK Aydınlatma Metni ve Gizlilik Politikası'nda, artık kullanmadığımız iki servisin (Supabase adlı veri tabanı ve Mapbox adlı harita) verilerinizin gittiği yerler arasında hâlâ yazdığı görüldü — bunlar temizlendi. Üç hukuki sayfa (KVKK, gizlilik, çerez) artık aynı doğruyu söylüyor: veriniz yalnızca siteyi barındıran Vercel ve teklif formunu e-postayla ileten Resend üzerinden geçer, hiçbir veri tabanında saklanmaz. KVKK metninin sürüm tarihi de güncellendi (Temmuz 2026). Ayrıca "Hakkımızda sayfasında rakamlar yanlış" şüphesi araştırıldı: rakamlar aslında doğru ve tek envanter dosyasına bağlı — ekran görüntüsünde görünen düşük değerler, sayının animasyonla yukarı sayarken yakalanmış ara kareleriymiş; düzeltilecek bir hata yoktu.
+**Neden:** Bir gizlilik/KVKK metni, kişisel verinin gerçekte gittiği yerleri doğru listelemek zorundadır; kaldırılmış servisleri "veriniz buraya aktarılıyor" diye yazmak hem yanlış hem de hukuki risk. Doğru olmayan bir "düzeltmeyi" de yapmamak (uydurma değişiklik) aynı derecede önemli.
+**Ne işe yaradı:** Site ziyaretçisine ve olası bir denetime karşı hukuki metinler artık gerçeğe birebir uyuyor ve kendi aralarında çelişmiyor. Gereksiz/yanlış bir kod değişikliğinden de kaçınıldı.
+**Sırada:** Cowork denetimi + Hakan onayı → repoya işlenmesi → kalan görsel/kimlik yayma işleri (G4b-G7).
+
 ### 2026-07-06 — G6: Sıkça Sorulan Sorular + eksiksiz iletişim bilgileri
 **Ne yapıldı:** Ana sayfaya, ziyaretçinin en çok merak ettiği 9 sorunun cevabını içeren bir "Sıkça Sorulan Sorular" bölümü eklendi (tıkla-aç akordeon). Alt bilgideki (footer) iletişim kutusu tamamlandı: artık telefon numarası ve açık adres de var. Ayrıca sitenin her sayfasında sağ altta, açılır pencere çıkarmadan doğrudan WhatsApp'a götüren sabit bir düğme var. Google'ın bu soruları arama sonuçlarında zengin biçimde gösterebilmesi için görünmez bir teknik etiket (FAQPage) de eklendi.
 **Neden:** Sık gelen sorulara sayfada cevap vermek hem ziyaretçinin işini kolaylaştırır hem de "önce sorayım" adımını atlayıp doğrudan teklife yönlendirir; eksik iletişim bilgisi ise güveni düşürür. Sabit WhatsApp düğmesi, karar anında en hızlı iletişim kanalını hep elde tutar.

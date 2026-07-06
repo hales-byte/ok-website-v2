@@ -133,8 +133,10 @@ export default function GizlilikPage() {
                   <strong className="text-[var(--color-text-primary)]">
                     Hizmet sağlayıcılar:
                   </strong>{" "}
-                  Web altyapısı (Vercel), veritabanı (Supabase), e-posta
-                  iletişim sağlayıcıları
+                  Site barındırma (Vercel) ve yalnızca teklif formu e-posta
+                  iletimi (Resend). Site statik envanter verisiyle çalışır;
+                  form bilgileriniz bir veritabanında saklanmaz, e-posta ile
+                  satış ekibimize iletilir.
                 </li>
                 <li>
                   <strong className="text-[var(--color-text-primary)]">
@@ -154,9 +156,10 @@ export default function GizlilikPage() {
               <ul className="mt-4 space-y-2 list-disc list-inside">
                 <li>SSL/TLS şifreleme ile veri iletimi</li>
                 <li>
-                  Veritabanı seviyesinde Row Level Security (RLS) politikaları
+                  Veri tabanı yok — form bilgileriniz sunucuda saklanmaz,
+                  yalnızca e-posta ile iletilir (minimum veri ayak izi)
                 </li>
-                <li>Sadece yetkili personel erişimi (rol tabanlı yetki)</li>
+                <li>Form verilerine yalnızca yetkili satış personeli erişir</li>
                 <li>Düzenli güvenlik denetimleri ve güncellemeler</li>
                 <li>Veri ihlali durumunda 72 saat içinde bildirim</li>
               </ul>
