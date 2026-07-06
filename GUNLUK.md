@@ -15,7 +15,7 @@
 ---
 
 ### 2026-07-06 — G3: Ana sayfaya "Güçlü İş Birlikleri" logo duvarı eklendi (30 marka)
-**Ne yapıldı:** Ana sayfaya ve Markalar sayfasına, birlikte çalışılan 30 markanın logolarından oluşan bir "Güçlü İş Birlikleri" bölümü eklendi; üstünde üç rakamlı bir güven şeridi var (8 Kamu-Özel Ortaklığı · 21 Ajans İş Birliği · 890+ Marka Deneyimi). Ana sayfa ilk 15 logoyu gösterip "30 markanın tamamı" diye Markalar sayfasına yönlendiriyor; Markalar sayfası 30'un tamamını gösteriyor. Logolar beyaz kartlar içinde, yumuşak kayarak beliriyor.
+**Ne yapıldı:** Ana sayfaya ve Markalar sayfasına, birlikte çalışılan 30 markanın logolarından oluşan bir "Güçlü İş Birlikleri" bölümü eklendi; üstünde iki rakamlı bir güven şeridi var (180+ Ajans İş Birliği · 890+ Marka Deneyimi — ortalanmış). Ana sayfa ilk 15 logoyu gösterip "30 markanın tamamı" diye Markalar sayfasına yönlendiriyor; Markalar sayfası 30'un tamamını gösteriyor. Logolar beyaz kartlar içinde, yumuşak kayarak beliriyor.
 **Neden:** Ziyaretçi "bu firmaya kimler güvenmiş?" sorusunun cevabını tanıdık markaların logolarıyla anında görmeli — sosyal kanıt, teklif isteme kararını en çok etkileyen unsurlardan biri.
 **Ne işe yaradı:** Site artık somut bir referans duvarı gösteriyor; büyük markaların yan yana durması güven veriyor. Ayrıca bu iş, sitenin metin/verisini koddan ayıran ilk "içerik dosyası"nı (is-birlikleri.ts) kurdu — bundan sonra logolar/metin değişince tek dosya düzenlenecek, koda dokunulmayacak.
 **Sırada:** Cowork denetimi + Hakan onayı → repoya işlenmesi → kalan görsel/kimlik yayma işleri (G4b-G7) ve birkaç soluk logonun (VakıfBank, Nissan vb.) koyu varyantla yenilenmesi.

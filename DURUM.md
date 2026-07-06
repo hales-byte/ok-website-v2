@@ -2,13 +2,13 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-06 · Claude Code (G3 logo duvarı kodlandı, preview'da — commit bekliyor)
+**Son güncelleme:** 2026-07-06 · Claude Code (G3 logo duvarı commit'lendi + push'landı; KPI 2 öğeye revize)
 
 ## Şu an
-- **Aktif paket:** G3 TESLİM (preview) — "Güçlü İş Birlikleri" logo duvarı: 30 marka logosu + KPI şeridi (8 KÖO · 21 ajans · 890+ marka) + ana sayfa (ilk 15) & /markalar (30 tam) entegrasyonu; Cowork denetimi + Hakan onayı bekleniyor
-- **Durum:** `origin/v3`'te dört commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a). G3 değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
-- **Sonraki:** G3 onayı → commit → G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
-- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a + G3 logo duvarı tamam — kalan görsel yayma (G4b-G7)
+- **Aktif paket:** G3 KAPANDI — "Güçlü İş Birlikleri" logo duvarı: 30 marka logosu + KPI şeridi (180+ ajans · 890+ marka, ortalanmış) + ana sayfa (ilk 15) & /markalar (30 tam) entegrasyonu; commit'lenip origin/v3'e push'landı, preview yayında
+- **Durum:** `origin/v3`'te beş commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3).
+- **Sonraki:** G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
+- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3 tamam — kalan görsel yayma (G4b-G7)
 
 ## Paket durumu
 
@@ -26,7 +26,7 @@
 | G1 | Tema token + tipografi + chevron + SectionHeader | ✅ Denetlendi + commit'lendi (3fef044) |
 | G2 | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
 | G4a | Mecra fotoğrafları (Gemini) — 6 kart + havalimanı | ✅ Commit'lendi + push (9e41714) |
-| G3 | Logo duvarı — "Güçlü İş Birlikleri" + /markalar entegrasyonu | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
+| G3 | Logo duvarı — "Güçlü İş Birlikleri" + /markalar entegrasyonu | ✅ Commit'lendi + push (a7b56a6) |
 | G4b-G7 | Kalan görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ G3 onayı bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
@@ -70,3 +70,4 @@
 | 2026-07-05 | G4a (preview) | 6 mecra fotoğrafı yenilendi + havalimanı ilk kez gerçek görsele bağlandı; build 186; preview |
 | 2026-07-05 | G4a kapanış | Commit 9e41714 + origin/v3'e push; preview: web-v2-4vg8eg2ma |
 | 2026-07-06 | G3 (preview) | Logo duvarı: 30 logo kopyalandı + ilk content dosyası (is-birlikleri.ts) + LogoWall + ana sayfa & /markalar entegrasyonu; build 186; preview: web-v2-1nqoi5pat |
+| 2026-07-06 | G3 revize + kapanış | KPI 3→2 öğe (8 KÖO kaldırıldı, 21→180+ ajans; 890+ marka aynı), 2'li ortalanmış grid; build ✓; commit a7b56a6 + origin/v3'e push |
