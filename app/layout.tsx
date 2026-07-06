@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 import { CookieBanner } from "@/components/CookieBanner";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import "./globals.css";
 
 const inter = Inter({
@@ -72,6 +73,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <CookieBanner />
+        <WhatsAppFloat />
         {/* Organization JSON-LD — SEO temeli */}
         <script
           type="application/ld+json"

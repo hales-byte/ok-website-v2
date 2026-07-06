@@ -15,6 +15,8 @@ import { CustomerProof } from "@/components/CustomerProof";
 import { Chevrons } from "@/components/Chevrons";
 import { SectionHeader } from "@/components/SectionHeader";
 import { LogoWall } from "@/components/LogoWall";
+import { FAQ } from "@/components/FAQ";
+import { SSS_BASLIK, SSS_LISTESI, sssJsonLd } from "@/src/data/content/sss";
 import {
   IS_BIRLIKLERI,
   IS_BIRLIKLERI_LOGOLARI,
@@ -412,6 +414,28 @@ export default async function Home() {
        * isimli AI ajan ile mesajlaşma deneyimine evrilecek — Faz 4 kapsamı.
        * Bkz: docs/roadmap.md.
        */}
+
+      {/* SSS (G6) — içerik: src/data/content/sss.ts */}
+      <section className="py-24 border-t border-[var(--color-border-subtle)]">
+        <div className="container-narrow">
+          <ScrollReveal direction="up">
+            <SectionHeader
+              eyebrow={SSS_BASLIK.eyebrow}
+              title={SSS_BASLIK.baslik}
+              subtitle={SSS_BASLIK.altMetin}
+            />
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={120}>
+            <div className="mt-10">
+              <FAQ maddeler={SSS_LISTESI} />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(sssJsonLd()) }}
+      />
 
       {/* ALT CTA */}
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">

@@ -2,13 +2,13 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-06 · Claude Code (G3 logo duvarı commit'lendi + push'landı; KPI 2 öğeye revize)
+**Son güncelleme:** 2026-07-06 · Claude Code (G6 SSS + footer + WhatsApp float kodlandı, preview'da — commit bekliyor)
 
 ## Şu an
-- **Aktif paket:** G3 KAPANDI — "Güçlü İş Birlikleri" logo duvarı: 30 marka logosu + KPI şeridi (180+ ajans · 890+ marka, ortalanmış) + ana sayfa (ilk 15) & /markalar (30 tam) entegrasyonu; commit'lenip origin/v3'e push'landı, preview yayında
-- **Durum:** `origin/v3`'te beş commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3).
-- **Sonraki:** G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
-- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3 tamam — kalan görsel yayma (G4b-G7)
+- **Aktif paket:** G6 TESLİM (preview) — SSS bölümü (9 soru, native details akordeon) + FAQPage JSON-LD + footer tam iletişim (telefon + açık adres) + tüm sayfalarda sabit WhatsApp düğmesi; patch temiz uygulandı; Hakan onayı bekleniyor
+- **Durum:** `origin/v3`'te beş commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3). G6 değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
+- **Sonraki:** G6 onayı → commit → G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
+- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G6 tamam — kalan görsel yayma (G4b-G7)
 
 ## Paket durumu
 
@@ -20,14 +20,15 @@
 | T3 | SVG harita (Mapbox söküm) | ✅ Kod hazır — il sınırlı SVG, bağımlılıksız |
 | T4 | Rakam senkronu (45/20/35.919) | ✅ Kod hazır — grep temiz |
 | T5 | Lead hattı (Resend + FormSubmit yedek) | 🟡 Kod hazır — E2E mail testi Hakan'da (Resend key gerek) |
-| T6 | SEO teknik (sitemap, meta, JSON-LD) | ✅ Kod hazır — FAQPage G6'ya bırakıldı (SSS henüz yok) |
+| T6 | SEO teknik (sitemap, meta, JSON-LD) | ✅ Kod hazır — FAQPage G6'da eklendi (SSS canlıya çıktı) |
 | T7 | QA + deploy | 🟡 Build 186 sayfa ✓ + Vercel preview ✓ (2 tur) — Lighthouse kaldı |
 | G0 | Tasarım kimliği kararı | ✅ Seçenek B — aydınlık gövde + koyu vurgu (cyan #00E4FF) |
 | G1 | Tema token + tipografi + chevron + SectionHeader | ✅ Denetlendi + commit'lendi (3fef044) |
 | G2 | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
 | G4a | Mecra fotoğrafları (Gemini) — 6 kart + havalimanı | ✅ Commit'lendi + push (9e41714) |
 | G3 | Logo duvarı — "Güçlü İş Birlikleri" + /markalar entegrasyonu | ✅ Commit'lendi + push (a7b56a6) |
-| G4b-G7 | Kalan görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ G3 onayı bekliyor |
+| G6 | SSS + FAQPage JSON-LD + footer tam iletişim + sabit WhatsApp | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
+| G4b-G7 | Kalan görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ Onay bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
 | O2-O4 | Cutover hazırlık → cutover → sonrası | ⬜ Bekliyor |
@@ -47,6 +48,8 @@
 - **Aylık erişim: 42.400.011 (42,4M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.145.295) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer).
 - **Format kartları: 8 adet**, hepsi gerçek görsele bağlı (billboard, clp, megalight, led, giantboard, pole-banner, totem, havalimanı). ⚠️ `public/images/formats/tramvay-kaplama.{jpg,webp}` G4a'da eklendi ama HİÇBİR karta bağlı değil (formats.ts'te referansı yok) — yeni bir "tramvay/transit" formatı açılırsa kullanılacak; şu an sitede görünmüyor.
 - **Logo duvarı (G3):** 30 marka logosu `public/logos/*.png` (dosya adları slug). İçerik/veri `src/data/content/is-birlikleri.ts`'te — projenin İLK content dosyası; kural: kullanıcıya görünen metin/veri koda gömülmez, buraya toplanır. Bileşen `components/LogoWall.tsx` (her iki temada beyaz kart). Ana sayfa ilk 15 + "30 markanın tamamı →" /markalar linki; /markalar 30 tam. Soluk logolar (VakıfBank, Nissan, Paulmark, Hatemoğlu, Arçelik) A1'de koyu varyantla yenilenecek — şimdilik olduğu gibi.
+- **SSS (G6):** 9 soru `src/data/content/sss.ts`'te (2. content dosyası; kaynak ok-iframe canlı sitesi). Rakamlar TOPLAM'dan türetilir (elle yazılmaz). Bileşen `components/FAQ.tsx` — native `<details>/<summary>` (JS'siz, erişilebilir). Ana sayfada süreç ile alt-CTA arasında + FAQPage JSON-LD (`sssJsonLd()`). ⚠️ Angarya A2'de gerçek müşteri sorularıyla güncellenecek.
+- **İletişim (G6, footer):** telefon `+90 552 918 58 64` (tel: linki) + açık adres "Gümüşsuyu Mah. İnönü Cad. Zampak Apt. No: 7/5, Beyoğlu / İstanbul". Sabit WhatsApp düğmesi (`components/WhatsAppFloat.tsx`) tüm sayfalarda sağ altta (layout'ta), aynı numara — pop-up'sız, iframe'deki gibi.
 - Lead: Resend → satis@objektifkriter.com.tr (cutover'a kadar Resend default göndericisi — normaldir; API key yoksa FormSubmit yedeği devrede)
 - MX kayıtlarına DOKUNULMAZ (şirket maili)
 - İl×format sayfası: adet ≥ 5 ise üret; altındakiler il sayfasına 301 (next.config.ts otomatik üretir)
@@ -71,3 +74,4 @@
 | 2026-07-05 | G4a kapanış | Commit 9e41714 + origin/v3'e push; preview: web-v2-4vg8eg2ma |
 | 2026-07-06 | G3 (preview) | Logo duvarı: 30 logo kopyalandı + ilk content dosyası (is-birlikleri.ts) + LogoWall + ana sayfa & /markalar entegrasyonu; build 186; preview: web-v2-1nqoi5pat |
 | 2026-07-06 | G3 revize + kapanış | KPI 3→2 öğe (8 KÖO kaldırıldı, 21→180+ ajans; 890+ marka aynı), 2'li ortalanmış grid; build ✓; commit a7b56a6 + origin/v3'e push |
+| 2026-07-06 | G6 (preview) | SSS (9 soru, details akordeon) + FAQPage JSON-LD + footer telefon/adres + sabit WhatsApp; patch temiz; build ✓; preview: web-v2-4c7h4x9gu — commit onay bekliyor |

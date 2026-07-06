@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { RAKAM_METNI } from "@/src/data/envanter";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
 const navLinks = [
@@ -171,9 +171,21 @@ export function Footer() {
                   <span>satis@objektifkriter.com.tr</span>
                 </a>
               </li>
+              <li>
+                <a
+                  href="tel:+905529185864"
+                  className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                >
+                  <Phone size={16} className="mt-0.5 shrink-0" />
+                  <span>+90 552 918 58 64</span>
+                </a>
+              </li>
               <li className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
                 <MapPin size={16} className="mt-0.5 shrink-0" />
-                <span>İstanbul, Türkiye</span>
+                <span>
+                  Gümüşsuyu Mah. İnönü Cad. Zampak Apt. No: 7/5,
+                  Beyoğlu / İstanbul
+                </span>
               </li>
             </ul>
           </div>

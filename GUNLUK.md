@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-06 — G6: Sıkça Sorulan Sorular + eksiksiz iletişim bilgileri
+**Ne yapıldı:** Ana sayfaya, ziyaretçinin en çok merak ettiği 9 sorunun cevabını içeren bir "Sıkça Sorulan Sorular" bölümü eklendi (tıkla-aç akordeon). Alt bilgideki (footer) iletişim kutusu tamamlandı: artık telefon numarası ve açık adres de var. Ayrıca sitenin her sayfasında sağ altta, açılır pencere çıkarmadan doğrudan WhatsApp'a götüren sabit bir düğme var. Google'ın bu soruları arama sonuçlarında zengin biçimde gösterebilmesi için görünmez bir teknik etiket (FAQPage) de eklendi.
+**Neden:** Sık gelen sorulara sayfada cevap vermek hem ziyaretçinin işini kolaylaştırır hem de "önce sorayım" adımını atlayıp doğrudan teklife yönlendirir; eksik iletişim bilgisi ise güveni düşürür. Sabit WhatsApp düğmesi, karar anında en hızlı iletişim kanalını hep elde tutar.
+**Ne işe yaradı:** Site artık kendi kendine cevap veren, iletişim bilgisi tam ve her an bir tık uzağında olan bir yapıya kavuştu; SSS'ler arama motorunda da avantaj sağlayacak. Sorular ayrı bir içerik dosyasında (sss.ts) — ileride gerçek müşteri sorularıyla güncellemek tek dosya işi.
+**Sırada:** Cowork denetimi + Hakan onayı → repoya işlenmesi → kalan görsel/kimlik yayma işleri (G4b-G7); SSS'lerin gerçek müşteri sorularıyla güncellenmesi (angarya A2).
+
 ### 2026-07-06 — G3: Ana sayfaya "Güçlü İş Birlikleri" logo duvarı eklendi (30 marka)
 **Ne yapıldı:** Ana sayfaya ve Markalar sayfasına, birlikte çalışılan 30 markanın logolarından oluşan bir "Güçlü İş Birlikleri" bölümü eklendi; üstünde iki rakamlı bir güven şeridi var (180+ Ajans İş Birliği · 890+ Marka Deneyimi — ortalanmış). Ana sayfa ilk 15 logoyu gösterip "30 markanın tamamı" diye Markalar sayfasına yönlendiriyor; Markalar sayfası 30'un tamamını gösteriyor. Logolar beyaz kartlar içinde, yumuşak kayarak beliriyor.
 **Neden:** Ziyaretçi "bu firmaya kimler güvenmiş?" sorusunun cevabını tanıdık markaların logolarıyla anında görmeli — sosyal kanıt, teklif isteme kararını en çok etkileyen unsurlardan biri.
