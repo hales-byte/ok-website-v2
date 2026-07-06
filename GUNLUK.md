@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-06 — G3: Ana sayfaya "Güçlü İş Birlikleri" logo duvarı eklendi (30 marka)
+**Ne yapıldı:** Ana sayfaya ve Markalar sayfasına, birlikte çalışılan 30 markanın logolarından oluşan bir "Güçlü İş Birlikleri" bölümü eklendi; üstünde üç rakamlı bir güven şeridi var (8 Kamu-Özel Ortaklığı · 21 Ajans İş Birliği · 890+ Marka Deneyimi). Ana sayfa ilk 15 logoyu gösterip "30 markanın tamamı" diye Markalar sayfasına yönlendiriyor; Markalar sayfası 30'un tamamını gösteriyor. Logolar beyaz kartlar içinde, yumuşak kayarak beliriyor.
+**Neden:** Ziyaretçi "bu firmaya kimler güvenmiş?" sorusunun cevabını tanıdık markaların logolarıyla anında görmeli — sosyal kanıt, teklif isteme kararını en çok etkileyen unsurlardan biri.
+**Ne işe yaradı:** Site artık somut bir referans duvarı gösteriyor; büyük markaların yan yana durması güven veriyor. Ayrıca bu iş, sitenin metin/verisini koddan ayıran ilk "içerik dosyası"nı (is-birlikleri.ts) kurdu — bundan sonra logolar/metin değişince tek dosya düzenlenecek, koda dokunulmayacak.
+**Sırada:** Cowork denetimi + Hakan onayı → repoya işlenmesi → kalan görsel/kimlik yayma işleri (G4b-G7) ve birkaç soluk logonun (VakıfBank, Nissan vb.) koyu varyantla yenilenmesi.
+
 ### 2026-07-05 — G4a: Mecra kartlarına gerçek fotoğraflar geldi (havalimanı ilk kez)
 **Ne yapıldı:** Ana sayfadaki reklam formatı kartlarının fotoğrafları yenilendi (6 kart); havalimanı formatı ilk kez gerçek bir görsele kavuştu (önceden boş/yer tutucu tasarımla görünüyordu). Görseller marka kimliğiyle uyumlu (cyan ok motifi işlenmiş). Ayrıca ileride açılabilecek bir "tramvay giydirme" formatı için hazır bir görsel de klasöre eklendi ama henüz bir karta bağlanmadı.
 **Neden:** Yer tutucu/eski görseller yerine, her formatın nasıl göründüğünü net gösteren gerçek sahneler ziyaretçinin "ürünü" anlamasını kolaylaştırır; havalimanı premium bir format olduğu için görselsiz durması eksiklikti.

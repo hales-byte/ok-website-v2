@@ -13,6 +13,13 @@ import {
 } from "@/components/icons/SegmentIcons";
 import { CustomerProof } from "@/components/CustomerProof";
 import { Chevrons } from "@/components/Chevrons";
+import { SectionHeader } from "@/components/SectionHeader";
+import { LogoWall } from "@/components/LogoWall";
+import {
+  IS_BIRLIKLERI,
+  IS_BIRLIKLERI_LOGOLARI,
+  IS_BIRLIKLERI_KPI,
+} from "@/src/data/content/is-birlikleri";
 
 // Ana sayfa: layout default'unun template'ine düşmemesi için title.absolute kullan.
 // Layout'un title.template'i "%s | Objektif Kriter" — homepage'te çift "Objektif Kriter"
@@ -305,6 +312,53 @@ export default async function Home() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* GÜÇLÜ İŞ BİRLİKLERİ — logo duvarı (G3) */}
+      <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+        <div className="container-narrow space-y-14">
+          <ScrollReveal direction="up">
+            <SectionHeader
+              eyebrow={IS_BIRLIKLERI.eyebrow}
+              title={IS_BIRLIKLERI.baslik}
+              subtitle={IS_BIRLIKLERI.altMetin}
+            />
+          </ScrollReveal>
+
+          {/* KPI ŞERİDİ — 2 öğe, ortalanmış */}
+          <ScrollReveal direction="up" delay={100}>
+            <div className="grid grid-cols-2 gap-8 md:gap-16 border-y border-[var(--color-border-subtle)] py-8 max-w-lg mx-auto">
+              {IS_BIRLIKLERI_KPI.map((kpi) => (
+                <div key={kpi.etiket} className="text-center">
+                  <div className="text-4xl md:text-5xl font-bold text-gradient">
+                    {kpi.deger}
+                  </div>
+                  <div className="mt-2 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
+                    {kpi.etiket}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+
+          {/* LOGO DUVARI — ilk 15 + tamamı linki */}
+          <LogoWall logolar={IS_BIRLIKLERI_LOGOLARI} limit={15} />
+
+          <ScrollReveal direction="up">
+            <div className="text-center">
+              <Link
+                href="/markalar"
+                className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group"
+              >
+                {IS_BIRLIKLERI.markalarLinkMetni}
+                <ArrowRight
+                  size={14}
+                  className="group-hover:translate-x-1 transition-transform"
+                />
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

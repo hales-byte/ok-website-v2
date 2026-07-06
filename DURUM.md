@@ -2,13 +2,13 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-05 · Claude Code (G4a mecra fotoğrafları commit'lendi + push'landı)
+**Son güncelleme:** 2026-07-06 · Claude Code (G3 logo duvarı kodlandı, preview'da — commit bekliyor)
 
 ## Şu an
-- **Aktif paket:** G4a KAPANDI — Gemini mecra fotoğrafları: 6 kart yenilendi + havalimanı ilk kez gerçek görsele bağlandı; commit'lenip origin/v3'e push'landı, preview yayında
-- **Durum:** `origin/v3`'te dört commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a).
-- **Sonraki:** G4a onayı → commit → G3 (kimliği diğer bölümlere yay) / kalan format görselleri → T5 uçtan uca mail testi
-- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2 + G4a görseller tamam — kalan görsel yayma (G3) + tramvay-kaplama formatı kararı
+- **Aktif paket:** G3 TESLİM (preview) — "Güçlü İş Birlikleri" logo duvarı: 30 marka logosu + KPI şeridi (8 KÖO · 21 ajans · 890+ marka) + ana sayfa (ilk 15) & /markalar (30 tam) entegrasyonu; Cowork denetimi + Hakan onayı bekleniyor
+- **Durum:** `origin/v3`'te dört commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a). G3 değişiklikleri henüz commit EDİLMEDİ — onay sonrası girecek.
+- **Sonraki:** G3 onayı → commit → G4b-G7 (kalan görsel/kimlik yayma) + tramvay-kaplama formatı kararı → T5 uçtan uca mail testi
+- **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a + G3 logo duvarı tamam — kalan görsel yayma (G4b-G7)
 
 ## Paket durumu
 
@@ -26,7 +26,8 @@
 | G1 | Tema token + tipografi + chevron + SectionHeader | ✅ Denetlendi + commit'lendi (3fef044) |
 | G2 | Hero eyebrow + 4 KPI bandı + erişim metriği (42,4M) | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
 | G4a | Mecra fotoğrafları (Gemini) — 6 kart + havalimanı | ✅ Commit'lendi + push (9e41714) |
-| G3/G4b-G7 | Görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ G4a onayı bekliyor |
+| G3 | Logo duvarı — "Güçlü İş Birlikleri" + /markalar entegrasyonu | 🟡 Kod hazır (preview) — denetim + onay bekliyor |
+| G4b-G7 | Kalan görsel revizyonlar (kimliği yay) + tramvay-kaplama formatı | ⬜ G3 onayı bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
 | O2-O4 | Cutover hazırlık → cutover → sonrası | ⬜ Bekliyor |
@@ -45,6 +46,7 @@
 - Rakamlar: **45 il · 20 mecra · 35.919 ünite** — tek kaynak `src/data/envanter.json`
 - **Aylık erişim: 42.400.011 (42,4M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.145.295) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer).
 - **Format kartları: 8 adet**, hepsi gerçek görsele bağlı (billboard, clp, megalight, led, giantboard, pole-banner, totem, havalimanı). ⚠️ `public/images/formats/tramvay-kaplama.{jpg,webp}` G4a'da eklendi ama HİÇBİR karta bağlı değil (formats.ts'te referansı yok) — yeni bir "tramvay/transit" formatı açılırsa kullanılacak; şu an sitede görünmüyor.
+- **Logo duvarı (G3):** 30 marka logosu `public/logos/*.png` (dosya adları slug). İçerik/veri `src/data/content/is-birlikleri.ts`'te — projenin İLK content dosyası; kural: kullanıcıya görünen metin/veri koda gömülmez, buraya toplanır. Bileşen `components/LogoWall.tsx` (her iki temada beyaz kart). Ana sayfa ilk 15 + "30 markanın tamamı →" /markalar linki; /markalar 30 tam. Soluk logolar (VakıfBank, Nissan, Paulmark, Hatemoğlu, Arçelik) A1'de koyu varyantla yenilenecek — şimdilik olduğu gibi.
 - Lead: Resend → satis@objektifkriter.com.tr (cutover'a kadar Resend default göndericisi — normaldir; API key yoksa FormSubmit yedeği devrede)
 - MX kayıtlarına DOKUNULMAZ (şirket maili)
 - İl×format sayfası: adet ≥ 5 ise üret; altındakiler il sayfasına 301 (next.config.ts otomatik üretir)
@@ -67,3 +69,4 @@
 | 2026-07-04 | G2 kapanış | Onaylandı; commit f8f01e6 + origin/v3'e push |
 | 2026-07-05 | G4a (preview) | 6 mecra fotoğrafı yenilendi + havalimanı ilk kez gerçek görsele bağlandı; build 186; preview |
 | 2026-07-05 | G4a kapanış | Commit 9e41714 + origin/v3'e push; preview: web-v2-4vg8eg2ma |
+| 2026-07-06 | G3 (preview) | Logo duvarı: 30 logo kopyalandı + ilk content dosyası (is-birlikleri.ts) + LogoWall + ana sayfa & /markalar entegrasyonu; build 186; preview: web-v2-1nqoi5pat |

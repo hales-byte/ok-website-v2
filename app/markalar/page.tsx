@@ -15,6 +15,12 @@ import type { Metadata } from "next";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { CustomerProof } from "@/components/CustomerProof";
+import { SectionHeader } from "@/components/SectionHeader";
+import { LogoWall } from "@/components/LogoWall";
+import {
+  IS_BIRLIKLERI,
+  IS_BIRLIKLERI_LOGOLARI,
+} from "@/src/data/content/is-birlikleri";
 
 export const metadata: Metadata = {
   title: "Markalar İçin OOH Reklam Çözümleri",
@@ -356,6 +362,20 @@ export default async function MarkalarPage() {
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* GÜÇLÜ İŞ BİRLİKLERİ — logo duvarı, 30'un tamamı (G3) */}
+      <section className="py-24 border-t border-[var(--color-border-subtle)]">
+        <div className="container-narrow space-y-12">
+          <ScrollReveal direction="up">
+            <SectionHeader
+              eyebrow={IS_BIRLIKLERI.eyebrow}
+              title={IS_BIRLIKLERI.baslik}
+              subtitle={IS_BIRLIKLERI.altMetin}
+            />
+          </ScrollReveal>
+          <LogoWall logolar={IS_BIRLIKLERI_LOGOLARI} />
         </div>
       </section>
 
