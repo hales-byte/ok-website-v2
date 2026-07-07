@@ -22,6 +22,7 @@ import {
   IS_BIRLIKLERI,
   IS_BIRLIKLERI_LOGOLARI,
   IS_BIRLIKLERI_KPI,
+  MARKALAR_LINK_METNI,
 } from "@/src/data/content/is-birlikleri";
 
 // Ana sayfa: layout default'unun template'ine düşmemesi için title.absolute kullan.
@@ -374,7 +375,7 @@ export default async function Home() {
                 href="/markalar"
                 className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group"
               >
-                {IS_BIRLIKLERI.markalarLinkMetni}
+                {MARKALAR_LINK_METNI}
                 <ArrowRight
                   size={14}
                   className="group-hover:translate-x-1 transition-transform"
