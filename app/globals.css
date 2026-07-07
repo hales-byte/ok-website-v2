@@ -429,3 +429,22 @@
     transition: none;
   }
 }
+
+/* --- Yazdırma: başvuru formu çıktısı --- */
+@media print {
+  .print-gizle {
+    display: none !important;
+  }
+  /* Site çerçevesi (header/footer) çıktıda gizlensin */
+  header,
+  footer {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .container-narrow {
+    max-width: 100%;
+  }
+}

@@ -18,6 +18,14 @@ const formatLinks = [
   { label: "Havalimanı", href: "/hizmetler#havalimani" },
 ];
 
+const legalLinks = [
+  { label: "KVKK Aydınlatma", href: "/kvkk-aydinlatma" },
+  { label: "Gizlilik", href: "/gizlilik-politikasi" },
+  { label: "Çerez", href: "/cerez-politikasi" },
+  { label: "İlgili Kişi Başvuru Formu", href: "/kvkk-basvuru-formu" },
+  { label: "Kullanım Koşulları", href: "/kullanim-kosullari" },
+];
+
 // Bu projedeki lucide-react sürümü brand ikonlarını export etmiyor; inline SVG kullanıyoruz.
 function InstagramIcon({ size = 20 }: { size?: number }) {
   return (
@@ -191,8 +199,20 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Alt çizgi: Copyright */}
-        <div className="mt-12 pt-8 border-t border-[var(--color-border-subtle)]">
+        {/* Alt çizgi: Yasal linkler + Copyright */}
+        <div className="mt-12 pt-8 border-t border-[var(--color-border-subtle)] space-y-4">
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+            {legalLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           <p className="text-xs text-[var(--color-text-muted)]">
             © {new Date().getFullYear()} Objektif Kriter. Tüm hakları saklıdır.
           </p>

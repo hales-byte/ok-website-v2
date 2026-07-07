@@ -1,28 +1,28 @@
 import Link from "next/link";
-import { ArrowRight, Cookie } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import type { Metadata } from "next";
 import { LegalIcerik } from "@/components/legal/LegalIcerik";
-import { CEREZ_POLITIKASI } from "@/src/data/content/legal/cerez-politikasi";
+import { GIZLILIK_POLITIKASI } from "@/src/data/content/legal/gizlilik-politikasi";
 
 export const metadata: Metadata = {
-  title: "Çerez Politikası",
+  title: "Gizlilik Politikası",
   description:
-    "Objektif Kriter web sitesinde kullanılan çerezler ve benzeri teknolojiler hakkında bilgi.",
+    "Objektif Kriter olarak ziyaretçilerimizin ve müşterilerimizin verilerini nasıl topladığımız, kullandığımız ve koruduğumuz.",
 };
 
-export default function CerezPolitikasiPage() {
-  const doc = CEREZ_POLITIKASI;
+export default function GizlilikPolitikasiPage() {
+  const doc = GIZLILIK_POLITIKASI;
   return (
     <>
       <section className="pt-24 pb-12 border-b border-[var(--color-border-subtle)]">
         <div className="container-narrow">
           <div className="max-w-3xl space-y-6">
             <div className="flex items-center gap-2 text-sm uppercase tracking-widest text-[var(--color-primary)] font-medium">
-              <Cookie size={16} />
-              Çerezler
+              <Lock size={16} />
+              Gizlilik
             </div>
             <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight">
-              <span className="text-gradient">Çerez</span> Politikası
+              <span className="text-gradient">Gizlilik</span> Politikası
             </h1>
             <p className="text-base text-[var(--color-text-muted)]">
               Versiyon {doc.versiyon} · Son güncelleme: {doc.guncelleme}
@@ -46,10 +46,10 @@ export default function CerezPolitikasiPage() {
                 </Link>
                 {" • "}
                 <Link
-                  href="/gizlilik-politikasi"
+                  href="/cerez-politikasi"
                   className="text-[var(--color-primary)] hover:underline"
                 >
-                  Gizlilik Politikası
+                  Çerez Politikası
                 </Link>
               </div>
               <Link href="/" className="btn-secondary">

@@ -4,7 +4,6 @@ import { Inter, Cormorant_Garamond } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
-import { CookieBanner } from "@/components/CookieBanner";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import "./globals.css";
 
@@ -72,7 +71,9 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <CookieBanner />
+        {/* Çerez onay bandı KALDIRILDI (KVKK paketi): site yalnız zorunlu çerez
+            kullanır, Çerez Politikası uyarınca onay bandı gerekmez. İleride
+            analitik/pazarlama çerezi eklenirse geri açılır. */}
         <WhatsAppFloat />
         {/* Organization JSON-LD — SEO temeli */}
         <script

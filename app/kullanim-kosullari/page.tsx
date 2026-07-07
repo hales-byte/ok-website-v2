@@ -134,7 +134,7 @@ export default function KullanimKosullariPage() {
                 </Link>{" "}
                 ve{" "}
                 <Link
-                  href="/gizlilik"
+                  href="/gizlilik-politikasi"
                   className="text-[var(--color-primary)] hover:underline"
                 >
                   Gizlilik Politikası
@@ -185,7 +185,7 @@ export default function KullanimKosullariPage() {
                 </Link>
                 {" • "}
                 <Link
-                  href="/gizlilik"
+                  href="/gizlilik-politikasi"
                   className="text-[var(--color-primary)] hover:underline"
                 >
                   Gizlilik Politikası

@@ -85,7 +85,11 @@ const nextConfig: NextConfig = {
       { source: `/sehir/${eski}`, destination: `/sehir/${yeni}`, permanent: true },
       { source: `/sehir/${eski}/:format*`, destination: `/sehir/${yeni}`, permanent: true },
     ]);
-    return [...sehirler, ...esikAltiRedirects()];
+    // Hukuki sayfa slug tutarlılığı: /gizlilik → /gizlilik-politikasi (KVKK paketi)
+    const hukuki = [
+      { source: "/gizlilik", destination: "/gizlilik-politikasi", permanent: true },
+    ];
+    return [...sehirler, ...hukuki, ...esikAltiRedirects()];
   },
 };
 

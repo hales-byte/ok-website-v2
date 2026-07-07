@@ -135,13 +135,16 @@ export function Step6Onay({ state, dispatch }: Step6OnayProps) {
         />
       </div>
 
-      {/* KVKK ONAYI — Zorunlu */}
+      {/* KVKK BİLGİLENDİRME ONAYI — isteğe bağlı (ispat kolaylığı).
+          Talebin ifası açık rıza gerektirmez (KVKK m.5/2-c); aydınlatma her
+          hâlükârda form altındaki kısa metinle sağlanır. Bu kutu madde 2'dir
+          (kaynak: 05-form-alti-aydinlatma) ve işaretlenmesi zorunlu değildir. */}
       <div className="space-y-4">
         <h4 className="text-sm font-semibold text-[var(--color-text-primary)]">
-          Onaylar
+          Onay
         </h4>
 
-        {/* KVKK */}
+        {/* KVKK bilgilendirme onayı (isteğe bağlı) */}
         <label
           className={`flex gap-3 p-5 rounded-xl border-2 cursor-pointer transition-all ${
             state.kvkk
@@ -154,25 +157,22 @@ export function Step6Onay({ state, dispatch }: Step6OnayProps) {
             onChange={(checked) =>
               dispatch({ type: "SET_KVKK", value: checked })
             }
-            required
           />
           <div className="flex-1 text-sm">
             <div className="text-[var(--color-text-primary)] leading-relaxed">
-              <span className="text-[var(--color-primary-deep)] font-medium">
-                * Zorunlu —{" "}
+              <span className="text-[var(--color-text-muted)] text-xs">
+                İsteğe bağlı —{" "}
               </span>
-              KVKK m.10 kapsamında{" "}
+              Kişisel verilerimin, teklif talebimin karşılanması amacıyla{" "}
               <Link
                 href="/kvkk-aydinlatma"
                 target="_blank"
                 onClick={(e) => e.stopPropagation()}
                 className="text-[var(--color-primary-deep)] hover:underline font-medium"
               >
-                Aydınlatma Metnini
+                KVKK Aydınlatma Metni
               </Link>{" "}
-              okudum <strong>ve</strong> KVKK m.5/1 kapsamında kişisel
-              verilerimin teklif sürecinin yürütülmesi amacıyla işlenmesine{" "}
-              <strong>açık rıza</strong> veriyorum.
+              kapsamında işlenmesi hakkında bilgilendirildim.
             </div>
             <button
               type="button"
@@ -205,50 +205,31 @@ export function Step6Onay({ state, dispatch }: Step6OnayProps) {
           </div>
         </label>
 
-        {/* PAZARLAMA */}
-        <label
-          className={`flex gap-3 p-5 rounded-xl border-2 cursor-pointer transition-all ${
-            state.pazarlama
-              ? "border-[var(--color-primary)]/40 bg-[var(--color-primary)]/5"
-              : "border-[var(--color-border-subtle)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]/30"
-          }`}
-        >
-          <Checkbox
-            checked={state.pazarlama}
-            onChange={(checked) =>
-              dispatch({ type: "SET_PAZARLAMA", value: checked })
-            }
-          />
-          <div className="flex-1 text-sm text-[var(--color-text-secondary)] leading-relaxed">
-            <span className="text-[var(--color-text-muted)] text-xs">
-              Opsiyonel —{" "}
-            </span>
-            Sektörel bilgilendirme, kampanya duyuruları ve içeriklerin
-            tarafıma e-posta yoluyla gönderilmesini onaylıyorum. Onayımı her
-            zaman geri çekebilirim.
-          </div>
-        </label>
+        {/* PAZARLAMA onay kutusu — KVKK paketi (madde 3): pazarlama gönderimi
+            fiilen başlamadıkça sitede GÖSTERİLMEZ. İYS + ayrı açık rıza gerektiğinde
+            eklenecek. state.pazarlama varsayılan false kalır (e-postaya öyle yansır). */}
       </div>
 
-      {/* FOOTNOTE */}
+      {/* FORM-ALTI KISA AYDINLATMA (kaynak: 05-form-alti-aydinlatma, madde 1) */}
       <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
-        Detaylı bilgi için{" "}
+        Paylaştığınız kişisel veriler; teklif ve iletişim talebinizin
+        karşılanması amacıyla,{" "}
         <Link
-          href="/gizlilik"
+          href="/kvkk-aydinlatma"
+          target="_blank"
+          className="text-[var(--color-primary)] hover:underline"
+        >
+          KVKK Aydınlatma Metni
+        </Link>{" "}
+        kapsamında işlenir. Ayrıntılar için Aydınlatma Metni ve{" "}
+        <Link
+          href="/gizlilik-politikasi"
           target="_blank"
           className="text-[var(--color-primary)] hover:underline"
         >
           Gizlilik Politikası
-        </Link>{" "}
-        ve{" "}
-        <Link
-          href="/cerez-politikasi"
-          target="_blank"
-          className="text-[var(--color-primary)] hover:underline"
-        >
-          Çerez Politikası
-        </Link>{" "}
-        sayfalarımızı inceleyebilirsiniz.
+        </Link>
+        &apos;nı inceleyebilirsiniz.
       </p>
     </div>
   );

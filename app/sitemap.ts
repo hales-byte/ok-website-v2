@@ -30,8 +30,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/ilk-kampanyaniz`, lastModified: contentRev, changeFrequency: "monthly", priority: 0.8 },
     // Hukuki sayfalar
     { url: `${BASE_URL}/kvkk-aydinlatma`, lastModified: contentRev, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE_URL}/gizlilik`, lastModified: contentRev, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${BASE_URL}/gizlilik-politikasi`, lastModified: contentRev, changeFrequency: "yearly", priority: 0.3 },
     { url: `${BASE_URL}/cerez-politikasi`, lastModified: contentRev, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${BASE_URL}/kvkk-basvuru-formu`, lastModified: contentRev, changeFrequency: "yearly", priority: 0.3 },
     { url: `${BASE_URL}/kullanim-kosullari`, lastModified: contentRev, changeFrequency: "yearly", priority: 0.3 },
   ];
 

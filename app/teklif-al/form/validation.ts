@@ -36,9 +36,11 @@ export function isStep5Valid(state: FormState): boolean {
   return adsoyad.length >= 2 && EMAIL_REGEX.test(email);
 }
 
-// Adım 6: KVKK onayı verildi mi?
-export function isStep6Valid(state: FormState): boolean {
-  return state.kvkk === true;
+// Adım 6: Gönderime engel yok. KVKK bilgilendirme onayı isteğe bağlıdır
+// (talebin ifası açık rıza gerektirmez; aydınlatma form altı kısa metinle
+// sağlanır). Bu nedenle gönder butonu kvkk kutusuna bağlı değildir.
+export function isStep6Valid(): boolean {
+  return true;
 }
 
 /**
@@ -58,7 +60,7 @@ export function isStepValid(state: FormState, step: number): boolean {
     case 5:
       return isStep5Valid(state);
     case 6:
-      return isStep6Valid(state);
+      return isStep6Valid();
     default:
       return false;
   }
@@ -82,7 +84,7 @@ export function isFormSubmittable(state: FormState): boolean {
     isStep3Valid(state) &&
     isStep4Valid(state) &&
     isStep5Valid(state) &&
-    isStep6Valid(state)
+    isStep6Valid()
   );
 }
 

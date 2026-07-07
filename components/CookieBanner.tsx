@@ -240,7 +240,7 @@ export function CookieBanner() {
                 </Link>{" "}
                 ve{" "}
                 <Link
-                  href="/gizlilik"
+                  href="/gizlilik-politikasi"
                   className="text-[var(--color-primary)] hover:underline"
                 >
                   Gizlilik Politikası

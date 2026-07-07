@@ -12,4 +12,4 @@
  *
  * Versiyon formatı: "YYYY.MM.DD" (yayın tarihi).
  */
-export const AYDINLATMA_VERSIYONU = "2026.07.06";
+export const AYDINLATMA_VERSIYONU = "2026.07.07";
