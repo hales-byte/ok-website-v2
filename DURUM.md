@@ -2,12 +2,12 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-06 · Claude Code (G4b +12 mecra grid'i commit'lendi + push'landı, prod'da)
+**Son güncelleme:** 2026-07-07 · Claude Code (G5+G7a harita cilası + fiyat kalıntısı temizliği commit'lendi + push'landı, prod'da)
 
 ## Şu an
-- **Aktif paket:** G4b KAPANDI — ana sayfada FormatShowcase altına **"+12 mecra" açılır grid'i** eklendi (native details): 12 ek mecra kartı, adetler envanter.json'dan türetilir (Luna 140, Megaboard 97, Tramvay Kaplama 40 görselli…), fiyat YOK. FormatShowcase başlığı "20 mecra türü, tek envanter". Ayrıca **tüm fiyat verisi (priceBand + formatPriceBand) söküldü** (Hakan kararı) ve **totem tanımı düzeltildi** ("dikey kule" → "direk üstünde ışıklı kutu pano"). Tramvay-kaplama öksüz görseli artık kullanılıyor. Commit'lenip origin/v3'e push'landı, prod'da.
-- **Durum:** `origin/v3`'te dokuz commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6, abd9243 FIX-legal, c258cfe G3.1, 799fb06 G4b).
-- **Sonraki:** G5/G7 (kalan görsel/kimlik yayma) → T5 uçtan uca mail testi
+- **Aktif paket:** G5+G7a KAPANDI — **/envanter haritası cilalandı** (seçili il koyu çerçeve `--color-primary-darker` #075985 + strokeWidth 2 + opaklık 1, seçili olmayanlar 0.45'e soluyor; **klavye erişimi** tabIndex+role=button+Enter/Space onKeyDown + `.harita-il:focus-visible`; panel bölge etiketi yeni **AA-kontrast metin paleti** `BOLGE_RENK_METIN` ≥4.5:1; mobilde ilSec paneli görüş alanına kaydırır, reduced-motion'da anında). **Fiyat kalıntısı temizliği (G7a):** `public/ratecard.pdf` silindi + hizmetler/ajanslar/markalar/Header'dan tüm "Ratecard indir" butonları/metinleri söküldü ("indikatif fiyat bantları" ibareleri de) → grep `ratecard|indikatif fiyat` = 0, /ratecard.pdf artık 404. Ayrıca hero'lara `priority` (hizmetler + hakkimizda anında görünür), hizmetler başlığı "8 ana format", ana sayfa hero "35.919 ünite" **SWC boşluk düzeltmesi** (`{" "}` → sayı-harf yapışması giderildi, grep 0), iletisim e-posta taşma fix'i. Commit'lenip origin/v3'e push'landı, prod'da.
+- **Durum:** `origin/v3`'te **on** commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6, abd9243 FIX-legal, c258cfe G3.1, 799fb06 G4b, 0306770 G5+G7a).
+- **Sonraki:** G7b/kalan görsel yayma (varsa) → T5 uçtan uca mail testi
 - **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G3.1/G6/G4b + hukuki tutarlılık tamam
 
 ## Paket durumu
@@ -31,7 +31,8 @@
 | G6 | SSS + FAQPage JSON-LD + footer tam iletişim + sabit WhatsApp | ✅ Commit'lendi + push (edd0753) |
 | FIX-legal | KVKK/gizlilik'ten kaldırılmış servis (Supabase/Mapbox) temizliği + 3 hukuki sayfa tutarlılığı | ✅ Commit'lendi + push (abd9243) |
 | G4b | +12 mecra grid'i (envanter-türevi adet) + fiyat söküm + totem düzeltme | ✅ Commit'lendi + push (799fb06) |
-| G5/G7 | Kalan görsel revizyonlar (kimliği yay) | ⬜ Onay bekliyor |
+| G5+G7a | Harita cilası (seçili il vurgu, klavye erişimi, AA renk) + ratecard/fiyat kalıntısı temizliği + hero priority + SWC boşluk fix | ✅ Commit'lendi + push (0306770) |
+| G7b/görsel | Kalan görsel revizyonlar (kimliği yay) | ⬜ Onay bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
 | O2-O4 | Cutover hazırlık → cutover → sonrası | ⬜ Bekliyor |
@@ -91,3 +92,5 @@
 | 2026-07-06 | G3.1 dikiş + kapanış | Dikişsizlik: iki eş yarım (pr-4) + track gap:0 → -50% sapması 0px (canlı ölçüm); reduced-motion statik doğrulandı; commit c258cfe + origin/v3'e push; prod |
 | 2026-07-06 | G4b (prod alias) | +12 mecra grid'i (envanter-türevi: Luna 140/Megaboard 97/Tramvay 40) + priceBand söküm (grep 0) + totem düzeltme; başlık "20 mecra türü"; check 8/8; build ✓; grid canlı doğrulandı (12 kart); prod web-v2-seven-rho; commit onay bekliyor |
 | 2026-07-06 | G4b kapanış | Onaylandı; commit 799fb06 + origin/v3'e push; prod |
+| 2026-07-07 | G5+G7a (prev) | Harita cilası (seçili il koyu çerçeve + tabIndex/Enter klavye + AA metin paleti) + ratecard.pdf silindi & tüm ratecard/indikatif fiyat kalıntıları söküldü (grep 0, /ratecard.pdf 404) + hero priority + SWC boşluk fix (grep 0); check 8/8; build ✓; kod inceleme ile doğrulandı; commit onay bekliyor |
+| 2026-07-07 | G5+G7a kapanış | Onaylandı; commit 0306770 + origin/v3'e push; prod web-v2-seven-rho (alias 200, ratecard.pdf 404 teyitli) |
