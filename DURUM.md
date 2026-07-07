@@ -2,11 +2,11 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-07 · Claude Code (G5+G7a harita cilası + fiyat kalıntısı temizliği commit'lendi + push'landı, prod'da)
+**Son güncelleme:** 2026-07-07 · Claude Code (V1 envanter güncellemesi — 36.703 ünite commit'lendi + push'landı, prod'da)
 
 ## Şu an
-- **Aktif paket:** G5+G7a KAPANDI — **/envanter haritası cilalandı** (seçili il koyu çerçeve `--color-primary-darker` #075985 + strokeWidth 2 + opaklık 1, seçili olmayanlar 0.45'e soluyor; **klavye erişimi** tabIndex+role=button+Enter/Space onKeyDown + `.harita-il:focus-visible`; panel bölge etiketi yeni **AA-kontrast metin paleti** `BOLGE_RENK_METIN` ≥4.5:1; mobilde ilSec paneli görüş alanına kaydırır, reduced-motion'da anında). **Fiyat kalıntısı temizliği (G7a):** `public/ratecard.pdf` silindi + hizmetler/ajanslar/markalar/Header'dan tüm "Ratecard indir" butonları/metinleri söküldü ("indikatif fiyat bantları" ibareleri de) → grep `ratecard|indikatif fiyat` = 0, /ratecard.pdf artık 404. Ayrıca hero'lara `priority` (hizmetler + hakkimizda anında görünür), hizmetler başlığı "8 ana format", ana sayfa hero "35.919 ünite" **SWC boşluk düzeltmesi** (`{" "}` → sayı-harf yapışması giderildi, grep 0), iletisim e-posta taşma fix'i. Commit'lenip origin/v3'e push'landı, prod'da.
-- **Durum:** `origin/v3`'te **on** commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6, abd9243 FIX-legal, c258cfe G3.1, 799fb06 G4b, 0306770 G5+G7a).
+- **Aktif paket:** V1 envanter güncellemesi KAPANDI — **rakamlar 35.919 → 36.703 ünite** oldu (Aydın ili +782 eklendi: BILLBOARD 532 + CLP RAKET-DURAK 250, 5 kapsama noktası Didim/Kuşadası/Efeler/Söke/Nazilli; Edirne envanterden **çıkarıldı**; tramvay 80 = Gaziantep). İl sayısı 45 sabit (Aydın girdi, Edirne çıktı). **Erişim 42,4M → 43,1M** (nüfus toplamı 44.894.964 → aylık erişim 43.120.042). `edirne → kirklareli` kalıcı 301/308 yönlendirmesi eklendi (`next.config.ts` ESKI_SEHIR_301). check:envanter artık **10 kontrol** (Aydın 782 + Edirne-yok kontrolleri eklendi). Build 186 → **187 sayfa** (Aydın +3: sayfa+billboard+clp, Edirne −2). Tüm rakamlar tek kaynak envanter.json'dan türer — elle sabit yok. Commit'lenip origin/v3'e push'landı, prod'da (canlı teyit: ana sayfa 36.703 + 43,1M, edirne→kirklareli 308, aydin/billboard 200).
+- **Durum:** `origin/v3`'te **on bir** commit push'lu (b956893 T0-T6, 3fef044 G1, f8f01e6 G2, 9e41714 G4a, a7b56a6 G3, edd0753 G6, abd9243 FIX-legal, c258cfe G3.1, 799fb06 G4b, 0306770 G5+G7a, 53c70cd V1).
 - **Sonraki:** G7b/kalan görsel yayma (varsa) → T5 uçtan uca mail testi
 - **Bu hafta hedefi:** ✅ Faz 1 + G0/G1/G2/G4a/G3/G3.1/G6/G4b + hukuki tutarlılık tamam
 
@@ -32,6 +32,7 @@
 | FIX-legal | KVKK/gizlilik'ten kaldırılmış servis (Supabase/Mapbox) temizliği + 3 hukuki sayfa tutarlılığı | ✅ Commit'lendi + push (abd9243) |
 | G4b | +12 mecra grid'i (envanter-türevi adet) + fiyat söküm + totem düzeltme | ✅ Commit'lendi + push (799fb06) |
 | G5+G7a | Harita cilası (seçili il vurgu, klavye erişimi, AA renk) + ratecard/fiyat kalıntısı temizliği + hero priority + SWC boşluk fix | ✅ Commit'lendi + push (0306770) |
+| V1 | Envanter güncellemesi — 36.703 ünite (Aydın +782 girdi, Edirne çıktı, tramvay 80) + erişim 43,1M + edirne→kirklareli 301 + check 10 kontrol | ✅ Commit'lendi + push (53c70cd) |
 | G7b/görsel | Kalan görsel revizyonlar (kimliği yay) | ⬜ Onay bekliyor |
 | O0 | Hesap sahipliği envanteri | 🟡 Tufan'a 2 soru + Resend hesabı |
 | O1 | İçerik girdileri (foto, 42,4M teyidi, SSS, vaka) | 🟡 Hakan toplayacak |
@@ -48,8 +49,9 @@
 
 ## Kilit gerçekler (değişmez — tereddütte buraya bak)
 
-- Rakamlar: **45 il · 20 mecra · 35.919 ünite** — tek kaynak `src/data/envanter.json`
-- **Aylık erişim: 42.400.011 (42,4M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.145.295) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer).
+- Rakamlar: **45 il · 20 mecra · 36.703 ünite** — tek kaynak `src/data/envanter.json` (V1 güncellemesi 2026-07-07: Aydın +782 girdi, Edirne çıktı; il sayısı 45 sabit kaldı). Eski değer 35.919 idi.
+- **Aylık erişim: 43.120.042 (43,1M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.894.964, V1'de Aydın nüfusu girdi/Edirne çıktı) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer). Eski değer 42,4M idi.
+- **V1 envanter (2026-07-07):** Aydın (Ege) envantere eklendi — BILLBOARD 532 + CLP RAKET-DURAK 250 = 782 ünite, kapsama noktaları Didim/Kuşadası/Efeler/Söke/Nazilli. Edirne envanterden çıkarıldı → `/sehir/edirne` artık `/sehir/kirklareli`'ye kalıcı yönlenir (`next.config.ts` ESKI_SEHIR_301; canlıda HTTP 308). check:envanter 8 → **10 kontrol** (Aydın 782 + Edirne-yok). Tramvay toplamı 80 (yalnız Gaziantep TRAMVAY KAPLAMA).
 - **Mecralar (ana sayfa): 8 showcase kartı** (FormatShowcase: billboard, clp, megalight, led, giantboard, pole-banner, totem, havalimanı — hepsi görselli) **+ 12 ek mecra grid'i** (G4b, `EkMecraGrid` + `src/data/content/ek-mecralar.ts`) = **20 mecra**. Ek grid adetleri envanter.json'dan `getFormatToplam(envanterAd)` ile türer (Luna 140, Megaboard 97, Tramvay Kaplama 40…), adet 0 olan kart gizlenir. Tramvay-kaplama görseli artık bu grid'de kullanılıyor (öksüz değil). `totem` tanımı G4b'de düzeltildi (direk üstünde ışıklı kutu pano).
 - **FİYAT GÖSTERİLMEZ (Hakan kararı, G4b):** `priceBand` + `formatPriceBand` `lib/formats.ts`'ten tamamen söküldü. Sitede hiçbir yerde fiyat yok; teklif akışı fiyatı konuşma/teklifle verir. grep `priceBand` → sıfır olmalı.
 - **Logo duvarı (G3):** 30 marka logosu `public/logos/*.png` (dosya adları slug). İçerik/veri `src/data/content/is-birlikleri.ts`'te — projenin İLK content dosyası; kural: kullanıcıya görünen metin/veri koda gömülmez, buraya toplanır. Bileşen `components/LogoWall.tsx` (her iki temada beyaz kart). /markalar 30 tam grid (LogoWall). Soluk logolar (VakıfBank, Nissan, Paulmark, Hatemoğlu, Arçelik) A1'de koyu varyantla yenilenecek — şimdilik olduğu gibi.
@@ -94,3 +96,5 @@
 | 2026-07-06 | G4b kapanış | Onaylandı; commit 799fb06 + origin/v3'e push; prod |
 | 2026-07-07 | G5+G7a (prev) | Harita cilası (seçili il koyu çerçeve + tabIndex/Enter klavye + AA metin paleti) + ratecard.pdf silindi & tüm ratecard/indikatif fiyat kalıntıları söküldü (grep 0, /ratecard.pdf 404) + hero priority + SWC boşluk fix (grep 0); check 8/8; build ✓; kod inceleme ile doğrulandı; commit onay bekliyor |
 | 2026-07-07 | G5+G7a kapanış | Onaylandı; commit 0306770 + origin/v3'e push; prod web-v2-seven-rho (alias 200, ratecard.pdf 404 teyitli) |
+| 2026-07-07 | V1 envanter (prev) | 35.919→36.703 ünite (Aydın +782 girdi/Edirne çıktı, il 45 sabit); erişim 42,4M→43,1M; edirne→kirklareli 301; check 10/10; build 187 (186→187); grep eski rakam 0 / yeni 36.703 var; commit onay bekliyor |
+| 2026-07-07 | V1 kapanış | Onaylandı; commit 53c70cd + origin/v3'e push; prod web-v2-seven-rho (canlı: 36.703+43,1M, edirne→kirklareli 308, aydin/billboard 200) |
