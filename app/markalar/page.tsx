@@ -8,7 +8,6 @@ import {
   Layers,
   MapPin,
   Check,
-  Download,
   X,
 } from "lucide-react";
 import type { Metadata } from "next";
@@ -98,14 +97,6 @@ export default async function MarkalarPage() {
                   Teklif Al
                   <ArrowRight size={18} />
                 </Link>
-                <a
-                  href="/ratecard.pdf"
-                  download="objektifkriter-ratecard-2026.pdf"
-                  className="btn-secondary"
-                >
-                  <Download size={18} />
-                  Ratecard&apos;ı İndir (PDF)
-                </a>
                 <Link href="/envanter" className="btn-secondary">
                   Envanteri İnceleyin
                 </Link>
@@ -258,9 +249,9 @@ export default async function MarkalarPage() {
                       okIyi: true,
                     },
                     {
-                      kriter: "Ratecard erişimi",
-                      tipik: "Sözleşme sonrası",
-                      ok: "İndikatif PDF tek tıkla indirilebilir",
+                      kriter: "Teklif netliği",
+                      tipik: "Sözleşme sonrasına kalır",
+                      ok: "Briefe özel net teklif — 15 dakikada",
                       okIyi: true,
                     },
                     {

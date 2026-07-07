@@ -409,3 +409,23 @@
     display: none;
   }
 }
+
+/* --- G5: Türkiye haritası il etkileşimi --- */
+.harita-il {
+  cursor: pointer;
+  transition: fill-opacity 0.18s ease, stroke 0.15s ease;
+}
+.harita-il:hover {
+  fill-opacity: 1;
+}
+.harita-il:focus-visible {
+  outline: none;
+  stroke: var(--color-primary-darker);
+  stroke-width: 2;
+  fill-opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .harita-il {
+    transition: none;
+  }
+}

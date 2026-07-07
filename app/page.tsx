@@ -167,7 +167,7 @@ export default async function Home() {
             <ScrollReveal direction="up" delay={400} duration={1000} priority>
               <p className="text-xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl leading-relaxed">
                 Türkiye genelinde {stats.sehirSayisi} il, {stats.mecraSayisi}{" "}
-                mecra türü, {sayiTr(stats.yuzSayisi)} ünite — Anadolu&apos;nun
+                mecra türü, {sayiTr(stats.yuzSayisi)}{" "}ünite — Anadolu&apos;nun
                 her köşesinde markanızın yanındayız.
               </p>
             </ScrollReveal>

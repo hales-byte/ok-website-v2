@@ -25,7 +25,7 @@ const cozumler = [
     href: "/ajanslar",
     tag: "AJANS",
     label: "Reklam Ajansları",
-    desc: "15 dakika teklif, ajansa özel ratecard, white-label raporlama.",
+    desc: "15 dakika teklif, ajansa özel koşullar, white-label raporlama.",
     icon: Users,
   },
   {

@@ -46,7 +46,7 @@ const degerler = [
   {
     icon: Shield,
     title: "Şeffaflık",
-    desc: "Gördüğünüz her lokasyon, her fiyat, her rapor — gerçek. Gizli koşul yok, sürpriz fatura yok.",
+    desc: "Gördüğünüz her lokasyon, her rapor — gerçek. Gizli koşul yok, sürpriz fatura yok.",
   },
   {
     icon: Target,
@@ -68,7 +68,7 @@ export default async function HakkimizdaPage() {
       {/* HERO */}
       <section className="pt-24 pb-16 border-b border-[var(--color-border-subtle)]">
         <div className="container-narrow">
-          <ScrollReveal direction="up" duration={1000}>
+          <ScrollReveal direction="up" duration={1000} priority>
             <div className="max-w-3xl space-y-6">
               <div className="text-sm uppercase tracking-widest text-[var(--color-primary)] font-medium">
                 Hakkımızda

@@ -8,7 +8,7 @@
  * Token, API, ağ isteği yoktur — "0 şehir" hatası kökten tarih olmuştur.
  */
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, MapPin, X } from "lucide-react";
 import { TR_IL_PATHS, TR_HARITA_VIEWBOX } from "@/src/data/tr-il-paths";
@@ -32,15 +32,26 @@ const BOLGELER = [
   "Güneydoğu Anadolu",
 ] as const;
 
-/** Bölge → vurgu rengi (koyu zeminde okunur tonlar; G5'te cilalanacak) */
+/** Bölge → dolgu rengi (aydınlık zeminde doygun tonlar — G5 cilası) */
 const BOLGE_RENK: Record<string, string> = {
-  "Marmara": "#38BDF8",
-  "Ege": "#2DD4BF",
-  "Akdeniz": "#FBBF24",
-  "İç Anadolu": "#A78BFA",
-  "Karadeniz": "#4ADE80",
-  "Doğu Anadolu": "#FB7185",
-  "Güneydoğu Anadolu": "#FB923C",
+  "Marmara": "#0EA5E9",
+  "Ege": "#14B8A6",
+  "Akdeniz": "#F59E0B",
+  "İç Anadolu": "#8B5CF6",
+  "Karadeniz": "#22C55E",
+  "Doğu Anadolu": "#F43F5E",
+  "Güneydoğu Anadolu": "#F97316",
+};
+
+/** Bölge → metin rengi (beyaz zeminde ≥4.5:1 — panel etiketi bunlarla yazılır) */
+const BOLGE_RENK_METIN: Record<string, string> = {
+  "Marmara": "#0369A1",
+  "Ege": "#0F766E",
+  "Akdeniz": "#B45309",
+  "İç Anadolu": "#6D28D9",
+  "Karadeniz": "#15803D",
+  "Doğu Anadolu": "#BE123C",
+  "Güneydoğu Anadolu": "#C2410C",
 };
 
 const sayiTr = (n: number) => n.toLocaleString("tr-TR");
@@ -49,6 +60,18 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
   const [seciliSlug, setSeciliSlug] = useState<string | null>(null);
   const [bolgeFiltre, setBolgeFiltre] = useState<string>("Tümü");
   const [formatFiltre, setFormatFiltre] = useState<string>("Tümü");
+  const panelRef = useRef<HTMLElement>(null);
+
+  /** İl seç + mobilde (panel haritanın altında) paneli görüş alanına getir */
+  const ilSec = (slug: string) => {
+    setSeciliSlug(slug);
+    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      const azHareket = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      requestAnimationFrame(() => {
+        panelRef.current?.scrollIntoView({ behavior: azHareket ? "auto" : "smooth", block: "start" });
+      });
+    }
+  };
 
   const illerBySlug = useMemo(
     () => new Map(iller.map((i) => [i.slug, i])),
@@ -150,21 +173,43 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
             const aktif = !!il;
             const gorunur = il ? filtredeMi(il) : false;
             const fill = !aktif
-              ? "var(--color-surface)"
+              ? "var(--color-surface-elevated)"
               : gorunur
                 ? BOLGE_RENK[il!.bolge] ?? "var(--color-primary)"
                 : "var(--color-surface)";
-            const opacity = !aktif ? 0.6 : gorunur ? (seciliSlug && seciliSlug !== p.id ? 0.55 : 0.9) : 0.35;
+            const secildi = seciliSlug === p.id;
+            const opacity = !aktif
+              ? 0.7
+              : gorunur
+                ? secildi
+                  ? 1
+                  : seciliSlug
+                    ? 0.45
+                    : 0.9
+                : 0.35;
             return (
               <path
                 key={p.id}
                 d={p.d}
                 fill={fill}
                 fillOpacity={opacity}
-                stroke="var(--color-border-subtle)"
-                strokeWidth={1}
-                onClick={aktif ? () => setSeciliSlug(p.id) : undefined}
-                className={aktif ? "cursor-pointer transition-opacity hover:fill-opacity-100" : ""}
+                stroke={secildi ? "var(--color-primary-darker)" : "var(--color-border-subtle)"}
+                strokeWidth={secildi ? 2 : 1}
+                onClick={aktif ? () => ilSec(p.id) : undefined}
+                onKeyDown={
+                  aktif
+                    ? (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          ilSec(p.id);
+                        }
+                      }
+                    : undefined
+                }
+                tabIndex={aktif && gorunur ? 0 : -1}
+                role={aktif ? "button" : undefined}
+                aria-pressed={aktif ? secildi : undefined}
+                className={aktif ? "harita-il" : ""}
               >
                 <title>
                   {p.ad}
@@ -176,17 +221,17 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
         </svg>
         <p className="mt-3 text-xs text-[var(--color-text-muted)]">
           Renkli iller envanterimizin bulunduğu {iller.length} ili gösterir;
-          il üzerine gelin veya tıklayın.
+          il üzerine gelin, tıklayın veya Tab ile gezinin.
         </p>
       </div>
 
       {/* SAĞ: detay paneli */}
-      <aside className="lg:sticky lg:top-24 h-fit">
+      <aside ref={panelRef} className="lg:sticky lg:top-24 h-fit scroll-mt-24">
         {secili ? (
           <div className="p-6 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] space-y-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="flex items-center gap-2 text-xs uppercase tracking-widest font-medium" style={{ color: BOLGE_RENK[secili.bolge] }}>
+                <div className="flex items-center gap-2 text-xs uppercase tracking-widest font-medium" style={{ color: BOLGE_RENK_METIN[secili.bolge] ?? BOLGE_RENK[secili.bolge] }}>
                   <MapPin size={14} />
                   {secili.bolge}
                 </div>

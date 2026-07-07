@@ -9,7 +9,6 @@ import {
   Map,
   Check,
   ShieldCheck,
-  Download,
 } from "lucide-react";
 import type { Metadata } from "next";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -21,7 +20,7 @@ import { BriefModal } from "./BriefModal";
 export const metadata: Metadata = {
   title: "Reklam Ajansları İçin OOH Tedarikçi",
   description:
-    "Brief'iniz 15 dakikada teklife dönüşsün. Ajanslar için Türkiye geneli OOH envanter, white-label raporlama, ajansa özel ratecard ve hızlı teslimat.",
+    "Brief'iniz 15 dakikada teklife dönüşsün. Ajanslar için Türkiye geneli OOH envanter, white-label raporlama, ajansa özel koşullar ve hızlı teslimat.",
 };
 
 function getStats() {
@@ -42,8 +41,8 @@ const features = [
   },
   {
     icon: Lock,
-    title: "Ajansa özel ratecard",
-    desc: "Ajans-özel iskonto bantları, kampanya hacmine göre kademeli avantaj. Kanal münhasırlığı pazarlık edilebilir.",
+    title: "Ajansa özel koşullar",
+    desc: "Kampanya hacmine göre kademeli avantaj. Kanal münhasırlığı pazarlık edilebilir.",
   },
   {
     icon: Map,
@@ -102,26 +101,17 @@ export default async function AjanslarPage() {
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-4">
                 <BriefModal triggerClassName="btn-primary" />
                 <a
-                  href="/ratecard.pdf"
-                  download="objektifkriter-ratecard-2026.pdf"
-                  className="btn-secondary"
-                >
-                  <Download size={18} />
-                  Ratecard&apos;ı İndir (PDF)
-                </a>
-                <a
-                  href="https://wa.me/905529185864?text=Merhaba%2C%20Reklam%20ajans%C4%B1ndan%20yaz%C4%B1yorum.%20Ratecard%20payla%C5%9Fabilir%20misiniz%3F"
+                  href="https://wa.me/905529185864?text=Merhaba%2C%20Reklam%20ajans%C4%B1ndan%20yaz%C4%B1yorum.%20Teklif%20almak%20istiyorum."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-secondary"
                 >
                   <WhatsAppIcon size={18} />
-                  WhatsApp ile iste
+                  WhatsApp ile yaz
                 </a>
               </div>
               <p className="text-xs text-[var(--color-text-muted)] pt-1">
-                İndikatif fiyat bantları içerir. Net teklif briefiniz
-                üzerinden 15 dakikada hazırlanır.
+                Net teklif briefiniz üzerinden 15 dakikada hazırlanır.
               </p>
             </div>
           </ScrollReveal>
@@ -326,7 +316,7 @@ export default async function AjanslarPage() {
                 {[
                   "15 dakika yanıt süresi",
                   "White-label raporlama",
-                  "Ajans-özel ratecard",
+                  "Ajansa özel koşullar",
                 ].map((item) => (
                   <li
                     key={item}

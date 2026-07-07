@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check, Clock, Download } from "lucide-react";
+import { ArrowRight, Check, Clock } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { TOPLAM } from "@/src/data/envanter";
 import type { Metadata } from "next";
 import { FORMATLAR } from "@/lib/formats";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -8,7 +10,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 export const metadata: Metadata = {
   title: "Hizmetlerimiz",
   description:
-    "Billboard, CLP, megalight, LED, giantboard, pole banner, totem ve havalimanı reklamları — 8 OOH formatıyla markanız için doğru çözüm.",
+    `Billboard, CLP, megalight, LED, giantboard, pole banner, totem ve havalimanı reklamları — ${TOPLAM.mecra} mecra türü içinden ana formatlarla markanız için doğru çözüm.`,
 };
 
 export default function HizmetlerPage() {
@@ -17,37 +19,37 @@ export default function HizmetlerPage() {
       {/* HERO */}
       <section className="pt-24 pb-16 border-b border-[var(--color-border-subtle)]">
         <div className="container-narrow">
-          <ScrollReveal direction="up" duration={1000}>
+          <ScrollReveal direction="up" duration={1000} priority>
             <div className="max-w-3xl space-y-6">
               <div className="text-sm uppercase tracking-widest text-[var(--color-primary)] font-medium">
                 Hizmetlerimiz
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
                 Markanız için{" "}
-                <span className="text-gradient">{FORMATLAR.length} ayrı format</span>
+                <span className="text-gradient">{FORMATLAR.length} ana format</span>
               </h1>
               <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
                 Klasik billboard&apos;dan dijital LED&apos;e, premium havalimanı
                 ekranından yaya seviyesindeki CLP&apos;ye kadar — kampanyanız için
-                doğru görünürlüğü birlikte buluyoruz.
+                doğru görünürlüğü birlikte buluyoruz. Toplam {TOPLAM.mecra} mecra türünün tamamı tek envanterde.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                <a
-                  href="/ratecard.pdf"
-                  download="objektifkriter-ratecard-2026.pdf"
-                  className="btn-secondary"
-                >
-                  <Download size={18} />
-                  Ratecard&apos;ı İndir (PDF)
-                </a>
                 <Link href="/teklif-al" className="btn-primary">
                   Teklif Al
                   <ArrowRight size={18} />
                 </Link>
+                <a
+                  href="https://wa.me/905529185864?text=Merhaba%2C%20Objektif%20Kriter%20web%20sitesi%20%C3%BCzerinden%20yaz%C4%B1yorum.%20Mecralar%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary"
+                >
+                  <WhatsAppIcon size={18} />
+                  WhatsApp ile sor
+                </a>
               </div>
               <p className="text-xs text-[var(--color-text-muted)]">
-                İndikatif fiyat bantları içerir; net teklif briefiniz
-                üzerinden 15 dakikada hazırlanır.
+                Net teklif briefiniz üzerinden 15 dakikada hazırlanır.
               </p>
             </div>
           </ScrollReveal>
