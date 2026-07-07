@@ -1,6 +1,6 @@
 export default function Loading() {
     return (
-      <section className="min-h-[60vh] flex items-center justify-center py-20">
+      <section className="min-h-screen flex items-center justify-center py-20">
         <div className="flex flex-col items-center gap-6">
           {/* Pulse spinner */}
           <div className="relative w-12 h-12">
