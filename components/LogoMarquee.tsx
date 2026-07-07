@@ -7,13 +7,13 @@ import type { MarkaLogo } from "@/src/data/content/is-birlikleri";
  *
  * - Satır sayısı logo adedine göre: ≤40 → 2 satır, >40 → 3 satır
  *   (100 logo geldiğinde otomatik ölçeklenir).
- * - Satırlar zıt yönlerde akar; tur süreleri 20sn / 24sn (/ 22sn).
+ * - Satırlar zıt yönlerde akar; tur süreleri 30sn / 36sn (/ 33sn) — G3.3 yavaş tempo.
  * - Dikişsiz döngü için her satır içeriği iki kez basılır; ikinci kopya
  *   aria-hidden'dır ve reduced-motion'da gizlenir (globals.css).
  * - Fareyle üzerine gelince akış durur (.ok-marquee-band:hover kuralı).
  */
 
-const TUR_SURELERI = [20, 24, 22]; // saniye/tur — Hakan onaylı tempo
+const TUR_SURELERI = [30, 36, 33]; // saniye/tur — G3.3: ~1,5× yavaşlatıldı (Hakan, 07.07)
 
 function satirlaraBol(logolar: MarkaLogo[]): MarkaLogo[][] {
   const satirSayisi = logolar.length > 40 ? 3 : 2;
@@ -25,15 +25,15 @@ function satirlaraBol(logolar: MarkaLogo[]): MarkaLogo[][] {
 function Chip({ logo }: { logo: MarkaLogo }) {
   return (
     <div
-      className="flex h-[76px] w-[150px] shrink-0 items-center justify-center rounded-xl border border-slate-200/80 bg-white transition-colors duration-300 hover:border-[var(--color-primary)]/60"
+      className="flex h-[88px] w-[168px] shrink-0 items-center justify-center rounded-xl border border-slate-200/80 bg-white transition-colors duration-300 hover:border-[var(--color-primary)]/60"
       title={logo.markaAdi}
     >
-      <div className="relative h-8 w-[120px]">
+      <div className="relative h-[72px] w-[152px]">
         <Image
           src={`/logos/${logo.dosyaAdi}.png`}
           alt={logo.markaAdi}
           fill
-          sizes="120px"
+          sizes="152px"
           className="object-contain"
         />
       </div>
