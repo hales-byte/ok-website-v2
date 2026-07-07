@@ -1,14 +1,14 @@
 {
-  "guncelleme": "2026-07-02",
-  "kaynak": "OBJ ENVANTER objenv.xlsx (Network Adeti hariç)",
+  "guncelleme": "2026-07-07",
+  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-07; Network Adeti hariç)",
   "toplam": {
     "il": 45,
-    "unite": 35919
+    "unite": 36703
   },
   "iller": [
     {
       "il": "Gaziantep",
-      "toplam": 3490,
+      "toplam": 3532,
       "ilceler": [
         "Nizip",
         "Gaziantep Üniversitesi",
@@ -23,29 +23,18 @@
         "POLE BANNER": 1000,
         "BILLBOARD": 550,
         "MEGALIGHT": 116,
+        "TRAMVAY KAPLAMA": 80,
         "BIGBOARD": 50,
-        "TRAMVAY KAPLAMA": 40,
         "LED": 40,
         "KULEBOARD": 4,
         "MEGABOARD": 4,
-        "OTOBÜS KAPLAMA": 2
+        "OTOBÜS KAPLAMA": 4
       }
     },
     {
       "il": "Ankara",
       "toplam": 2946,
-      "ilceler": [
-        "Güvenpark Metro Çıkışı",
-        "Soysal İş Mrk. Çatı",
-        "Soysal İş Mrk. Duvar",
-        "Yaka Beytepe",
-        "Beytepe Necdet Et",
-        "Beşevler Metro Çıkışı",
-        "Yozgat Bulvarı",
-        "Keçiören FTZ",
-        "Kocatepe Kültür Mrk.",
-        "AŞTİ Bağlantı Tüneli"
-      ],
+      "ilceler": [],
       "formatlar": {
         "CLP RAKET-DURAK": 1951,
         "BILLBOARD": 342,
@@ -56,6 +45,23 @@
         "KULEBOARD": 26,
         "PARAPET": 26,
         "LED": 14
+      }
+    },
+    {
+      "il": "Mersin",
+      "toplam": 2761,
+      "ilceler": [],
+      "formatlar": {
+        "BILLBOARD": 1250,
+        "CLP RAKET-DURAK": 1133,
+        "BILLBOARD PLUS": 111,
+        "MEGALIGHT": 106,
+        "GIANTBOARD": 70,
+        "MEGABOARD": 48,
+        "RAKET LED": 16,
+        "LED": 14,
+        "SÜPER LED EKRAN": 12,
+        "PRİZMA LED": 1
       }
     },
     {
@@ -89,25 +95,8 @@
       }
     },
     {
-      "il": "Mersin",
-      "toplam": 2611,
-      "ilceler": [],
-      "formatlar": {
-        "CLP RAKET-DURAK": 1133,
-        "BILLBOARD": 1100,
-        "BILLBOARD PLUS": 111,
-        "MEGALIGHT": 106,
-        "GIANTBOARD": 70,
-        "MEGABOARD": 48,
-        "RAKET LED": 16,
-        "LED": 14,
-        "SÜPER LED EKRAN": 12,
-        "PRİZMA LED": 1
-      }
-    },
-    {
       "il": "Tekirdağ",
-      "toplam": 2063,
+      "toplam": 2434,
       "ilceler": [
         "Çorlu",
         "Silivri",
@@ -120,7 +109,9 @@
       ],
       "formatlar": {
         "POLE BANNER": 1975,
-        "CLP RAKET-DURAK": 80,
+        "CLP RAKET-DURAK": 280,
+        "BILLBOARD": 150,
+        "MEGALIGHT": 21,
         "LED": 4,
         "GIANTBOARD": 3,
         "RAKET LED": 1
@@ -248,6 +239,21 @@
       }
     },
     {
+      "il": "Aydın",
+      "toplam": 782,
+      "ilceler": [
+        "Didim",
+        "Kuşadası",
+        "Efeler",
+        "Söke",
+        "Nazilli"
+      ],
+      "formatlar": {
+        "BILLBOARD": 532,
+        "CLP RAKET-DURAK": 250
+      }
+    },
+    {
       "il": "Batman",
       "toplam": 725,
       "ilceler": [],
@@ -311,24 +317,6 @@
         "MEGALIGHT": 10,
         "TOTEM": 10,
         "LED": 3
-      }
-    },
-    {
-      "il": "Osmaniye",
-      "toplam": 410,
-      "ilceler": [],
-      "formatlar": {
-        "CLP RAKET-DURAK": 250,
-        "BILLBOARD": 150,
-        "MEGALIGHT": 10
-      }
-    },
-    {
-      "il": "Edirne",
-      "toplam": 410,
-      "ilceler": [],
-      "formatlar": {
-        "POLE BANNER": 410
       }
     },
     {
@@ -415,6 +403,15 @@
       }
     },
     {
+      "il": "Osmaniye",
+      "toplam": 260,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 250,
+        "MEGALIGHT": 10
+      }
+    },
+    {
       "il": "Rize",
       "toplam": 259,
       "ilceler": [],
@@ -426,14 +423,13 @@
     },
     {
       "il": "Ordu",
-      "toplam": 255,
+      "toplam": 254,
       "ilceler": [
-        "Fatsa",
         "Ordu-Giresun Havalimanı"
       ],
       "formatlar": {
         "POLE BANNER": 250,
-        "LED": 5
+        "LED": 4
       }
     },
     {
@@ -490,7 +486,7 @@
       "toplam": 48,
       "ilceler": [
         "Hopa",
-        "Borçka"
+        "Hopa-Borçka"
       ],
       "formatlar": {
         "BILLBOARD": 22,
@@ -530,7 +526,7 @@
       "il": "Amasya",
       "toplam": 1,
       "ilceler": [
-        "Merzifon Havalimanı"
+        "Havalimanı"
       ],
       "formatlar": {
         "LED": 1

@@ -17,6 +17,7 @@ const ESKI_SEHIR_301: Array<{ eski: string; yeni: string }> = [
   { eski: "safranbolu", yeni: "karabuk" },
   { eski: "iskenderun", yeni: "hatay" },
   { eski: "giresun", yeni: "ordu" },
+  { eski: "edirne", yeni: "kirklareli" }, // V1 (2026-07-07): Edirne envanterden çıktı
   { eski: "cankiri", yeni: "ankara" },
 ];
 

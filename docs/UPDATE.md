@@ -7,7 +7,7 @@
 
 | Komut | Ne yapar |
 |---|---|
-| `npm run check:envanter` | Envanterin iç tutarlılığını test eder (35.919 / 45 / Ankara 2.946) |
+| `npm run check:envanter` | Envanterin iç tutarlılığını test eder (36.703 / 45 / Ankara 2.946) |
 | `npm run build` | Siteyi derler — hatasızsa yayınlanabilir |
 | `vercel --prod` | Yayınlar (repo kökünden) |
 
