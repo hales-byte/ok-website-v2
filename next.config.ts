@@ -48,7 +48,9 @@ function slugifyTr(str: string): string {
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
-function esikAltiRedirects(): Array<{ source: string; destination: string; permanent: boolean }> {
+function esikAltiRedirects(
+  standalone: Set<string>
+): Array<{ source: string; destination: string; permanent: boolean }> {
   const data = JSON.parse(
     readFileSync(join(__dirname, "src/data/envanter.json"), "utf8")
   ) as { iller: Array<{ il: string; formatlar: Record<string, number> }> };
@@ -56,6 +58,9 @@ function esikAltiRedirects(): Array<{ source: string; destination: string; perma
   const out: Array<{ source: string; destination: string; permanent: boolean }> = [];
   for (const il of data.iller) {
     const slug = slugifyTr(il.il);
+    // Sadece standalone iller: taşınan illerin format yolları zaten /sehir/<il>/:format*
+    // kuralıyla bölgeye 301'lenir (301 zinciri olmasın).
+    if (!standalone.has(slug)) continue;
     const adetByKey = new Map<string, number>();
     for (const [ad, adet] of Object.entries(il.formatlar)) {
       const key = FORMAT_PAGE_KEY[ad];
@@ -81,15 +86,38 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   async redirects() {
-    const sehirler = ESKI_SEHIR_301.flatMap(({ eski, yeni }) => [
-      { source: `/sehir/${eski}`, destination: `/sehir/${yeni}`, permanent: true },
-      { source: `/sehir/${eski}/:format*`, destination: `/sehir/${yeni}`, permanent: true },
+    // Bölge revizyonu tek kaynağı: src/data/bolge-config.json (config Next
+    // app modüllerini import edemez, bu yüzden readFileSync ile okunur).
+    const bolgeCfg = JSON.parse(
+      readFileSync(join(__dirname, "src/data/bolge-config.json"), "utf8")
+    ) as { standalone: string[]; movedToBolge: Record<string, string> };
+    const standalone = new Set(bolgeCfg.standalone);
+    const moved = bolgeCfg.movedToBolge;
+
+    // /sehir/<slug> nihai hedefi: taşınansa bölge, değilse kendi sayfası.
+    const sehirHedef = (slug: string) =>
+      moved[slug] ? `/bolge/${moved[slug]}` : `/sehir/${slug}`;
+
+    // Eski/kalkan slug 301'leri — hedef taşınan ilse doğrudan bölgeye (zincir yok)
+    const eskiler = ESKI_SEHIR_301.flatMap(({ eski, yeni }) => {
+      const dest = sehirHedef(yeni);
+      return [
+        { source: `/sehir/${eski}`, destination: dest, permanent: true },
+        { source: `/sehir/${eski}/:format*`, destination: dest, permanent: true },
+      ];
+    });
+
+    // Taşınan 23 il: /sehir/<il> ve /sehir/<il>/:format* → /bolge/<bölge>
+    const tasinan = Object.entries(moved).flatMap(([slug, bolge]) => [
+      { source: `/sehir/${slug}`, destination: `/bolge/${bolge}`, permanent: true },
+      { source: `/sehir/${slug}/:format*`, destination: `/bolge/${bolge}`, permanent: true },
     ]);
+
     // Hukuki sayfa slug tutarlılığı: /gizlilik → /gizlilik-politikasi (KVKK paketi)
     const hukuki = [
       { source: "/gizlilik", destination: "/gizlilik-politikasi", permanent: true },
     ];
-    return [...sehirler, ...hukuki, ...esikAltiRedirects()];
+    return [...eskiler, ...tasinan, ...hukuki, ...esikAltiRedirects(standalone)];
   },
 };
 

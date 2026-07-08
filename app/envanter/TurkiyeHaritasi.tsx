@@ -19,6 +19,10 @@ export interface HaritaIl {
   bolge: string;
   toplam: number;
   ilceler: string[];
+  /** Detay linki — standalone il için /sehir/<il>, taşınan il için /bolge/<bölge> */
+  detayHref: string;
+  /** Buton metni — "<il> sayfasına git" ya da "<Bölge> bölge sayfasına git" */
+  detayLabel: string;
   formatlar: Array<{ label: string; adet: number }>;
 }
 
@@ -303,8 +307,8 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
             )}
 
             <div className="flex flex-col gap-2 pt-1">
-              <Link href={`/sehir/${secili.slug}`} className="btn-primary justify-center">
-                {secili.il} sayfasına git
+              <Link href={secili.detayHref} className="btn-primary justify-center">
+                {secili.detayLabel}
                 <ArrowRight size={16} />
               </Link>
               <Link href="/teklif-al" className="btn-secondary justify-center">

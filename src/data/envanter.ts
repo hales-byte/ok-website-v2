@@ -244,24 +244,56 @@ const IL_NUFUS: Record<string, number> = (ilNufusData as { nufus: Record<string,
  */
 export const ERISIM_KATSAYISI = 0.960465;
 
-/** Envanterdeki illerin nüfus toplamı × katsayı → aylık tekrarsız erişim */
+/** Tek ilin aylık erişimi: nüfus × katsayı (yuvarlanmış). Per-il tek türetim noktası. */
+function erisimDegeri(nufus: number): number {
+  return Math.round(nufus * ERISIM_KATSAYISI);
+}
+
+/**
+ * Bir ilin aylık tekrarsız erişimi (slug'dan). Nüfus kaydı yoksa 0.
+ * getAylikErisim() bunların toplamıdır → Σ getIlErisim(45) === getAylikErisim().
+ */
+export function getIlErisim(slug: string): number {
+  const il = getIl(slug);
+  if (!il) return 0;
+  const n = IL_NUFUS[il.il];
+  return n === undefined ? 0 : erisimDegeri(n);
+}
+
+/**
+ * Envanterdeki tüm illerin aylık erişim TOPLAMI — per-il değerlerin toplamı.
+ * (round(Σnüfus×K) yerine Σround(nüfus×K): global ile per-il birebir tutarlı.)
+ */
 export function getAylikErisim(): number {
-  let toplamNufus = 0;
+  let toplam = 0;
   for (const il of ENVANTER.iller) {
     const n = IL_NUFUS[il.il];
     if (n === undefined) {
       console.warn(`il-nufus.json'da eksik il: ${il.il} — erişim hesabına katılmadı`);
       continue;
     }
-    toplamNufus += n;
+    toplam += erisimDegeri(n);
   }
-  return Math.round(toplamNufus * ERISIM_KATSAYISI);
+  return toplam;
 }
 
-/** "42,4M" biçiminde etiket (milyon, 1 ondalık, TR virgül) */
+/** "43,1M" biçiminde global etiket (milyon, 1 ondalık, TR virgül) */
 export function erisimEtiketi(): string {
   const milyon = getAylikErisim() / 1_000_000;
   return `${milyon.toLocaleString("tr-TR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+}
+
+/**
+ * İl sayaçında gösterilecek erişim etiketi:
+ * ≥1M → "~5,7M" (yaklaşık, milyon), altı → tam gruplu sayı ("79.561").
+ */
+export function getIlErisimEtiketi(slug: string): string {
+  const e = getIlErisim(slug);
+  if (e >= 1_000_000) {
+    const milyon = e / 1_000_000;
+    return `~${milyon.toLocaleString("tr-TR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+  }
+  return sayiTr(e);
 }
 
 /** Bir mecranın (envanter yazımıyla) Türkiye toplamı — örn. "LUNA" → 140 */

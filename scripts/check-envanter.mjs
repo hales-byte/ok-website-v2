@@ -56,8 +56,29 @@ if (nufussuz.length) console.log("  Eksik:", nufussuz.map((i) => i.il).join(", "
 
 const ERISIM_KATSAYISI = 0.960465; // src/data/envanter.ts ile aynı — değişirse ikisini birden güncelle
 const nufusToplam = iller.reduce((s, i) => s + (nufus[i.il] ?? 0), 0);
-const erisim = Math.round(nufusToplam * ERISIM_KATSAYISI);
-console.log(`ℹ Nüfus toplamı: ${nufusToplam.toLocaleString("tr-TR")} → aylık erişim: ${erisim.toLocaleString("tr-TR")} (${(erisim / 1e6).toLocaleString("tr-TR", { maximumFractionDigits: 1 })}M)`);
+// Global erişim = Σ per-il erişim (sitedeki tek türetim); aggregate ise round(Σnüfus×K).
+const perIlErisim = iller.reduce(
+  (s, i) => s + (nufus[i.il] !== undefined ? Math.round(nufus[i.il] * ERISIM_KATSAYISI) : 0),
+  0
+);
+const aggErisim = Math.round(nufusToplam * ERISIM_KATSAYISI);
+// Σ getIlErisim(45) ile getAylikErisim() aynı kaynaktan türer; iki formül
+// yuvarlama toleransında (±il sayısı) örtüşmeli — biri bayatlarsa yakalanır.
+check(
+  "Σ per-il erişim == global erişim (±il sayısı tolerans)",
+  Math.abs(perIlErisim - aggErisim) <= iller.length,
+  true
+);
+console.log(`ℹ Nüfus toplamı: ${nufusToplam.toLocaleString("tr-TR")} → aylık erişim (Σ per-il): ${perIlErisim.toLocaleString("tr-TR")} (${(perIlErisim / 1e6).toLocaleString("tr-TR", { maximumFractionDigits: 1 })}M)`);
+
+// ── Stub uyarısı (bilgi amaçlı, başarısız ETMEZ) ──
+// toplam ≤ 3 olan iller büyük olasılıkla eksik/placeholder envanter (örn. tek
+// havalimanı LED'i). İl sayfası revizyonunda bunlar bölge sayfasında toplanır;
+// gerçek veri girilince buradan düşerler.
+const stublar = iller.filter((i) => i.toplam <= 3).sort((a, b) => a.toplam - b.toplam);
+if (stublar.length) {
+  console.log(`ℹ Düşük envanter (toplam ≤ 3) ${stublar.length} il — muhtemel eksik veri: ${stublar.map((i) => `${i.il}(${i.toplam})`).join(", ")}`);
+}
 
 if (fail > 0) { console.error(`\n${fail} kontrol BAŞARISIZ`); process.exit(1); }
 console.log("\nTüm kontroller geçti — envanter.json tutarlı.");

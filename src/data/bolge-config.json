@@ -1,0 +1,43 @@
+{
+  "_not": "İl sayfası render kararı — envanter.json'a DOKUNMAZ (45 il/36.703 aynen durur). Sadece hangi ilin tek başına sayfa olacağını (standalone) ve hangisinin bölge sayfasında toplanıp 301 alacağını belirler. bolgeler.ts + next.config.ts bu dosyayı okur (tek kaynak).",
+  "bolgeler": [
+    { "ad": "Marmara", "slug": "marmara" },
+    { "ad": "Ege", "slug": "ege" },
+    { "ad": "Akdeniz", "slug": "akdeniz" },
+    { "ad": "İç Anadolu", "slug": "ic-anadolu" },
+    { "ad": "Karadeniz", "slug": "karadeniz" },
+    { "ad": "Doğu Anadolu", "slug": "dogu-anadolu" },
+    { "ad": "Güneydoğu Anadolu", "slug": "guneydogu-anadolu" }
+  ],
+  "standalone": [
+    "ankara", "gaziantep", "mersin", "balikesir", "adana", "tekirdag",
+    "erzurum", "eskisehir", "diyarbakir", "trabzon", "sakarya", "samsun",
+    "van", "kars", "hatay", "aydin", "batman", "denizli", "agri", "malatya",
+    "rize", "ordu"
+  ],
+  "movedToBolge": {
+    "kocaeli": "marmara",
+    "kirklareli": "marmara",
+    "bilecik": "marmara",
+    "canakkale": "marmara",
+    "izmir": "ege",
+    "afyonkarahisar": "ege",
+    "usak": "ege",
+    "osmaniye": "akdeniz",
+    "yozgat": "ic-anadolu",
+    "sivas": "ic-anadolu",
+    "karabuk": "karadeniz",
+    "zonguldak": "karadeniz",
+    "duzce": "karadeniz",
+    "bayburt": "karadeniz",
+    "artvin": "karadeniz",
+    "tokat": "karadeniz",
+    "amasya": "karadeniz",
+    "elazig": "dogu-anadolu",
+    "erzincan": "dogu-anadolu",
+    "igdir": "dogu-anadolu",
+    "ardahan": "dogu-anadolu",
+    "adiyaman": "guneydogu-anadolu",
+    "kilis": "guneydogu-anadolu"
+  }
+}

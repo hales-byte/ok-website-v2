@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowRight, MapPin, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import {
-  getIller,
   getIl,
   getFormatlarByIl,
   formatAdi,
@@ -12,9 +11,16 @@ import {
   sayiTr,
   slugifyTr,
   lokatifEk,
-  ilSirasi,
+  getIlErisimEtiketi,
   TOPLAM,
 } from "@/src/data/envanter";
+import { getIlAciklama } from "@/src/data/content/il-aciklama";
+import { getIlSSS } from "@/src/data/content/il-sss";
+import { FAQ } from "@/components/FAQ";
+import { getStandaloneIller, bolgeOfIl } from "@/src/data/bolgeler";
+import { getKomsuIller, getIlMecraSayfalari } from "./il-derive";
+import { IlIcLinkler } from "./IlIcLinkler";
+import { IlSchema } from "./IlSchema";
 
 /**
  * Bilinmeyen parametreler için GERÇEK 404 (Next 16 akışlı metadata,
@@ -23,9 +29,11 @@ import {
  */
 export const dynamicParams = false;
 
-// Build time'da envanter.json'daki 45 ilin hepsi için statik sayfa üret
+// Build time'da SADECE 22 standalone il için statik sayfa üret; taşınan 23 il
+// bölge sayfasına 301'lenir (next.config.ts). dynamicParams=false → gerisi 404
+// olmaz çünkü redirect routing'den önce çalışır.
 export function generateStaticParams() {
-  return getIller().map((il) => ({ slug: slugifyTr(il.il) }));
+  return getStandaloneIller().map((il) => ({ slug: slugifyTr(il.il) }));
 }
 
 // Her sayfa için dinamik SEO metadata — rakamlar envanter.json'dan
@@ -46,7 +54,7 @@ export async function generateMetadata({
   const mecraSayisi = Object.keys(il.formatlar).length;
   return {
     title: `${il.il} Açıkhava Reklam — ${sayiTr(il.toplam)} Reklam Ünitesi`,
-    description: `${il.il}${lokatifEk(il.il)} ${sayiTr(il.toplam)} reklam ünitesi, ${mecraSayisi} mecra türü: billboard, CLP, megalight ve dijital açıkhava çözümleri. Hızlı teklif, profesyonel takip.`,
+    description: `${il.il}${lokatifEk(il.il)} ${sayiTr(il.toplam)} reklam ünitesi, ${mecraSayisi} mecra türü: billboard, CLP, megalight ve dijital açıkhava çözümleri. Aylık ${getIlErisimEtiketi(slug)} erişim. Hızlı teklif, profesyonel takip.`,
     alternates: {
       canonical: `https://objektifkriter.com.tr/sehir/${slug}`,
     },
@@ -75,13 +83,33 @@ export default async function SehirPage({
   const ek = lokatifEk(sehir);
   const formatlar = getFormatlarByIl(slug);
   const mecraSayisi = formatlar.length;
-  const sira = ilSirasi(slug);
+  const erisimEtiket = getIlErisimEtiketi(slug);
+  const aciklama = getIlAciklama(slug);
+  const sssMaddeler = getIlSSS(slug);
+  const komsular = getKomsuIller(slug, 4);
+  const mecraSayfalari = getIlMecraSayfalari(slug, 2);
+  const bolge = bolgeOfIl(slug);
+  const teklifHref = `/teklif-al?sehir=${encodeURIComponent(sehir)}`;
 
   return (
     <>
+      <IlSchema slug={slug} sssMaddeler={sssMaddeler} />
+
       {/* HERO */}
       <section className="pt-24 pb-16 border-b border-[var(--color-border-subtle)]">
         <div className="container-narrow">
+          <nav className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-6">
+            <Link href="/" className="hover:text-[var(--color-primary)] transition-colors">
+              Ana sayfa
+            </Link>
+            <ChevronRight size={14} />
+            <Link href="/envanter" className="hover:text-[var(--color-primary)] transition-colors">
+              Envanter
+            </Link>
+            <ChevronRight size={14} />
+            <span className="text-[var(--color-text-secondary)]">{sehir}</span>
+          </nav>
+
           <div className="max-w-3xl space-y-6">
             <div className="flex items-center gap-2 text-sm uppercase tracking-widest text-[var(--color-primary)] font-medium">
               <MapPin size={16} />
@@ -92,15 +120,13 @@ export default async function SehirPage({
               {ek} Açıkhava Reklam
             </h1>
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
-              {sehir}{ek} {sayiTr(il.toplam)} reklam ünitesi ile markanızı
-              şehrin doğru noktalarında konumlandırın. {mecraSayisi} farklı
-              mecra türünden oluşan envanterimiz kampanyanız için hazır.
+              {aciklama}
             </p>
           </div>
         </div>
       </section>
 
-      {/* SAYAÇ */}
+      {/* SAYAÇ — ünite · mecra türü · aylık erişim */}
       <section className="border-y border-[var(--color-border-subtle)] bg-[var(--color-surface)]">
         <div className="container-narrow py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -122,10 +148,10 @@ export default async function SehirPage({
             </div>
             <div className="text-center md:text-left">
               <div className="text-5xl md:text-6xl font-bold text-gradient">
-                #{sira}
+                {erisimEtiket}
               </div>
               <div className="mt-2 text-sm uppercase tracking-widest text-[var(--color-text-muted)]">
-                {TOPLAM.il} İllik Ağdaki Sırası
+                Aylık Erişim
               </div>
             </div>
           </div>
@@ -180,7 +206,7 @@ export default async function SehirPage({
         </div>
       </section>
 
-      {/* İLÇE / BÖLGELER */}
+      {/* İLÇE / KAPSAMA */}
       {il.ilceler.length > 0 && (
         <section className="py-20 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/30">
           <div className="container-narrow">
@@ -209,7 +235,33 @@ export default async function SehirPage({
         </section>
       )}
 
-      {/* CTA */}
+      {/* SSS — verinden üretilen ile özel sorular */}
+      {sssMaddeler.length > 0 && (
+        <section className="py-24 border-t border-[var(--color-border-subtle)]">
+          <div className="container-narrow">
+            <div className="max-w-2xl mb-10">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
+                SSS
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+                {sehir} açıkhava reklam — sık sorulanlar
+              </h2>
+            </div>
+            <FAQ maddeler={sssMaddeler} />
+          </div>
+        </section>
+      )}
+
+      {/* İÇ LİNKLER — komşu iller + mecra sayfaları */}
+      <IlIcLinkler
+        sehir={sehir}
+        slug={slug}
+        komsular={komsular}
+        mecraSayfalari={mecraSayfalari}
+        bolge={bolge}
+      />
+
+      {/* CTA — il etiketli teklif */}
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
           <div className="max-w-3xl mx-auto text-center space-y-8">
@@ -218,18 +270,21 @@ export default async function SehirPage({
               <span className="text-gradient">teklif</span> alın
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
-              Hedefinize ve bütçenize uygun lokasyonları 15 dakika içinde
-              önerelim.
+              Hedefinize ve bütçenize uygun {sehir} lokasyonlarını 15 dakika
+              içinde önerelim.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Link href="/teklif-al" className="btn-primary">
-                Teklif Al
+              <Link href={teklifHref} className="btn-primary">
+                {sehir} için teklif al
                 <ArrowRight size={18} />
               </Link>
-              <Link href="/hizmetler" className="btn-secondary">
-                Formatları İncele
+              <Link href="/envanter" className="btn-secondary">
+                Tüm envanteri gör
               </Link>
             </div>
+            <p className="text-xs text-[var(--color-text-muted)]">
+              {TOPLAM.il} ilde {sayiTr(TOPLAM.unite)} reklam ünitesi.
+            </p>
           </div>
         </div>
       </section>

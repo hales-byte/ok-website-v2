@@ -15,6 +15,7 @@ import {
   slugifyTr,
   lokatifEk,
 } from "@/src/data/envanter";
+import { isStandalone } from "@/src/data/bolgeler";
 
 /**
  * SAYFA ÜRETİM KURALI (SEO ince içerik önlemi):
@@ -30,7 +31,11 @@ import {
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getKombinasyonlar().map(({ slug, format }) => ({ slug, format }));
+  // Sadece 22 standalone ilin format sayfaları üretilir; taşınan illerin
+  // /sehir/<il>/<format> adresleri next.config.ts'te bölgeye 301'lenir.
+  return getKombinasyonlar()
+    .filter(({ slug }) => isStandalone(slug))
+    .map(({ slug, format }) => ({ slug, format }));
 }
 
 /** Aynı şehirde sayfası olan diğer formatlar (iç linkleme) */
@@ -49,10 +54,11 @@ function getAyniSehirDigerFormatlar(slug: string, mevcutFormat: string) {
     .sort((a, b) => b.adet - a.adet);
 }
 
-/** Aynı format diğer şehirlerde (orphan sayfa önlemi) */
+/** Aynı format diğer şehirlerde (orphan sayfa önlemi) — sadece standalone iller
+ *  (taşınan illerin format sayfası yok, 301 olur; link vermeyiz). */
 function getAyniFormatDigerSehirler(formatKey: string, mevcutSlug: string, limit = 9) {
   return getIllerByFormat(formatKey)
-    .filter((x) => x.slug !== mevcutSlug && x.adet >= MIN_FORMAT_PAGE_UNITE)
+    .filter((x) => x.slug !== mevcutSlug && x.adet >= MIN_FORMAT_PAGE_UNITE && isStandalone(x.slug))
     .slice(0, limit);
 }
 
