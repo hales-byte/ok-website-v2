@@ -119,6 +119,37 @@ const nextConfig: NextConfig = {
     ];
     return [...eskiler, ...tasinan, ...hukuki, ...esikAltiRedirects(standalone)];
   },
+  // Güvenlik başlıkları + CSP (şimdilik Report-Only: tarayıcı ihlalleri sadece
+  // raporlar, engellemez — bir sonraki pakette güvenle enforce'a çevrilecek).
+  async headers() {
+    const csp = [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self'",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data:",
+      "style-src 'self' 'unsafe-inline'",
+      "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+      "connect-src 'self' https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+      "upgrade-insecure-requests",
+    ].join("; ");
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "X-DNS-Prefetch-Control", value: "on" },
+          { key: "Content-Security-Policy-Report-Only", value: csp },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

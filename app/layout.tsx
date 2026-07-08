@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -134,6 +135,7 @@ export default function RootLayout({
             }),
           }}
         />
+        <SpeedInsights />
       </body>
     </html>
   );
