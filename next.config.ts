@@ -119,8 +119,8 @@ const nextConfig: NextConfig = {
     ];
     return [...eskiler, ...tasinan, ...hukuki, ...esikAltiRedirects(standalone)];
   },
-  // Güvenlik başlıkları + CSP (şimdilik Report-Only: tarayıcı ihlalleri sadece
-  // raporlar, engellemez — bir sonraki pakette güvenle enforce'a çevrilecek).
+  // Güvenlik başlıkları + CSP (enforce: Report-Only'de canlıda temiz raporladıktan
+  // sonra zorunlu moda alındı — direktif string'i birebir korundu).
   async headers() {
     const csp = [
       "default-src 'self'",
@@ -145,7 +145,7 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "X-DNS-Prefetch-Control", value: "on" },
-          { key: "Content-Security-Policy-Report-Only", value: csp },
+          { key: "Content-Security-Policy", value: csp },
         ],
       },
     ];
