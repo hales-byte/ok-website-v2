@@ -14,6 +14,18 @@
 
 ---
 
+### 2026-07-08 — Yayın: Güvenlik başlıkları + Speed Insights canlıya alındı
+**Ne yapıldı:** Onayınla güvenlik paketi kaydedilip yayına alındı. Canlı sitede kontrol edildi: altı güvenlik başlığı da geliyor, güvenlik politikası (rapor modunda) çalışıyor ve kendi kaynaklarımızın hiçbiri bu politikayı ihlal etmiyor (tertemiz); ayrıca yerelde görülen hız-ölçüm aracı hatası canlıda kayboldu (araç artık düzgün yükleniyor). Küçük teknik not: koda push atınca çıkan otomatik ön-izleme şifre korumalı olduğu için kontrol edilemiyordu; bu yüzden yayını üretim adresine aldım (gerçek alan adı etkilenmez, DNS hâlâ Tufan'da bekliyor).
+**Neden:** Güvenlik ayarlarının gerçekten canlıda çalıştığını kanıtlamak.
+**Ne işe yaradı:** Site artık standart güvenlik başlıklarıyla ve rapor-modundaki güvenlik politikasıyla canlı; hız ölçümü de bağlı. Senden iki işlem: Vercel panelinden Speed Insights'ı "Enable" etmen ve alt alan adlarının HTTPS olduğunu Tufan'ın teyit etmesi.
+**Sırada:** Güvenlik politikasını bir sonraki pakette "rapor"dan "engelle" moduna çevirme (ayrı iş).
+
+### 2026-07-08 — Vercel-launch: Güvenlik başlıkları + izleme (Speed Insights)
+**Ne yapıldı:** Siteye tarayıcı güvenliği için standart koruma başlıkları eklendi (ör. sitenin başka sitelere iframe içinde gömülmesini engelleme, tarayıcıyı hep HTTPS'e zorlama, dosya türü kandırmasını kapatma, kamera/mikrofon/konum izinlerini varsayılan kapalı yapma). Ayrıca bir "İçerik Güvenliği Politikası" eklendi ama **şimdilik sadece rapor modunda** — yani hiçbir şeyi engellemiyor, sadece "şu kaynak kurala takılırdı" diye kayıt tutuyor; böylece bir sonraki adımda tam korumaya geçmeden önce neyin takılacağını güvenle görebiliyoruz. Kendi test taramamızda kendi kaynaklarımızın hiçbiri kurala takılmadı (temiz). Bir de sayfa hız ölçümü aracı (Vercel Speed Insights) siteye bağlandı; gerçek ziyaretçilerin sayfa açılış hızını ölçüp panelde gösterecek.
+**Neden:** Yayına çıkmadan önce sitenin güvenlik hijyenini standart seviyeye çekmek ve gerçek kullanıcı hız verisini toplamaya başlamak.
+**Ne işe yaradı:** Site artık güvenlik başlıklarıyla geliyor (test edildi, hepsi görünüyor); güvenlik politikası rapor modunda sorunsuz; hız ölçümü kod tarafında hazır. **Yayına almak için onayın bekleniyor.** Senden iki küçük işlem: Vercel panelinden Speed Insights'ı "Enable" etmen (birkaç ziyaret sonra veri gelir) ve alt alan adlarının hepsinin HTTPS olduğunu Tufan'ın teyit etmesi.
+**Sırada:** Onayınla yayına alma → bir sonraki pakette güvenlik politikasını "rapor"dan "engelle" moduna çevirme.
+
 ### 2026-07-08 — Yayın: İl/bölge metinleri ve site düzeltmeleri canlıya alındı
 **Ne yapıldı:** Onayınla içerik paketi (22 il + 7 bölge tanıtım metni + site geneli 7 düzeltme) kaydedilip yayına alındı. Canlı sitede kontrol edildi: şehir/bölge metinleri görünüyor, Ankara metni doğru (envanterde olmayan noktalar çıkmış), Ajanslar sayfası 15 dakika ve 20 mecra gösteriyor, baskı mesajı ve dil düzeltmeleri yerinde — hepsi beklendiği gibi. Özel alan adı (www.objektifkriter.com.tr) hâlâ DNS bağlanmayı bekliyor (Tufan); yayın teknik adres üzerinden çalışıyor.
 **Neden:** Değişikliğin canlıda gerçekten çalıştığından emin olmak.
