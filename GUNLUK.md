@@ -14,6 +14,18 @@
 
 ---
 
+### 2026-07-08 — Yayın: CSP koruması "engelle" modunda canlıya alındı
+**Ne yapıldı:** Onayınla güvenlik politikası "engelle" modunda yayına alındı. Canlı sitede kontrol edildi: koruma başlığı artık zorunlu modda geliyor, harita ve teklif formu dahil sayfalar sorunsuz açılıyor, engellenen hiçbir kaynak yok, hız-ölçüm aracı da canlıda düzgün çalışıyor. Yani gerçek koruma açıldı ve site normal çalışmaya devam ediyor.
+**Neden:** Rapor modunda temiz çıktıktan sonra asıl korumayı devreye almak için.
+**Ne işe yaradı:** Site artık tam CSP korumasıyla canlı; test ve canlı taramada tek bir engellenme çıkmadı. Güvenlik paketi (başlıklar + politika + hız ölçümü) tamamlandı.
+**Sırada:** Özel bir sonraki iş yok; DNS bağlanınca (Tufan) alan adından genel son kontrol.
+
+### 2026-07-08 — CSP enforce: Güvenlik politikası "engelle" moduna alındı (test)
+**Ne yapıldı:** Geçen adımda "rapor modunda" eklenen içerik güvenlik politikası, artık gerçekten koruyacak şekilde "engelle" moduna alındı — yani izin verilmeyen bir kaynak yüklenmeye çalışırsa tarayıcı onu bloklar. Politikanın içeriği hiç değiştirilmedi (rapor modunda temiz çıkmıştı, aynen korundu); sadece "sadece raporla" ayarı "engelle"ye çevrildi. Sonra sitenin yedi farklı sayfa türü (ana sayfa, şehir, bölge, envanter/harita, şehir-format, hukuki sayfa, teklif formu) tek tek açılıp kontrol edildi: hiçbirinde politikaya takılan/engellenen bir şey çıkmadı — fontlar, görseller, harita, form hepsi sorunsuz. Yani koruma açıldığında site normal çalışıyor.
+**Neden:** Rapor modu sadece uyarır; asıl koruma "engelle" modunda başlar. Açmadan önce hiçbir şeyin kırılmadığından emin olmak için geniş test yapıldı.
+**Ne işe yaradı:** Site artık gerçek CSP korumasıyla çalışacak durumda; test taramasında tek bir sorun bile çıkmadı. **Yayına almak için onayın bekleniyor** (henüz kaydedilmedi).
+**Sırada:** Onayınla yayına alma ve canlıda son bir kontrol.
+
 ### 2026-07-08 — Yayın: Güvenlik başlıkları + Speed Insights canlıya alındı
 **Ne yapıldı:** Onayınla güvenlik paketi kaydedilip yayına alındı. Canlı sitede kontrol edildi: altı güvenlik başlığı da geliyor, güvenlik politikası (rapor modunda) çalışıyor ve kendi kaynaklarımızın hiçbiri bu politikayı ihlal etmiyor (tertemiz); ayrıca yerelde görülen hız-ölçüm aracı hatası canlıda kayboldu (araç artık düzgün yükleniyor). Küçük teknik not: koda push atınca çıkan otomatik ön-izleme şifre korumalı olduğu için kontrol edilemiyordu; bu yüzden yayını üretim adresine aldım (gerçek alan adı etkilenmez, DNS hâlâ Tufan'da bekliyor).
 **Neden:** Güvenlik ayarlarının gerçekten canlıda çalıştığını kanıtlamak.
