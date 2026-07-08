@@ -46,7 +46,7 @@ export function getIlSSS(slug: string): SSSMaddesi[] {
     },
     {
       soru: `${sehir} kampanyası için teklifi ne kadar sürede alırım?`,
-      cevap: `Teklif formundan ${sehir}'i seçip bütçe ve hedefinizi bırakın; satış uzmanımız 15 dakika içinde ${sehir} özelinde lokasyon planı ve teklifle döner.`,
+      cevap: `Teklif formunda hedef ilinizi seçip bütçe ve hedefinizi bırakın; satış uzmanımız 15 dakika içinde ${sehir} özelinde lokasyon planı ve teklifle döner.`,
     },
   ];
 

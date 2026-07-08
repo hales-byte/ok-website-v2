@@ -57,7 +57,7 @@ const surec = [
   {
     num: "01",
     title: "Sizi dinleyelim",
-    desc: "Hedefinizi, hedef kitlenizi ve mesajınızı anlıyoruz, ihtiyacınızı netleştiriyoruz. İlk açıkhava kampanyanız mı? Sıfırdan birlikte planlayalım. Reklam Ajansı mısınız?",
+    desc: "Hedefinizi, hedef kitlenizi ve mesajınızı anlıyoruz, ihtiyacınızı netleştiriyoruz. İlk açıkhava kampanyanız mı, yoksa reklam ajansı mısınız — ikisinde de sıfırdan birlikte planlıyoruz.",
   },
   {
     num: "02",
@@ -67,7 +67,7 @@ const surec = [
   {
     num: "03",
     title: "Mesajınızı Taşıyalım",
-    desc: "Tasarım, baskı ve lojistik süreçlerini biz yönetiyoruz.",
+    desc: "Asım, montaj ve lojistiği biz yönetiyoruz; baskı için sizi doğru merkeze yönlendiriyor, gerektiğinde süreci de üstleniyoruz.",
   },
   {
     num: "04",

@@ -16,6 +16,14 @@ export const metadata: Metadata = {
   title: "İlk Açıkhava Kampanyanız",
   description:
     "İlk açıkhava reklamınız mı? Brief'inizi olmasa da olur. Şeffaf fiyat, anlaşılır süreç, sıcak destek — birlikte planlayalım.",
+  alternates: { canonical: "https://objektifkriter.com.tr/ilk-kampanyaniz" },
+  openGraph: {
+    title: "İlk Açıkhava Kampanyanız — Objektif Kriter",
+    description:
+      "İlk açıkhava reklamınız mı? Şeffaf fiyat, anlaşılır süreç, sıcak destek — birlikte planlayalım.",
+    url: "https://objektifkriter.com.tr/ilk-kampanyaniz",
+    type: "website",
+  },
 };
 
 const endiseler = [
@@ -44,8 +52,8 @@ const adimlar = [
   },
   {
     num: "03",
-    title: "Üretim ve asım",
-    desc: "Tasarım yardıma ihtiyacınız varsa onda da yanınızdayız. Baskıdan asıma kadar süreç bizde — siz işinizle ilgilenin.",
+    title: "Asım ve takip",
+    desc: "Tasarıma yardım gerekiyorsa onda da yanınızdayız. Baskıyı genelde iyi baskı merkezlerine yönlendiriyoruz; asım ve foto-raporlu takip bizde, gerektiğinde baskıyı da üstleniyoruz — siz işinizle ilgilenin.",
   },
   {
     num: "04",
@@ -215,7 +223,7 @@ export default function IlkKampanyanizPage() {
                 Süreç
               </div>
               <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                Baskı yapmıyor olabiliriz ama işinde iyi baskı merkezleri sizin için listeleyebiliriz
+                Baskıyı genelde iyi baskı merkezlerine yönlendiriyoruz — asım ve takip bizde, gerektiğinde baskıyı da üstleniriz
               </h2>
             </div>
           </ScrollReveal>

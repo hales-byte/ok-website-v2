@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   title: "Hizmetlerimiz",
   description:
     `Billboard, CLP, megalight, LED, giantboard, pole banner, totem ve havalimanı reklamları — ${TOPLAM.mecra} mecra türü içinden ana formatlarla markanız için doğru çözüm.`,
+  alternates: { canonical: "https://objektifkriter.com.tr/hizmetler" },
+  openGraph: {
+    title: "Hizmetlerimiz — Objektif Kriter",
+    description: `Billboard, CLP, megalight, LED, pole banner ve daha fazlası — ${TOPLAM.mecra} mecra türüyle markanız için doğru açıkhava çözümü.`,
+    url: "https://objektifkriter.com.tr/hizmetler",
+    type: "website",
+  },
 };
 
 export default function HizmetlerPage() {

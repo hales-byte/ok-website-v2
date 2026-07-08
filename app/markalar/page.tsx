@@ -25,6 +25,13 @@ export const metadata: Metadata = {
   title: "Markalar İçin OOH Reklam Çözümleri",
   description:
     `Kurumsal markalar için Türkiye geneli OOH planlama. Stratejik medya, raporlanabilir kampanyalar, sektörel deneyim. ${TOPLAM.il} ilde ${sayiTr(TOPLAM.unite)} reklam ünitesi.`,
+  alternates: { canonical: "https://objektifkriter.com.tr/markalar" },
+  openGraph: {
+    title: "Markalar İçin OOH Reklam Çözümleri — Objektif Kriter",
+    description: `Kurumsal markalar için Türkiye geneli OOH planlama; ${TOPLAM.il} ilde ${sayiTr(TOPLAM.unite)} reklam ünitesi, raporlanabilir kampanyalar.`,
+    url: "https://objektifkriter.com.tr/markalar",
+    type: "website",
+  },
 };
 
 function getStats() {

@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   title: "Hakkımızda",
   description:
     "Objektif Kriter — Türkiye genelinde aktif lokasyonlar ve binlerce reklam yüzü ile OOH reklam çözümleri sunan lokasyon odaklı bir ajans.",
+  alternates: { canonical: "https://objektifkriter.com.tr/hakkimizda" },
+  openGraph: {
+    title: "Hakkımızda — Objektif Kriter",
+    description:
+      "Türkiye genelinde aktif lokasyonlar ve binlerce reklam yüzüyle OOH reklam çözümleri sunan lokasyon odaklı bir ajans.",
+    url: "https://objektifkriter.com.tr/hakkimizda",
+    type: "website",
+  },
 };
 
 function getStats() {
@@ -98,7 +106,7 @@ export default async function HakkimizdaPage() {
                 </div>
                 <p className="text-2xl md:text-3xl leading-relaxed text-[var(--color-text-primary)] font-medium">
                   Out-of-home reklam, doğru lokasyonda doğru mesajla{" "}
-                  <span className="text-gradient">tek bir baskıdan</span>{" "}
+                  <span className="text-gradient">tek bir fikirden</span>{" "}
                   kampanyanın tamamına dönüşür.
                 </p>
                 <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed">

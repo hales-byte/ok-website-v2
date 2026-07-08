@@ -21,6 +21,14 @@ export const metadata: Metadata = {
   title: "Reklam Ajansları İçin OOH Tedarikçi",
   description:
     "Brief'iniz 15 dakikada teklife dönüşsün. Ajanslar için Türkiye geneli OOH envanter, white-label raporlama, ajansa özel koşullar ve hızlı teslimat.",
+  alternates: { canonical: "https://objektifkriter.com.tr/ajanslar" },
+  openGraph: {
+    title: "Reklam Ajansları İçin OOH Tedarikçi — Objektif Kriter",
+    description:
+      "Brief'iniz 15 dakikada teklife dönüşsün. Türkiye geneli OOH envanter, white-label raporlama ve ajansa özel koşullar.",
+    url: "https://objektifkriter.com.tr/ajanslar",
+    type: "website",
+  },
 };
 
 function getStats() {
@@ -95,8 +103,8 @@ export default async function AjanslarPage() {
               </h1>
               <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed max-w-3xl">
                 Ajanslar için Türkiye geneli OOH tedariki — hızlı geri dönüş,
-                esnek satın alma, white-label raporlama. Müşterinize teklifle
-                gitmek için partneriniz, müşteriniz arkasında değil.
+                esnek satın alma, white-label raporlama. Müşteri ilişkisi
+                sizde kalır; biz araya girmeyiz.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-4">
                 <BriefModal triggerClassName="btn-primary" />
@@ -149,7 +157,7 @@ export default async function AjanslarPage() {
             <ScrollReveal direction="up" delay={240}>
               <div>
                 <div className="text-3xl md:text-5xl font-bold text-gradient">
-                  30
+                  15
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
                   Dakika Yanıt
@@ -159,10 +167,10 @@ export default async function AjanslarPage() {
             <ScrollReveal direction="up" delay={360}>
               <div>
                 <div className="text-3xl md:text-5xl font-bold text-gradient">
-                  8
+                  {TOPLAM.mecra}
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Format Seçeneği
+                  Mecra Türü
                 </div>
               </div>
             </ScrollReveal>

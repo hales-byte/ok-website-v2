@@ -36,7 +36,7 @@ export const SSS_LISTESI: SSSMaddesi[] = [
   {
     soru: "Üretim (baskı) ve uygulama dahil mi?",
     cevap:
-      "Evet — açıkhava sürecinin tamamını biz yönetiyoruz. Tüm mecralar için kreatif uyarlama, baskı/üretim, montaj ve uygulama hizmetlerini tek paket olarak sunuyoruz. Sadece tasarımınızı (PDF, AI veya katmanlı PSD) gönderin; gerisini biz halledelim.",
+      "Açıkhava sürecinin planlama, montaj/asım, uygulama ve foto-raporlu takip kısmını uçtan uca biz yönetiyoruz. Baskıyı genellikle güvenilir baskı merkezlerine yönlendiriyoruz; talep ederseniz nadiren de olsa baskıyı da üstleniyoruz. Kreatif uyarlamada ve doğru baskı için yönlendirmede yanınızdayız — siz tasarımınızı verin, gerisini birlikte çözelim.",
   },
   {
     soru: "Kampanya sırasında raporlama alabilir miyim?",

@@ -7,6 +7,14 @@ export const metadata: Metadata = {
   title: "İletişim",
   description:
     "Objektif Kriter ile iletişime geçin. OOH reklam kampanyalarınız için 15 dakika içinde dönüş yapıyoruz.",
+  alternates: { canonical: "https://objektifkriter.com.tr/iletisim" },
+  openGraph: {
+    title: "İletişim — Objektif Kriter",
+    description:
+      "OOH reklam kampanyalarınız için bize ulaşın; mesai içinde 15 dakikada dönüş yapıyoruz.",
+    url: "https://objektifkriter.com.tr/iletisim",
+    type: "website",
+  },
 };
 
 function getStats() {
