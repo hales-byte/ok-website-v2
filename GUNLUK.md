@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-08 — Yayın: İl sayfaları revizyonu canlıya alındı
+**Ne yapıldı:** Onayınla iki paket (şehir sayfası zenginleştirme + 22 güçlü şehir / 7 bölge revizyonu) tek seferde kaydedilip yayına alındı. Yayın sonrası canlı sitede tek tek kontrol edildi: güçlü şehir sayfaları açılıyor, küçük iller bölge sayfasına düzgün yönleniyor, bölge sayfaları dolu görünüyor, site haritası (Google'a verilen adres listesi) doğru — hepsi beklendiği gibi.
+**Neden:** Değişikliğin gerçekten canlıda çalıştığından emin olmak; sonradan sürpriz çıkmasın.
+**Ne işe yaradı:** Site artık 22 güçlü şehir + 7 bölge sayfasıyla canlı; hiçbir eski adres kırılmıyor. Küçük bir hatırlatma: özel alan adı (www.objektifkriter.com.tr) hâlâ bu yeni sisteme bağlanmayı bekliyor (DNS ayarı Tufan'da) — o bağlanınca ziyaretçi doğrudan alan adından da bu sayfaları görecek; şu an teknik adres üzerinden yayında ve çalışıyor.
+**Sırada:** DNS bağlanınca alan adından son kontrol → İzmir/Kocaeli gerçek envanterini girme → il/bölge tanıtım metinlerini doldurma.
+
 ### 2026-07-08 — T-il-revizyon: Güçlü 22 şehir sayfası + 7 bölge sayfası
 **Ne yapıldı:** Şehir sayfalarını iki gruba ayırdık. Envanteri güçlü **22 il** (Ankara, Gaziantep, Mersin, Adana, İzmir'in aksine dolu olanlar…) kendi zengin sayfası olarak kaldı. Envanteri az olan **23 küçük il** ise tek tek silinmek yerine, ait oldukları **7 coğrafi bölge sayfasında** (örn. objektifkriter.com.tr/bolge/ege) toplandı — böylece boş/zayıf sayfa kalmadı, her bölge sayfası birden çok ili topladığı için dolu ve güçlü. Kaldırılan illerin eski adresleri boşa düşmüyor: ziyaretçi ya da Google eski şehir linkine gelince **kalıcı olarak** ilgili bölge sayfasına yönlendiriliyor (örn. /sehir/izmir → /bolge/ege). Haritada bu illere tıklayınca da bölge sayfası açılıyor. Önemli bir incelik: İzmir ve Kocaeli gibi **çok aranan ama envanteri şu an eksik** iller ziyan olmasın diye, bölge sayfasında adlarıyla anılıp doğrudan "teklif al" formuna yönlendiriliyorlar — yani o talep yakalanıyor. Sitenin envanter verisine (45 il, 36.703 ünite) hiç dokunulmadı; sadece hangi ilin nasıl gösterildiği değişti.
 **Neden:** İçi neredeyse boş şehir sayfaları (bkz. İzmir = 1 ünite) hem Google'da zayıf görünüyor hem de ziyaretçiye kötü izlenim veriyordu. Küçük illeri bölge çatısı altında toplamak hem SEO'yu güçlendirir hem de siteyi daha derli toplu yapar. Eski linkleri yönlendirmek, birikmiş SEO değerini ve ziyaretçiyi kaybetmemek için şart.
