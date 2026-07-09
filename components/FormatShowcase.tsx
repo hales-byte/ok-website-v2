@@ -66,7 +66,7 @@ export function FormatShowcase() {
       <section
         ref={containerRef}
         className="relative hidden lg:block bg-[var(--color-surface)]/40 border-t border-b border-[var(--color-border-subtle)]"
-        style={{ height: `${FORMATLAR.length * 90}vh` }}
+        style={{ height: `${FORMATLAR.length * 55}vh` }}
         aria-label="Reklam üniteleri showcase"
       >
         <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden py-12">
@@ -107,7 +107,7 @@ export function FormatShowcase() {
                   return (
                     <div
                       key={format.key}
-                      className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+                      className="absolute inset-0 transition-opacity duration-300 ease-in-out"
                       style={{ opacity: i === activeIndex ? 1 : 0 }}
                     >
                       {format.image ? (
@@ -139,8 +139,12 @@ export function FormatShowcase() {
                 })}
               </div>
 
-              {/* TEXT - right (animated key for fade-in on change) */}
-              <div key={active.key} className="space-y-5 animate-textReveal">
+              {/* TEXT - right. NOT: key vermiyoruz — key değişince panel
+                  remount olup bir an opacity:0'a düşüyordu (boş panel). Key'siz
+                  içerik yerinde güncellenir, panel HEP DOLU kalır; geçiş hissini
+                  soldaki görsel crossfade + üstteki progress dot'lar verir.
+                  animate-textReveal yalnız ilk yüklemede oynar. */}
+              <div className="space-y-5 animate-textReveal">
                 <div className="flex items-center gap-4">
                   <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] font-mono">
                     {String(activeIndex + 1).padStart(2, "0")} /{" "}

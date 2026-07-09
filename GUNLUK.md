@@ -14,6 +14,18 @@
 
 ---
 
+### 2026-07-08 — G8: Ana sayfa cila (beliriş, mecra vitrini, footer)
+**Ne yapıldı:** Ana sayfada 8 Temmuz tasarım denetiminde çıkan pürüzler giderildi. (1) Hızlı kaydırışta bazı bölümler bir an boş beliriyordu (istatistikler, logo duvarı, SSS); beliriş mekanizması içerik daha erken ve daha hızlı görünecek biçimde ayarlandı ve "hiç tetiklenmezse bile asla boş kalmasın" güvenliği eklendi. (2) Mecra vitrininde "Billboard" adımının ikonu boş bir kareye benziyordu → billboard biçiminde bir ikonla değiştirildi. (3) Adımlar arası geçişte sağdaki yazı paneli bir an tamamen boşalıyordu → artık hep dolu kalıyor. (4) "Havalimanı LED" adımında yanlış görsel göründüğü söylenmişti; görselin kendisi aslında doğru (havalimanı ekranı), sorun görselin metnin gerisinde kalıp yavaş değişmesiydi — geçiş hızlandırıldı, artık başlıkla görsel aynı anda değişiyor. (5) İkincil rötuşlar: küçük etiket başlıklarının rengi biraz koyulaştırıldı (okunurluk), istatistik rakamlarının açık cyan tonu bir tık koyulaştırıldı, footer'daki sosyal ikon ve linklerin mobil dokunma alanı büyütüldü (masaüstü görünüm korunarak).
+**Neden:** Bu pürüzler siteyi "bitmemiş" gösteriyordu; küçük ama görünür kalite sorunları.
+**Ne işe yaradı:** Ana sayfa artık hızlı kaydırışta bile boş bölüm göstermiyor, mecra vitrini ikon/görsel/panel açısından tutarlı, mobil footer'a basmak kolaylaştı. Tarayıcıda tek tek test edildi. **Yayına almak için onayın bekleniyor.** Bir de senin kararını isteyen bir konu var: mecra vitrini bölümü çok uzun kaydırma yutuyor + mobilde dokunmatik riski; bunun için 2 yeniden-tasarım seçeneği sundum (kod yazmadım, aşağıda).
+**Sırada:** Onayınla yayına alma → mecra vitrini yeniden-tasarım kararı.
+
+### 2026-07-09 — G8.1: Mecra vitrini kaydırması kısaltıldı (Seçenek A)
+**Ne yapıldı:** Önceki adımda sunduğum iki seçenekten **A**'yı onayladın: mecra vitrini bölümü, baştan sona geçmek için gereken kaydırmayı yaklaşık **%40 azaltacak** şekilde kısaltıldı (her mecra adımı için ayrılan yükseklik düşürüldü). 8 mecra ve geçiş efekti aynen korundu; ilk (Billboard) ve son (Havalimanı LED) adım tam görünüyor, kırpılma yok, panel hâlâ hep dolu, mobil düz liste etkilenmedi. Tarayıcıda tek tek doğrulandı.
+**Neden:** Vitrin tek başına çok fazla kaydırma yutuyordu; kısaltınca sayfa daha akıcı geziliyor.
+**Ne işe yaradı:** Ana sayfada mecra vitrinini geçmek artık belirgin biçimde daha kısa ve akıcı. Tüm G8 cila paketi tamamlandı. **Yayına almak için "commit + yayınla" onayın bekleniyor** (onayınla hepsi tek seferde kaydedilip yayına alınacak).
+**Sırada:** Onayınla tüm G8'i tek commit + yayın.
+
 ### 2026-07-08 — Yayın: CSP koruması "engelle" modunda canlıya alındı
 **Ne yapıldı:** Onayınla güvenlik politikası "engelle" modunda yayına alındı. Canlı sitede kontrol edildi: koruma başlığı artık zorunlu modda geliyor, harita ve teklif formu dahil sayfalar sorunsuz açılıyor, engellenen hiçbir kaynak yok, hız-ölçüm aracı da canlıda düzgün çalışıyor. Yani gerçek koruma açıldı ve site normal çalışmaya devam ediyor.
 **Neden:** Rapor modunda temiz çıktıktan sonra asıl korumayı devreye almak için.

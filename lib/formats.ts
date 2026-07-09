@@ -8,7 +8,7 @@
  */
 
 import {
-  Square,
+  RectangleHorizontal,
   Smartphone,
   Monitor,
   Tv,
@@ -55,7 +55,7 @@ export const FORMATLAR: FormatMeta[] = [
       "Şehirlerarası ve şehiriçi kapsama",
     ],
     useCases: "Marka bilinirliği, ürün lansmanı, sezonluk kampanyalar",
-    icon: Square,
+    icon: RectangleHorizontal,
     image: "billboard",
   },
   {

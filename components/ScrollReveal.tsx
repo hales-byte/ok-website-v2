@@ -39,7 +39,7 @@ export function ScrollReveal({
   children,
   direction = "up",
   delay = 0,
-  duration = 700,
+  duration = 500,
   className = "",
   once = true,
   priority = false,
@@ -55,6 +55,13 @@ export function ScrollReveal({
     const node = ref.current;
     if (!node) return;
 
+    // Güvenlik: IntersectionObserver yoksa içeriği doğrudan göster (asla
+    // opacity:0'da takılı kalmasın).
+    if (typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -65,12 +72,25 @@ export function ScrollReveal({
         }
       },
       {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px",
+        // İçerik daha erken belirsin: ilk pikselde tetikle + görüş alanının
+        // %15 altındaki öğeleri de kapsayan pozitif rootMargin → hızlı
+        // kaydırışta bölüm görünmeden önce dolmuş olur.
+        threshold: 0,
+        rootMargin: "0px 0px 15% 0px",
       }
     );
 
     observer.observe(node);
+
+    // Güvenlik ağı: gözlemci başlarken öğe zaten görüş alanında ya da
+    // yukarı kaydırılıp geçilmişse hemen göster (çok hızlı kaydırışta
+    // gözlemcinin async tetiklemesini beklemeden boş kalmayı önler).
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setVisible(true);
+      if (once) observer.unobserve(node);
+    }
+
     return () => observer.disconnect();
   }, [once, prefersReducedMotion, priority]);
 

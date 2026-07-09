@@ -95,12 +95,12 @@ export function Footer() {
               outdoor reklam çözümleri. Markanızı doğru yerde, doğru zamanda
               gösterin.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-1 md:gap-4">
               <a
                 href="https://wa.me/905529185864?text=Merhaba%2C%20Objektif%20Kriter%20web%20sitesi%20%C3%BCzerinden%20yaz%C4%B1yorum."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
+                className="inline-flex items-center justify-center w-11 h-11 md:w-auto md:h-auto text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
                 aria-label="WhatsApp"
               >
                 <WhatsAppIcon size={20} />
@@ -109,7 +109,7 @@ export function Footer() {
                 href="https://www.linkedin.com/company/objektifkriter/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
+                className="inline-flex items-center justify-center w-11 h-11 md:w-auto md:h-auto text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
                 aria-label="LinkedIn"
               >
                 <LinkedinIcon size={20} />
@@ -118,7 +118,7 @@ export function Footer() {
                 href="https://www.instagram.com/objektifkriter/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
+                className="inline-flex items-center justify-center w-11 h-11 md:w-auto md:h-auto text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
                 aria-label="Instagram"
               >
                 <InstagramIcon size={20} />
@@ -136,7 +136,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                    className="block py-3 md:py-0 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -155,7 +155,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                    className="block py-3 md:py-0 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -206,7 +206,7 @@ export function Footer() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
+                  className="inline-flex items-center min-h-11 md:min-h-0 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
                 >
                   {link.label}
                 </Link>
