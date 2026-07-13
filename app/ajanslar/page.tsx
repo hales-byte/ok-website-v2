@@ -63,7 +63,7 @@ const briefSteps = [
   {
     num: "01",
     title: "Brief'i bize gönder",
-    desc: "Form veya WhatsApp — sektör, şehir, format, süre, bütçe. Format şablonumuz yoksa serbest metin de yeterli.",
+    desc: "Form veya WhatsApp — sektör, şehir, mecra, süre, bütçe. Şablonunuz yoksa serbest metin de yeterli.",
   },
   {
     num: "02",
@@ -73,7 +73,7 @@ const briefSteps = [
   {
     num: "03",
     title: "Teklif size döner",
-    desc: "Lokasyon listesi (harita ile), kapsama özeti, fiyat, üretim takvimi. Müşterinize sunabileceğiniz formatta.",
+    desc: "Lokasyon listesi (harita ile), kapsama özeti, fiyat, üretim takvimi. Müşterinize sunabileceğiniz biçimde.",
   },
   {
     num: "04",

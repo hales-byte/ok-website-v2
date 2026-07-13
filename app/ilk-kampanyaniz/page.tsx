@@ -48,7 +48,7 @@ const adimlar = [
   {
     num: "02",
     title: "Birlikte plan çıkaralım",
-    desc: "Şehir mi, mahalle mi, hangi format mantıklı, kaç gün, neye dikkat — birlikte değerlendiriyoruz. Kararı siz veriyorsunuz.",
+    desc: "Şehir mi, mahalle mi, hangi mecra mantıklı, kaç gün, neye dikkat — birlikte değerlendiriyoruz. Kararı siz veriyorsunuz.",
   },
   {
     num: "03",
@@ -77,8 +77,8 @@ const fiyatBant = [
   },
   {
     range: "40K+ TL",
-    title: "Çoklu şehir / format kombinasyonu",
-    desc: "Birden fazla şehirde ve formatta kampanya. Markanızı bölgesel/ulusal düzeye çıkartıyoruz.",
+    title: "Çoklu şehir / mecra kombinasyonu",
+    desc: "Birden fazla şehirde ve mecrada kampanya. Markanızı bölgesel/ulusal düzeye çıkartıyoruz.",
     examples: "E-ticaret kampanyası, sezonluk lansman, marka konsolidasyon",
   },
 ];

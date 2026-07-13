@@ -303,3 +303,16 @@ export function getFormatToplam(envanterAd: string): number {
     0
   );
 }
+
+/**
+ * Bir mecranın (envanter.json'daki adıyla) bulunduğu iller — adede göre sıralı.
+ * /mecralar sayfasındaki "hangi şehirlerde" bilgisi buradan türetilir.
+ */
+export function getFormatIller(
+  envanterAd: string
+): Array<{ il: string; adet: number }> {
+  return ENVANTER.iller
+    .map((il) => ({ il: il.il, adet: il.formatlar[envanterAd] ?? 0 }))
+    .filter((x) => x.adet > 0)
+    .sort((a, b) => b.adet - a.adet);
+}

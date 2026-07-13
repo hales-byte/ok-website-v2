@@ -1,26 +1,30 @@
 /**
- * +12 EK MECRA — ana sayfadaki "20 mecranın tamamı" grid'inin içeriği (G4b).
- * Kural: metin koda gömülmez; adetler envanter.json'dan otomatik türetilir
- * (envanterAd alanı üzerinden getFormatToplam ile).
- * Dönem etiketleri saha envanterindeki asım dönemlerinden derlendi.
+ * DİĞER MECRALARIMIZ — /mecralar sayfası + ana sayfa "Diğer mecralarımız"
+ * kartının içeriği. (Eski adı: ek-mecralar.ts / G4b grid'i.)
+ *
+ * Kurallar:
+ * - Metin koda gömülmez; adetler envanter.json'dan otomatik türetilir
+ *   (envanterAd alanı üzerinden getFormatToplam ile). Adedi 0 olan mecra
+ *   kendiliğinden gizlenir.
+ * - Sıra = gösterim sırası (güncel envanter ünite sayısına göre).
+ * - TANITIM KAPSAMI (Hakan kararı, 2026-07-12): Parapet, Süper LED Ekran,
+ *   Silindir Kule ve Prizma LED envanterde MEVCUTTUR ancak sitedeki tanıtım
+ *   akışında YER ALMAZ — bu listeye ekleme. Envanter verisine dokunulmaz.
+ * - Dönem etiketleri saha envanterindeki asım dönemlerinden derlendi.
  */
 
-export interface EkMecra {
+export interface DigerMecra {
   /** envanter.json'daki yazım — adet buradan türetilir */
   envanterAd: string;
   ad: string;
-  donem: string;
+  /** Asım dönemi etiketi (bilinmiyorsa boş bırakılır, rozet gizlenir) */
+  donem?: string;
   aciklama: string;
   /** public/images/formats/{gorsel}.jpg varsa kartta gösterilir */
   gorsel?: string;
 }
 
-export const EK_MECRALAR_BASLIK = {
-  ozet: "Ana formatların ötesinde 12 mecra daha — hepsi aynı envanterde, tek partnerden.",
-  butonAc: "12 mecrayı daha gör",
-};
-
-export const EK_MECRALAR: EkMecra[] = [
+export const DIGER_MECRALAR: DigerMecra[] = [
   {
     envanterAd: "ALINLIK",
     ad: "Alınlık",
@@ -46,22 +50,17 @@ export const EK_MECRALAR: EkMecra[] = [
     aciklama: "Çevre yolu ölçeğinde dev yüzey; günde on binlerce aracın görüş hattında kesintisiz görünürlük.",
   },
   {
+    envanterAd: "TRAMVAY KAPLAMA",
+    ad: "Tramvay Kaplama",
+    donem: "6 Ay / Yıl",
+    aciklama: "Şehrin içinden geçen hareketli reklam; hat boyunca her durakta yeni bir kitleyle buluşur.",
+    gorsel: "tramvay-kaplama",
+  },
+  {
     envanterAd: "BIGBOARD",
     ad: "Bigboard",
     donem: "Hafta",
     aciklama: "Bulvar kenarında geniş tek parça yüzey; yaya ve araç trafiğine aynı anda konuşur.",
-  },
-  {
-    envanterAd: "KULEBOARD",
-    ad: "Kuleboard",
-    donem: "Hafta / Ay",
-    aciklama: "Yüksek kolon üstünde kavşaklara hükmeden pano; kilometrelerce öteden ilk görülen yüz.",
-  },
-  {
-    envanterAd: "PARAPET",
-    ad: "Parapet",
-    donem: "Hafta",
-    aciklama: "Orta refüj hattı boyunca tekrarlanan paneller; iki yönün trafiğine aynı mesajı ritimle işler.",
   },
   {
     envanterAd: "RAKET LED",
@@ -70,23 +69,16 @@ export const EK_MECRALAR: EkMecra[] = [
     aciklama: "Yaya caddelerinde dikey dijital ekran; gündüz bile parlak, içerik anında güncellenebilir.",
   },
   {
-    envanterAd: "PRİZMA LED",
-    ad: "Prizma LED",
-    donem: "Hafta",
-    aciklama: "Dönen üç yüzüyle tek noktadan üç kampanya; kavşakta bekleyen gözlerin hareketli odağı.",
+    envanterAd: "TOTEM",
+    ad: "Totem",
+    aciklama: "Tek yüksek direk üzerinde içten aydınlatmalı kutu pano; AVM ve işletme girişleri ile ana arterlerde, gökyüzüne karşı çok uzaktan okunur.",
+    gorsel: "totem",
   },
   {
-    envanterAd: "SÜPER LED EKRAN",
-    ad: "Süper LED Ekran",
-    donem: "Hafta",
-    aciklama: "Meydanlara hükmeden dev dijital yüzey; şehrin en kalabalık anlarında en parlak sahne.",
-  },
-  {
-    envanterAd: "TRAMVAY KAPLAMA",
-    ad: "Tramvay Kaplama",
-    donem: "6 Ay / Yıl",
-    aciklama: "Şehrin içinden geçen hareketli reklam; hat boyunca her durakta yeni bir kitleyle buluşur.",
-    gorsel: "tramvay-kaplama",
+    envanterAd: "KULEBOARD",
+    ad: "Kuleboard",
+    donem: "Hafta / Ay",
+    aciklama: "Yüksek kolon üstünde kavşaklara hükmeden pano; kilometrelerce öteden ilk görülen yüz.",
   },
   {
     envanterAd: "OTOBÜS KAPLAMA",

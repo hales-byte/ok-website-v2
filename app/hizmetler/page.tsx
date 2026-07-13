@@ -4,17 +4,17 @@ import { ArrowRight, Check, Clock } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { TOPLAM } from "@/src/data/envanter";
 import type { Metadata } from "next";
-import { FORMATLAR } from "@/lib/formats";
+import { ANA_MECRALAR, HAVALIMANI_LED } from "@/lib/formats";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Hizmetlerimiz",
   description:
-    `Billboard, CLP, megalight, LED, giantboard, pole banner, totem ve havalimanı reklamları — ${TOPLAM.mecra} mecra türü içinden ana formatlarla markanız için doğru çözüm.`,
+    `CLP, billboard, pole banner, megalight, LED ve giantboard — ${TOPLAM.mecra} mecra türü içinden ana mecralarla markanız için doğru açıkhava çözümü.`,
   alternates: { canonical: "https://objektifkriter.com.tr/hizmetler" },
   openGraph: {
     title: "Hizmetlerimiz — Objektif Kriter",
-    description: `Billboard, CLP, megalight, LED, pole banner ve daha fazlası — ${TOPLAM.mecra} mecra türüyle markanız için doğru açıkhava çözümü.`,
+    description: `CLP, billboard, pole banner, megalight, LED ve giantboard — ${TOPLAM.mecra} mecra türüyle markanız için doğru açıkhava çözümü.`,
     url: "https://objektifkriter.com.tr/hizmetler",
     type: "website",
   },
@@ -33,11 +33,11 @@ export default function HizmetlerPage() {
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight">
                 Markanız için{" "}
-                <span className="text-gradient">{FORMATLAR.length} ana format</span>
+                <span className="text-gradient">{ANA_MECRALAR.length} ana mecra</span>
               </h1>
               <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
-                Klasik billboard&apos;dan dijital LED&apos;e, premium havalimanı
-                ekranından yaya seviyesindeki CLP&apos;ye kadar — kampanyanız için
+                Yaya seviyesindeki CLP&apos;den otoyol billboard&apos;una, cadde boyu
+                pole banner&apos;dan dijital LED&apos;e kadar — kampanyanız için
                 doğru görünürlüğü birlikte buluyoruz. Toplam {TOPLAM.mecra} mecra türünün tamamı tek envanterde.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
@@ -67,7 +67,7 @@ export default function HizmetlerPage() {
       <section className="py-8 sticky top-[73px] z-40 backdrop-blur-md bg-[var(--color-bg)]/85 border-b border-[var(--color-border-subtle)]">
         <div className="container-narrow">
           <div className="flex flex-wrap gap-2 md:gap-3">
-            {FORMATLAR.map((format) => (
+            {ANA_MECRALAR.map((format) => (
               <Link
                 key={format.key}
                 href={`#${format.key}`}
@@ -76,13 +76,26 @@ export default function HizmetlerPage() {
                 {format.name}
               </Link>
             ))}
+            <Link
+              href="#havalimani"
+              className="text-xs md:text-sm px-3 py-1.5 rounded-full border border-[var(--color-border-subtle)] text-[var(--color-text-secondary)] hover:border-[var(--color-primary)]/40 hover:text-[var(--color-primary)] transition-colors"
+            >
+              {HAVALIMANI_LED.name}
+            </Link>
+            <Link
+              href="/mecralar"
+              className="text-xs md:text-sm px-3 py-1.5 rounded-full border border-[var(--color-primary)]/40 text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 transition-colors inline-flex items-center gap-1.5"
+            >
+              Diğer mecralar
+              <ArrowRight size={13} />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* FORMAT BÖLÜMLERI - Apple tarzi buyuk gorsellerle */}
+      {/* MECRA BÖLÜMLERI - Apple tarzi buyuk gorsellerle */}
       <div className="divide-y divide-[var(--color-border-subtle)]">
-        {FORMATLAR.map((format, index) => {
+        {ANA_MECRALAR.map((format, index) => {
           const Icon = format.icon;
           const reverse = index % 2 === 1;
 
@@ -141,7 +154,7 @@ export default function HizmetlerPage() {
                           <Icon size={24} className="text-[var(--color-primary)]" />
                         </div>
                         <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] font-mono">
-                          Format {String(index + 1).padStart(2, "0")}
+                          Mecra {String(index + 1).padStart(2, "0")}
                         </div>
                       </div>
 
@@ -205,6 +218,76 @@ export default function HizmetlerPage() {
                     </div>
                   </ScrollReveal>
                 </div>
+
+                {/* HAVALİMANI LED — ayrı mecra değil, LED & Dijital ailesinin
+                    premium alt bölümü (Hakan kararı, 2026-07-12). Eski
+                    #havalimani çapaları buraya iner. */}
+                {format.key === "led" && (
+                  <ScrollReveal direction="up" delay={150} duration={900}>
+                    <div
+                      id="havalimani"
+                      className="mt-14 scroll-mt-32 rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)]/60 p-6 md:p-10"
+                    >
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div className="space-y-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center">
+                              <HAVALIMANI_LED.icon
+                                size={24}
+                                className="text-[var(--color-primary)]"
+                              />
+                            </div>
+                            <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] font-mono">
+                              LED &amp; Dijital ailesinin premium yüzü
+                            </div>
+                          </div>
+                          <h3 className="text-2xl md:text-3xl font-bold leading-tight">
+                            {HAVALIMANI_LED.name}
+                          </h3>
+                          <p className="text-base text-[var(--color-text-secondary)] leading-relaxed">
+                            {HAVALIMANI_LED.description}
+                          </p>
+                          <p className="text-xs text-[var(--color-text-muted)]">
+                            Tipik kullanım:{" "}
+                            <span className="text-[var(--color-text-primary)]">
+                              {HAVALIMANI_LED.useCases}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="space-y-4">
+                          <ul className="space-y-2">
+                            {HAVALIMANI_LED.benefits.map((benefit) => (
+                              <li key={benefit} className="flex items-start gap-3">
+                                <div className="mt-1 w-5 h-5 rounded-full bg-[var(--color-primary)]/15 flex items-center justify-center shrink-0">
+                                  <Check
+                                    size={12}
+                                    className="text-[var(--color-primary)]"
+                                  />
+                                </div>
+                                <span className="text-sm text-[var(--color-text-primary)] leading-relaxed">
+                                  {benefit}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="pt-1 flex flex-wrap items-center gap-x-5 gap-y-2">
+                            <Link
+                              href="/teklif-al?format=led"
+                              className="btn-primary text-sm py-2.5 px-5"
+                            >
+                              {HAVALIMANI_LED.name} fiyatı sor
+                              <ArrowRight size={16} />
+                            </Link>
+                          </div>
+                          <p className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
+                            <Clock size={11} aria-hidden="true" />
+                            15 dakika içinde yanıt
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                )}
               </div>
             </section>
           );
@@ -217,10 +300,10 @@ export default function HizmetlerPage() {
           <ScrollReveal direction="up">
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                Hangi format kampanyanıza uyar?
+                Hangi mecra kampanyanıza uyar?
               </h2>
               <p className="text-lg text-[var(--color-text-secondary)]">
-                Hedefinizi ve bütçenizi paylaşın, size en uygun format ve
+                Hedefinizi ve bütçenizi paylaşın, size en uygun mecra ve
                 lokasyon kombinasyonunu önerelim. İlk açıkhava kampanyanız mı,
                 yoksa süregelen bir strateji mi — Brief&apos;iniz olsun olmasın,
                 doğru kombinasyonu birlikte buluyoruz.

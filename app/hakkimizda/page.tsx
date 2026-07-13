@@ -88,7 +88,7 @@ export default async function HakkimizdaPage() {
               <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
                 Objektif Kriter, Türkiye genelinde OOH reklam çözümleri sunan
                 lokasyon odaklı bir ajans. Markanın hangi lokasyonda, hangi
-                formatta görünmesi gerektiğine veri ile karar veriyoruz.
+                mecrada görünmesi gerektiğine veri ile karar veriyoruz.
               </p>
             </div>
           </ScrollReveal>

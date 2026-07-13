@@ -1,7 +1,10 @@
 /**
- * Tüm site genelinde kullanılan OOH format meta bilgileri.
- * Yeni format eklemek için: bu dosyaya yeni FormatMeta objesi ekle,
- * görselini public/images/formats/ klasörüne koy, hepsi otomatik güncellenir.
+ * Tüm site genelinde kullanılan ANA MECRA meta bilgileri.
+ * Sıra = sitedeki gösterim sırası (Hakan kararı, 2026-07-12):
+ * CLP → Billboard → Pole Banner → Megalight → LED & Dijital → Giantboard.
+ * Ana liste dışındaki tanıtılan mecralar: src/data/content/diger-mecralar.ts
+ * (Havalimanı LED ayrı mecra değildir; LED & Dijital'in alt bölümü olarak
+ * hizmetler sayfasında anlatılır — HAVALIMANI_LED export'u oradan kullanılır.)
 
  * FİYAT KARARI (Hakan, 2026-07-06): Sitede fiyat GÖSTERİLMEZ — "15 dakikada
  * teklif" hattı esastır. Bu dosyaya fiyat alanı ekleme.
@@ -15,12 +18,11 @@ import {
   Maximize2,
   Flag,
   Plane,
-  Layers,
   type LucideIcon,
 } from "lucide-react";
 
 export interface FormatMeta {
-  /** URL slug ve database format_kategori değeri */
+  /** URL slug ve teklif formu mecra key değeri */
   key: string;
   /** Kullanıcıya gösterilen ad */
   name: string;
@@ -40,7 +42,25 @@ export interface FormatMeta {
   image: string | null;
 }
 
-export const FORMATLAR: FormatMeta[] = [
+export const ANA_MECRALAR: FormatMeta[] = [
+  {
+    key: "clp",
+    name: "CLP / Raket",
+    shortDesc: "Şehir merkezleri ve duraklarda",
+    tagline: "Şehir merkezleri ve duraklarda yaya trafiğine yönelik",
+    description:
+      "Dikey, aydınlatmalı reklam paneli. Genellikle otobüs duraklarında ve şehir merkezlerindeki yoğun yaya bölgelerinde bulunur. Bekleyen ve yürüyen kitleye doğrudan ulaşır.",
+    benefits: [
+      "Yüksek frekans, tekrarlı temas",
+      "Yaya seviyesinde okunabilirlik",
+      "Gece/gündüz aydınlatmalı",
+      "Premium şehir merkezi konumları",
+    ],
+    useCases:
+      "Lokal işletmeler, perakende, hizmet sektörü, kentsel kampanyalar",
+    icon: Smartphone,
+    image: "clp",
+  },
   {
     key: "billboard",
     name: "Billboard",
@@ -59,22 +79,21 @@ export const FORMATLAR: FormatMeta[] = [
     image: "billboard",
   },
   {
-    key: "clp",
-    name: "CLP / Raket",
-    shortDesc: "Şehir merkezleri ve duraklarda",
-    tagline: "Şehir merkezleri ve duraklarda yaya trafiğine yönelik",
+    key: "pole-banner",
+    name: "Pole Banner",
+    shortDesc: "Cadde ve bulvar boyunca",
+    tagline: "Cadde ve bulvar boyunca tekrarlı görünürlük",
     description:
-      "Dikey, aydınlatmalı reklam paneli. Genellikle otobüs duraklarında ve şehir merkezlerindeki yoğun yaya bölgelerinde bulunur. Bekleyen ve yürüyen kitleye doğrudan ulaşır.",
+      "Cadde ve bulvarlardaki aydınlatma direklerine asılan dikey banner reklamlar. Genellikle bir kampanya kapsamında onlarca direkte tekrar eden mesajla uygulanır.",
     benefits: [
-      "Yüksek frekans, tekrarlı temas",
-      "Yaya seviyesinde okunabilirlik",
-      "Gece/gündüz aydınlatmalı",
-      "Premium şehir merkezi konumları",
+      "Tekrar etkisiyle güçlü hatırlatma",
+      "Cadde boyunca süreklilik",
+      "Ekonomik yüksek görünürlük",
+      "Kampanya teması ve atmosfer",
     ],
-    useCases:
-      "Lokal işletmeler, perakende, hizmet sektörü, kentsel kampanyalar",
-    icon: Smartphone,
-    image: "clp",
+    useCases: "Festival ve etkinlikler, kentsel kampanyalar, perakende temaları",
+    icon: Flag,
+    image: "pole-banner",
   },
   {
     key: "megalight",
@@ -127,83 +146,62 @@ export const FORMATLAR: FormatMeta[] = [
     icon: Maximize2,
     image: "giantboard",
   },
-  {
-    key: "pole-banner",
-    name: "Pole Banner",
-    shortDesc: "Cadde ve bulvar boyunca",
-    tagline: "Cadde ve bulvar boyunca tekrarlı görünürlük",
-    description:
-      "Cadde ve bulvarlardaki aydınlatma direklerine asılan dikey banner reklamlar. Genellikle bir kampanya kapsamında onlarca direkte tekrar eden mesajla uygulanır.",
-    benefits: [
-      "Tekrar etkisiyle güçlü hatırlatma",
-      "Cadde boyunca süreklilik",
-      "Ekonomik yüksek görünürlük",
-      "Kampanya teması ve atmosfer",
-    ],
-    useCases: "Festival ve etkinlikler, kentsel kampanyalar, perakende temaları",
-    icon: Flag,
-    image: "pole-banner",
-  },
-  {
-    key: "totem",
-    name: "Totem",
-    shortDesc: "Direk üstünde, uzaktan görünen ışıklı kutu pano",
-    tagline: "İşletme önleri ve ana arterlerin yüksekten konuşan yüzü",
-    description:
-      "Tek yüksek direk üzerinde konumlanan, içten aydınlatmalı kutu pano. AVM ve market girişleri, bayi önleri, ana arterler ile şehir giriş-çıkışlarında kullanılır; gökyüzüne karşı okunduğu için yoldan çok uzaktan fark edilir.",
-    benefits: [
-      "Yüksek konum sayesinde uzun mesafeden okunabilirlik",
-      "İşletme girişleri ve arter kenarlarında stratejik konum",
-      "İçten aydınlatma ile gece-gündüz kesintisiz görünürlük",
-      "Çift yüzlü kullanımla iki yönlü trafiğe temas",
-    ],
-    useCases: "OSB tanıtımları, AVM çevre kampanyaları, bölgesel markalar",
-    icon: Layers,
-    image: "totem",
-  },
-  {
-    key: "havalimani",
-    name: "Havalimanı LED",
-    shortDesc: "Premium kitleye doğrudan erişim",
-    tagline: "Premium kitleye doğrudan erişim",
-    description:
-      "Havalimanlarındaki check-in, gümrük ve gate noktalarında yer alan dijital ekranlar. Bekleyen yolcular, yüksek dikkat süresi ve premium demografiyle birleşir.",
-    benefits: [
-      "Yüksek gelirli, premium kitle",
-      "Uluslararası seyahat eden tüketici",
-      "Uzun bekleme sürelerinde maruziyet",
-      "Prestijli, kurumsal konum",
-    ],
-    useCases: "Premium markalar, lüks tüketim, finans, B2B, otomotiv",
-    icon: Plane,
-    image: "havalimani",
-  },
 ];
 
 /**
- * Yardımcı: key ile format meta'yı bul
+ * Havalimanı LED — ayrı bir mecra türü değil; LED & Dijital ailesinin
+ * premium alt bölümü olarak hizmetler sayfasında anlatılır.
+ */
+export const HAVALIMANI_LED: FormatMeta = {
+  key: "havalimani",
+  name: "Havalimanı LED",
+  shortDesc: "Premium kitleye doğrudan erişim",
+  tagline: "Premium kitleye doğrudan erişim",
+  description:
+    "Havalimanlarındaki check-in, gümrük ve gate noktalarında yer alan dijital ekranlar. Bekleyen yolcular, yüksek dikkat süresi ve premium demografiyle birleşir.",
+  benefits: [
+    "Yüksek gelirli, premium kitle",
+    "Uluslararası seyahat eden tüketici",
+    "Uzun bekleme sürelerinde maruziyet",
+    "Prestijli, kurumsal konum",
+  ],
+  useCases: "Premium markalar, lüks tüketim, finans, B2B, otomotiv",
+  icon: Plane,
+  image: "havalimani",
+};
+
+/**
+ * Yardımcı: key ile ana mecra meta'sını bul.
+ * (Teklif formu prefill doğrulaması da bunu kullanır — ana listede olmayan
+ * key'ler prefill edilmez, form 6 ana mecra + "öneri istiyorum" ile ilerler.)
  */
 export function getFormatByKey(key: string): FormatMeta | undefined {
-  return FORMATLAR.find((f) => f.key === key);
+  return ANA_MECRALAR.find((f) => f.key === key);
 }
 
 /**
- * Yardımcı: format URL'inde kullanılan slug
+ * Yardımcı: mecra URL'inde kullanılan slug
  */
 export function getFormatSlug(key: string): string {
   return key; // Şu an aynı, gelecekte değişebilir
 }
 
+/** Eski linklerden gelebilecek, ana listede olmayan key'lerin okunabilir adları */
+const LEGACY_KEY_LABELS: Record<string, string> = {
+  havalimani: "Havalimanı LED",
+  totem: "Totem",
+};
+
 /**
- * UI'da gösterilecek format etiketi.
- * `format_kategori = 'diger'` gibi FORMATLAR listesinde olmayan kayıtlar için
- * de okunabilir bir Türkçe karşılık döndürür.
+ * UI'da gösterilecek mecra etiketi.
+ * `format_kategori = 'diger'` gibi ANA_MECRALAR listesinde olmayan kayıtlar
+ * için de okunabilir bir Türkçe karşılık döndürür.
  */
 export function getFormatLabel(key: string): string {
   if (key === "diger") return "Diğer";
   const meta = getFormatByKey(key);
   if (meta) return meta.name;
+  if (LEGACY_KEY_LABELS[key]) return LEGACY_KEY_LABELS[key];
   // Bilinmeyen key'i temiz basmak için ilk harfi büyüt
   return key.charAt(0).toLocaleUpperCase("tr") + key.slice(1).toLocaleLowerCase("tr");
 }
-

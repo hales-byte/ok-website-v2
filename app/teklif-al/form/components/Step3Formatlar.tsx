@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Check, Sparkles } from "lucide-react";
 import type { FormState, FormAction } from "../types";
-import { FORMATLAR } from "@/lib/formats";
+import { ANA_MECRALAR } from "@/lib/formats";
 
 type Step3FormatlarProps = {
   state: FormState;
@@ -13,7 +13,7 @@ type Step3FormatlarProps = {
 export function Step3Formatlar({ state, dispatch }: Step3FormatlarProps) {
   return (
     <div className="space-y-8">
-      {/* FORMAT KARTLARI */}
+      {/* MECRA KARTLARI */}
       <div className={state.oneriIstiyor ? "opacity-40 pointer-events-none" : ""}>
         <div className="flex items-center justify-between mb-4">
           <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
@@ -27,7 +27,7 @@ export function Step3Formatlar({ state, dispatch }: Step3FormatlarProps) {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {FORMATLAR.map((format) => {
+          {ANA_MECRALAR.map((format) => {
             const Icon = format.icon;
             const isSelected = state.formatlar.includes(format.key);
 

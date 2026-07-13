@@ -144,7 +144,7 @@ export function BriefModal({
                       Envanter seçerek ilerlemek istiyorum
                     </div>
                     <div className="text-xs text-[var(--color-text-secondary)] leading-relaxed mb-4">
-                      6 adımlı form ile şehir, format, bütçe ve süreyi
+                      6 adımlı form ile şehir, mecra, bütçe ve süreyi
                       birlikte netleştirelim.
                     </div>
                     <div className="flex items-center gap-1 text-xs font-medium text-[var(--color-primary-deep)] opacity-0 group-hover:opacity-100 transition-opacity">

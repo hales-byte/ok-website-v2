@@ -43,12 +43,12 @@ const valueProps = [
   {
     icon: MapPin,
     title: "Türkiye geneli kapsam",
-    desc: "Marmara'dan Doğu Anadolu'ya 45 ilde aktif lokasyon. Tier-1 illerin yanında tier-2 ve tier-3 şehirlerde de varız — markanızın izi metropolün dışına da çıkar.",
+    desc: `Marmara'dan Doğu Anadolu'ya ${TOPLAM.il} ilde aktif lokasyon. Tier-1 illerin yanında tier-2 ve tier-3 şehirlerde de varız — markanızın izi metropolün dışına da çıkar.`,
   },
   {
     icon: Layers,
     title: "Stratejik medya planlaması",
-    desc: "Format kombinasyonu (billboard + CLP + LED) ile farklı temas noktalarında frekans kuruyoruz. Tek format yerine optimal mix.",
+    desc: "Mecra kombinasyonu (billboard + CLP + LED) ile farklı temas noktalarında frekans kuruyoruz. Tek mecra yerine optimal karışım.",
   },
   {
     icon: ShieldCheck,
@@ -66,7 +66,7 @@ const sureclar = [
   {
     num: "02",
     title: "Lokasyon planı",
-    desc: "Demografik veri, trafik yoğunluğu ve sektörel deneyimle birleşen şehir-format kombinasyonu. Tahmin değil, kanıtlanabilir öneri.",
+    desc: "Demografik veri, trafik yoğunluğu ve sektörel deneyimle birleşen şehir-mecra kombinasyonu. Tahmin değil, kanıtlanabilir öneri.",
   },
   {
     num: "03",
@@ -144,10 +144,10 @@ export default async function MarkalarPage() {
             <ScrollReveal direction="up" delay={240}>
               <div>
                 <div className="text-4xl md:text-6xl font-bold text-gradient">
-                  8
+                  <CountUp end={TOPLAM.mecra} duration={1600} />
                 </div>
                 <div className="mt-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)]">
-                  Format Seçeneği
+                  Mecra Türü
                 </div>
               </div>
             </ScrollReveal>
@@ -246,7 +246,7 @@ export default async function MarkalarPage() {
                     {
                       kriter: "Şehir-bazlı detay sayfası",
                       tipik: "Yok",
-                      ok: "47 ayrı şehir sayfası, format dağılımı dahil",
+                      ok: `${TOPLAM.il} ilin tamamı için şehir/bölge sayfası, mecra dağılımı dahil`,
                       okIyi: true,
                     },
                     {
@@ -262,8 +262,8 @@ export default async function MarkalarPage() {
                       okIyi: true,
                     },
                     {
-                      kriter: "Format çeşitliliği",
-                      tipik: "Genelde 3-5 format",
+                      kriter: "Mecra çeşitliliği",
+                      tipik: "Genelde 3-5 mecra",
                       ok: `${TOPLAM.mecra} mecra türü (klasik + dijital + havalimanı)`,
                       okIyi: true,
                     },

@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: contentRev, changeFrequency: "weekly", priority: 1.0 },
     { url: `${BASE_URL}/hizmetler`, lastModified: contentRev, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE_URL}/mecralar`, lastModified: inventoryRev, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE_URL}/hakkimizda`, lastModified: contentRev, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/iletisim`, lastModified: contentRev, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/teklif-al`, lastModified: contentRev, changeFrequency: "monthly", priority: 0.9 },

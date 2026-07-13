@@ -9,7 +9,7 @@ import { getIl, getIlFormatAdet, sayiTr } from "@/src/data/envanter";
  * 2.946 yüz") rakip Wix sitelerinden anlamlı bir adım önde.
  */
 
-export const alt = "Şehir + format reklam çözümleri — Objektif Kriter";
+export const alt = "Şehir + mecra reklam çözümleri — Objektif Kriter";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

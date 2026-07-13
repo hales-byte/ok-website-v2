@@ -55,7 +55,7 @@ export function buildNotificationEmail(
     ? payload.sehirler.join(", ")
     : "—";
   const formatlarStr = state.oneriIstiyor
-    ? "Öneri istiyor (format seçilmedi)"
+    ? "Öneri istiyor (mecra seçilmedi)"
     : payload.formatlar.length
       ? payload.formatlar.join(", ")
       : "—";
@@ -122,7 +122,7 @@ export function buildNotificationEmail(
           <td style="padding:6px 0;">${esc(sehirlerStr)}</td>
         </tr>
         <tr>
-          <td style="padding:6px 0;color:#64748b;vertical-align:top;">Formatlar</td>
+          <td style="padding:6px 0;color:#64748b;vertical-align:top;">Mecralar</td>
           <td style="padding:6px 0;">${esc(formatlarStr)}</td>
         </tr>
         <tr>
@@ -172,7 +172,7 @@ export function buildNotificationEmail(
     "",
     "TALEP",
     `  Şehirler: ${sehirlerStr}`,
-    `  Formatlar: ${formatlarStr}`,
+    `  Mecralar: ${formatlarStr}`,
     `  Bütçe: ${butceStr}`,
     `  Zaman: ${zamanStr}`,
     "",

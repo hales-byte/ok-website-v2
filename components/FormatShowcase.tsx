@@ -3,15 +3,28 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, Clock } from "lucide-react";
-import { FORMATLAR } from "@/lib/formats";
-import { TOPLAM } from "@/src/data/envanter";
+import { ArrowRight, Check, Clock, LayoutGrid } from "lucide-react";
+import { ANA_MECRALAR } from "@/lib/formats";
+import { TOPLAM, getFormatToplam, sayiTr } from "@/src/data/envanter";
+import { DIGER_MECRALAR } from "@/src/data/content/diger-mecralar";
+import { DIGER_MECRA_SLIDE } from "@/src/data/content/mecralar";
 
 /**
  * Apple-tarzı sticky scroll showcase.
- * Desktop: ekrana yapışan blok, scroll ile format değişir.
+ * Desktop: ekrana yapışan blok, scroll ile mecra değişir.
  * Mobile: vertical liste fallback.
+ * Yapı (Hakan kararı, 2026-07-12): 6 ana mecra + 7. kart "Diğer mecralarımız"
+ * → /mecralar sayfasına gider. Eski "+12 mecra" akordeonu kaldırıldı.
  */
+
+/** Tanıtılan diğer mecralar — adet>0 olanlar, envanterden */
+const DIGER_TANITILAN = DIGER_MECRALAR.map((m) => ({
+  ...m,
+  adet: getFormatToplam(m.envanterAd),
+})).filter((m) => m.adet > 0);
+
+const TOPLAM_SLIDE = ANA_MECRALAR.length + 1; // 6 ana + Diğer kartı
+
 export function FormatShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,8 +53,8 @@ export function FormatShowcase() {
           Math.min(1, scrolledIntoSection / totalScrollableLength)
         );
         const newIndex = Math.min(
-          FORMATLAR.length - 1,
-          Math.floor(progress * FORMATLAR.length)
+          TOPLAM_SLIDE - 1,
+          Math.floor(progress * TOPLAM_SLIDE)
         );
 
         setActiveIndex(newIndex);
@@ -57,8 +70,10 @@ export function FormatShowcase() {
     };
   }, []);
 
-  const active = FORMATLAR[activeIndex];
-  const ActiveIcon = active.icon;
+  const isDigerActive = activeIndex >= ANA_MECRALAR.length;
+  const active = isDigerActive ? null : ANA_MECRALAR[activeIndex];
+  const ActiveIcon = active?.icon ?? LayoutGrid;
+  const digerOrnekler = DIGER_TANITILAN.slice(0, 3);
 
   return (
     <>
@@ -66,7 +81,7 @@ export function FormatShowcase() {
       <section
         ref={containerRef}
         className="relative hidden lg:block bg-[var(--color-surface)]/40 border-t border-b border-[var(--color-border-subtle)]"
-        style={{ height: `${FORMATLAR.length * 55}vh` }}
+        style={{ height: `${TOPLAM_SLIDE * 55}vh` }}
         aria-label="Reklam üniteleri showcase"
       >
         <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden py-12">
@@ -83,7 +98,7 @@ export function FormatShowcase() {
               </h2>
               {/* Progress dots */}
               <div className="flex justify-center gap-1.5">
-                {FORMATLAR.map((_, i) => (
+                {Array.from({ length: TOPLAM_SLIDE }).map((_, i) => (
                   <div
                     key={i}
                     className={`h-1 rounded-full transition-all duration-500 ${
@@ -102,7 +117,7 @@ export function FormatShowcase() {
             <div className="grid grid-cols-2 gap-12 xl:gap-16 items-center">
               {/* IMAGE - left, crossfade */}
               <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[var(--color-surface)] border border-[var(--color-border-subtle)] shadow-2xl">
-                {FORMATLAR.map((format, i) => {
+                {ANA_MECRALAR.map((format, i) => {
                   const Icon = format.icon;
                   return (
                     <div
@@ -137,6 +152,35 @@ export function FormatShowcase() {
                     </div>
                   );
                 })}
+                {/* Diğer mecralar kartı — görsel taraf */}
+                <div
+                  className="absolute inset-0 transition-opacity duration-300 ease-in-out"
+                  style={{ opacity: isDigerActive ? 1 : 0 }}
+                >
+                  <div className="w-full h-full bg-gradient-to-br from-[var(--color-primary)]/15 to-[var(--color-surface)] flex items-center justify-center">
+                    <div className="text-center space-y-5 p-8">
+                      <div className="w-20 h-20 mx-auto rounded-2xl bg-[var(--color-primary)]/15 flex items-center justify-center">
+                        <LayoutGrid
+                          size={40}
+                          className="text-[var(--color-primary)]"
+                        />
+                      </div>
+                      <div className="text-5xl font-bold text-gradient">
+                        +{DIGER_TANITILAN.length}
+                      </div>
+                      <div className="flex flex-wrap justify-center gap-2 max-w-sm mx-auto">
+                        {DIGER_TANITILAN.map((m) => (
+                          <span
+                            key={m.envanterAd}
+                            className="rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-bg)]/70 px-3 py-1 text-xs text-[var(--color-text-secondary)]"
+                          >
+                            {m.ad}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* TEXT - right. NOT: key vermiyoruz — key değişince panel
@@ -148,7 +192,7 @@ export function FormatShowcase() {
                 <div className="flex items-center gap-4">
                   <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] font-mono">
                     {String(activeIndex + 1).padStart(2, "0")} /{" "}
-                    {String(FORMATLAR.length).padStart(2, "0")}
+                    {String(TOPLAM_SLIDE).padStart(2, "0")}
                   </div>
                   <div className="h-px w-12 bg-[var(--color-border-subtle)]" />
                 </div>
@@ -162,28 +206,35 @@ export function FormatShowcase() {
 
                 <div className="space-y-2">
                   <h3 className="text-4xl xl:text-5xl font-bold leading-tight tracking-tight">
-                    {active.name}
+                    {active ? active.name : DIGER_MECRA_SLIDE.ad}
                   </h3>
                   <p className="text-lg text-[var(--color-primary-deep)] font-medium">
-                    {active.tagline}
+                    {active ? active.tagline : DIGER_MECRA_SLIDE.tagline}
                   </p>
                 </div>
 
                 <p className="text-base text-[var(--color-text-secondary)] leading-relaxed">
-                  {active.description}
+                  {active ? active.description : DIGER_MECRA_SLIDE.aciklama}
                 </p>
 
-                {/* Tipik kullanım — kim için uygun, format-segment eşleşmesi.
+                {/* Tipik kullanım — kim için uygun, mecra-segment eşleşmesi.
                  * Veri lib/formats.ts useCases. */}
-                <p className="text-xs text-[var(--color-text-muted)]">
-                  Tipik kullanım:{" "}
-                  <span className="text-[var(--color-text-secondary)]">
-                    {active.useCases}
-                  </span>
-                </p>
+                {active && (
+                  <p className="text-xs text-[var(--color-text-muted)]">
+                    Tipik kullanım:{" "}
+                    <span className="text-[var(--color-text-secondary)]">
+                      {active.useCases}
+                    </span>
+                  </p>
+                )}
 
                 <ul className="space-y-2 pt-1">
-                  {active.benefits.slice(0, 3).map((benefit) => (
+                  {(active
+                    ? active.benefits.slice(0, 3)
+                    : digerOrnekler.map(
+                        (m) => `${m.ad} — ${sayiTr(m.adet)} ünite`
+                      )
+                  ).map((benefit) => (
                     <li key={benefit} className="flex items-start gap-3">
                       <div className="mt-1 w-5 h-5 rounded-full bg-[var(--color-primary)]/15 flex items-center justify-center shrink-0">
                         <Check
@@ -199,27 +250,51 @@ export function FormatShowcase() {
                 </ul>
 
                 {/* CTA + 15 dakika sözü — fiyat bandı kaldırıldı, yerine
-                 * format-spesifik teklif yolu + hız sözü. Fade+Lift belirme
+                 * mecra-spesifik teklif yolu + hız sözü. Fade+Lift belirme
                  * animasyonu, panel textReveal'in üzerine 250ms/400ms gecikmeli.
                  * Reduced-motion globals.css'te override ediliyor. */}
                 <div className="pt-3 flex flex-wrap items-center gap-x-5 gap-y-2 animate-ctaReveal">
-                  <Link
-                    href={`/teklif-al?format=${active.key}`}
-                    className="btn-primary text-sm py-2.5 px-5"
-                  >
-                    {active.name} fiyatı sor
-                    <ArrowRight size={16} />
-                  </Link>
-                  <Link
-                    href={`/hizmetler#${active.key}`}
-                    className="text-sm text-[var(--color-primary-deep)] hover:text-[var(--color-primary-darker)] font-medium inline-flex items-center gap-2 group"
-                  >
-                    Detayları gör
-                    <ArrowRight
-                      size={14}
-                      className="group-hover:translate-x-1 transition-transform"
-                    />
-                  </Link>
+                  {active ? (
+                    <>
+                      <Link
+                        href={`/teklif-al?format=${active.key}`}
+                        className="btn-primary text-sm py-2.5 px-5"
+                      >
+                        {active.name} fiyatı sor
+                        <ArrowRight size={16} />
+                      </Link>
+                      <Link
+                        href={`/hizmetler#${active.key}`}
+                        className="text-sm text-[var(--color-primary-deep)] hover:text-[var(--color-primary-darker)] font-medium inline-flex items-center gap-2 group"
+                      >
+                        Detayları gör
+                        <ArrowRight
+                          size={14}
+                          className="group-hover:translate-x-1 transition-transform"
+                        />
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/mecralar"
+                        className="btn-primary text-sm py-2.5 px-5"
+                      >
+                        {DIGER_MECRA_SLIDE.cta}
+                        <ArrowRight size={16} />
+                      </Link>
+                      <Link
+                        href="/teklif-al"
+                        className="text-sm text-[var(--color-primary-deep)] hover:text-[var(--color-primary-darker)] font-medium inline-flex items-center gap-2 group"
+                      >
+                        Teklif Al
+                        <ArrowRight
+                          size={14}
+                          className="group-hover:translate-x-1 transition-transform"
+                        />
+                      </Link>
+                    </>
+                  )}
                 </div>
                 <p className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] animate-ctaRevealLate">
                   <Clock size={11} aria-hidden="true" />
@@ -245,7 +320,7 @@ export function FormatShowcase() {
             </h2>
           </div>
 
-          {FORMATLAR.map((format, i) => {
+          {ANA_MECRALAR.map((format, i) => {
             const Icon = format.icon;
             return (
               <div key={format.key} className="space-y-4">
@@ -269,7 +344,7 @@ export function FormatShowcase() {
                     <Icon size={20} className="text-[var(--color-primary)]" />
                     <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] font-mono">
                       {String(i + 1).padStart(2, "0")} /{" "}
-                      {String(FORMATLAR.length).padStart(2, "0")}
+                      {String(TOPLAM_SLIDE).padStart(2, "0")}
                     </div>
                   </div>
                   <h3 className="text-2xl font-bold">{format.name}</h3>
@@ -312,6 +387,52 @@ export function FormatShowcase() {
               </div>
             );
           })}
+
+          {/* 7. kart — Diğer mecralarımız */}
+          <div className="space-y-4">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--color-primary)]/15 to-[var(--color-surface)] border border-[var(--color-border-subtle)] flex items-center justify-center">
+              <div className="text-center space-y-4 p-6">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-[var(--color-primary)]/15 flex items-center justify-center">
+                  <LayoutGrid size={32} className="text-[var(--color-primary)]" />
+                </div>
+                <div className="text-4xl font-bold text-gradient">
+                  +{DIGER_TANITILAN.length}
+                </div>
+                <div className="flex flex-wrap justify-center gap-1.5">
+                  {DIGER_TANITILAN.slice(0, 6).map((m) => (
+                    <span
+                      key={m.envanterAd}
+                      className="rounded-full border border-[var(--color-border-subtle)] bg-[var(--color-bg)]/70 px-2.5 py-0.5 text-[11px] text-[var(--color-text-secondary)]"
+                    >
+                      {m.ad}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <LayoutGrid size={20} className="text-[var(--color-primary)]" />
+                <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] font-mono">
+                  {String(TOPLAM_SLIDE).padStart(2, "0")} /{" "}
+                  {String(TOPLAM_SLIDE).padStart(2, "0")}
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold">{DIGER_MECRA_SLIDE.ad}</h3>
+              <p className="text-sm text-[var(--color-primary-deep)] font-medium">
+                {DIGER_MECRA_SLIDE.tagline}
+              </p>
+              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                {DIGER_MECRA_SLIDE.aciklama}
+              </p>
+              <div className="pt-2">
+                <Link href="/mecralar" className="btn-primary text-sm py-2.5 px-5">
+                  {DIGER_MECRA_SLIDE.cta}
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

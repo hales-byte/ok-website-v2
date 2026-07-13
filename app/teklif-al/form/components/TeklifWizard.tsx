@@ -75,8 +75,8 @@ export function TeklifWizard() {
     const sehirFromUrl = searchParams?.get("sehir");
     const sehirPrefill = sehirFromUrl ? [titleCaseTr(sehirFromUrl)] : null;
 
-    // FormatShowcase "Bu formatla teklif al" CTA'sı: ?format=billboard gibi
-    // parametre form'u o formatla başlatır. Bilinmeyen key'ler atılır.
+    // FormatShowcase "fiyatı sor" CTA'sı: ?format=billboard gibi parametre
+    // form'u o mecrayla başlatır. Ana listede olmayan key'ler atılır.
     const formatFromUrl = searchParams?.get("format");
     const formatPrefill =
       formatFromUrl && getFormatByKey(formatFromUrl) ? [formatFromUrl] : null;

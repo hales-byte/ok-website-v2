@@ -304,7 +304,7 @@ function buildMesaj(state: FormState): string | null {
   }
 
   if (state.oneriIstiyor) {
-    parts.push("[Format konusunda öneri istiyor — bütçe ve hedefe göre planlanacak]");
+    parts.push("[Mecra konusunda öneri istiyor — bütçe ve hedefe göre planlanacak]");
   }
 
   if (state.mesaj.trim()) {

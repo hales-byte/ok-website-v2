@@ -10,12 +10,14 @@ const navLinks = [
   { label: "İletişim", href: "/iletisim" },
 ];
 
-const formatLinks = [
-  { label: "Billboard", href: "/hizmetler#billboard" },
+const mecraLinks = [
   { label: "CLP / Raket", href: "/hizmetler#clp" },
+  { label: "Billboard", href: "/hizmetler#billboard" },
+  { label: "Pole Banner", href: "/hizmetler#pole-banner" },
   { label: "Megalight", href: "/hizmetler#megalight" },
   { label: "LED & Dijital", href: "/hizmetler#led" },
-  { label: "Havalimanı", href: "/hizmetler#havalimani" },
+  { label: "Giantboard", href: "/hizmetler#giantboard" },
+  { label: "Tüm Mecralar", href: "/mecralar" },
 ];
 
 const legalLinks = [
@@ -145,13 +147,13 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Orta: Formatlar */}
+          {/* Orta: Mecralar */}
           <div className="md:col-span-2 space-y-4">
             <h4 className="text-sm font-semibold text-[var(--color-text-primary)] uppercase tracking-wider">
-              Formatlar
+              Mecralar
             </h4>
             <ul className="space-y-2">
-              {formatLinks.map((link) => (
+              {mecraLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

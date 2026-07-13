@@ -18,7 +18,7 @@ import {
   BUTCE_LABELS,
   ZAMAN_LABELS,
 } from "../types";
-import { FORMATLAR } from "@/lib/formats";
+import { getFormatLabel } from "@/lib/formats";
 
 type Step6OnayProps = {
   state: FormState;
@@ -32,7 +32,7 @@ export function Step6Onay({ state, dispatch }: Step6OnayProps) {
   const formatNames =
     state.formatlar.length > 0
       ? state.formatlar
-          .map((key) => FORMATLAR.find((f) => f.key === key)?.name || key)
+          .map((key) => getFormatLabel(key))
           .join(", ")
       : state.oneriIstiyor
       ? "Bana öner"

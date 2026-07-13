@@ -278,7 +278,7 @@ export default async function SehirFormatPage({
           <div className="container-narrow">
             <div className="max-w-2xl mb-10">
               <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
-                Aynı format farklı şehirlerde
+                Aynı mecra farklı şehirlerde
               </div>
               <h2 className="text-2xl md:text-3xl font-bold leading-tight">
                 Diğer şehirlerde {formatMeta.name} reklam
