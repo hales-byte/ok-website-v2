@@ -19,6 +19,8 @@ import { getIlSSS } from "@/src/data/content/il-sss";
 import { FAQ } from "@/components/FAQ";
 import { getStandaloneIller, bolgeOfIl } from "@/src/data/bolgeler";
 import { getKomsuIller, getIlMecraSayfalari } from "./il-derive";
+import { SahadanKareler } from "@/components/SahadanKareler";
+import { getSehirFotolar, SAHADAN_METIN } from "@/src/data/content/sehir-fotolar";
 import { IlIcLinkler } from "./IlIcLinkler";
 import { IlSchema } from "./IlSchema";
 
@@ -90,6 +92,7 @@ export default async function SehirPage({
   const mecraSayfalari = getIlMecraSayfalari(slug, 2);
   const bolge = bolgeOfIl(slug);
   const teklifHref = `/teklif-al?sehir=${encodeURIComponent(sehir)}`;
+  const sahaFotolari = getSehirFotolar(slug);
 
   return (
     <>
@@ -205,6 +208,27 @@ export default async function SehirPage({
           </div>
         </div>
       </section>
+
+      {/* R3 — SAHADAN KARELER: koyu bantta gerçek uygulama fotoğrafları.
+          Fotoğrafı olmayan ilde bölüm hiç render edilmez. */}
+      {sahaFotolari.length > 0 && (
+        <section className="band-dark py-20 overflow-hidden">
+          <div className="container-narrow mb-10">
+            <div className="max-w-2xl">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-primary)] mb-3">
+                {SAHADAN_METIN.etiket}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+                {sehir} {SAHADAN_METIN.baslik}
+              </h2>
+              <p className="mt-4 text-base text-[var(--color-text-secondary)] leading-relaxed">
+                {SAHADAN_METIN.aciklama}
+              </p>
+            </div>
+          </div>
+          <SahadanKareler slug={slug} ilAdi={sehir} />
+        </section>
+      )}
 
       {/* İLÇE / KAPSAMA */}
       {il.ilceler.length > 0 && (

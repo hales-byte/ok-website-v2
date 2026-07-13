@@ -85,5 +85,6 @@ export const DIGER_MECRALAR: DigerMecra[] = [
     ad: "Otobüs Kaplama",
     donem: "Hafta+",
     aciklama: "Rota boyunca şehri dolaşan giydirme; durak durak değişen kitleye kesintisiz temas.",
+    gorsel: "otobus-kaplama",
   },
 ];
