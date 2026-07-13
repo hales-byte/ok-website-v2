@@ -27,7 +27,6 @@ export const SAHADAN_METIN = {
 export const SEHIR_FOTOLAR: Record<string, SehirFoto[]> = {
   // Adana
   "adana": [
-    { dosya: "adana-billboard-01.webp", mecra: "Billboard", w: 1024, h: 768 },
     { dosya: "adana-giantboard-01.webp", mecra: "Giantboard", w: 1365, h: 768 },
     { dosya: "adana-led-01.webp", mecra: "LED", w: 1600, h: 1201 },
     { dosya: "adana-led-02.webp", mecra: "LED", w: 1600, h: 1201 },
