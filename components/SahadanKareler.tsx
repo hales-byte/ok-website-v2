@@ -59,6 +59,8 @@ export function SahadanKareler({ slug, ilAdi }: { slug: string; ilAdi: string })
     >
       {liste.map((f, i) => {
         const kw = Math.round((KART_YUKSEKLIK * f.w) / f.h);
+        // R4: bölüm sayfada yukarı taşındı — görünür ilk kareler eager yüklenir
+        const eager = !dup && i < 3;
         return (
           <figure
             key={`${dup ? "d-" : ""}${i}-${f.dosya}`}
@@ -74,7 +76,7 @@ export function SahadanKareler({ slug, ilAdi }: { slug: string; ilAdi: string })
                   height={KART_YUKSEKLIK}
                   sizes={`${kw}px`}
                   className="h-full w-full object-cover"
-                  loading="lazy"
+                  loading={eager ? "eager" : "lazy"}
                 />
               </div>
               <div className="flex h-8 items-center justify-end px-2">

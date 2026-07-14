@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, MapPin, ChevronRight } from "lucide-react";
+import { ArrowRight, MapPin, ChevronRight, Clock, Camera, Map } from "lucide-react";
 import type { Metadata } from "next";
 import {
   getIl,
@@ -21,6 +21,8 @@ import { getStandaloneIller, bolgeOfIl } from "@/src/data/bolgeler";
 import { getKomsuIller, getIlMecraSayfalari } from "./il-derive";
 import { SahadanKareler } from "@/components/SahadanKareler";
 import { getSehirFotolar, SAHADAN_METIN } from "@/src/data/content/sehir-fotolar";
+import { SEHIR_NEDEN } from "@/src/data/content/sehir-neden";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { IlIcLinkler } from "./IlIcLinkler";
 import { IlSchema } from "./IlSchema";
 
@@ -125,6 +127,22 @@ export default async function SehirPage({
             <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed">
               {aciklama}
             </p>
+            {/* R4: karar anı ilk ekranda — teklif + WhatsApp */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Link href={teklifHref} className="btn-primary">
+                {sehir} için teklif al
+                <ArrowRight size={18} />
+              </Link>
+              <a
+                href={`https://wa.me/905529185864?text=${encodeURIComponent(`Merhaba, ${sehir} için açıkhava reklam bilgisi almak istiyorum.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                <WhatsAppIcon size={18} />
+                WhatsApp ile yaz
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -160,6 +178,34 @@ export default async function SehirPage({
           </div>
         </div>
       </section>
+
+      {/* R3 — SAHADAN KARELER: koyu bantta gerçek uygulama fotoğrafları.
+          Fotoğrafı olmayan ilde bölüm hiç render edilmez. */}
+      {sahaFotolari.length > 0 && (
+        <section className="band-dark py-20 overflow-hidden">
+          <div className="container-narrow mb-10">
+            <div className="max-w-2xl">
+              <div className="text-xs uppercase tracking-widest text-[var(--color-primary)] mb-3">
+                {SAHADAN_METIN.etiket}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
+                {sehir} {SAHADAN_METIN.baslik}
+              </h2>
+              <p className="mt-4 text-base text-[var(--color-text-secondary)] leading-relaxed">
+                {SAHADAN_METIN.aciklama}
+              </p>
+            </div>
+          </div>
+          <SahadanKareler slug={slug} ilAdi={sehir} />
+          {/* R4: kanıtın dibinde aksiyon */}
+          <div className="container-narrow mt-10">
+            <Link href={teklifHref} className="btn-primary">
+              {sehir} için teklif al
+              <ArrowRight size={18} />
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* FORMAT DAĞILIMI */}
       <section className="py-24">
@@ -209,26 +255,32 @@ export default async function SehirPage({
         </div>
       </section>
 
-      {/* R3 — SAHADAN KARELER: koyu bantta gerçek uygulama fotoğrafları.
-          Fotoğrafı olmayan ilde bölüm hiç render edilmez. */}
-      {sahaFotolari.length > 0 && (
-        <section className="band-dark py-20 overflow-hidden">
-          <div className="container-narrow mb-10">
-            <div className="max-w-2xl">
-              <div className="text-xs uppercase tracking-widest text-[var(--color-primary)] mb-3">
-                {SAHADAN_METIN.etiket}
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold leading-tight">
-                {sehir} {SAHADAN_METIN.baslik}
-              </h2>
-              <p className="mt-4 text-base text-[var(--color-text-secondary)] leading-relaxed">
-                {SAHADAN_METIN.aciklama}
-              </p>
-            </div>
+      {/* R4 — NEDEN OBJEKTİF KRİTER: onaylı söylemlerden mini şerit */}
+      <section className="py-16 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
+        <div className="container-narrow">
+          <div className="text-xs uppercase tracking-widest text-[var(--color-primary)] font-medium mb-8">
+            {SEHIR_NEDEN.etiket}
           </div>
-          <SahadanKareler slug={slug} ilAdi={sehir} />
-        </section>
-      )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {SEHIR_NEDEN.maddeler.map((m) => {
+              const Ikon = m.ikon === "clock" ? Clock : m.ikon === "camera" ? Camera : Map;
+              return (
+                <div key={m.baslik} className="flex gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center shrink-0">
+                    <Ikon size={22} className="text-[var(--color-primary)]" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">{m.baslik}</h3>
+                    <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                      {m.metin.replace("{il}", String(TOPLAM.il))}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* İLÇE / KAPSAMA */}
       {il.ilceler.length > 0 && (
