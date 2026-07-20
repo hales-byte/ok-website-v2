@@ -4,7 +4,7 @@
 
 **Son güncelleme:** 2026-07-20 · Cowork (V2 envanter — yeni Excel işlendi: tek fark **Adana LED 16→12**, toplam **36.703→36.699**; il 45 · mecra 20 · erişim 43,1M değişmedi; check:envanter 13/13 + build sandbox'ta yeşil; yama `OK_v3_yama/v2-envanter.patch` — **commit'siz, onay bekliyor**)
 
-## V2 envanter güncellemesi (bu oturum — yama hazır, onay+commit bekliyor)
+## V2 envanter güncellemesi (bu oturum — CANLI — 20.07 gerçek domainde doğrulandı)
 - Hakan 2026-07-20'de güncel "OBJ ENVANTER objenv.xlsx" verdi; V1 işleme kurallarıyla (forward-fill, il eşleme, mecra kanonikleştirme, Sayfa 2 ayrı) 246 satırın tamamı işlendi; işlenen toplam = ham toplam 36.699 birebir ✓.
 - **Tek fark: Adana LED 16→12 (−4).** Başka hiçbir il/mecra değişmedi; giren/çıkan il yok; Ankara 2.946, Aydın 782 sabit; il seti aynı → erişim 43,1M aynen.
 - Değişen dosyalar: `envanter.json` (Adana LED 12, Adana toplam 2.673, toplam 36.699, tarih 2026-07-20) · `check-envanter.mjs` (beklenen 36.699 + yeni nöbetçi "Adana LED 12" → 13 kontrol) · rakam geçen kural dosyaları (CLAUDE.md, UPDATE.md, master plan, Plan3, bolge-config/bolgeler yorumları, il-aciklama yorumu) · DURUM + GÜNLÜK.
