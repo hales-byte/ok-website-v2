@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-20 — Teklif formu: 3 düzeltme (81 il + KVKK isteğe bağlı + ölü buton)
+**Ne yapıldı:** Canlıdaki teklif formunda üç sorun giderildi. (1) "Tüm Türkiye"yi seçen kullanıcı 81 il işaretliyordu ama sistem en fazla 50 ile izin veriyordu → form reddediliyordu; sınır 81'e çıkarıldı. (2) KVKK onay kutusu tasarım gereği isteğe bağlı olmasına rağmen, işaretlemeyen herkesin talebi arka planda sessizce düşüyordu → kutu artık gerçekten isteğe bağlı. (3) Sayfayı yenileyen kişide "Gönder" butonu bazen hiç tepki vermeden ölü kalıyordu (kişisel bilgiler güvenlik için siliniyor); artık sessiz kalmak yerine "İletişim bilgileriniz eksik görünüyor — bir önceki adıma dönüp ad soyad ve e-posta girin" uyarısı çıkıyor.
+**Neden:** Üçü de canlıda gerçek lead kaybına yol açıyordu — kullanıcı formu dolduruyor ama talep ya reddediliyor ya da sessizce kayboluyordu.
+**Ne işe yaradı:** Formu dolduran daha fazla kişinin talebi eksiksiz ulaşacak; takılan kullanıcı ne yapması gerektiğini görecek. Sadece ilgili iki dosyaya dokunuldu. Tip kontrolü temiz geçti.
+**Sırada:** Build (site derlemesi) Cowork sandbox'ta temiz geçti, onayınla tek commit atılıp yayına (v3) gönderildi. Değişiklik canlıya çıktı. (Not: bu otomatik oturumdan build çalıştırılamadı — ortama özgü aksaklık, kodla ilgisi yok; doğrulama Cowork'te yapıldı.)
+
 ### 2026-07-20 — V3: Malatya envanterden çıkarıldı (toplam 36.134)
 **Ne yapıldı:** Hakan'ın kararıyla Malatya (565 ünite) siteden tamamen çıkarıldı; toplamlar 44 il · 36.134 ünite · 42,4M erişim oldu.
 **Neden:** Malatya envanterimizden çıktı; sitede sunmadığımız bir şehir için müşteri beklentisi oluşmamalı.

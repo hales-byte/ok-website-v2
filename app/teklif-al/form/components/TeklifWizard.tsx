@@ -187,7 +187,17 @@ export function TeklifWizard() {
   }, [resumeData]);
 
   const handleSubmit = useCallback(async () => {
-    if (!isFormSubmittable(state)) return;
+    // Sessizce dönmek yerine sebebi söyle: sayfa yenilendiğinde PII
+    // localStorage'dan bilinçli silindiği için ad soyad/e-posta boşalabiliyor
+    // ve buton "ölü" görünüyordu.
+    if (!isFormSubmittable(state)) {
+      dispatch({
+        type: "SUBMIT_ERROR",
+        error:
+          "İletişim bilgileriniz eksik görünüyor — lütfen bir önceki adıma dönüp ad soyad ve e-posta alanlarını doldurun.",
+      });
+      return;
+    }
 
     dispatch({ type: "SUBMITTING" });
 

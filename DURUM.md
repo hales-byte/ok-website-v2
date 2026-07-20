@@ -2,7 +2,15 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-20 · Cowork (V3 envanter — **Malatya envanterden çıktı** (−565): toplam **36.699→36.134**, il **45→44**, erişim **43,1M→42,4M**; /sehir/malatya → /bolge/dogu-anadolu kalıcı yönlendirme; check 14/14 + build sandbox'ta yeşil; yama `OK_v3_yama/v3-malatya.patch` — **commit'siz, onay bekliyor**)
+**Son güncelleme:** 2026-07-20 · Claude Code (**Teklif formu 3 düzeltme** — 2 şema + 1 UX; `tsc --noEmit` temiz + build Cowork sandbox'ta ✓; **commit'lendi + origin/v3'e push edildi**)
+
+## Teklif formu düzeltmeleri — 3 düzeltme (KAPANDI — commit'lendi + push)
+- Canlıda tespit edilen 2 şema hatası + 1 UX düzeltmesi. **Sadece 2 kod dosyası** değişti (submit-action.ts, TeklifWizard.tsx); başka dosyaya dokunulmadı (+ DURUM/GUNLUK kapanış).
+- **Düzeltme 1 — sehirler tavanı:** `submit-action.ts` TalepSchema `sehirler: ...max(50)` → `.max(81)`. UI "Tüm Türkiye" ile 81 il seçtiriyordu; 50 tavanı canlıda `too_big` ile gerçek kullanıcıyı düşürüyordu. (81 = Türkiye il sayısı.)
+- **Düzeltme 2 — KVKK kutusu:** `kvkk: z.literal(true)` → `z.boolean()`. KVKK kutusu tasarım gereği İSTEĞE BAĞLI (08.07 kararı; `validation.isStep6Valid` hep true). `literal(true)` kutuyu işaretlemeyen HERKESİ şema doğrulamada düşürüyordu — form-altı aydınlatma zaten var, açık rıza gerekmiyor. (Artık yanlış olan "KVKK literal kontrolü" yorumu da düzeltildi.)
+- **Düzeltme 3 — sessiz submit (UX):** `TeklifWizard.tsx` handleSubmit'te `if (!isFormSubmittable(state)) return;` sessizce dönüyordu → sayfa yenilenince PII localStorage'dan bilinçli silindiği için buton "ölü" kalıyordu. Artık `SUBMIT_ERROR` dispatch ediyor: "İletişim bilgileriniz eksik görünüyor — lütfen bir önceki adıma dönüp ad soyad ve e-posta alanlarını doldurun." (Mevcut kırmızı hata kutusu bu mesajı gösterir.)
+- **Doğrulama:** `tsc --noEmit` → **exit 0** (tüm proje, düzenlenen iki dosya dahil temiz). `npm run build` **Cowork sandbox'ta temiz geçti** (Hakan teyit etti). NOT: bu Claude Code oturumundan build koşulamadı — `next` CLI başlangıçta bir dosya `read()`'inde sonsuz asılıyordu (`next --version` bile), oysa node/tsc/curl/düz `readFileSync` sorunsuzdu; ortamsal (bu oturumun `next` binary'sini başlatamaması), koddan/font'tan bağımsız (mock font + telemetri kapalı + CI + stdin /dev/null + taze `.next` denendi). Gelecekte bu oturumda build gerekirse aynı engel çıkabilir → build Cowork/yerel terminalde koşulmalı.
+- **KAPANDI:** Hakan onayı sonrası tek commit + origin/v3'e push edildi.
 
 ## V3 envanter güncellemesi — Malatya çıktı (yama hazır, onay+commit bekliyor)
 - Hakan kararı (2026-07-20): **Malatya envanterden çıktı** (565 ünite: CLP 300 + BILLBOARD 250 + OTOBÜS KAPLAMA 15). Yeni gerçekler: **44 il · 20 mecra · 36.134 ünite · erişim 42,4M** (42.394.071; Malatya nüfusu 755.854 tabandan düştü, katsayı 0,960465 sabit). Mecra sayısı 20 kaldı (OTOBÜS KAPLAMA Gaziantep'te 4 ünite ile yaşıyor).

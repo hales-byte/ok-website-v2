@@ -36,7 +36,9 @@ function safeErrorInfo(err: unknown): string {
  */
 const TalepSchema = z.object({
   segment: z.enum(["marka", "ajans", "ilk"]).nullable(),
-  sehirler: z.array(z.string().min(1).max(80)).max(50),
+  // 81 = Türkiye'nin il sayısı. UI'daki "Tüm Türkiye" seçeneği 81 ilin
+  // tamamını işaretleyebiliyor; daha düşük bir tavan gerçek kullanıcıyı düşürür.
+  sehirler: z.array(z.string().min(1).max(80)).max(81),
   formatlar: z.array(z.string().min(1).max(40)).max(20),
   oneriIstiyor: z.boolean(),
   butce: z
@@ -72,7 +74,10 @@ const TalepSchema = z.object({
     dogrudanIletisim: z.enum(["evet", "hayir"]).nullable(),
   }),
   mesaj: z.string().max(2000),
-  kvkk: z.literal(true),
+  // KVKK kutusu tasarım gereği İSTEĞE BAĞLI (bkz. validation.isStep6Valid):
+  // talebin ifası açık rıza gerektirmez, aydınlatma form altı metinle sağlanır.
+  // Bu yüzden burada literal(true) değil boolean doğrulanır.
+  kvkk: z.boolean(),
   pazarlama: z.boolean(),
 });
 
@@ -117,7 +122,7 @@ export async function submitTeklif(
     }
   }
 
-  // ─── Schema validation: tip + uzunluk + KVKK literal kontrolü ───
+  // ─── Schema validation: tip + uzunluk kontrolü ───
   const parsed = TalepSchema.safeParse(state);
   if (!parsed.success) {
     // Generic kullanıcı mesajı; detay sadece log'a (PII içerebilir, kısıt 200 char).
