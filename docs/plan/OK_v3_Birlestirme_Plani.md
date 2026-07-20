@@ -10,7 +10,7 @@ Hazırlayan: Claude · Tarih: 04.07.2026 · Durum: Onay bekliyor
 İki paralel hattı (ok-iframe.vercel.app + ok-website-v2.vercel.app) tek sitede birleştirmek.
 Domain (`objektifkriter.com.tr`) doğrudan v3'e taşınır — ara cutover yok.
 
-**Tek doğruluk kaynağı:** `envanter.json` → **45 il · 20 mecra · 36.703 ünite** *(V1 güncellemesi 2026-07-07; plan metinlerindeki 35.919 tarihseldir)*
+**Tek doğruluk kaynağı:** `envanter.json` → **45 il · 20 mecra · 36.699 ünite** *(V2 güncellemesi 2026-07-20, Adana LED 16→12; plan metinlerindeki 35.919 tarihseldir)*
 
 ## Çalışma kuralları (iframe hattında kanıtlanan disiplin)
 

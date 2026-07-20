@@ -2,7 +2,14 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-12 · Claude Code (R1R2-mecra-revizyonu yaması UYGULANDI — temiz v3 clone'a `git apply` temiz geçti; build+check:envanter yeşil; ana sayfa vitrini 7 kart + yeni `/mecralar` sayfası + `/hizmetler` 6 ana mecra + footer "Mecralar" bölümü; dev'de tarayıcı doğrulaması Hakan'da; **worktree'de commit'siz**, onay bekliyor)
+**Son güncelleme:** 2026-07-20 · Cowork (V2 envanter — yeni Excel işlendi: tek fark **Adana LED 16→12**, toplam **36.703→36.699**; il 45 · mecra 20 · erişim 43,1M değişmedi; check:envanter 13/13 + build sandbox'ta yeşil; yama `OK_v3_yama/v2-envanter.patch` — **commit'siz, onay bekliyor**)
+
+## V2 envanter güncellemesi (bu oturum — yama hazır, onay+commit bekliyor)
+- Hakan 2026-07-20'de güncel "OBJ ENVANTER objenv.xlsx" verdi; V1 işleme kurallarıyla (forward-fill, il eşleme, mecra kanonikleştirme, Sayfa 2 ayrı) 246 satırın tamamı işlendi; işlenen toplam = ham toplam 36.699 birebir ✓.
+- **Tek fark: Adana LED 16→12 (−4).** Başka hiçbir il/mecra değişmedi; giren/çıkan il yok; Ankara 2.946, Aydın 782 sabit; il seti aynı → erişim 43,1M aynen.
+- Değişen dosyalar: `envanter.json` (Adana LED 12, Adana toplam 2.673, toplam 36.699, tarih 2026-07-20) · `check-envanter.mjs` (beklenen 36.699 + yeni nöbetçi "Adana LED 12" → 13 kontrol) · rakam geçen kural dosyaları (CLAUDE.md, UPDATE.md, master plan, Plan3, bolge-config/bolgeler yorumları, il-aciklama yorumu) · DURUM + GÜNLÜK.
+- QA (sandbox): `check:envanter` 13/13 ✓ · `npm run build` ✓ · derlenmiş HTML: 36.699 var / 36.703 yok, Adana sayfası 2.673 + "12 LED Ekran", /sehir/adana/led 12 ünite, 43,1M aynen, SWC bitişik-rakam deseni 0.
+- **Sonraki:** Hakan yamayı Claude Code ile uygular → build + onay → commit + `vercel --prod`. Not: müşteri sunumlarındaki "LED=158" artık 154 — sunum ayrıca güncellenebilir.
 
 ## R1R2 mecra revizyonu (bu oturum — UYGULANDI, onay+commit bekliyor)
 - **Kurulum:** `~/Desktop`e temiz `git clone -b v3` → `ok-v3-mecra`; yama `r1r2-mecra-revizyonu.patch` (`OK_v3_yama/`) — `git apply --check` temiz → uygulandı. 25 dosya (712+/293-): +`app/mecralar/page.tsx`, +`components/DigerMecraGrid.tsx`, +`src/data/content/{diger-mecralar,mecralar}.ts`; −`components/EkMecraGrid.tsx`, −`src/data/content/ek-mecralar.ts`; `FormatShowcase.tsx`/`lib/formats.ts`/`app/hizmetler/page.tsx`/`components/layout/Footer.tsx` + teklif akışı dosyaları güncellendi.
@@ -77,7 +84,7 @@
 
 ## Kilit gerçekler (değişmez — tereddütte buraya bak)
 
-- Rakamlar: **45 il · 20 mecra · 36.703 ünite** — tek kaynak `src/data/envanter.json` (V1 güncellemesi 2026-07-07: Aydın +782 girdi, Edirne çıktı; il sayısı 45 sabit kaldı). Eski değer 35.919 idi.
+- Rakamlar: **45 il · 20 mecra · 36.699 ünite** — tek kaynak `src/data/envanter.json` (V2 güncellemesi 2026-07-20: yalnız Adana LED 16→12; V1 2026-07-07: Aydın +782 girdi, Edirne çıktı; il sayısı 45 sabit). Eski değerler 36.703 ve 35.919 idi.
 - **Aylık erişim: 43.120.042 (43,1M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.894.964, V1'de Aydın nüfusu girdi/Edirne çıktı) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer). Eski değer 42,4M idi.
 - **V1 envanter (2026-07-07):** Aydın (Ege) envantere eklendi — BILLBOARD 532 + CLP RAKET-DURAK 250 = 782 ünite, kapsama noktaları Didim/Kuşadası/Efeler/Söke/Nazilli. Edirne envanterden çıkarıldı → `/sehir/edirne` artık `/sehir/kirklareli`'ye kalıcı yönlenir (`next.config.ts` ESKI_SEHIR_301; canlıda HTTP 308). check:envanter 8 → **10 kontrol** (Aydın 782 + Edirne-yok). Tramvay toplamı 80 (yalnız Gaziantep TRAMVAY KAPLAMA).
 - **Mecralar (ana sayfa): 8 showcase kartı** (FormatShowcase: billboard, clp, megalight, led, giantboard, pole-banner, totem, havalimanı — hepsi görselli) **+ 12 ek mecra grid'i** (G4b, `EkMecraGrid` + `src/data/content/ek-mecralar.ts`) = **20 mecra**. Ek grid adetleri envanter.json'dan `getFormatToplam(envanterAd)` ile türer (Luna 140, Megaboard 97, Tramvay Kaplama 40…), adet 0 olan kart gizlenir. Tramvay-kaplama görseli artık bu grid'de kullanılıyor (öksüz değil). `totem` tanımı G4b'de düzeltildi (direk üstünde ışıklı kutu pano).
@@ -135,3 +142,4 @@
 | 2026-07-07 | G7b Lighthouse | 3 sayfa × 4 kategori canlı tarandı; 12 skor 80+ (Perf 86-91 en düşük); CLS home 0.21/ankara 0.186 tek suçlu footer, /envanter mobil LCP 3.8s; rapor _lh/ (gitignore); yorum/düzeltme yok |
 | 2026-07-07 | G7c (önizleme) | loading.tsx min-h-[60vh]→min-h-screen; build 188; önizleme SSO korumalı olduğu için CLS yerel prod build'de doğrulandı (0.21/0.186→0.05); commit onay bekliyor |
 | 2026-07-07 | G7c kapanış | Onaylandı; commit 3e8fbc6 (yalnız loading.tsx) + push; vercel --prod; CANLI prod teyidi: home CLS 0.21→0 Perf 89→97, ankara CLS 0.186→0 Perf 91→100, footer kayması giderildi |
+| 2026-07-20 | V2 envanter (yama) | 36.703→36.699 (tek fark Adana LED 16→12); Excel 246 satır tam işlendi, ham toplam birebir; il 45/mecra 20/erişim 43,1M sabit; check 13/13; build ✓; HTML'de 36.699 var/36.703 yok; yama OK_v3_yama/v2-envanter.patch; commit onay bekliyor |

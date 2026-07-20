@@ -6,7 +6,7 @@
  * Metni OLMAYAN il için getIlAciklama() veriden zarif bir yedek üretir.
  *
  * NOT (lokasyon doğrulaması): metinlerdeki lokasyon adları güncel
- * envanter.json'a (36.703) göre teyit edildi. Ankara ilceler'i envanter.json'da
+ * envanter.json'a (36.699) göre teyit edildi. Ankara ilceler'i envanter.json'da
  * boş olduğu için Güvenpark/Kocatepe/AŞTİ/Beytepe/Keçiören çıkarıldı; Ordu'da
  * "Fatsa" ilceler'de olmadığı için çıkarıldı. (Envanter.json'a bu noktalar
  * eklenirse metin daha spesifik yazılabilir.)

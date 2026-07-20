@@ -4,7 +4,7 @@
  * Karar verisi: src/data/bolge-config.json (standalone listesi + taşınan il →
  * bölge). Coğrafi partition (hangi il hangi bölgede): lib/turkiye-sehirler.ts
  * (tek coğrafi kaynak). Ünite/erişim/mecra HEP envanter.json'dan türer —
- * envanter.json'a DOKUNULMAZ (45 il / 36.703 aynen durur).
+ * envanter.json'a DOKUNULMAZ (45 il / 36.699 aynen durur).
  */
 import config from "./bolge-config.json";
 import {

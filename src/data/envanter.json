@@ -1,9 +1,9 @@
 {
-  "guncelleme": "2026-07-07",
-  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-07; Network Adeti hariç)",
+  "guncelleme": "2026-07-20",
+  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-20; Network Adeti hariç)",
   "toplam": {
     "il": 45,
-    "unite": 36703
+    "unite": 36699
   },
   "iller": [
     {
@@ -82,14 +82,14 @@
     },
     {
       "il": "Adana",
-      "toplam": 2677,
+      "toplam": 2673,
       "ilceler": [],
       "formatlar": {
         "CLP RAKET-DURAK": 1500,
         "BILLBOARD": 900,
         "MEGALIGHT": 230,
         "GIANTBOARD": 20,
-        "LED": 16,
+        "LED": 12,
         "SİLİNDİR KULE": 6,
         "MEGABOARD": 5
       }

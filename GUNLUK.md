@@ -14,6 +14,13 @@
 
 ---
 
+### 2026-07-20 — V2: Envanter güncellemesi (Adana LED 16→12, toplam 36.699)
+**Ne yapıldı:** Hakan'ın verdiği güncel envanter Excel'i sitedeki veriyle satır satır karşılaştırıldı; tek fark çıktı (Adana'daki LED ekran sayısı 16'dan 12'ye inmiş) ve site verisi buna göre güncellendi.
+**Neden:** Sitedeki envanter her zaman sahadaki gerçek envanterle birebir olmalı; müşteri yanlış adet görmemeli.
+**Ne işe yaradı:** Site toplamı artık 36.699 ünite; Adana sayfası ve Adana LED sayfası doğru adedi gösteriyor. Otomatik kontrol aracına "Adana LED 12" nöbetçisi eklendi — ileride eski rakam sızarsa alarm verir. İl sayısı, mecra sayısı ve 43,1M erişim değişmedi.
+**Sırada:** Hakan'ın onayıyla değişikliğin yayına alınması (yama hazır, commit onay bekliyor).
+
+
 ### 2026-07-12 — R1R2: Mecra listesi revizyonu (7 kart + Diğer Mecralar sayfası)
 **Ne yapıldı:** Mecra revizyonu yaması temiz bir kopyaya kuruldu ve çalıştı. Ana sayfadaki mecra şeridi artık 7 kart (CLP, Billboard, Pole Banner, Megalight, LED, Giantboard ve "Diğer mecralarımız"); eskiden orada duran "12 mecrayı daha gör" akordeonu kaldırıldı. Diğer mecralar için ayrı bir sayfa açıldı (`/mecralar`) — 10 mecra, her biri adet ve il bilgisiyle; artık envanterde olmayan Parapet, Süper LED Ekran, Silindir Kule ve Prizma LED listeden çıkarıldı. Hizmetler sayfası "6 ana mecra" başlığıyla düzenlendi (Mecra 01–06 etiketleri, LED bölümünün altında ayrı Havalimanı LED alt başlığı). Footer'a "Mecralar" başlığı ve "Tüm Mecralar" linki eklendi.
 **Neden:** Mecra listesi güncel envanterle uyumlu değildi; olmayan mecralar görünüyor, çok sayıda mecra tek akordeonda sıkışıyordu.
