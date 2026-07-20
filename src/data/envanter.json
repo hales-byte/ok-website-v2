@@ -1,9 +1,9 @@
 {
   "guncelleme": "2026-07-20",
-  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-20; Network Adeti hariç)",
+  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-20; Network Adeti hariç) + V3: Malatya çıkarıldı (Hakan, 2026-07-20)",
   "toplam": {
-    "il": 45,
-    "unite": 36699
+    "il": 44,
+    "unite": 36134
   },
   "iller": [
     {
@@ -281,16 +281,6 @@
         "POLE BANNER": 300,
         "CLP RAKET-DURAK": 222,
         "BILLBOARD": 78
-      }
-    },
-    {
-      "il": "Malatya",
-      "toplam": 565,
-      "ilceler": [],
-      "formatlar": {
-        "CLP RAKET-DURAK": 300,
-        "BILLBOARD": 250,
-        "OTOBÜS KAPLAMA": 15
       }
     },
     {

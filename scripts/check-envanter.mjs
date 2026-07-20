@@ -2,8 +2,8 @@
 /**
  * ENVANTER DOĞRULAMA — npm run check:envanter
  * Tek doğruluk kaynağının iç tutarlılığını test eder:
- *   1. Toplam ünite = 36.699 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
- *   2. İl sayısı = 45
+ *   1. Toplam ünite = 36.134 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
+ *   2. İl sayısı = 44
  *   3. Ankara toplamı = 2.946
  *   4. Her ilin toplamı, format dağılımının toplamına eşit
  *   5. Mecra türü sayısı = 20
@@ -27,9 +27,9 @@ const uniteToplam = iller.reduce((s, i) => s + i.toplam, 0);
 const ankara = iller.find((i) => i.il === "Ankara");
 const mecralar = new Set(iller.flatMap((i) => Object.keys(i.formatlar)));
 
-check("Toplam ünite", uniteToplam, 36699);
+check("Toplam ünite", uniteToplam, 36134);
 check("json.toplam.unite alanı", data.toplam.unite, uniteToplam);
-check("İl sayısı", iller.length, 45);
+check("İl sayısı", iller.length, 44);
 check("json.toplam.il alanı", data.toplam.il, iller.length);
 check("Ankara toplamı", ankara?.toplam, 2946);
 check("Mecra türü sayısı", mecralar.size, 20);
@@ -43,6 +43,10 @@ check("Edirne envanterde YOK (V1'de çıktı)", edirne === undefined, true);
 // V2 (2026-07-20) güncelleme nöbetçisi: tek değişiklik Adana LED 16→12
 const adana = iller.find((i) => i.il === "Adana");
 check("Adana LED (V2'de 16→12)", adana?.formatlar?.["LED"], 12);
+
+// V3 (2026-07-20) güncelleme nöbetçisi: Malatya envanterden çıktı (565 ünite)
+const malatya = iller.find((i) => i.il === "Malatya");
+check("Malatya envanterde YOK (V3'te çıktı)", malatya === undefined, true);
 
 const bozukIller = iller.filter(
   (i) => Object.values(i.formatlar).reduce((s, a) => s + a, 0) !== i.toplam

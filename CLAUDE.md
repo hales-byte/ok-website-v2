@@ -7,7 +7,7 @@
 - Planlar: `docs/plan/` (master + teknik + görsel + operasyon). Görev numaraları (T1, G3, A5…) oradan gelir.
 
 ## TEK DOĞRULUK KAYNAĞI
-- `src/data/envanter.json` → **45 il · 20 mecra türü · 36.699 ünite**
+- `src/data/envanter.json` → **44 il · 20 mecra türü · 36.134 ünite**
 - Rakam ASLA elle yazılmaz — her sayı bu dosyadan türetilir
 - Eski rakam görürsen (39/18/35.861 veya 47+/8/33.812+) sil, envanter.json'a bağla
 
@@ -21,7 +21,7 @@
 ## Komutlar
 - Doğrulama: `npm run build`
 - Deploy: `vercel --prod` (repo kökünden)
-- Veri kontrolü: `npm run check:envanter` (T1'de eklenecek: toplam 36.699, il 45, Ankara 2.946)
+- Veri kontrolü: `npm run check:envanter` (T1'de eklenecek: toplam 36.134, il 44, Ankara 2.946)
 
 ## SÜREKLİLİK PROTOKOLÜ — her oturumda zorunlu
 

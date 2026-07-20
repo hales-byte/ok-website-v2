@@ -22,7 +22,7 @@ export const BOLGE_ACIKLAMA: Record<string, string> = {
   karadeniz:
     "Karadeniz, tek bir sahil yolunun şehirleri birbirine bağladığı bölge. Samsun ve Trabzon'un liman ve şehir trafiğinden Rize ile Ordu'nun çay-fındık sahil hattına, Safranbolu'nun turist akışına kadar her durakta yenilenen bir kitlenin karşısındayız. Hedef ilinize göre bölge planını 15 dakikada çıkarıyoruz.",
   "dogu-anadolu":
-    "Doğu Anadolu, Türkiye'nin en geniş coğrafyasına yayılan bölge. Erzurum ve Van'ın üniversite ve ticaret merkezlerinden Kars–Sarıkamış'ın turizm hattına, Ağrı ile Malatya'nın şehir bulvarlarına kadar birbirinden uzak ama en görünür noktaları tek elden kapsıyoruz. Bölge planınızı 15 dakikada hazırlıyoruz.",
+    "Doğu Anadolu, Türkiye'nin en geniş coğrafyasına yayılan bölge. Erzurum ve Van'ın üniversite ve ticaret merkezlerinden Kars–Sarıkamış'ın turizm hattına, Ağrı'nın şehir bulvarlarına kadar birbirinden uzak ama en görünür noktaları tek elden kapsıyoruz. Bölge planınızı 15 dakikada hazırlıyoruz.",
   "guneydogu-anadolu":
     "Güneydoğu, sanayinin ve ticaretin hızla büyüdüğü bölge. Gaziantep'in OSB, üniversite ve AVM akslarından Diyarbakır ile Batman'ın kalabalık şehir merkezlerine kadar bölgenin en yoğun envanterlerinden birine sahibiz. Kampanyanız için lokasyon planını 15 dakikada çıkarıyoruz.",
 };

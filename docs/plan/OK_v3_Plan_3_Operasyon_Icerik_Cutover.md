@@ -94,7 +94,7 @@ Ritüel: **3 ayda bir 30 dk bakım turu** (Cowork ile) — rakam tutarlılığı
 
 - Her Claude Code oturumu için **hazır prompt üretimi** (Plan 1-2'deki taslaklardan)
 - Preview URL'lerinin tarayıcı denetimi (desktop + mobile ekran görüntülü rapor)
-- Rakam/tutarlılık bekçiliği: her yerde 45 / 20 / 36.699 (V2, 2026-07-20)
+- Rakam/tutarlılık bekçiliği: her yerde 44 / 20 / 36.134 (V3, 2026-07-20)
 - Tufan iletişim taslakları (WhatsApp mesajları)
 - İlerleme kaydı: her oturum sonu proje hafızasına durum notu
 

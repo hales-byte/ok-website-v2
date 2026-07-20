@@ -14,6 +14,13 @@
 
 ---
 
+### 2026-07-20 — V3: Malatya envanterden çıkarıldı (toplam 36.134)
+**Ne yapıldı:** Hakan'ın kararıyla Malatya (565 ünite) siteden tamamen çıkarıldı; toplamlar 44 il · 36.134 ünite · 42,4M erişim oldu.
+**Neden:** Malatya envanterimizden çıktı; sitede sunmadığımız bir şehir için müşteri beklentisi oluşmamalı.
+**Ne işe yaradı:** Malatya sayfasına gelen ziyaretçi artık Doğu Anadolu bölge sayfasına yönlendiriliyor (talep oradan yakalanıyor); tüm sayaçlar ve metinler yeni gerçeği gösteriyor. Kontrol aracına "Malatya yok" nöbetçisi eklendi.
+**Sırada:** Hakan'ın onayıyla yayına alma (yama hazır, commit onay bekliyor).
+
+
 ### 2026-07-20 — V2: Envanter güncellemesi (Adana LED 16→12, toplam 36.699)
 **Ne yapıldı:** Hakan'ın verdiği güncel envanter Excel'i sitedeki veriyle satır satır karşılaştırıldı; tek fark çıktı (Adana'daki LED ekran sayısı 16'dan 12'ye inmiş) ve site verisi buna göre güncellendi.
 **Neden:** Sitedeki envanter her zaman sahadaki gerçek envanterle birebir olmalı; müşteri yanlış adet görmemeli.

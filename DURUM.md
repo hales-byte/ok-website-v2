@@ -2,7 +2,14 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-20 · Cowork (V2 envanter — yeni Excel işlendi: tek fark **Adana LED 16→12**, toplam **36.703→36.699**; il 45 · mecra 20 · erişim 43,1M değişmedi; check:envanter 13/13 + build sandbox'ta yeşil; yama `OK_v3_yama/v2-envanter.patch` — **commit'siz, onay bekliyor**)
+**Son güncelleme:** 2026-07-20 · Cowork (V3 envanter — **Malatya envanterden çıktı** (−565): toplam **36.699→36.134**, il **45→44**, erişim **43,1M→42,4M**; /sehir/malatya → /bolge/dogu-anadolu kalıcı yönlendirme; check 14/14 + build sandbox'ta yeşil; yama `OK_v3_yama/v3-malatya.patch` — **commit'siz, onay bekliyor**)
+
+## V3 envanter güncellemesi — Malatya çıktı (yama hazır, onay+commit bekliyor)
+- Hakan kararı (2026-07-20): **Malatya envanterden çıktı** (565 ünite: CLP 300 + BILLBOARD 250 + OTOBÜS KAPLAMA 15). Yeni gerçekler: **44 il · 20 mecra · 36.134 ünite · erişim 42,4M** (42.394.071; Malatya nüfusu 755.854 tabandan düştü, katsayı 0,960465 sabit). Mecra sayısı 20 kaldı (OTOBÜS KAPLAMA Gaziantep'te 4 ünite ile yaşıyor).
+- Yönlendirme: bolge-config'te malatya standalone'dan çıktı → `movedToBolge` malatya→dogu-anadolu; `/sehir/malatya` + `/sehir/malatya/*` kalıcı (308) → `/bolge/dogu-anadolu`. Bölge sayfası Malatya'yı artık listelemiyor (envanter-türevi olduğu için otomatik).
+- İçerik: il-aciklama'dan Malatya metni kaldırıldı; Doğu Anadolu bölge metninden "Ağrı ile Malatya'nın" → "Ağrı'nın" (Hakan'a bildirildi). il-nufus.json'dan Malatya çıktı.
+- Nöbetçiler: check-envanter → toplam 36.134, il 44, + "Malatya envanterde YOK" (14 kontrol).
+- **Sonraki:** Hakan yamayı terminalden uygular → check + build + onay → commit + push (oto-deploy).
 
 ## V2 envanter güncellemesi (bu oturum — CANLI — 20.07 gerçek domainde doğrulandı)
 - Hakan 2026-07-20'de güncel "OBJ ENVANTER objenv.xlsx" verdi; V1 işleme kurallarıyla (forward-fill, il eşleme, mecra kanonikleştirme, Sayfa 2 ayrı) 246 satırın tamamı işlendi; işlenen toplam = ham toplam 36.699 birebir ✓.
@@ -84,8 +91,8 @@
 
 ## Kilit gerçekler (değişmez — tereddütte buraya bak)
 
-- Rakamlar: **45 il · 20 mecra · 36.699 ünite** — tek kaynak `src/data/envanter.json` (V2 güncellemesi 2026-07-20: yalnız Adana LED 16→12; V1 2026-07-07: Aydın +782 girdi, Edirne çıktı; il sayısı 45 sabit). Eski değerler 36.703 ve 35.919 idi.
-- **Aylık erişim: 43.120.042 (43,1M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.894.964, V1'de Aydın nüfusu girdi/Edirne çıktı) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer). Eski değer 42,4M idi.
+- Rakamlar: **44 il · 20 mecra · 36.134 ünite** — tek kaynak `src/data/envanter.json` (V3 2026-07-20: Malatya −565 çıktı, il 45→44; V2 2026-07-20: Adana LED 16→12; V1 2026-07-07: Aydın +782 girdi, Edirne çıktı). Eski değerler 36.699, 36.703 ve 35.919 idi.
+- **Aylık erişim: 42.394.071 (42,4M)** — envanter türevi; `src/data/il-nufus.json` nüfus toplamından (44.139.110; V3'te Malatya 755.854 çıktı) hesaplanır, `erisimEtiketi` ile sunulur. check:envanter doğrular (sabit değil, veriden türer). Eski değerler 43,1M ve 42,4M idi.
 - **V1 envanter (2026-07-07):** Aydın (Ege) envantere eklendi — BILLBOARD 532 + CLP RAKET-DURAK 250 = 782 ünite, kapsama noktaları Didim/Kuşadası/Efeler/Söke/Nazilli. Edirne envanterden çıkarıldı → `/sehir/edirne` artık `/sehir/kirklareli`'ye kalıcı yönlenir (`next.config.ts` ESKI_SEHIR_301; canlıda HTTP 308). check:envanter 8 → **10 kontrol** (Aydın 782 + Edirne-yok). Tramvay toplamı 80 (yalnız Gaziantep TRAMVAY KAPLAMA).
 - **Mecralar (ana sayfa): 8 showcase kartı** (FormatShowcase: billboard, clp, megalight, led, giantboard, pole-banner, totem, havalimanı — hepsi görselli) **+ 12 ek mecra grid'i** (G4b, `EkMecraGrid` + `src/data/content/ek-mecralar.ts`) = **20 mecra**. Ek grid adetleri envanter.json'dan `getFormatToplam(envanterAd)` ile türer (Luna 140, Megaboard 97, Tramvay Kaplama 40…), adet 0 olan kart gizlenir. Tramvay-kaplama görseli artık bu grid'de kullanılıyor (öksüz değil). `totem` tanımı G4b'de düzeltildi (direk üstünde ışıklı kutu pano).
 - **FİYAT GÖSTERİLMEZ (Hakan kararı, G4b):** `priceBand` + `formatPriceBand` `lib/formats.ts`'ten tamamen söküldü. Sitede hiçbir yerde fiyat yok; teklif akışı fiyatı konuşma/teklifle verir. grep `priceBand` → sıfır olmalı.
@@ -143,3 +150,4 @@
 | 2026-07-07 | G7c (önizleme) | loading.tsx min-h-[60vh]→min-h-screen; build 188; önizleme SSO korumalı olduğu için CLS yerel prod build'de doğrulandı (0.21/0.186→0.05); commit onay bekliyor |
 | 2026-07-07 | G7c kapanış | Onaylandı; commit 3e8fbc6 (yalnız loading.tsx) + push; vercel --prod; CANLI prod teyidi: home CLS 0.21→0 Perf 89→97, ankara CLS 0.186→0 Perf 91→100, footer kayması giderildi |
 | 2026-07-20 | V2 envanter (yama) | 36.703→36.699 (tek fark Adana LED 16→12); Excel 246 satır tam işlendi, ham toplam birebir; il 45/mecra 20/erişim 43,1M sabit; check 13/13; build ✓; HTML'de 36.699 var/36.703 yok; yama OK_v3_yama/v2-envanter.patch; commit onay bekliyor |
+| 2026-07-20 | V3 Malatya çıkışı (yama) | 36.699→36.134, il 45→44 (Malatya −565); erişim 43,1M→42,4M; malatya→dogu-anadolu 308; il+bölge metin ayıklama; check 14/14; build ✓; yama OK_v3_yama/v3-malatya.patch; commit onay bekliyor |

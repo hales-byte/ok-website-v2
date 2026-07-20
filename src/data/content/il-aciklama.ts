@@ -6,7 +6,7 @@
  * Metni OLMAYAN il için getIlAciklama() veriden zarif bir yedek üretir.
  *
  * NOT (lokasyon doğrulaması): metinlerdeki lokasyon adları güncel
- * envanter.json'a (36.699) göre teyit edildi. Ankara ilceler'i envanter.json'da
+ * envanter.json'a (36.134) göre teyit edildi. Ankara ilceler'i envanter.json'da
  * boş olduğu için Güvenpark/Kocatepe/AŞTİ/Beytepe/Keçiören çıkarıldı; Ordu'da
  * "Fatsa" ilceler'de olmadığı için çıkarıldı. (Envanter.json'a bu noktalar
  * eklenirse metin daha spesifik yazılabilir.)
@@ -60,8 +60,6 @@ export const IL_ACIKLAMA: Record<string, string> = {
     "Denizli, tekstil ve sanayinin şehri; gün boyu yoğun bir araç ve yaya trafiği var. Billboard ağırlıklı ağımız şehir girişlerinden ana bulvarlara kadar en çok görülen noktaları kapsıyor. Denizli planınızı 15 dakikada çıkarıyoruz.",
   agri:
     "Ağrı, Doğu'nun sınır ticareti ve geçiş şehri. Pole banner ve CLP ağırlıklı ağımızla şehir bulvarları boyunca tekrar eden bir görünürlük sunuyoruz. Ağrı planınızı bütçenize göre 15 dakikada hazırlıyoruz.",
-  malatya:
-    "Malatya, kayısının şehri ve bölgenin önemli bir ticaret merkezi. CLP ve billboard ağımızın yanında otobüs kaplamayla şehrin içinde hareketli bir görünürlük de sunuyoruz. Malatya planınızı 15 dakikada çıkarıyoruz.",
   rize:
     "Rize, çay ve yayla turizminin sahil şehri. CLP ve billboard ağırlıklı ağımız sahil yolu boyunca şehir merkezinin en çok görülen noktalarını kapsıyor. Rize planınızı bütçenize göre 15 dakikada hazırlıyoruz.",
   ordu:
