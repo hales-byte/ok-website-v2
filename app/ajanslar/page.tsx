@@ -55,7 +55,8 @@ const features = [
   {
     icon: Map,
     title: "Türkiye geneli envanter",
-    desc: "Tier-1 metropoller + tier-2 şehirler + Doğu/Güneydoğu kapsama. Tek tedarikçiyle 45 ilde paralel yürütme.",
+    // Rakam elle yazılmaz — TEK doğruluk kaynağı src/data/envanter.json (TOPLAM.il).
+    desc: `Tier-1 metropoller + tier-2 şehirler + Doğu/Güneydoğu kapsama. Tek tedarikçiyle ${TOPLAM.il} ilde paralel yürütme.`,
   },
 ];
 

@@ -8,7 +8,7 @@
  *   4. Her ilin toplamı, format dağılımının toplamına eşit
  *   5. Mecra türü sayısı = 20
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -87,6 +87,48 @@ const stublar = iller.filter((i) => i.toplam <= 3).sort((a, b) => a.toplam - b.t
 if (stublar.length) {
   console.log(`ℹ Düşük envanter (toplam ≤ 3) ${stublar.length} il — muhtemel eksik veri: ${stublar.map((i) => `${i.il}(${i.toplam})`).join(", ")}`);
 }
+
+/* ── NÖBETÇİ: kaynak kodda elle yazılmış il/ünite/erişim rakamı var mı? ──
+ * Kural: bu üç rakam ASLA literal yazılmaz, hep envanter.json'dan türetilir
+ * (TOPLAM.il / sayiTr(TOPLAM.unite) / erisimEtiketi()). Bu yüzden aşağıdaki
+ * kalıplardan HERHANGİ birinin koda girmesi başlı başına hatadır — değeri
+ * bugün doğru olsa bile envanter değişince sessizce bayatlar.
+ * Yanlış alarm önlemi (geçmiş ders): yorum satırları, URL/mailto'lar ve
+ * SVG path / nüfus veri dosyaları taranmaz; bütçe etiketleri ("100.000 TL")
+ * ve "15 dakika" gibi rakamlar kalıplara zaten uymaz. */
+const KOD_KOKLERI = ["app", "components", "src/data/content", "lib"];
+const TARANMAZ = new Set(["tr-il-paths.ts", "il-nufus.json"]);
+const HARDCODE_KALIPLARI = [
+  [/\b\d{1,3}\+?\s*il(de|den|in|e|i|'|\b)/, "il sayısı"],
+  [/\b\d{1,3}\.\d{3}\s*(ünite|reklam ünitesi)/, "ünite sayısı"],
+  [/\b\d{1,3}[.,]\d\s*M\b/, "aylık erişim"],
+];
+const tsDosyalari = (d) =>
+  readdirSync(d, { withFileTypes: true }).flatMap((e) => {
+    const p = join(d, e.name);
+    if (e.isDirectory()) return tsDosyalari(p);
+    return /\.(ts|tsx)$/.test(e.name) && !TARANMAZ.has(e.name) ? [p] : [];
+  });
+
+const hardcodelar = [];
+for (const kok of KOD_KOKLERI) {
+  const tam = join(root, kok);
+  if (!existsSync(tam)) continue;
+  for (const dosya of tsDosyalari(tam)) {
+    readFileSync(dosya, "utf8").split("\n").forEach((satir, i) => {
+      const t = satir.trim();
+      // yorum satırı veya URL/mailto içeren satır → tarama dışı
+      if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) return;
+      if (/https?:\/\/|mailto:|%[0-9A-F]{2}/.test(satir)) return;
+      for (const [re, ad] of HARDCODE_KALIPLARI) {
+        const m = re.exec(satir);
+        if (m) hardcodelar.push(`${ad}: ${dosya.slice(root.length + 1)}:${i + 1} → "${m[0].trim()}"`);
+      }
+    });
+  }
+}
+check("Kodda elle yazılmış il/ünite/erişim rakamı (olmamalı)", hardcodelar.length, 0);
+for (const h of hardcodelar) console.log(`   ✗ ${h} — envanter.json'dan türet (TOPLAM/sayiTr/erisimEtiketi)`);
 
 if (fail > 0) { console.error(`\n${fail} kontrol BAŞARISIZ`); process.exit(1); }
 console.log("\nTüm kontroller geçti — envanter.json tutarlı.");

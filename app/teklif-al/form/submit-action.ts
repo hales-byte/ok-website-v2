@@ -12,7 +12,7 @@ import { buildNotificationEmail } from "./email-template";
 import { AYDINLATMA_VERSIYONU } from "@/lib/kvkk";
 
 /**
- * Hata loglarında PII echo'sunu engellemek için Resend/FormSubmit hata
+ * Hata loglarında PII echo'sunu engellemek için Resend hata
  * objesinden sadece kod + mesaj çekilir. Saldırgan recon değeri en aza
  * indirilir, KVKK m.12 veri güvenliği prensibine uyum sağlanır.
  */
@@ -85,6 +85,9 @@ const TalepSchema = z.object({
  * Spam koruma metası — client'tan gelir ama doğrulanır:
  * - honeypot: gizli input (görünmez); bot doldurursa reject
  * - formStartTime: form mount unix timestamp; submit < 3sn sonraysa bot
+ *
+ * ZORUNLU: TeklifWizard her submit'te ikisini de gönderir. Eksik/bozuk meta
+ * yalnızca doğrudan Server Action çağrısı (bot) demektir → reddedilir.
  */
 export type SubmitMeta = {
   honeypot?: string;
@@ -98,28 +101,42 @@ export type SubmitResult =
   | { success: false; error: string };
 
 /**
- * Formu e-postayla satış ekibine ileten Server Action (Supabase kaldırıldı — lead hattı: Resend, yedek: FormSubmit).
+ * Formu e-postayla satış ekibine ileten Server Action (Supabase kaldırıldı — lead hattı: yalnız Resend).
  * Server-side çalışır, IP/user-agent bilgilerini güvenli şekilde alır.
  *
- * `meta` parametresi spam korumalarını içerir (honeypot + form-fill duration).
- * Eski çağrı imzası (`submitTeklif(state)`) hâlâ çalışır — meta opsiyonel.
+ * `meta` parametresi spam korumalarını içerir (honeypot + form-fill duration)
+ * ve ZORUNLUDUR — gerçek form her submit'te gönderir.
  */
 export async function submitTeklif(
   state: FormState,
   meta?: SubmitMeta
 ): Promise<SubmitResult> {
-  // ─── Honeypot: gizli input boş gelmiyorsa bot ───
   // Generic mesaj — saldırgan hangi kontrolün yakaladığını anlamasın.
-  if (meta?.honeypot && meta.honeypot.length > 0) {
-    return { success: false, error: "Talep işlenemedi. Lütfen tekrar deneyin." };
+  const SPAM_HATASI: SubmitResult = {
+    success: false,
+    error: "Talep işlenemedi. Lütfen tekrar deneyin.",
+  };
+
+  // ─── Meta zorunlu: eksik/bozuk tip = form dışı çağrı ───
+  if (
+    !meta ||
+    typeof meta.honeypot !== "string" ||
+    typeof meta.formStartTime !== "number" ||
+    !Number.isFinite(meta.formStartTime)
+  ) {
+    return SPAM_HATASI;
+  }
+
+  // ─── Honeypot: gizli input boş gelmiyorsa bot ───
+  if (meta.honeypot.length > 0) {
+    return SPAM_HATASI;
   }
 
   // ─── Min duration: form mount → submit < 3sn ise bot ───
-  if (meta?.formStartTime && typeof meta.formStartTime === "number") {
-    const elapsed = Date.now() - meta.formStartTime;
-    if (elapsed >= 0 && elapsed < MIN_FORM_DURATION_MS) {
-      return { success: false, error: "Talep işlenemedi. Lütfen tekrar deneyin." };
-    }
+  // elapsed < 0 = gelecek tarihli sahte timestamp → yine bot.
+  const elapsed = Date.now() - meta.formStartTime;
+  if (elapsed < MIN_FORM_DURATION_MS) {
+    return SPAM_HATASI;
   }
 
   // ─── Schema validation: tip + uzunluk kontrolü ───
@@ -176,7 +193,7 @@ export async function submitTeklif(
     aydinlatma_versiyonu: AYDINLATMA_VERSIYONU,
   };
 
-  // ─── LEAD HATTI (kritik yol): Resend → satis@ · yedek: FormSubmit ───
+  // ─── LEAD HATTI (kritik yol): Resend → satis@ ───
   // Veritabanı YOK — talep ancak e-posta ulaşırsa "alındı" sayılır.
   // Bu yüzden gönderim hatası kullanıcıya açıkça bildirilir.
   const gonderildi = await sendNotificationEmail(state, payload);
@@ -197,13 +214,14 @@ export async function submitTeklif(
 /**
  * Bildirim mailini gönderir — dönüş değeri lead'in ulaşıp ulaşmadığıdır.
  *
- * 1. RESEND_API_KEY varsa Resend ile gönderir.
- *    - RESEND_TO verilmemişse varsayılan alıcı: satis@objektifkriter.com.tr
- *    - RESEND_FROM verilmemişse Resend'in onboarding göndericisi kullanılır
- *      (domain doğrulaması cutover randevusunda yapılacak — o güne kadar
- *      default gönderici NORMALDİR, bkz. docs/plan Plan 1 / T5 notu).
- * 2. API anahtarı yoksa veya Resend hata verirse FormSubmit yedeği devreye
- *    girer (ek hesap/servis gerektirmez, e-posta relay'idir).
+ * Tek sağlayıcı Resend'dir (gizlilik politikamızın sağlayıcı seti: Vercel + Resend).
+ *  - RESEND_TO verilmemişse varsayılan alıcı: satis@objektifkriter.com.tr
+ *  - RESEND_FROM verilmemişse Resend'in onboarding göndericisi kullanılır
+ *    (domain doğrulaması cutover randevusunda yapılacak — o güne kadar
+ *    default gönderici NORMALDİR, bkz. docs/plan Plan 1 / T5 notu).
+ *
+ * Anahtar yoksa veya gönderim hata verirse false döner; kullanıcıya WhatsApp /
+ * satis@ alternatifini gösteren hata mesajı çıkar. Üçüncü parti yedek YOKTUR.
  */
 const VARSAYILAN_ALICI = "satis@objektifkriter.com.tr";
 
@@ -220,7 +238,6 @@ async function sendNotificationEmail(
 
   const { subject, html, text } = buildNotificationEmail(state, payload);
 
-  // ── 1) Resend (birincil) ──
   if (apiKey) {
     try {
       const resend = new Resend(apiKey);
@@ -238,28 +255,7 @@ async function sendNotificationEmail(
       console.error("Resend hatası (catch):", safeErrorInfo(e));
     }
   } else {
-    console.warn("RESEND_API_KEY yok — FormSubmit yedeğine geçiliyor.");
-  }
-
-  // ── 2) FormSubmit (yedek) ──
-  try {
-    const res = await fetch(
-      `https://formsubmit.co/ajax/${VARSAYILAN_ALICI}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          _subject: subject,
-          _template: "box",
-          _replyto: payload.email,
-          mesaj: text,
-        }),
-      }
-    );
-    if (res.ok) return true;
-    console.error("FormSubmit hatası: status=" + res.status);
-  } catch (e) {
-    console.error("FormSubmit hatası (catch):", safeErrorInfo(e));
+    console.error("RESEND_API_KEY yok — lead gönderilemedi.");
   }
 
   return false;

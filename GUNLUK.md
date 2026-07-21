@@ -14,6 +14,18 @@
 
 ---
 
+### 2026-07-21 — S2: Sitedeki rakamlar tek kaynağa bağlandı + kayma nöbetçisi
+**Ne yapıldı:** Sitedeki tüm "il sayısı / ünite sayısı / erişim" rakamları tarandı. Neredeyse tamamı zaten envanter dosyasından otomatik geliyordu; **tek bir yerde eski rakam kalmıştı** — Ajanslar sayfasındaki "45 ilde paralel yürütme" cümlesi (doğrusu 44; Malatya çıktığında güncellenmemiş). Bu cümle de artık rakamı envanter dosyasından otomatik alıyor. Ayrıca kontrol aracına yeni bir nöbetçi eklendi: bundan sonra kim koda elle bir il/ünite/erişim rakamı yazarsa kontrol kırmızı yanacak.
+**Neden:** Envanter değiştiğinde (il girip çıktığında) elle yazılmış rakamlar sessizce yanlış kalıyor ve müşteriye yanlış bilgi gidiyordu — Malatya örneğinde tam olarak bu oldu.
+**Ne işe yaradı:** Sitede artık yanlış rakam yok; envanter dosyası değiştiğinde bütün sayfalar (başlıklar, arama motoru açıklamaları, sayaçlar, sosyal medya görselleri) otomatik güncelleniyor. Yeni nöbetçi test edildi — elle yazılmış rakamı, bugün doğru olsa bile yakalıyor. Hukuki sayfalarda bu tür rakam hiç geçmiyor (üç kez kontrol edildi).
+**Sırada:** Site derlemesinin temiz geçtiğinin görülmesi, sonra onayınla commit. Ayrıca cevap bekleyen bir veri sorusu var: İzmir, Kocaeli, Sivas, Amasya ve Tokat'ta envanterde sadece 1-3 ünite görünüyor (gerçek veri bekleniyor).
+
+### 2026-07-21 — S1: Güvenlik yaması (paket güncellemesi + yedek servis kaldırma + spam sıkılaştırma)
+**Ne yapıldı:** Dört güvenlik işi: (1) sitenin altyapı paketleri güncellendi, bilinen ciddi açıklar kapandı; (2) teklif formundaki "yedek e-posta servisi" (formsubmit.co) tamamen kaldırıldı; (3) formu doğrudan çağırmaya çalışan botlar için kontrol sıkılaştırıldı; (4) sitenin başka bir sayfanın içine gömülmesi tamamen engellendi.
+**Neden:** Yedek servis canlıda zaten çalışmıyordu (hiç aktive edilmemişti) ve gizlilik politikamızda yer almayan üçüncü bir şirkete müşteri bilgisi gönderme riski taşıyordu. Paket açıkları ise dışarıdan bilinen ve taranan türden.
+**Ne işe yaradı:** Müşteri verisi artık yalnızca politikada yazan iki yere gidiyor (Vercel + Resend). Ciddi seviyedeki açık sayısı sıfır. Bot koruması eskiden atlatılabiliyordu, artık atlatılamıyor — gerçek kullanıcı hiç etkilenmiyor. Kullanıcıya gösterilen hata mesajları aynı kaldı.
+**Sırada:** Site derlemesinin (build) Cowork/yerel terminalde çalıştırılıp temiz geçtiğinin görülmesi; sonra onayınla tek commit + yayına gönderme.
+
 ### 2026-07-20 — Teklif formu: 3 düzeltme (81 il + KVKK isteğe bağlı + ölü buton)
 **Ne yapıldı:** Canlıdaki teklif formunda üç sorun giderildi. (1) "Tüm Türkiye"yi seçen kullanıcı 81 il işaretliyordu ama sistem en fazla 50 ile izin veriyordu → form reddediliyordu; sınır 81'e çıkarıldı. (2) KVKK onay kutusu tasarım gereği isteğe bağlı olmasına rağmen, işaretlemeyen herkesin talebi arka planda sessizce düşüyordu → kutu artık gerçekten isteğe bağlı. (3) Sayfayı yenileyen kişide "Gönder" butonu bazen hiç tepki vermeden ölü kalıyordu (kişisel bilgiler güvenlik için siliniyor); artık sessiz kalmak yerine "İletişim bilgileriniz eksik görünüyor — bir önceki adıma dönüp ad soyad ve e-posta girin" uyarısı çıkıyor.
 **Neden:** Üçü de canlıda gerçek lead kaybına yol açıyordu — kullanıcı formu dolduruyor ama talep ya reddediliyor ya da sessizce kayboluyordu.
