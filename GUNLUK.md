@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-07-22 — V4: Envanter güncellendi — Balıkesir LED +7 (toplam 36.141)
+**Ne yapıldı:** Hakan'ın verdiği güncel envanter Excel'i baştan sona işlendi; tek rakam değişikliği çıktı: Balıkesir'in LED ekran sayısı 31'den 38'e çıktı → site toplamı 36.134'ten 36.141'e güncellendi. Ayrıca Excel, Balıkesir'i ilk kez ilçe ilçe verdiği için Balıkesir sayfasındaki kapsama noktaları 4'ten 19'a zenginleşti (Bandırma, Edremit, Ayvalık'a ek olarak Altıeylül, Karesi, Gönen, Susurluk ve diğerleri).
+**Neden:** Sitedeki her rakam tek doğruluk kaynağından (envanter dosyası) türediği için şirket envanteri değişince önce bu dosya güncellenir; müşteri her zaman güncel gerçeği görmeli.
+**Ne işe yaradı:** Tüm sayaçlar, Balıkesir sayfası ve arama motoru açıklamaları otomatik olarak yeni toplamı gösterecek; Balıkesir ilçe kapsamıyla yerel aramalarda daha güçlü. Kontrol aracına "Balıkesir LED 38" nöbetçisi eklendi (15 kontrol) — rakam bir daha sessizce bayatlayamaz.
+**Sırada:** Hakan'ın onayıyla commit + yayın (v3'e push canlıya otomatik yansır) → canlıda 36.141 teyidi.
+
 ### 2026-07-21 — S2: Sitedeki rakamlar tek kaynağa bağlandı + kayma nöbetçisi
 **Ne yapıldı:** Sitedeki tüm "il sayısı / ünite sayısı / erişim" rakamları tarandı. Neredeyse tamamı zaten envanter dosyasından otomatik geliyordu; **tek bir yerde eski rakam kalmıştı** — Ajanslar sayfasındaki "45 ilde paralel yürütme" cümlesi (doğrusu 44; Malatya çıktığında güncellenmemiş). Bu cümle de artık rakamı envanter dosyasından otomatik alıyor. Ayrıca kontrol aracına yeni bir nöbetçi eklendi: bundan sonra kim koda elle bir il/ünite/erişim rakamı yazarsa kontrol kırmızı yanacak.
 **Neden:** Envanter değiştiğinde (il girip çıktığında) elle yazılmış rakamlar sessizce yanlış kalıyor ve müşteriye yanlış bilgi gidiyordu — Malatya örneğinde tam olarak bu oldu.

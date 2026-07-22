@@ -1,5 +1,5 @@
 {
-  "_not": "İl sayfası render kararı — envanter.json'a DOKUNMAZ (44 il/36.134 aynen durur). Sadece hangi ilin tek başına sayfa olacağını (standalone) ve hangisinin bölge sayfasında toplanıp 301 alacağını belirler. bolgeler.ts + next.config.ts bu dosyayı okur (tek kaynak).",
+  "_not": "İl sayfası render kararı — envanter.json'a DOKUNMAZ (44 il/36.141 aynen durur). Sadece hangi ilin tek başına sayfa olacağını (standalone) ve hangisinin bölge sayfasında toplanıp 301 alacağını belirler. bolgeler.ts + next.config.ts bu dosyayı okur (tek kaynak).",
   "bolgeler": [
     { "ad": "Marmara", "slug": "marmara" },
     { "ad": "Ege", "slug": "ege" },

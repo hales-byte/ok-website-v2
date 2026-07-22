@@ -1,9 +1,9 @@
 {
-  "guncelleme": "2026-07-20",
-  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-20; Network Adeti hariç) + V3: Malatya çıkarıldı (Hakan, 2026-07-20)",
+  "guncelleme": "2026-07-22",
+  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-22; Network Adeti hariç; Malatya kaynak dosyada da yok — V3 kararı geçerli)",
   "toplam": {
     "il": 44,
-    "unite": 36134
+    "unite": 36141
   },
   "iller": [
     {
@@ -66,17 +66,32 @@
     },
     {
       "il": "Balıkesir",
-      "toplam": 2714,
+      "toplam": 2721,
       "ilceler": [
+        "Altıeylül",
+        "Karesi",
         "Bandırma",
-        "Ayvalık",
+        "Gönen",
+        "Erdek",
+        "Marmara",
         "Edremit",
-        "Burhaniye-Altınoluk-Güre-Altınkum"
+        "Burhaniye",
+        "Havran",
+        "Sındırgı",
+        "Susurluk",
+        "Bigadiç",
+        "İvrindi",
+        "Dursunbey",
+        "Savaştepe",
+        "Ayvalık",
+        "Altınoluk",
+        "Güre",
+        "Altınkum"
       ],
       "formatlar": {
         "CLP RAKET-DURAK": 2146,
         "BILLBOARD": 509,
-        "LED": 31,
+        "LED": 38,
         "MEGALIGHT": 28
       }
     },
