@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { RAKAM_METNI } from "@/src/data/envanter";
+import { BOLGELER } from "@/src/data/bolgeler";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
 
@@ -90,7 +91,7 @@ export function Footer() {
       <div className="container-narrow py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           {/* Sol: Logo + tanıtım */}
-          <div className="md:col-span-5 space-y-6">
+          <div className="md:col-span-4 space-y-6">
             <Logo size="sm" href={null} />
             <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-sm">
               Türkiye genelinde {RAKAM_METNI.ozet} ile
@@ -129,7 +130,7 @@ export function Footer() {
           </div>
 
           {/* Orta: Sayfalar */}
-          <div className="md:col-span-3 space-y-4">
+          <div className="md:col-span-2 space-y-4">
             <h4 className="text-sm font-semibold text-[var(--color-text-primary)] uppercase tracking-wider">
               Sayfalar
             </h4>
@@ -160,6 +161,27 @@ export function Footer() {
                     className="block py-3 md:py-0 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
                   >
                     {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Orta: Bölgeler — 7 bölge sayfasının tek kalıcı giriş noktası
+              (hub-spoke: buradan bölge → il sayfalarına iniliyor). Liste
+              src/data/bolge-config.json'dan gelir; il linki eklenmez. */}
+          <div className="md:col-span-2 space-y-4">
+            <h4 className="text-sm font-semibold text-[var(--color-text-primary)] uppercase tracking-wider">
+              Bölgeler
+            </h4>
+            <ul className="space-y-2">
+              {BOLGELER.map((bolge) => (
+                <li key={bolge.slug}>
+                  <Link
+                    href={`/bolge/${bolge.slug}`}
+                    className="block py-3 md:py-0 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  >
+                    {bolge.ad}
                   </Link>
                 </li>
               ))}

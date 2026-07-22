@@ -25,6 +25,7 @@ import { SEHIR_NEDEN } from "@/src/data/content/sehir-neden";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { IlIcLinkler } from "./IlIcLinkler";
 import { IlSchema } from "./IlSchema";
+import { IlHarita } from "./IlHarita";
 
 /**
  * Bilinmeyen parametreler için GERÇEK 404 (Next 16 akışlı metadata,
@@ -327,6 +328,14 @@ export default async function SehirPage({
           </div>
         </section>
       )}
+
+      {/* KONUM HARİTASI — o ile zoom (fold altı, sabit oranlı kutu → CLS yok) */}
+      <IlHarita
+        slug={slug}
+        ilAdi={sehir}
+        unite={il.toplam}
+        mecraSayisi={mecraSayisi}
+      />
 
       {/* İÇ LİNKLER — komşu iller + mecra sayfaları */}
       <IlIcLinkler
