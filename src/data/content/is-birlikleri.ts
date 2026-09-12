@@ -10,8 +10,8 @@
  * G3.2 (2026-07-07): 30 → 74 markaya çıkarıldı (Hakan'ın yeni logo paketi).
  *   - Ana sayfa: LogoMarquee TÜM logoları iki/üç zıt satırda akıtır (slice yok).
  *   - /markalar: LogoWall tam duvarı (74) gösterir.
- *   - Sayaç ("X markanın tamamı") artık dizinin uzunluğundan türetilir
- *     (MARKALAR_LINK_METNI) — elle sayı yazılmaz.
+ *   - V5 (2026-09-12): ana sayfadaki "X markanın tamamı" bağlantısı kaldırıldı;
+ *     o bölümde yalnız logo akışı kalıyor.
  *   - Pepsi, PepsiCo kurumsal logosunun yerine geçti (Hakan kararı).
  *   - Emlak Konut, mevcut Emlak Yönetim kaydının yerine geçti (Hakan kararı).
  *   - Çakışan 15 marka (a101, arçelik, beko, bim, civil, dyson, getir,
@@ -134,11 +134,9 @@ export const IS_BIRLIKLERI_KPI: IsBirligiKPI[] = [
   { deger: "890+", etiket: "Marka Deneyimi" },
 ];
 
-/**
- * "X markanın tamamı" link metni — sayı diziden türetilir (elle yazılmaz).
- * Logo eklenip çıktıkça otomatik güncellenir.
- */
-export const MARKALAR_LINK_METNI = `${IS_BIRLIKLERI_LOGOLARI.length} markanın tamamı`;
+/* MARKALAR_LINK_METNI ("X markanın tamamı") V5'te (2026-09-12, Hakan kararı)
+ * KALDIRILDI: ana sayfada logo akışının altındaki bağlantı sökülünce tek
+ * kullanıcısı kalmadı. /markalar sayfası ve içindeki LogoWall duruyor. */
 
 /** Bölüm metinleri (başlık + eyebrow + alt metin). */
 export const IS_BIRLIKLERI = {

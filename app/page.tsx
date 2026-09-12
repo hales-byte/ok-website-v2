@@ -21,7 +21,6 @@ import {
   IS_BIRLIKLERI,
   IS_BIRLIKLERI_LOGOLARI,
   IS_BIRLIKLERI_KPI,
-  MARKALAR_LINK_METNI,
 } from "@/src/data/content/is-birlikleri";
 
 // Ana sayfa: layout default'unun template'ine düşmemesi için title.absolute kullan.
@@ -366,22 +365,10 @@ export default async function Home() {
 
           {/* G3.1: LOGO AKIŞI — tüm logolar iki zıt satırda akar (20sn/24sn),
               hover'da durur, reduced-motion'da statik ızgara */}
-          <LogoMarquee logolar={IS_BIRLIKLERI_LOGOLARI} />
-
-          <ScrollReveal direction="up">
-            <div className="text-center">
-              <Link
-                href="/markalar"
-                className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group"
-              >
-                {MARKALAR_LINK_METNI}
-                <ArrowRight
-                  size={14}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </Link>
-            </div>
-          </ScrollReveal>
+          {/* V5 (2026-09-12, Hakan kararı): logo akışının altındaki
+              "X markanın tamamı → /markalar" bağlantısı kaldırıldı.
+              Bu bölümde yalnız logo akışı kalır. /markalar segment sayfası,
+              menüdeki yeri ve ana sayfadaki segment kartı DOKUNULMADAN durur. */}
         </div>
       </section>
 

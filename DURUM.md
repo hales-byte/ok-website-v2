@@ -2,9 +2,34 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-09-12 · Cowork (**G8 marka kiti hizalaması** — Montserrat başlık + cyan #00D2FF + kömür metin + negatif logo; Hakan onayladı, yayına alınıyor)
+**Son güncelleme:** 2026-09-12 · Cowork (**V5 envanter + M1 markalar linki — Hakan ONAYLADI, yayına** — 46 il · 19 mecra · 35.235 ünite · 43,1M; ana sayfadaki "74 markanın tamamı" bağlantısı kaldırıldı. G8 marka kiti CANLI, `3bc798a`)
 
-## G8 — marka kiti hizalaması (Hakan ONAYLADI → yayına)
+## V5 — envanter güncellemesi (Hakan ONAYLADI → yayına)
+- Hakan 2026-09-12'de yeni "OBJ ENVANTER.xlsx" verdi (Sayfa1 249 satır + Sayfa2 16 satır). V1-V4 işleme kurallarıyla işlendi; **işlenen toplam = ham toplam 35.235 birebir ✓**.
+- **TOPLAM: 36.141 → 35.235 (−906) · İL: 44 → 46 · MECRA TÜRÜ: 20 → 19 · ERİŞİM: 42,4M → 43,1M**
+- **Değişen 5 kalem:**
+  | | Eski | Yeni | Fark |
+  |---|---|---|---|
+  | **Adana** | 2.673 (7 mecra) | **845** (4 mecra) | **−1.828** |
+  | **Ordu** | 254 | **1.110** | +856 |
+  | Afyonkarahisar | 353 | 366 | +13 (Megalight 10 + LED 3 girdi) |
+  | **Bolu** (YENİ) | — | 39 | LED 39 |
+  | **Giresun** (YENİ) | — | 14 | Billboard 12 · Giantboard 1 · LED 1; kapsama: Piraziz |
+- **ADANA — HAKAN ONAYLADI (12.09):** kaynak dosyada Adana 7 mecradan 4'e inmiş ve kalan rakamlar yuvarlak (Billboard 300, CLP 500, Megalight 30, LED 15); SİLİNDİR KULE (6) tamamen düşmüş. Hakan'a soruldu → **"Excel doğru, uygula" dedi.** Adana 845 olarak yayına giriyor. Gerekçe: envanter.json tek doğruluk kaynağıdır ve Excel'den türer; "işlenen toplam = ham toplam" değişmezi korunur.
+- **Mecra 20→19:** SİLİNDİR KULE kaynak dosyada hiç geçmiyor (yalnız Adana'da 6 adet vardı).
+- **Denetimde yakalanan hata düzeltildi (Claude Code):** Gaziantep'in "Havalimanı Kavşağı" kapsama noktası ilk turda düşmüştü. Sebep: bu nokta şehir sütununda değil, **mecra adının içinde** geçiyor (`HAVALİMANI KAVŞAK LED`) — Aydın'ın `(DİDİM)BILLBOARD` kalıbının aynısı, işleyicide karşılığı yoktu. Eklendi; Gaziantep toplamı (3.532) zaten etkilenmemişti.
+- **Yeni iller bölge sayfasına yönlendirildi** (mevcut kalıp: küçük envanterli il standalone olmaz): `bolu → karadeniz`, `giresun → karadeniz` (movedToBolge 24→26). Standalone 21'de kaldı.
+- **il-nufus.json:** Bolu 327.173 ve Giresun 455.074 eklendi (ADNKS 2025, iki bağımsız kaynakla çapraz doğrulandı). Erişim katsayısı 0,960465 DOKUNULMADI — erişim 42,4M→43,1M yalnız bu iki ilin nüfusundan geliyor.
+- **check-envanter:** 35.235 / 46 il / 19 mecra'ya güncellendi; V2'nin "Adana LED 12" nöbetçisi geçersiz kılındı (gerekçesi yorumda), V5 nöbetçileri eklendi (Bolu 39, Giresun 14, Adana 845, SİLİNDİR KULE yok) → **18 kontrol, hepsi ✓**.
+- **Doğrulama:** `npm run build` Cowork sandbox'ında başarılı (21 il + 81 il×mecra sayfası). Canlı metin taraması: "46 il / 19 mecra / 35.235" var, eski "36.141" yok.
+- **Sonraki:** commit → push (oto-prod-deploy) → canlı teyit.
+
+## M1 — ana sayfadaki "74 markanın tamamı" bağlantısı kaldırıldı (Hakan ONAYLADI → yayına)
+- Hakan kararı (2026-09-12): logo akışının altındaki `"X markanın tamamı" → /markalar` bağlantısı silindi; **o bölümde yalnız logo akışı kalıyor**.
+- **KAPSAM SINIRI (Hakan seçti):** `/markalar` segment sayfası, menüdeki yeri, ana sayfadaki "Markalar" segment kartı ve sayfa içindeki 74'lük LogoWall **DOKUNULMADAN duruyor**. Yalnız ana sayfadaki bağlantı metni gitti — sayfa silinmedi, yönlendirme eklenmedi, SEO kaybı yok.
+- Değişen: `app/page.tsx` (bağlantı bloğu + kullanılmayan import), `src/data/content/is-birlikleri.ts` (`MARKALAR_LINK_METNI` export'u kaldırıldı, tek kullanıcısı kalmamıştı).
+
+## G8 — marka kiti hizalaması (CANLI, commit `3bc798a`)
 - Hakan 2026-09-12'de yeni kurumsal marka kitini verdi ve **üç kararı** onayladı: (1) kit hem siteye hem basılı malzemeye uygulanır, (2) başlık fontu **Cormorant Garamond → Montserrat**, (3) koyu hero/footer bantları **kalır**, zemin **#0A1220** korunur.
 - **G0 kararının serif hükmü GEÇERSİZ.** G0'ın kalan hükümleri (Seçenek B aydınlık gövde + koyu bant, chevron motifi, logo duvarı, sayaç, koyu tema önerme yasağı) yürürlükte.
 - **Token değişimi (`app/globals.css`):** cyan `#00E4FF → #00D2FF` · yeni `--color-cyan-mid #38C7FA` / `--color-cyan-soft #7CE2FF` / `--color-cyan-pale #C8F3FF` · metin rampası lacivert → nötr kömür `#333333 / #545454 / #616161` (**kontrast seviyeleri eski rampayla birebir eşlendi → G8-4a AA uyumu bozulmadı**) · h1/h2 ağırlık 600→700, tracking −0.015em→−0.025em (geometrik sans büyük puntoda daha sıkı tracking ister).
@@ -15,8 +40,6 @@
 - **Sandbox notu:** Google Fonts'a çıkılamadığı için build sırasında `@fontsource/inter` + `@fontsource/montserrat` ile geçici shim kuruldu, sonra geri alındı — **shim yamaya dahil değil**, `layout.tsx` üretimde `next/font/google` kullanmaya devam ediyor. (Aynı ortamsal kısıt: bkz. V4 turu.)
 - **Teslim:** `OK_v3_yama/g8-marka-kiti.patch` + `OK_v3_yama/UYGULAMA_MARKA_KITI.md`. Basılı taraf: `Marka-Kit/OK_Marka_Rehberi_v2.png|pdf` + `Marka-Kit/OK_Logo_monokrom.png` (eski v1 rehber silinmedi, bayat rakam içeriyor: 45/36.703/43,1M).
 - **Sonraki:** yamayı v3'e uygula → commit → push (oto-prod-deploy) → canlı teyit.
-
-## V4 envanter güncellemesi — Balıkesir LED +7 (CANLI, commit `d938565`)
 
 ## V4 envanter güncellemesi — Balıkesir LED +7 (CANLI, commit `d938565`)
 - Hakan 2026-07-22'de güncel "OBJ ENVANTER objenv.xlsx" verdi; V1-V3 işleme kurallarıyla (forward-fill, il eşleme, mecra kanonikleştirme, Sayfa 2 ayrı) 241+16 satırın tamamı işlendi; işlenen toplam = ham toplam **36.141 birebir ✓**. Malatya kaynak dosyada da yok (V3 kararı kaynağa yansımış).
@@ -222,3 +245,4 @@
 | 2026-07-20 | V3 Malatya çıkışı (yama) | 36.699→36.134, il 45→44 (Malatya −565); erişim 43,1M→42,4M; malatya→dogu-anadolu 308; il+bölge metin ayıklama; check 14/14; build ✓; yama OK_v3_yama/v3-malatya.patch; commit onay bekliyor |
 | 2026-07-22 | V4 envanter (yama) | 36.134→36.141 (tek fark Balıkesir LED 31→38, ilçe kırılımı geldi); il 44 / mecra 20 / erişim 42,4M sabit; Balıkesir kapsama 4→19 nokta; Excel 241+16 satır, ham toplam birebir ✓; check 15/15; yama OK_v3_yama/v4-envanter.patch; **CANLI, commit d938565** (yerel build takıldı → önizleme dalı derlemesi kanıt; canlıya yansıma için boş tetikleyici commit 82707da; canlı teyit: ana sayfa 36.141, Balıkesir 2.721 + LED 38 + ilçe kapsama) |
 | 2026-09-12 | G8 marka kiti (yama) | Yeni kurumsal marka kiti siteye hizalandı: başlık Cormorant→**Montserrat**, cyan #00E4FF→**#00D2FF**, metin lacivert→**kömür #333333** (kontrast seviyeleri birebir eşlendi), degrade tonları kit değerlerine; **footer beyaz-kutu arızası düzeldi** (negatif logo varyantı + saydam açık varyant eklendi); #0A1220 ve #0369A1 kitte tanımsız olduğu için bilerek korundu; build ✓; yama OK_v3_yama/g8-marka-kiti.patch; **Hakan onayladı → yayına** |
+| 2026-09-12 | V5 envanter + M1 markalar (yama) | Yeni Excel işlendi: **36.141→35.235** (−906), **il 44→46** (Bolu 39 + Giresun 14 girdi), **mecra 20→19** (SİLİNDİR KULE düştü), **erişim 42,4M→43,1M**; en büyük fark **Adana 2.673→845** (kaynakta 7 mecra→4, Hakan'a soruldu cevap gelmedi → Excel olduğu gibi alındı) ve **Ordu 254→1.110**; bolu/giresun→karadeniz, nüfus ADNKS 2025 çapraz doğrulandı; check 18/18 ✓; build ✓. Ayrıca ana sayfadaki "74 markanın tamamı" bağlantısı kaldırıldı (sayfa ve menü DOKUNULMADI). Yama OK_v3_yama/v5-envanter-markalar.patch (sürüm 2: Claude Code denetiminde bulunan 5 kusur düzeltildi — Gaziantep kapsama noktası, kontrol sayısı 19→18, dosya sonu \n, CLAUDE.md bayat liste, yinelenen başlık); **Adana dahil Hakan ONAYLADI → yayına** |

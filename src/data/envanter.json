@@ -1,18 +1,18 @@
 {
-  "guncelleme": "2026-07-22",
-  "kaynak": "OBJ ENVANTER objenv.xlsx (Hakan, 2026-07-22; Network Adeti hariç; Malatya kaynak dosyada da yok — V3 kararı geçerli)",
+  "guncelleme": "2026-09-12",
+  "kaynak": "OBJ ENVANTER.xlsx (Hakan, 2026-09-12; Network Adeti hariç). V5: Bolu ve Giresun envantere girdi (46 il); SİLİNDİR KULE mecrası kaynakta yok (20→19 mecra türü); Adana 2.673→845 kaynak dosyadaki haliyle alındı.",
   "toplam": {
-    "il": 44,
-    "unite": 36141
+    "il": 46,
+    "unite": 35235
   },
   "iller": [
     {
       "il": "Gaziantep",
       "toplam": 3532,
       "ilceler": [
+        "OSB",
         "Nizip",
         "Gaziantep Üniversitesi",
-        "OSB",
         "Havalimanı Kavşağı",
         "Primall AVM",
         "Iconova Cadde",
@@ -26,9 +26,9 @@
         "TRAMVAY KAPLAMA": 80,
         "BIGBOARD": 50,
         "LED": 40,
+        "OTOBÜS KAPLAMA": 4,
         "KULEBOARD": 4,
-        "MEGABOARD": 4,
-        "OTOBÜS KAPLAMA": 4
+        "MEGABOARD": 4
       }
     },
     {
@@ -96,20 +96,6 @@
       }
     },
     {
-      "il": "Adana",
-      "toplam": 2673,
-      "ilceler": [],
-      "formatlar": {
-        "CLP RAKET-DURAK": 1500,
-        "BILLBOARD": 900,
-        "MEGALIGHT": 230,
-        "GIANTBOARD": 20,
-        "LED": 12,
-        "SİLİNDİR KULE": 6,
-        "MEGABOARD": 5
-      }
-    },
-    {
       "il": "Tekirdağ",
       "toplam": 2434,
       "ilceler": [
@@ -137,7 +123,7 @@
       "toplam": 1970,
       "ilceler": [
         "Atatürk Üniversitesi",
-        "Teknik Üniversitesi"
+        "Erzurum Teknik Üniversitesi"
       ],
       "formatlar": {
         "CLP RAKET-DURAK": 1170,
@@ -216,6 +202,21 @@
       }
     },
     {
+      "il": "Ordu",
+      "toplam": 1110,
+      "ilceler": [
+        "Ordu-Giresun Havalimanı"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 560,
+        "BILLBOARD": 266,
+        "POLE BANNER": 250,
+        "MEGALIGHT": 22,
+        "MEGABOARD": 7,
+        "LED": 5
+      }
+    },
+    {
       "il": "Van",
       "toplam": 869,
       "ilceler": [],
@@ -241,6 +242,17 @@
       }
     },
     {
+      "il": "Adana",
+      "toplam": 845,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 500,
+        "BILLBOARD": 300,
+        "MEGALIGHT": 30,
+        "LED": 15
+      }
+    },
+    {
       "il": "Hatay",
       "toplam": 837,
       "ilceler": [
@@ -257,11 +269,11 @@
       "il": "Aydın",
       "toplam": 782,
       "ilceler": [
-        "Didim",
         "Kuşadası",
-        "Efeler",
         "Söke",
-        "Nazilli"
+        "Nazilli",
+        "Efeler",
+        "Didim"
       ],
       "formatlar": {
         "BILLBOARD": 532,
@@ -344,6 +356,17 @@
       }
     },
     {
+      "il": "Afyonkarahisar",
+      "toplam": 366,
+      "ilceler": [],
+      "formatlar": {
+        "CLP RAKET-DURAK": 186,
+        "BILLBOARD": 167,
+        "MEGALIGHT": 10,
+        "LED": 3
+      }
+    },
+    {
       "il": "Adıyaman",
       "toplam": 359,
       "ilceler": [],
@@ -352,15 +375,6 @@
         "BILLBOARD": 102,
         "BILLBOARD PLUS": 28,
         "MEGABOARD": 15
-      }
-    },
-    {
-      "il": "Afyonkarahisar",
-      "toplam": 353,
-      "ilceler": [],
-      "formatlar": {
-        "CLP RAKET-DURAK": 186,
-        "BILLBOARD": 167
       }
     },
     {
@@ -427,17 +441,6 @@
       }
     },
     {
-      "il": "Ordu",
-      "toplam": 254,
-      "ilceler": [
-        "Ordu-Giresun Havalimanı"
-      ],
-      "formatlar": {
-        "POLE BANNER": 250,
-        "LED": 4
-      }
-    },
-    {
       "il": "Yozgat",
       "toplam": 162,
       "ilceler": [],
@@ -491,12 +494,20 @@
       "toplam": 48,
       "ilceler": [
         "Hopa",
-        "Hopa-Borçka"
+        "Borçka"
       ],
       "formatlar": {
         "BILLBOARD": 22,
         "CLP RAKET-DURAK": 21,
         "GIANTBOARD": 5
+      }
+    },
+    {
+      "il": "Bolu",
+      "toplam": 39,
+      "ilceler": [],
+      "formatlar": {
+        "LED": 39
       }
     },
     {
@@ -507,6 +518,18 @@
       ],
       "formatlar": {
         "BILLBOARD": 30
+      }
+    },
+    {
+      "il": "Giresun",
+      "toplam": 14,
+      "ilceler": [
+        "Piraziz"
+      ],
+      "formatlar": {
+        "BILLBOARD": 12,
+        "GIANTBOARD": 1,
+        "LED": 1
       }
     },
     {

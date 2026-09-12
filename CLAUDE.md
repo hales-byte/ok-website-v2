@@ -7,9 +7,9 @@
 - Planlar: `docs/plan/` (master + teknik + görsel + operasyon). Görev numaraları (T1, G3, A5…) oradan gelir.
 
 ## TEK DOĞRULUK KAYNAĞI
-- `src/data/envanter.json` → **44 il · 20 mecra türü · 36.141 ünite**
+- `src/data/envanter.json` → **46 il · 19 mecra türü · 35.235 ünite** (V5 güncellemesi, 2026-09-12)
 - Rakam ASLA elle yazılmaz — her sayı bu dosyadan türetilir
-- Eski rakam görürsen (39/18/35.861 veya 47+/8/33.812+) sil, envanter.json'a bağla
+- Eski rakam görürsen sil, envanter.json'a bağla. Bayat setler: **36.141 / 44 il / 20 mecra / 42,4M** (V4) · 36.703 / 45 il / 43,1M (V1) · 35.919 · 36.134 · 36.699 · 39/18/35.861 · 47+/8/33.812+
 
 ## Yasaklar
 1. Supabase, Mapbox veya yeni dış servis eklemek YASAK (tek istisna: Resend)
@@ -21,7 +21,7 @@
 ## Komutlar
 - Doğrulama: `npm run build`
 - Deploy: `vercel --prod` (repo kökünden)
-- Veri kontrolü: `npm run check:envanter` (T1'de eklenecek: toplam 36.141, il 44, Ankara 2.946)
+- Veri kontrolü: `npm run check:envanter` (beklenen: toplam 35.235, il 46, mecra 19, Ankara 2.946, Adana 845, Bolu 39, Giresun 14)
 
 ## SÜREKLİLİK PROTOKOLÜ — her oturumda zorunlu
 

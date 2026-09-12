@@ -14,6 +14,13 @@
 
 ---
 
+### 2026-09-12 — V5: Envanter güncellendi + ana sayfadaki marka bağlantısı kaldırıldı
+**Ne yapıldı:** Yeni envanter Excel'i baştan sona işlendi. Toplam ünite 36.141'den 35.235'e indi; envantere **Bolu ve Giresun** girdi (il sayısı 44'ten 46'ya çıktı), mecra türü 20'den 19'a düştü. En büyük iki değişiklik: **Adana 2.673'ten 845'e indi**, **Ordu 254'ten 1.110'a çıktı**. Ayrıca ana sayfada logo akışının altındaki "74 markanın tamamı" yazısı kaldırıldı — o bölümde artık sadece logolar akıyor.
+**Neden:** Sitedeki her rakam tek doğruluk kaynağından (envanter dosyası) türüyor; şirket envanteri değişince önce bu dosya güncellenir. Marka bağlantısı ise Hakan'ın isteğiyle sadeleştirme amaçlı kaldırıldı.
+**Ne işe yaradı:** Tüm sayaçlar, il sayfaları, arama motoru açıklamaları ve sosyal medya görselleri otomatik olarak yeni rakamları gösterecek. İki yeni il Karadeniz bölge sayfasına bağlandı, nüfusları resmî kaynaktan çapraz doğrulandı — aylık erişim 42,4 milyondan 43,1 milyona çıktı. Kontrol aracına dört yeni nöbetçi eklendi (18 kontrol).
+**Dikkat:** Adana'nın üçte ikisini kaybetmesi kaynak dosyadan geliyor. Rakamların yuvarlaklığı (300/500/30/15) şüphe uyandırdığı için Hakan'a soruldu; **"Excel doğru" onayı geldi** ve öyle uygulandı.
+**Sırada:** Yayına alma (onay alındı). "Markalar" sayfası, menüdeki yeri ve içindeki 74 logoluk duvar olduğu gibi duruyor — sadece ana sayfadaki bağlantı gitti.
+
 ### 2026-09-12 — G8: Site yeni marka kimliğine geçti
 **Ne yapıldı:** Hakan'ın verdiği yeni kurumsal marka kiti siteye uygulandı. En görünür değişiklik başlık yazı tipi: eski zarif tırnaklı (serif) yazı yerine artık logodaki harflerle aynı aileden gelen **Montserrat** kullanılıyor. Camgöbeği vurgu rengi kitin tonuna çekildi, gövde yazıları lacivertten kömür griye döndü. Bir de arıza çıktı ve düzeldi: logonun beyaz fonlu olması yüzünden sayfa altındaki koyu şeritte logo **beyaz bir kutu içinde** duruyordu — artık kitin koyu zemin için tanımladığı beyaz yazılı versiyon kullanılıyor.
 **Neden:** Logo, site ve basılı malzeme üç ayrı görsel dil konuşuyordu. Kiti tek kaynak yapmak, müşterinin gördüğü her yerde aynı markayı görmesini sağlıyor.
