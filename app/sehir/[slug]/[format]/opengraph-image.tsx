@@ -60,7 +60,7 @@ export default async function Image({
             height: 560,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(1,181,204,0.32) 0%, rgba(1,181,204,0) 70%)",
+              "radial-gradient(circle, rgba(0,210,255,0.32) 0%, rgba(0,210,255,0) 70%)",
             display: "flex",
           }}
         />
@@ -139,7 +139,7 @@ export default async function Image({
         <div
           style={{
             display: "flex",
-            color: "#0F172A",
+            color: "#333333",
             fontSize: 88,
             fontWeight: 800,
             lineHeight: 1.05,

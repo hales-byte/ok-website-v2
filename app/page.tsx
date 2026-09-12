@@ -117,7 +117,7 @@ export default async function Home() {
             className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full opacity-40 blur-3xl"
             style={{
               background:
-                "radial-gradient(circle, rgba(0, 228, 255, 0.30) 0%, rgba(0, 228, 255, 0) 70%)",
+                "radial-gradient(circle, rgba(0, 210, 255, 0.30) 0%, rgba(0, 210, 255, 0) 70%)",
             }}
           />
           <div
@@ -326,7 +326,7 @@ export default async function Home() {
           className="ok-glow pointer-events-none absolute -left-16 -top-24 h-[340px] w-[340px] rounded-full blur-3xl"
           style={{
             background:
-              "radial-gradient(circle, rgba(0, 228, 255, 0.20) 0%, rgba(0, 228, 255, 0) 70%)",
+              "radial-gradient(circle, rgba(0, 210, 255, 0.20) 0%, rgba(0, 210, 255, 0) 70%)",
             animation: "ok-glow-a 22s ease-in-out infinite",
           }}
         />

@@ -7,7 +7,7 @@ import { TOPLAM, sayiTr } from "@/src/data/envanter";
  *
  * Brand renkleri (`globals.css`'teki CSS değişkenleriyle aynı):
  *   primary-deep #0369A1 → primary #01B5CC → light #00CCE4
- *   bg #FFFFFF, text-primary #0F172A
+ *   bg #FFFFFF, text-primary #333333
  */
 
 export const alt = "Objektif Kriter — Türkiye OOH Reklam";
@@ -39,7 +39,7 @@ export default async function OpengraphImage() {
             height: 600,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(1,181,204,0.35) 0%, rgba(1,181,204,0) 70%)",
+              "radial-gradient(circle, rgba(0,210,255,0.35) 0%, rgba(0,210,255,0) 70%)",
             display: "flex",
           }}
         />
@@ -84,7 +84,7 @@ export default async function OpengraphImage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            color: "#0F172A",
+            color: "#333333",
             fontSize: 92,
             fontWeight: 800,
             lineHeight: 1.05,

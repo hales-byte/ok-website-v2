@@ -92,7 +92,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
           {/* Sol: Logo + tanıtım */}
           <div className="md:col-span-4 space-y-6">
-            <Logo size="sm" href={null} />
+            {/* Koyu bant → marka kiti negatif varyantı (beyaz yazı, cyan oklar) */}
+            <Logo size="sm" href={null} negatif />
             <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-sm">
               Türkiye genelinde {RAKAM_METNI.ozet} ile
               outdoor reklam çözümleri. Markanızı doğru yerde, doğru zamanda

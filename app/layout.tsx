@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { TOPLAM, sayiTr } from "@/src/data/envanter";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter, Montserrat } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
@@ -14,12 +14,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// Display serif — SADECE h1/h2 ve büyük rakamlarda kullanılır (bkz. globals.css)
-const cormorant = Cormorant_Garamond({
+// Display — marka kiti başlık fontu Montserrat (SemiBold/Bold).
+// SADECE h1/h2 ve büyük rakamlarda kullanılır (bkz. globals.css).
+const montserrat = Montserrat({
   subsets: ["latin", "latin-ext"],
   weight: ["600", "700"],
   display: "swap",
-  variable: "--font-cormorant",
+  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -62,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" className={`${inter.variable} ${cormorant.variable}`}>
+    <html lang="tr" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="flex flex-col min-h-screen">
         <a href="#main" className="skip-link">
           İçeriğe atla

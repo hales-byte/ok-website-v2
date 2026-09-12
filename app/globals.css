@@ -8,8 +8,18 @@
    ───────────────────────────────────────────── */
 @theme {
   /* ── Kimlik: Seçenek B — aydınlık gövde + koyu vurgu (Temmuz 2026) ──
-     Vurgu cyan #00E4FF koyu bantlarda parlar; açık gövdede küçük metin/link
-     WCAG AA için #0369A1 ailesine düşer. Koyu bant zemini #0A1220. */
+     Vurgu cyan koyu bantlarda parlar; açık gövdede küçük metin/link
+     WCAG AA için #0369A1 ailesine düşer. Koyu bant zemini #0A1220.
+
+     ── Marka kiti revizyonu (Eylül 2026) ──
+     Kurumsal marka kitine hizalandı: cyan #00E4FF → #00D2FF, ana metin
+     lacivert #0F172A → kömür/antrasit #333333 (nötr gri rampa), başlık fontu
+     Cormorant Garamond → Montserrat, degrade tonları kit değerleriyle
+     (#38C7FA · #7CE2FF · #C8F3FF).
+     KİTİN TANIMLAMADIĞI, SİTEYE ÖZEL İKİ TOKEN KORUNDU:
+       · --color-ink #0A1220 — koyu bant zemini (kit sadece beyaz zemin der)
+       · --color-primary #0369A1 — açık zeminde AA-güvenli link/buton;
+         kit cyan'ı beyaz üzerinde 1,8:1 kalır, küçük metinde kullanılamaz. */
 
   /* Renkler — açık gövde */
   --color-bg: #FFFFFF;
@@ -21,25 +31,32 @@
   --color-ink: #0A1220;
 
   /* Parlak cyan vurgu — koyu bant + dekoratif glow (küçük metinde kullanma) */
-  --color-cyan: #00E4FF;
+  --color-cyan: #00D2FF;
+
+  /* Kit degrade tonları — chevron akışı ve koyu bant başlık degradesi */
+  --color-cyan-mid: #38C7FA;
+  --color-cyan-soft: #7CE2FF;
+  --color-cyan-pale: #C8F3FF;
 
   /* Primary — açık gövdede AA-safe cyan/mavi.
-     .band-dark scope'unda #00E4FF'e yükselir (aşağıda). */
+     .band-dark scope'unda #00D2FF'e yükselir (aşağıda). */
   --color-primary: #0369A1;         /* beyaz üzerinde ~4.9:1 — normal metin AA */
   --color-primary-hover: #075985;
   --color-primary-deep: #0369A1;    /* buton zemini, beyaz metinle AA */
   --color-primary-darker: #075985;  /* hover/odak — beyaz üzerinde ~7:1, AAA */
 
-  /* Yazı renkleri — koyu lacivert tonları */
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #475569;
-  /* G8-4a: bir ton koyulaştırıldı (#64748B → #556174) — yarı saydam zeminde
-     12px etiket başlıkları AA'ya çekildi. Koyu bant değeri (#94A3B8) korunur. */
-  --color-text-muted: #556174;
+  /* Yazı renkleri — nötr kömür/antrasit rampası (marka kiti ana rengi).
+     Kontrast seviyeleri eski lacivert rampayla birebir eşlendi, böylece
+     G8-4a'da kazanılan AA uyumu korunur. */
+  --color-text-primary: #333333;    /* beyaz üzerinde 12,6:1 — AAA */
+  --color-text-secondary: #545454;  /* 7,6:1 — eski #475569 ile aynı seviye */
+  /* G8-4a devamı: muted, yarı saydam zeminde 12px etiketler için AA'da tutulur.
+     Koyu bant değeri (#94A3B8) korunur. */
+  --color-text-muted: #616161;      /* 6,2:1 — eski #556174 ile aynı seviye */
 
-  /* Fontlar — başlık serif (Cormorant), gövde sans (Inter) */
+  /* Fontlar — başlık geometrik sans (Montserrat), gövde sans (Inter) */
   --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-montserrat), "Helvetica Neue", Arial, sans-serif;
 
   /* Gradient — açık zeminde büyük başlık/rakam (koyu→orta cyan, büyük metin AA) */
   --background-image-logo-gradient: linear-gradient(
@@ -50,7 +67,7 @@
   );
 
   /* Glow shadow — cyan hafif gölge */
-  --shadow-primary-glow: 0 0 20px rgba(0, 228, 255, 0.25);
+  --shadow-primary-glow: 0 0 20px rgba(0, 210, 255, 0.25);
 }
 
 /* ── Koyu bant scope: token'ları koyu-zemin karşılıklarıyla yeniden tanımlar.
@@ -68,7 +85,7 @@
   --color-surface-elevated: rgba(255, 255, 255, 0.09);
   /* Koyu zeminde vurgu (link/ikon hover) parlak cyan'a yükselir */
   --color-primary: var(--color-cyan);
-  --color-primary-hover: #7DEEFF;
+  --color-primary-hover: var(--color-cyan-soft);
 }
 
 /* ─────────────────────────────────────────────
@@ -87,11 +104,12 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Display serif SADECE h1/h2'de (Cormorant Garamond). h3/h4 gövde sans kalır. */
+  /* Display SADECE h1/h2'de (Montserrat Bold). h3/h4 gövde sans (Inter) kalır.
+     Geometrik sans büyük puntoda serif'ten daha sıkı tracking ister. */
   h1, h2 {
     font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: -0.015em;
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 
   h3, h4 {
@@ -101,7 +119,7 @@
   }
 
   ::selection {
-    background: rgba(0, 228, 255, 0.28);
+    background: rgba(0, 210, 255, 0.28);
     color: var(--color-text-primary);
   }
 }
@@ -153,7 +171,7 @@
 
   .btn-secondary:hover {
     background: var(--color-surface-elevated);
-    border-color: rgba(1, 181, 204, 0.4);
+    border-color: rgba(0, 210, 255, 0.4);
   }
 
   .text-gradient {
@@ -163,9 +181,15 @@
     color: transparent;
   }
 
-  /* Koyu bantta gradient başlık parlak cyan'a döner (koyu zeminde AA) */
+  /* Koyu bantta gradient başlık kit degrade tonlarına döner (koyu zeminde AA:
+     en koyu uç #38C7FA bile #0A1220 üzerinde ~9,6:1) */
   .band-dark .text-gradient {
-    background-image: linear-gradient(to right, #67E8F9, #00E4FF, #A5F3FC);
+    background-image: linear-gradient(
+      to right,
+      var(--color-cyan-mid),
+      var(--color-cyan),
+      var(--color-cyan-pale)
+    );
   }
 
   /* Koyu bantta primary CTA parlak cyan zemin + koyu metin (cyan üzerinde ~10:1) */
@@ -174,7 +198,7 @@
     color: #06121F;
   }
   .band-dark .btn-primary:hover {
-    background: #7DEEFF;
+    background: var(--color-cyan-soft);
   }
 }
 

@@ -3,8 +3,8 @@
  * Kimlik: Seçenek B. Henüz sayfalara yayılmadı; hazır bileşen (G1).
  *
  * Renk: eyebrow `--color-primary` token'ını kullanır — açık gövdede AA-safe
- * #0369A1, `.band-dark` içinde otomatik parlak cyan (#00E4FF).
- * Başlık serif (font-display, Cormorant); alt yazı gövde sans + muted.
+ * #0369A1, `.band-dark` içinde otomatik parlak cyan (#00D2FF).
+ * Başlık display sans (font-display, Montserrat); alt yazı gövde sans + muted.
  */
 
 import type { ElementType, ReactNode } from "react";

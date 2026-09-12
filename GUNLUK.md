@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-09-12 — G8: Site yeni marka kimliğine geçti
+**Ne yapıldı:** Hakan'ın verdiği yeni kurumsal marka kiti siteye uygulandı. En görünür değişiklik başlık yazı tipi: eski zarif tırnaklı (serif) yazı yerine artık logodaki harflerle aynı aileden gelen **Montserrat** kullanılıyor. Camgöbeği vurgu rengi kitin tonuna çekildi, gövde yazıları lacivertten kömür griye döndü. Bir de arıza çıktı ve düzeldi: logonun beyaz fonlu olması yüzünden sayfa altındaki koyu şeritte logo **beyaz bir kutu içinde** duruyordu — artık kitin koyu zemin için tanımladığı beyaz yazılı versiyon kullanılıyor.
+**Neden:** Logo, site ve basılı malzeme üç ayrı görsel dil konuşuyordu. Kiti tek kaynak yapmak, müşterinin gördüğü her yerde aynı markayı görmesini sağlıyor.
+**Ne işe yaradı:** Site artık kartvizit, sunum ve açıkhava künyeleriyle aynı kimliği taşıyor; başlıklar logoyla aynı karakterde. Koyu şeritteki beyaz kutu sorunu gitti. Okunabilirlik korundu — açık zeminde link rengi ve koyu şerit zemini bilerek değiştirilmedi, çünkü kitin camgöbeği rengi beyaz üzerinde okunmuyor.
+**Sırada:** Yama hazır, Hakan onayladı; v3'e alınıp canlıya çıkacak. Basılı taraf için yeni marka rehberi (v2) ve tek renk logo da klasöre eklendi — eski rehberdeki rakamlar bayattı, yenisi güncel envanterden türetildi.
+
 ### 2026-07-22 — V4: Envanter güncellendi — Balıkesir LED +7 (toplam 36.141)
 **Ne yapıldı:** Hakan'ın verdiği güncel envanter Excel'i baştan sona işlendi; tek rakam değişikliği çıktı: Balıkesir'in LED ekran sayısı 31'den 38'e çıktı → site toplamı 36.134'ten 36.141'e güncellendi. Ayrıca Excel, Balıkesir'i ilk kez ilçe ilçe verdiği için Balıkesir sayfasındaki kapsama noktaları 4'ten 19'a zenginleşti (Bandırma, Edremit, Ayvalık'a ek olarak Altıeylül, Karesi, Gönen, Susurluk ve diğerleri).
 **Neden:** Sitedeki her rakam tek doğruluk kaynağından (envanter dosyası) türediği için şirket envanteri değişince önce bu dosya güncellenir; müşteri her zaman güncel gerçeği görmeli.

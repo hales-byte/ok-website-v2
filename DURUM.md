@@ -2,7 +2,21 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-07-22 · Cowork (**V4 envanter CANLI, commit `d938565`**: Balıkesir LED 31→38, toplam 36.141; S3 kapandı + canlı `69d1eec`)
+**Son güncelleme:** 2026-09-12 · Cowork (**G8 marka kiti hizalaması** — Montserrat başlık + cyan #00D2FF + kömür metin + negatif logo; Hakan onayladı, yayına alınıyor)
+
+## G8 — marka kiti hizalaması (Hakan ONAYLADI → yayına)
+- Hakan 2026-09-12'de yeni kurumsal marka kitini verdi ve **üç kararı** onayladı: (1) kit hem siteye hem basılı malzemeye uygulanır, (2) başlık fontu **Cormorant Garamond → Montserrat**, (3) koyu hero/footer bantları **kalır**, zemin **#0A1220** korunur.
+- **G0 kararının serif hükmü GEÇERSİZ.** G0'ın kalan hükümleri (Seçenek B aydınlık gövde + koyu bant, chevron motifi, logo duvarı, sayaç, koyu tema önerme yasağı) yürürlükte.
+- **Token değişimi (`app/globals.css`):** cyan `#00E4FF → #00D2FF` · yeni `--color-cyan-mid #38C7FA` / `--color-cyan-soft #7CE2FF` / `--color-cyan-pale #C8F3FF` · metin rampası lacivert → nötr kömür `#333333 / #545454 / #616161` (**kontrast seviyeleri eski rampayla birebir eşlendi → G8-4a AA uyumu bozulmadı**) · h1/h2 ağırlık 600→700, tracking −0.015em→−0.025em (geometrik sans büyük puntoda daha sıkı tracking ister).
+- **KİTİN TANIMLAMADIĞI, BİLEREK KORUNAN İKİ TOKEN — ileride "kite uymuyor" diye değiştirme:** `--color-ink #0A1220` (kit yalnız "Saf Beyaz zemin" der, koyu bant zeminini tanımlamaz) · `--color-primary #0369A1` (kit cyan'ı beyaz üzerinde **1,8:1** — küçük metin/linkte WCAG AA geçmez). Gerekçe `globals.css` başındaki yorum bloğuna yazıldı.
+- **DÜZELTİLEN ARIZA:** `public/logo.png` RGB (alfa yok, beyaz fon baskılı) olduğu için **koyu footer'da beyaz kutu** içinde görünüyordu. Çözüm: `public/logo-acik.png` (saydam) + `public/logo-negatif.png` (beyaz yazı, cyan oklar) eklendi, `Logo.tsx`'e `negatif` prop'u geldi, Footer negatif kullanıyor. `public/logo.png` JSON-LD/OG için **dokunulmadan** bırakıldı.
+- Değişen dosyalar (11): `globals.css` · `layout.tsx` · `page.tsx` · `opengraph-image.tsx` · `sehir/[slug]/[format]/opengraph-image.tsx` · `Logo.tsx` · `SectionHeader.tsx` · `SahadanKareler.tsx` · `layout/Footer.tsx` · **yeni** `public/logo-acik.png` + `public/logo-negatif.png`. Rakam/veri dosyalarına dokunulmadı.
+- **Doğrulama:** `npm run build` Cowork sandbox'ında **başarılı** (81 il + 78 il×mecra sayfası üretildi). Ekran görüntüleri: `ekran-goruntuleri/marka-v2-*.png` (ana hero, ana alt, şehir, envanter, footer, mobil 390px).
+- **Sandbox notu:** Google Fonts'a çıkılamadığı için build sırasında `@fontsource/inter` + `@fontsource/montserrat` ile geçici shim kuruldu, sonra geri alındı — **shim yamaya dahil değil**, `layout.tsx` üretimde `next/font/google` kullanmaya devam ediyor. (Aynı ortamsal kısıt: bkz. V4 turu.)
+- **Teslim:** `OK_v3_yama/g8-marka-kiti.patch` + `OK_v3_yama/UYGULAMA_MARKA_KITI.md`. Basılı taraf: `Marka-Kit/OK_Marka_Rehberi_v2.png|pdf` + `Marka-Kit/OK_Logo_monokrom.png` (eski v1 rehber silinmedi, bayat rakam içeriyor: 45/36.703/43,1M).
+- **Sonraki:** yamayı v3'e uygula → commit → push (oto-prod-deploy) → canlı teyit.
+
+## V4 envanter güncellemesi — Balıkesir LED +7 (CANLI, commit `d938565`)
 
 ## V4 envanter güncellemesi — Balıkesir LED +7 (CANLI, commit `d938565`)
 - Hakan 2026-07-22'de güncel "OBJ ENVANTER objenv.xlsx" verdi; V1-V3 işleme kurallarıyla (forward-fill, il eşleme, mecra kanonikleştirme, Sayfa 2 ayrı) 241+16 satırın tamamı işlendi; işlenen toplam = ham toplam **36.141 birebir ✓**. Malatya kaynak dosyada da yok (V3 kararı kaynağa yansımış).
@@ -207,3 +221,4 @@
 | 2026-07-20 | V2 envanter (yama) | 36.703→36.699 (tek fark Adana LED 16→12); Excel 246 satır tam işlendi, ham toplam birebir; il 45/mecra 20/erişim 43,1M sabit; check 13/13; build ✓; HTML'de 36.699 var/36.703 yok; yama OK_v3_yama/v2-envanter.patch; commit onay bekliyor |
 | 2026-07-20 | V3 Malatya çıkışı (yama) | 36.699→36.134, il 45→44 (Malatya −565); erişim 43,1M→42,4M; malatya→dogu-anadolu 308; il+bölge metin ayıklama; check 14/14; build ✓; yama OK_v3_yama/v3-malatya.patch; commit onay bekliyor |
 | 2026-07-22 | V4 envanter (yama) | 36.134→36.141 (tek fark Balıkesir LED 31→38, ilçe kırılımı geldi); il 44 / mecra 20 / erişim 42,4M sabit; Balıkesir kapsama 4→19 nokta; Excel 241+16 satır, ham toplam birebir ✓; check 15/15; yama OK_v3_yama/v4-envanter.patch; **CANLI, commit d938565** (yerel build takıldı → önizleme dalı derlemesi kanıt; canlıya yansıma için boş tetikleyici commit 82707da; canlı teyit: ana sayfa 36.141, Balıkesir 2.721 + LED 38 + ilçe kapsama) |
+| 2026-09-12 | G8 marka kiti (yama) | Yeni kurumsal marka kiti siteye hizalandı: başlık Cormorant→**Montserrat**, cyan #00E4FF→**#00D2FF**, metin lacivert→**kömür #333333** (kontrast seviyeleri birebir eşlendi), degrade tonları kit değerlerine; **footer beyaz-kutu arızası düzeldi** (negatif logo varyantı + saydam açık varyant eklendi); #0A1220 ve #0369A1 kitte tanımsız olduğu için bilerek korundu; build ✓; yama OK_v3_yama/g8-marka-kiti.patch; **Hakan onayladı → yayına** |

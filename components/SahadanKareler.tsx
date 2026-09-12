@@ -29,7 +29,7 @@ function Chevronlar() {
           key={x}
           d={`M${x + 2} 1 L${x + 12} 7 L${x + 2} 13`}
           fill="none"
-          stroke={["#9BEFFB", "#4DE9FF", "#00E4FF"][i]}
+          stroke={["#C8F3FF", "#7CE2FF", "#00D2FF"][i]}
           strokeWidth="3.2"
           strokeLinecap="square"
         />

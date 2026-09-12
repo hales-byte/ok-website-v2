@@ -11,18 +11,27 @@ interface LogoProps {
   size?: keyof typeof sizes;
   href?: string | null;
   className?: string;
+  /**
+   * Marka kiti "Zemin Varyasyonları" kuralı:
+   *  - false (varsayılan) → açık zemin: antrasit yazı + degrade oklar, saydam fon
+   *  - true → koyu zemin (negatif): beyaz yazı, "İ" noktaları ve oklar cyan kalır
+   * Koyu bant (`.band-dark`) üzerinde HER ZAMAN negatif kullanılır; beyaz fonlu
+   * logoyu koyu zemine koymak kiti ihlal eder (beyaz kutu efekti).
+   */
+  negatif?: boolean;
 }
 
 export function Logo({
   size = "md",
   href = "/",
   className = "",
+  negatif = false,
 }: LogoProps) {
   const { width, height } = sizes[size];
 
   const image = (
     <Image
-      src="/logo.png"
+      src={negatif ? "/logo-negatif.png" : "/logo-acik.png"}
       alt="Objektif Kriter"
       width={width}
       height={height}
