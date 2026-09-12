@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-09-12 — V5-DÜZELTME: Ana sayfadaki kayan logolar geri kondu
+**Ne yapıldı:** Bir önceki turda "74 markanın tamamı" yazısı kaldırılırken, aynı bölümdeki **kayan marka logoları da yanlışlıkla silinmişti**. Bölüm bir süre bomboş yayında kaldı. Logolar geri kondu; yazı kaldırılmış halde duruyor — yani istenen sonuç artık doğru.
+**Neden oldu:** Yazıyı silerken hemen üstündeki logo satırı da silme bloğuna girmiş. Yapılan kontroller yalnız "yazı gitti mi" diye baktığı için, "logolar duruyor mu" sorusu hiç sorulmadı; gönderilen ekran görüntüsü de o bölümü kadraja almamıştı. Hatayı Hakan canlıda fark etti.
+**Ne işe yaradı:** Ana sayfadaki en güçlü güven unsuru — 74 markanın logosu — geri geldi. Bundan sonra bir şey kaldırılırken "yanındaki ne oldu" kontrolü de yapılacak ve teslim görüntüsü değişen bölümü göstermek zorunda.
+**Sırada:** Düzeltme yaması hazır, hemen yayına alınmalı.
+
 ### 2026-09-12 — V5: Envanter güncellendi + ana sayfadaki marka bağlantısı kaldırıldı
 **Ne yapıldı:** Yeni envanter Excel'i baştan sona işlendi. Toplam ünite 36.141'den 35.235'e indi; envantere **Bolu ve Giresun** girdi (il sayısı 44'ten 46'ya çıktı), mecra türü 20'den 19'a düştü. En büyük iki değişiklik: **Adana 2.673'ten 845'e indi**, **Ordu 254'ten 1.110'a çıktı**. Ayrıca ana sayfada logo akışının altındaki "74 markanın tamamı" yazısı kaldırıldı — o bölümde artık sadece logolar akıyor.
 **Neden:** Sitedeki her rakam tek doğruluk kaynağından (envanter dosyası) türüyor; şirket envanteri değişince önce bu dosya güncellenir. Marka bağlantısı ise Hakan'ın isteğiyle sadeleştirme amaçlı kaldırıldı.

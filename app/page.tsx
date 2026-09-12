@@ -368,7 +368,11 @@ export default async function Home() {
           {/* V5 (2026-09-12, Hakan kararı): logo akışının altındaki
               "X markanın tamamı → /markalar" bağlantısı kaldırıldı.
               Bu bölümde yalnız logo akışı kalır. /markalar segment sayfası,
-              menüdeki yeri ve ana sayfadaki segment kartı DOKUNULMADAN durur. */}
+              menüdeki yeri ve ana sayfadaki segment kartı DOKUNULMADAN durur.
+              V5-düzeltme: V5'te bağlantı bloğuyla birlikte LogoMarquee de
+              yanlışlıkla silinmişti; geri kondu. Bu satır BU BÖLÜMÜN TEK
+              İÇERİĞİ — silinmemeli. */}
+          <LogoMarquee logolar={IS_BIRLIKLERI_LOGOLARI} />
         </div>
       </section>
 

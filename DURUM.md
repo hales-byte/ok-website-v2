@@ -2,7 +2,14 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-09-12 · Cowork (**V5 envanter + M1 markalar linki — Hakan ONAYLADI, yayına** — 46 il · 19 mecra · 35.235 ünite · 43,1M; ana sayfadaki "74 markanın tamamı" bağlantısı kaldırıldı. G8 marka kiti CANLI, `3bc798a`)
+**Son güncelleme:** 2026-09-12 · Cowork (**V5-DÜZELTME: logo akışı geri kondu** — V5'te yanlışlıkla silinmişti, canlıda bir süre görünmedi. Önceki: V5 envanter + M1 markalar linki, Hakan ONAYLADI, yayına** — 46 il · 19 mecra · 35.235 ünite · 43,1M; ana sayfadaki "74 markanın tamamı" bağlantısı kaldırıldı. G8 marka kiti CANLI, `3bc798a`)
+
+## V5-DÜZELTME — ana sayfa logo akışı geri kondu (ACİL, canlı hata)
+- **Hata:** V5/M1 turunda `app/page.tsx`'te "X markanın tamamı → /markalar" bağlantı bloğu silinirken **`<LogoMarquee logolar={IS_BIRLIKLERI_LOGOLARI} />` satırı da silindi.** Hakan'ın isteği "sadece logo akışı kalsın"dı — tam tersi oldu, bölüm tamamen boşaldı. `44dc090` ile canlıya çıktı.
+- **Neden yakalanmadı:** (a) metin taraması yalnız "markanın tamamı" ifadesinin YOKLUĞUNU kontrol etti, logoların VARLIĞINI kontrol etmedi; (b) build ve `check:envanter` görsel içerikle ilgilenmez; (c) teslim edilen ekran görüntüsünün kadrajı logo şeridini kaçırdı — bölümün boş olduğu görüntüde fark edilemedi. **Hatayı Hakan canlıda gördü.**
+- **Düzeltme:** `<LogoMarquee>` satırı geri kondu; üstüne "bu bölümün tek içeriği, silinmemeli" uyarı yorumu eklendi. Bağlantı metni kaldırılmış halde kalıyor (Hakan kararı doğru uygulanıyor).
+- **Doğrulama:** build ✓ · DOM kontrolü `.ok-marquee-track` içinde **148 logo** (74 × 2 dikişsiz kopya) · ekran görüntüsü `ekran-goruntuleri/duzeltme-logo-akisi.png` — 3 satır logo akıyor, altında bağlantı yok.
+- **KALICI DERS:** bir öğe kaldırılırken komşu JSX satırlarının da silinmediği, **kaldırma değil VARLIK kontrolüyle** doğrulanmalı ("X gitti mi" değil, "Y hâlâ duruyor mu"). Teslim ekran görüntüsü değişen bölümü mutlaka kadraja almalı.
 
 ## V5 — envanter güncellemesi (Hakan ONAYLADI → yayına)
 - Hakan 2026-09-12'de yeni "OBJ ENVANTER.xlsx" verdi (Sayfa1 249 satır + Sayfa2 16 satır). V1-V4 işleme kurallarıyla işlendi; **işlenen toplam = ham toplam 35.235 birebir ✓**.
