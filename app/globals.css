@@ -447,6 +447,12 @@
   stroke: var(--color-primary-darker);
   stroke-width: 1.6;
 }
+/* Fare tıklamasında tarayıcının varsayılan odak halkası ilin DİKDÖRTGEN sınır
+   kutusunu çiziyor ve siluet okunurluğunu bozuyordu. Klavye göstergesi
+   kaybolmuyor: :focus-visible'daki ink kontur aynen duruyor. */
+.harita-il:focus {
+  outline: none;
+}
 .harita-il:focus-visible {
   outline: none;
   stroke: var(--color-ink);
