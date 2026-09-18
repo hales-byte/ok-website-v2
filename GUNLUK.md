@@ -14,6 +14,13 @@
 
 ---
 
+### 2026-09-18 — V6: Envanter büyüdü (39.960 ünite, 48 il) + Nevşehir kendi sayfasına çıktı
+**Ne yapıldı:** Yeni envanter Excel'i işlendi ve siteye uygulandı. Toplam ünite 35.235'ten **39.960**'a, il sayısı 46'dan **48**'e çıktı; aylık erişim 43,1 milyondan **44,9 milyona** yükseldi. **Manisa (2.251)** ve **Nevşehir (697)** envantere girdi, ikisi de kendi şehir sayfasını aldı. **Adana 845'ten 2.673'e döndü** — V5'te kaynak dosyada eksik görünen mecralar bu kez tam geldi. Ankara'nın rakamı değişmedi ama Excel ilk kez lokasyon kırılımı verdiği için Güvenpark, AŞTİ, Beşevler gibi 8 nokta sayfaya ve metne girdi.
+**Neden:** Sitedeki her rakam tek bir dosyadan türüyor; şirket envanteri değişince önce o dosya güncelleniyor, sayaçlar ve tüm sayfalar peşinden geliyor. Nevşehir önce küçük iller kalıbıyla bölge sayfasına bağlanmıştı; Hakan "kendi sayfası olsun" dedi, aynı turda standalone'a alındı.
+**Ne işe yaradı:** Müşteri artık gerçek büyüklüğü görüyor: 48 il, 39.960 ünite, 44,9 milyon aylık erişim. Manisa ve Nevşehir için Google'dan gelen aramalar artık kendi sayfalarına düşüyor (site haritasında 23 şehir sayfası). Adana'nın envanteri gerçek haline döndü — V5'te üçte birine inmiş görünüyordu. Kontrol aracına yeni nöbetçiler eklendi (23 kontrol), rakamlar bir daha sessizce bayatlayamaz.
+**Dikkat:** İki yeni mecra türü (Lightbox ve Silindir Kule) envantere ve rakamlara dahil ama **Mecralar sayfasında tanıtılmıyor** — bu bilinçli bir karar, değişmedi. Manisa'daki giantboard adedi Excel'de belirsiz (`*`) olduğu için hiç sayılmadı; gerçek adet gelirse tek satırlık ekleme.
+**Sırada:** Sunum ve Instagram'daki rakamlar artık üç sürüm geride (36.703 → 36.141 → 35.235; doğrusu 39.960) — ayrı bir iş olarak güncellenmeli.
+
 ### 2026-09-12 — V5-DÜZELTME: Ana sayfadaki kayan logolar geri kondu
 **Ne yapıldı:** Bir önceki turda "74 markanın tamamı" yazısı kaldırılırken, aynı bölümdeki **kayan marka logoları da yanlışlıkla silinmişti**. Bölüm bir süre bomboş yayında kaldı. Logolar geri kondu; yazı kaldırılmış halde duruyor — yani istenen sonuç artık doğru.
 **Neden oldu:** Yazıyı silerken hemen üstündeki logo satırı da silme bloğuna girmiş. Yapılan kontroller yalnız "yazı gitti mi" diye baktığı için, "logolar duruyor mu" sorusu hiç sorulmadı; gönderilen ekran görüntüsü de o bölümü kadraja almamıştı. Hatayı Hakan canlıda fark etti.
