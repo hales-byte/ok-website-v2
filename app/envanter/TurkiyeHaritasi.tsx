@@ -4,7 +4,11 @@
  * SVG TÜRKİYE HARİTASI — Mapbox'ın yerine geçen tamamen statik bileşen.
  * - İl sınırları: src/data/tr-il-paths.ts (gömülü veri, dış servis YOK)
  * - Envanter: props ile server'dan gelir (kaynak: envanter.json)
- * - 7 bölge renk kodlu; envanterli iller tıklanınca detay paneli açılır.
+ * - RENK DİLİ (Eylül 2026 revizyonu): il dolgusu ENVANTER YOĞUNLUĞUNU gösterir,
+ *   marka kitinin cyan rampasıyla (soft → primary-darker). Eski 7-bölge gökkuşağı
+ *   paleti (kehribar/mor/gül/turuncu) marka kitinde yoktu ve renk hiçbir bilgi
+ *   taşımıyordu; bölge artık filtre + panel etiketiyle veriliyor, HUE ile değil.
+ * - Saydamlık yalnız filtre/seçim sönümlemesi yapar; renkle görev karışmaz.
  * Token, API, ağ isteği yoktur — "0 şehir" hatası kökten tarih olmuştur.
  */
 
@@ -36,29 +40,27 @@ const BOLGELER = [
   "Güneydoğu Anadolu",
 ] as const;
 
-/** Bölge → dolgu rengi (aydınlık zeminde doygun tonlar — G5 cilası) */
-const BOLGE_RENK: Record<string, string> = {
-  "Marmara": "#0EA5E9",
-  "Ege": "#14B8A6",
-  "Akdeniz": "#F59E0B",
-  "İç Anadolu": "#8B5CF6",
-  "Karadeniz": "#22C55E",
-  "Doğu Anadolu": "#F43F5E",
-  "Güneydoğu Anadolu": "#F97316",
-};
+/** ENVANTER YOĞUNLUĞU RAMPASI — tamamı marka kiti cyan ailesinden.
+ *  Açıktan koyuya: kit soft → kit mid → ara ton → primary-darker.
+ *  En açık basamak bile belirgin cyan; "envanteri az il" soluk/silik
+ *  görünmez, yalnız daha az doygun okunur. */
+const YOGUNLUK_RAMPA = ["#7CE2FF", "#38C7FA", "#0891B2", "#075985"] as const;
 
-/** Bölge → metin rengi (beyaz zeminde ≥4.5:1 — panel etiketi bunlarla yazılır) */
-const BOLGE_RENK_METIN: Record<string, string> = {
-  "Marmara": "#0369A1",
-  "Ege": "#0F766E",
-  "Akdeniz": "#B45309",
-  "İç Anadolu": "#6D28D9",
-  "Karadeniz": "#15803D",
-  "Doğu Anadolu": "#BE123C",
-  "Güneydoğu Anadolu": "#C2410C",
-};
+/** Filtre dışında kalan envanterli il — kitin en açık tonu (pale). */
+const SONUK_RENK = "var(--color-cyan-pale)";
+
+/** İl konturu: primary %28 — hem açık hem koyu dolguda görünen ince hat. */
+const KONTUR = "rgba(3, 105, 161, 0.28)";
 
 const sayiTr = (n: number) => n.toLocaleString("tr-TR");
+
+/** Kova sınırı etiketi — rakamlar eşiklerden, yani veriden türer (elle yazılmaz). */
+function kovaEtiketi(i: number, esikler: number[]): string {
+  if (esikler.length === 0) return "Tümü";
+  const alt = i === 0 ? 1 : esikler[i - 1] + 1;
+  if (i >= esikler.length) return `${sayiTr(alt)}+`;
+  return `${sayiTr(alt)}–${sayiTr(esikler[i])}`;
+}
 
 export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
   const [seciliSlug, setSeciliSlug] = useState<string | null>(null);
@@ -81,6 +83,21 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
     () => new Map(iller.map((i) => [i.slug, i])),
     [iller]
   );
+
+  /** Yoğunluk eşikleri — envanterin ÇEYREKLİKLERİNDEN türer, sabit sayı yok.
+   *  Envanter büyüyüp küçülse de rampa kendini ayarlar; eşit değer yığılması
+   *  varsa benzersizleştirme kova sayısını kendiliğinden düşürür. */
+  const esikler = useMemo(() => {
+    const veri = iller.map((i) => i.toplam).filter((n) => n > 0).sort((a, b) => a - b);
+    if (veri.length === 0) return [];
+    const ceyreklik = (p: number) => veri[Math.min(veri.length - 1, Math.floor(veri.length * p))];
+    return [ceyreklik(0.25), ceyreklik(0.5), ceyreklik(0.75)].filter(
+      (v, i, a) => i === 0 || v > a[i - 1]
+    );
+  }, [iller]);
+
+  /** Ünite adedi → rampa basamağı (0 = en açık). */
+  const kova = (toplam: number) => esikler.filter((e) => toplam > e).length;
 
   // Format seçenekleri — envanterdeki toplam adede göre azalan
   const formatSecenekleri = useMemo(() => {
@@ -128,12 +145,6 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
                   : "border-[var(--color-border-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]"
               }`}
             >
-              {b !== "Tümü" && (
-                <span
-                  className="inline-block w-2 h-2 rounded-full mr-1.5"
-                  style={{ background: BOLGE_RENK[b] }}
-                />
-              )}
               {b}
             </button>
           ))}
@@ -166,39 +177,37 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
         </div>
 
         {/* HARİTA */}
+        <div className="rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-surface)]/60 p-4 sm:p-6">
         <svg
           viewBox={TR_HARITA_VIEWBOX}
           className="w-full h-auto select-none"
           role="img"
-          aria-label="Türkiye envanter haritası — envanter bulunan iller renkli"
+          aria-label="Türkiye envanter haritası — envanter bulunan iller, ünite yoğunluğuna göre koyulaşan marka tonlarıyla"
         >
-          {TR_IL_PATHS.map((p) => {
+          {/* Seçili il EN SON çizilir: konturu sonraki komşuların altında kalmasın */}
+          {[
+            ...TR_IL_PATHS.filter((p) => p.id !== seciliSlug),
+            ...TR_IL_PATHS.filter((p) => p.id === seciliSlug),
+          ].map((p) => {
             const il = illerBySlug.get(p.id);
             const aktif = !!il;
             const gorunur = il ? filtredeMi(il) : false;
+            const secildi = seciliSlug === p.id;
+            // Dolgu = yoğunluk (marka rampası). Saydamlık SADECE sönümleme yapar.
             const fill = !aktif
               ? "var(--color-surface-elevated)"
               : gorunur
-                ? BOLGE_RENK[il!.bolge] ?? "var(--color-primary)"
-                : "var(--color-surface)";
-            const secildi = seciliSlug === p.id;
-            const opacity = !aktif
-              ? 0.7
-              : gorunur
-                ? secildi
-                  ? 1
-                  : seciliSlug
-                    ? 0.45
-                    : 0.9
-                : 0.35;
+                ? YOGUNLUK_RAMPA[kova(il!.toplam)]
+                : SONUK_RENK;
+            const opacity = !aktif ? 1 : gorunur ? (seciliSlug && !secildi ? 0.5 : 1) : 0.6;
             return (
               <path
                 key={p.id}
                 d={p.d}
                 fill={fill}
                 fillOpacity={opacity}
-                stroke={secildi ? "var(--color-primary-darker)" : "var(--color-border-subtle)"}
-                strokeWidth={secildi ? 2 : 1}
+                stroke={secildi ? "var(--color-ink)" : aktif ? KONTUR : "var(--color-border-subtle)"}
+                strokeWidth={secildi ? 2.2 : aktif ? 0.9 : 0.8}
                 onClick={aktif ? () => ilSec(p.id) : undefined}
                 onKeyDown={
                   aktif
@@ -223,9 +232,11 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
             );
           })}
         </svg>
+        </div>
         <p className="mt-3 text-xs text-[var(--color-text-muted)]">
-          Renkli iller envanterimizin bulunduğu {iller.length} ili gösterir;
-          il üzerine gelin, tıklayın veya Tab ile gezinin.
+          Renkli iller envanterimizin bulunduğu {iller.length} ili gösterir; ton
+          koyulaştıkça o ildeki ünite sayısı artar. İl üzerine gelin, tıklayın
+          veya Tab ile gezinin.
         </p>
       </div>
 
@@ -235,7 +246,7 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
           <div className="p-6 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] space-y-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="flex items-center gap-2 text-xs uppercase tracking-widest font-medium" style={{ color: BOLGE_RENK_METIN[secili.bolge] ?? BOLGE_RENK[secili.bolge] }}>
+                <div className="flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-[var(--color-primary)]">
                   <MapPin size={14} />
                   {secili.bolge}
                 </div>
@@ -324,14 +335,26 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
               mecra dağılımını, ünite sayılarını ve kapsama noktalarını
               görün.
             </p>
-            <ul className="space-y-1.5 text-xs text-[var(--color-text-muted)]">
-              {BOLGELER.map((b) => (
-                <li key={b} className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: BOLGE_RENK[b] }} />
-                  {b}
+            <div>
+              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
+                Envanter yoğunluğu
+              </div>
+              <ul className="space-y-1.5 text-xs text-[var(--color-text-muted)]">
+                {YOGUNLUK_RAMPA.slice(0, esikler.length + 1).map((renk, i) => (
+                  <li key={renk} className="flex items-center gap-2">
+                    <span
+                      className="w-5 h-3 rounded-[3px] border border-[var(--color-border-subtle)]"
+                      style={{ background: renk }}
+                    />
+                    {kovaEtiketi(i, esikler)} ünite
+                  </li>
+                ))}
+                <li className="flex items-center gap-2">
+                  <span className="w-5 h-3 rounded-[3px] border border-[var(--color-border-subtle)] bg-[var(--color-surface-elevated)]" />
+                  Envanter dışı il
                 </li>
-              ))}
-            </ul>
+              </ul>
+            </div>
           </div>
         )}
       </aside>

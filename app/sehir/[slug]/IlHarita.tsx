@@ -5,6 +5,8 @@
  * - Server component: sıfır client JS, dış servis yok (Mapbox YASAK).
  * - Koordinat/pin YOK — sadece ilin silueti vurgulanır; kapsama bilgisi
  *   envanter.json'dan türetilen rakamlarla verilir (elle rakam yazılmaz).
+ * - Renk dili /envanter haritasıyla aynı (Eylül 2026): hedef il dolu marka
+ *   primary'si, komşular nötr envanter-dışı tonu, konturlar primary %28.
  * - /envanter'deki 81 ilin tamamı burada ÇİZİLMEZ: tr-il-paths.ts 188 KB'dir,
  *   hepsini her il sayfasına gömmek LCP'yi bozardı. Sadece hedef il + görüş
  *   alanına giren komşular çizilir (bağlam korunur, ağırlık düşer).
@@ -121,7 +123,6 @@ export function IlHarita({
                     key={p.id}
                     d={p.d}
                     fill="var(--color-surface-elevated)"
-                    fillOpacity={0.55}
                     stroke="var(--color-border-subtle)"
                     strokeWidth={0.6}
                   />
@@ -129,9 +130,8 @@ export function IlHarita({
                 <path
                   d={hedef.d}
                   fill="var(--color-primary)"
-                  fillOpacity={0.85}
-                  stroke="var(--color-primary-darker)"
-                  strokeWidth={1.1}
+                  stroke="var(--color-ink)"
+                  strokeWidth={1.2}
                 />
               </svg>
             </div>

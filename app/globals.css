@@ -439,16 +439,18 @@
 /* --- G5: Türkiye haritası il etkileşimi --- */
 .harita-il {
   cursor: pointer;
-  transition: fill-opacity 0.18s ease, stroke 0.15s ease;
+  transition: fill-opacity 0.18s ease, stroke 0.15s ease, stroke-width 0.15s ease;
 }
+/* Saydamlık artık filtre/seçim sönümlemesi demek — hover onu EZMEZ,
+   affordans konturla verilir (yoğunluk rengi bozulmadan kalır). */
 .harita-il:hover {
-  fill-opacity: 1;
+  stroke: var(--color-primary-darker);
+  stroke-width: 1.6;
 }
 .harita-il:focus-visible {
   outline: none;
-  stroke: var(--color-primary-darker);
-  stroke-width: 2;
-  fill-opacity: 1;
+  stroke: var(--color-ink);
+  stroke-width: 2.2;
 }
 @media (prefers-reduced-motion: reduce) {
   .harita-il {
