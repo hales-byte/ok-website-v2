@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-09-18 — G9: Envanter haritası marka rengine geçti
+**Ne yapıldı:** `/envanter` sayfasındaki Türkiye haritası yedi ayrı renkte (mor, turuncu, yeşil, kehribar…) boyanıyordu; artık **tek renk ailesinde**: envanteri az olan il açık mavi, çok olan il koyu lacivert. Yani renk artık "nerede güçlüyüz" bilgisini veriyor. Sağdaki açıklama kutusu da bölge renk noktaları yerine **yoğunluk ölçeğini** gösteriyor (1–150 / 151–448 / 449–1.255 / 1.256+ ünite). Bölge filtre düğmeleri aynen duruyor. Bir de haritada bir ile tıklayınca çıkan kutu şeklindeki tarayıcı çerçevesi kapatıldı.
+**Neden:** O yedi renk marka kitinde yoktu — sitenin tek "çok renkli" yüzeyi burasıydı ve kurumsal dilden kopuk duruyordu. Ayrıca renk hiçbir şey anlatmıyordu; bölge bilgisi zaten filtrede ve panelde yazıyor.
+**Ne işe yaradı:** Harita artık hem markanın rengini konuşuyor hem de müşteriye tek bakışta "Anadolu'da nerede yoğunuz" cevabını veriyor. Ölçek envanterden otomatik hesaplandığı için yeni envanter geldiğinde kendini ayarlıyor — elle rakam güncellemesi gerekmiyor. Klavyeyle gezenler için görünür odak çerçevesi korundu.
+**Sırada:** İstenirse tek satırla tüm envanterli iller aynı maviye indirilebilir (bilgi kaybeder). Sunum ve Instagram rakamları hâlâ güncellenmeyi bekliyor (39.960).
+
 ### 2026-09-18 — V6: Envanter büyüdü (39.960 ünite, 48 il) + Nevşehir kendi sayfasına çıktı
 **Ne yapıldı:** Yeni envanter Excel'i işlendi ve siteye uygulandı. Toplam ünite 35.235'ten **39.960**'a, il sayısı 46'dan **48**'e çıktı; aylık erişim 43,1 milyondan **44,9 milyona** yükseldi. **Manisa (2.251)** ve **Nevşehir (697)** envantere girdi, ikisi de kendi şehir sayfasını aldı. **Adana 845'ten 2.673'e döndü** — V5'te kaynak dosyada eksik görünen mecralar bu kez tam geldi. Ankara'nın rakamı değişmedi ama Excel ilk kez lokasyon kırılımı verdiği için Güvenpark, AŞTİ, Beşevler gibi 8 nokta sayfaya ve metne girdi.
 **Neden:** Sitedeki her rakam tek bir dosyadan türüyor; şirket envanteri değişince önce o dosya güncelleniyor, sayaçlar ve tüm sayfalar peşinden geliyor. Nevşehir önce küçük iller kalıbıyla bölge sayfasına bağlanmıştı; Hakan "kendi sayfası olsun" dedi, aynı turda standalone'a alındı.
