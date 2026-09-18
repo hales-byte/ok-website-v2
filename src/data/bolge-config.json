@@ -1,5 +1,5 @@
 {
-  "_not": "İl sayfası render kararı — envanter.json'a DOKUNMAZ (44 il/36.141 aynen durur). Sadece hangi ilin tek başına sayfa olacağını (standalone) ve hangisinin bölge sayfasında toplanıp 301 alacağını belirler. bolgeler.ts + next.config.ts bu dosyayı okur (tek kaynak).",
+  "_not": "İl sayfası render kararı — envanter.json'a DOKUNMAZ. Sadece hangi ilin tek başına sayfa olacağını (standalone) ve hangisinin bölge sayfasında toplanıp 301 alacağını belirler. bolgeler.ts + next.config.ts bu dosyayı okur (tek kaynak).",
   "bolgeler": [
     { "ad": "Marmara", "slug": "marmara" },
     { "ad": "Ege", "slug": "ege" },
@@ -13,7 +13,7 @@
     "ankara", "gaziantep", "mersin", "balikesir", "adana", "tekirdag",
     "erzurum", "eskisehir", "diyarbakir", "trabzon", "sakarya", "samsun",
     "van", "kars", "hatay", "aydin", "batman", "denizli", "agri",
-    "rize", "ordu"
+    "rize", "ordu", "manisa"
   ],
   "movedToBolge": {
     "adiyaman": "guneydogu-anadolu",
@@ -36,6 +36,7 @@
     "kirklareli": "marmara",
     "kocaeli": "marmara",
     "malatya": "dogu-anadolu",
+    "nevsehir": "ic-anadolu",
     "osmaniye": "akdeniz",
     "sivas": "ic-anadolu",
     "tokat": "karadeniz",

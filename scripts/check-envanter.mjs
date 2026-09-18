@@ -2,11 +2,11 @@
 /**
  * ENVANTER DOĞRULAMA — npm run check:envanter
  * Tek doğruluk kaynağının iç tutarlılığını test eder:
- *   1. Toplam ünite = 35.235 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
- *   2. İl sayısı = 46
+ *   1. Toplam ünite = 39.960 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
+ *   2. İl sayısı = 48
  *   3. Ankara toplamı = 2.946
  *   4. Her ilin toplamı, format dağılımının toplamına eşit
- *   5. Mecra türü sayısı = 19
+ *   5. Mecra türü sayısı = 21
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -27,12 +27,12 @@ const uniteToplam = iller.reduce((s, i) => s + i.toplam, 0);
 const ankara = iller.find((i) => i.il === "Ankara");
 const mecralar = new Set(iller.flatMap((i) => Object.keys(i.formatlar)));
 
-check("Toplam ünite", uniteToplam, 35235);
+check("Toplam ünite", uniteToplam, 39960);
 check("json.toplam.unite alanı", data.toplam.unite, uniteToplam);
-check("İl sayısı", iller.length, 46);
+check("İl sayısı", iller.length, 48);
 check("json.toplam.il alanı", data.toplam.il, iller.length);
 check("Ankara toplamı", ankara?.toplam, 2946);
-check("Mecra türü sayısı", mecralar.size, 19);
+check("Mecra türü sayısı", mecralar.size, 21);
 
 // V1 (2026-07-07) güncelleme nöbetçileri
 const aydin = iller.find((i) => i.il === "Aydın");
@@ -60,8 +60,23 @@ const bolu = iller.find((i) => i.il === "Bolu");
 const giresun = iller.find((i) => i.il === "Giresun");
 check("Bolu envanterde VAR (V5'te girdi)", bolu?.toplam, 39);
 check("Giresun envanterde VAR (V5'te girdi)", giresun?.toplam, 14);
-check("Adana toplamı (V5'te 2.673→845)", adana?.toplam, 845);
-check("SİLİNDİR KULE mecrası YOK (V5'te düştü)", mecralar.has("SİLİNDİR KULE"), false);
+// V5'in Adana(845) ve SİLİNDİR-KULE-YOK nöbetçileri V6'da GEÇERSİZ — yenileri aşağıda.
+
+// V6 (2026-09-17) güncelleme nöbetçileri:
+//  · Manisa (2.251) ve Nevşehir (697) envantere girdi (46→48 il)
+//  · Adana kaynakta eski detayına döndü: 845→2.673; SİLİNDİR KULE (Adana 6) geri geldi
+//  · LIGHTBOX yeni mecra (Manisa 2) → 19→21 mecra türü
+//  · Afyonkarahisar 366→353 (Megalight+LED düştü), Van 869→831 (Megalight düştü)
+//  · Manisa GIANTBOARD kaynakta '*' (belirsiz) → sayılmadı (açık soru, Hakan'a soruldu)
+const manisa = iller.find((i) => i.il === "Manisa");
+const nevsehir = iller.find((i) => i.il === "Nevşehir");
+check("Manisa envanterde VAR (V6'da girdi)", manisa?.toplam, 2251);
+check("Nevşehir envanterde VAR (V6'da girdi)", nevsehir?.toplam, 697);
+check("Adana toplamı (V6'da 845→2.673 geri döndü)", adana?.toplam, 2673);
+check("SİLİNDİR KULE mecrası VAR (V6'da geri geldi)", adana?.formatlar?.["SİLİNDİR KULE"], 6);
+check("LIGHTBOX mecrası VAR (V6'da girdi)", manisa?.formatlar?.["LIGHTBOX"], 2);
+check("Afyonkarahisar toplamı (V6'da 366→353)", iller.find((i) => i.il === "Afyonkarahisar")?.toplam, 353);
+check("Van toplamı (V6'da 869→831)", iller.find((i) => i.il === "Van")?.toplam, 831);
 
 const bozukIller = iller.filter(
   (i) => Object.values(i.formatlar).reduce((s, a) => s + a, 0) !== i.toplam

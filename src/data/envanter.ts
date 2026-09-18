@@ -277,7 +277,7 @@ export function getAylikErisim(): number {
   return toplam;
 }
 
-/** "43,1M" biçiminde global etiket (milyon, 1 ondalık, TR virgül) */
+/** Global erişim etiketi (milyon, 1 ondalık, TR virgül) */
 export function erisimEtiketi(): string {
   const milyon = getAylikErisim() / 1_000_000;
   return `${milyon.toLocaleString("tr-TR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;

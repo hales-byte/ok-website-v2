@@ -6,10 +6,10 @@
  * Metni OLMAYAN il için getIlAciklama() veriden zarif bir yedek üretir.
  *
  * NOT (lokasyon doğrulaması): metinlerdeki lokasyon adları güncel
- * envanter.json'a (36.141) göre teyit edildi. Ankara ilceler'i envanter.json'da
- * boş olduğu için Güvenpark/Kocatepe/AŞTİ/Beytepe/Keçiören çıkarıldı; Ordu'da
- * "Fatsa" ilceler'de olmadığı için çıkarıldı. (Envanter.json'a bu noktalar
- * eklenirse metin daha spesifik yazılabilir.)
+ * envanter.json'a (V6) göre teyit edilir. V6'da Ankara ilceler'i kaynaktan
+ * doldu; Güvenpark/AŞTİ/Beşevler/Keçiören/Yozgat Bulvarı metne geri alındı.
+ * Ordu'da "Fatsa" envanterde hâlâ olmadığı için metinde yok. Manisa'nın
+ * kapsama noktası yok — metni lokasyon adı içermez.
  */
 import {
   getIl,
@@ -23,7 +23,7 @@ import {
 /** İle özel, elle yazılmış giriş metinleri. Anahtar = il slug'ı ("izmir"). */
 export const IL_ACIKLAMA: Record<string, string> = {
   ankara:
-    "Ankara'da görünür olmak, başkentin nabzının attığı yerlerde olmak demek — en yoğun yaya kalabalıklarından ana arterlerin durmayan trafiğine, şehrin her gün kalabalıklaşan akışına kadar. Ağırlıklı CLP/raket ağımız markanızı hem ana arterlerde hem insanların her gün durakladığı noktalarda tekrar tekrar göz hizasına getiriyor. Ankara planınızı bütçenize göre 15 dakikada çıkarıyor, asımdan foto-raporlu takibe süreci yönetiyoruz.",
+    "Ankara'da görünür olmak, başkentin nabzının attığı yerlerde olmak demek — Güvenpark ve Beşevler metro çıkışlarından AŞTİ'ye, Keçiören'den Yozgat Bulvarı'na, şehrin her gün kalabalıklaşan akışına kadar. Ağırlıklı CLP/raket ağımız ve lokasyon LED'lerimiz markanızı hem ana arterlerde hem insanların her gün durakladığı noktalarda tekrar tekrar göz hizasına getiriyor. Ankara planınızı bütçenize göre 15 dakikada çıkarıyor, asımdan foto-raporlu takibe süreci yönetiyoruz.",
   gaziantep:
     "Gaziantep, Anadolu'nun en canlı sanayi ve ticaret şehirlerinden biri; envanterimiz de bunu yansıtıyor. Nizip'ten OSB'ye, Gaziantep Üniversitesi ve Primall–Era AVM akslarından havalimanı kavşağına kadar şehrin en yoğun geçiş noktalarında CLP, pole banner ve billboard karması sunuyoruz. Gaziantep planınızı 15 dakikada çıkarıyor, montaj ve foto-raporlu takibi biz üstleniyoruz.",
   mersin:
@@ -34,6 +34,8 @@ export const IL_ACIKLAMA: Record<string, string> = {
     "Adana, güneyin en büyük metropollerinden; açıkhava trafiği gün boyu kesilmiyor. Çok sayıda mecra türünde, CLP ve billboard ağırlıklı güçlü bir ağla şehrin ana bulvarlarını ve en çok görülen kavşaklarını kapsıyoruz. Adana planınızı bütçenize göre 15 dakikada hazırlıyoruz.",
   tekirdag:
     "Tekirdağ, Trakya sanayisinin kalbi: Çorlu, Çerkezköy, Kapaklı ve Ergene'nin fabrika bulvarları boyunca yoğun bir pole banner ağımız var, Silivri ve Marmara Ereğlisi hattıyla tamamlanıyor. Cadde boyu tekrar eden bu görünürlük markanızı sanayi ve geçiş trafiğinin tam ortasına taşıyor. Tekirdağ planınızı 15 dakikada çıkarıyoruz.",
+  manisa:
+    "Manisa, Ege'nin İzmir'den sonraki en büyük sanayi ve ticaret merkezlerinden; organize sanayi aksları ve yoğun şehir içi trafiğiyle açıkhava için verimli bir pazar. Ağırlıklı CLP/raket ve billboard ağımız, pole banner ve otobüs kaplamayla tamamlanarak markanızı ana arterlerde ve günlük akışın tam içinde görünür kılıyor. Manisa planınızı bütçenize göre 15 dakikada çıkarıyoruz.",
   erzurum:
     "Erzurum, Doğu Anadolu'nun merkezi ve büyük bir üniversite şehri. Atatürk ve Teknik Üniversite akslarından şehir bulvarlarına kadar CLP, pole banner ve billboard karmasıyla en yoğun noktalardayız. Erzurum planınızı 15 dakikada hazırlıyor, asımdan foto-rapora süreci biz yönetiyoruz.",
   eskisehir:
