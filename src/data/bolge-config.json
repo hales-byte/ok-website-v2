@@ -13,7 +13,7 @@
     "ankara", "gaziantep", "mersin", "balikesir", "adana", "tekirdag",
     "erzurum", "eskisehir", "diyarbakir", "trabzon", "sakarya", "samsun",
     "van", "kars", "hatay", "aydin", "batman", "denizli", "agri",
-    "rize", "ordu", "manisa"
+    "rize", "ordu", "manisa", "nevsehir"
   ],
   "movedToBolge": {
     "adiyaman": "guneydogu-anadolu",
@@ -36,7 +36,6 @@
     "kirklareli": "marmara",
     "kocaeli": "marmara",
     "malatya": "dogu-anadolu",
-    "nevsehir": "ic-anadolu",
     "osmaniye": "akdeniz",
     "sivas": "ic-anadolu",
     "tokat": "karadeniz",

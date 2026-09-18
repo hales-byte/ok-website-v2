@@ -36,6 +36,8 @@ export const IL_ACIKLAMA: Record<string, string> = {
     "Tekirdağ, Trakya sanayisinin kalbi: Çorlu, Çerkezköy, Kapaklı ve Ergene'nin fabrika bulvarları boyunca yoğun bir pole banner ağımız var, Silivri ve Marmara Ereğlisi hattıyla tamamlanıyor. Cadde boyu tekrar eden bu görünürlük markanızı sanayi ve geçiş trafiğinin tam ortasına taşıyor. Tekirdağ planınızı 15 dakikada çıkarıyoruz.",
   manisa:
     "Manisa, Ege'nin İzmir'den sonraki en büyük sanayi ve ticaret merkezlerinden; organize sanayi aksları ve yoğun şehir içi trafiğiyle açıkhava için verimli bir pazar. Ağırlıklı CLP/raket ve billboard ağımız, pole banner ve otobüs kaplamayla tamamlanarak markanızı ana arterlerde ve günlük akışın tam içinde görünür kılıyor. Manisa planınızı bütçenize göre 15 dakikada çıkarıyoruz.",
+  nevsehir:
+    "Nevşehir, Kapadokya'nın giriş kapısı; yıl boyu süren ziyaretçi trafiği şehir merkezini açıkhava için canlı tutuyor. CLP/raket ve billboard ağırlıklı ağımız megaboard ve giantboard'la tamamlanarak markanızı hem şehirlinin günlük akışında hem turizm hattında görünür kılıyor. Nevşehir planınızı bütçenize göre 15 dakikada çıkarıyoruz.",
   erzurum:
     "Erzurum, Doğu Anadolu'nun merkezi ve büyük bir üniversite şehri. Atatürk ve Teknik Üniversite akslarından şehir bulvarlarına kadar CLP, pole banner ve billboard karmasıyla en yoğun noktalardayız. Erzurum planınızı 15 dakikada hazırlıyor, asımdan foto-rapora süreci biz yönetiyoruz.",
   eskisehir:
