@@ -150,10 +150,11 @@ export default async function Image({
             marginBottom: 24,
           }}
         >
-          <span>
+          {/* Görsel motoru parça başındaki boşluğu siler → aralık columnGap ile verilir */}
+          <div style={{ display: "flex", flexWrap: "wrap", columnGap: 22 }}>
             <span style={{ color: "#0369A1" }}>{formatAdi}</span>
-            <span> Reklam</span>
-          </span>
+            <span>Reklam</span>
+          </div>
         </div>
 
         {/* Alt etiket */}
