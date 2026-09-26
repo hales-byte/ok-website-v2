@@ -18,7 +18,8 @@
 **Ne yapıldı:** Teklif sayfası açılırken ortada dönen bir simge görünüyordu; artık formun ilk adımı (başlık, "Adım 1 / 6", Marka/Ajans/İlk kampanya kartları) hazır halde geliyor ve form devraldığında hiçbir şey yerinden oynamıyor.
 **Neden:** Sayfa açılırken boş ve kayan bir ekran güven vermiyor; ayrıca sayfa kayması ölçüsü masaüstünde sınırın üstündeydi (0,058).
 **Ne işe yaradı:** Kayma sıfırlandı; haritadan/mecra sayfasından gelen ziyaretçinin şehir ve mecra ön seçimi eskisi gibi çalışıyor; form gönderim hattına dokunulmadı. Yalnız JavaScript kapalı tarayıcıda hâlâ "Yükleniyor" görünüyor — bunun sebebi sitenin genel bekleme ekranı dosyası, ayrı karar.
-**Sırada:** Hakan önizlemeye bakıp onaylarsa canlıya alınacak.
+**Önizleme:** Başlık ve adım göstergesi yerinde, kendi kodumuzdan konsol hatası yok. Telefonda sayfa kayması 0,011. Masaüstündeki 0,052'lik kayma formdan değil, sitenin üst menüsünden geliyor (canlıdaki diğer sayfalarda da ara sıra görülüyor) — ayrı iş.
+**Sırada:** Hakan onayladı; canlıya alınıyor.
 
 ### 2026-09-26 — L2: Telefonda başlığın geç görünmesi (iki deneme de elendi)
 **Ne yapıldı:** Telefonda ölçüm aracının "başlık 4–5 saniyede görünüyor" demesinin sebebi arandı ve iki düzeltme denendi: ana sayfa başlığındaki açılış animasyonunu kaldırmak ve yazı tiplerinin önceden yüklenmesini kapatmak.

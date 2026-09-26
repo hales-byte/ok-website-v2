@@ -2,7 +2,7 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-09-26 · Claude Code (**F1 teklif formu iskeleti — önizleme dalında, v3'e merge onay bekliyor; JS'siz görünürlük kök loading.tsx kararına bağlı.** **L2 başlık/LCP denemesi → iki deneme de ELENDİ; gözlenen LCP <0,5 s, 4–5 s simülasyon tahmini.** **L1 "Yükleniyor" denemesi ölçüldü → ELENDİ (LCP iyileşmesi %0–11 < %15).** **D1 + paylaşım görseli — CANLI, `bf86fe5`.** D1 `f30e4d8`, görsel `76d570a`+`bf86fe5`. Canlı = origin/v3 = `bcce651`. Önceki: G9 harita renk dili CANLI `48487b7`)
+**Son güncelleme:** 2026-09-26 · Claude Code (**F1 teklif formu iskeleti — Hakan onayladı, v3'e alınıyor; JS'siz görünürlük kök loading.tsx kararına bağlı.** **L2 başlık/LCP denemesi → iki deneme de ELENDİ; gözlenen LCP <0,5 s, 4–5 s simülasyon tahmini.** **L1 "Yükleniyor" denemesi ölçüldü → ELENDİ (LCP iyileşmesi %0–11 < %15).** **D1 + paylaşım görseli — CANLI, `bf86fe5`.** D1 `f30e4d8`, görsel `76d570a`+`bf86fe5`. Canlı = origin/v3 = `bcce651`. Önceki: G9 harita renk dili CANLI `48487b7`)
 
 ## F1 — teklif formu sunucuda iskeletle açılıyor (önizleme dalı `onizleme/f1-form-iskelet`, v3'e merge YOK)
 - **Hakan seçimi (26.09): Seçenek 1 — yalnız F1**, kök `app/loading.tsx`'e dokunulmadı.
@@ -11,6 +11,8 @@
 - **KARŞILANAMAYAN ŞART — "JS olmadan görünüyor":** iskelet HTML'de ama JS kapalıyken ekranda kök "YÜKLENİYOR" görünüyor. **Kök sebep (deneylerle ayrıldı):** React 19.2, kök `loading.tsx`'in bekleme sınırının içeriği birkaç yüz baytı geçince içeriği footer sonrası gizli bloğa (`<div hidden id="S:0">`) ayırıyor; sayfa inline betik gelene kadar "Yükleniyor" gösteriyor. "Önce" durumunda /teklif-al yalnız küçük simge içerdiği için bundan kurtuluyordu. **D1'deki "tüm sayfalar Yükleniyor ile başlıyor" bulgusunun asıl mekanizması budur.** (Ara hipotez "lucide-react 1.x ikonları 'use client'" deneyle ÇÜRÜTÜLDÜ — ikon dosyası gerçekten "use client" ama tetikleyici değil.) Kanıt: aynı F1 kök `loading.tsx` kaldırılarak derlenince JS kapalıyken başlık + adım göstergesi + kartlar görünüyor, CLS 0/0.
 - **Açık karar (Hakan):** kök `loading.tsx` kaldırılırsa JS'siz görünürlük tüm sitede düzelir (L1: hız kaybı yok, CLS ≤ 0,011); risk: sayfa geçişlerinde dönen simge yok + G7c CLS düzeltmesi o dosyadaydı → canlıda CLS yeniden ölçülmeli.
 - **Ekran görüntüleri:** scratchpad `f1/` — `once-*`, `sonra-*` (F1), `sonraL-*` (F1 + loading'siz kanıt); her biri `{masaustu,telefon}-{jsyok,adim1,adim2-sehir,adim3-format}.png`.
+- **Önizleme ölçümü (`4d76621`, web-v2-68kwptwnp, Playwright, form gönderilmedi):** başlık "Kim için kampanya?" + "Adım 1 / 6" ✓ · CLS **telefon 0,011**, **masaüstü 0,052** — kaynak form DEĞİL, site üst menüsü (açılıştan ~150 ms sonra menü çubuğu ~14 px uzuyor, `NAV`/`MAIN` aşağı kayıyor; canlı `/hakkimizda`'da da 3 açılışın 1'inde aynı 0,052 ölçüldü → site geneli, ayrı iş). F1'in giderdiği kayma: canlı `/teklif-al`'daki her açılışta 0,058'lik footer kayması. · Konsol: kendi kodumuzdan hata 0; tek hata önizlemeye özgü `vercel.live` geri bildirim araç çubuğunun CSP'ye takılması (canlıda yüklenmez).
+- **Hakan onayı (26.09):** önizleme kontrolü tamam → v3'e fast-forward.
 - **Süreç notu:** tur ortasında disk doldu (ENOSPC), Hakan alan açtı; ara sürümde denenen sunucu-bileşeni refaktörü (`WizardParcalari`) işe yaramadığı için geri alındı, yalnız basit sürüm kaldı.
 
 ## L2 — telefonda başlığın geç görünmesi: teşhis + iki deneme (İKİSİ DE ELENDİ, kod değişmedi)
