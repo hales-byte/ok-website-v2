@@ -1,35 +1,35 @@
 /**
  * /deneyim sayfasına özel stil (yalnız bu sayfada basılır; globals.css'e dokunmaz).
- * Varsayılan (telefon, "hareketi azalt", JS yok): akışta sabit görsel + metin.
- * Masaüstü + hareket serbest: yapışkan 3D sahne, bölümler üstünde kayar.
- * data-mod="sabit" (yavaş bağlantı / WebGL yok / sahne çöktü) → masaüstünde de sabit düzen.
+ * Sabitlenmiş (sticky) fotoğraf sahnesi + üstünde kayan metin kartları.
+ * Fotoğraf hareketi yalnız transform/opacity (DeneyimAkisi yazar); burada yerleşim.
  */
 export const DENEYIM_CSS = `
-.dn{position:relative}
-.dn-sahne{display:none}
-.dn-bolum{position:relative;padding:40px 0}
-.dn-sabit{display:block;margin:0 0 20px}
-.dn-sabit img{display:block;width:100%;height:auto;border-radius:16px;background:#E2E8F0}
-.dn-kart{position:relative;max-width:34rem;border-radius:20px;padding:28px}
-.dn-kart-acik{background:var(--color-surface);border:1px solid var(--color-border-subtle)}
+.dn{position:relative;background:#0A1220}
+.dn-sahne{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#0A1220}
+.dn-foto{position:absolute;inset:0;will-change:transform,opacity;backface-visibility:hidden}
+.dn-foto img{width:100%;height:100%;object-fit:cover;display:block}
+.dn-karart{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,18,32,.08) 0%,rgba(10,18,32,0) 30%,rgba(10,18,32,.22) 100%);pointer-events:none}
+.dn-gece{position:absolute;inset:0;background:#0A1220;opacity:0;pointer-events:none;will-change:opacity}
+.dn-saat{position:absolute;top:calc(69px + 16px);right:16px;z-index:2;display:flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:999px;background:rgba(10,18,32,.72);color:#fff;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  font-family:var(--font-display);font-weight:700;font-size:18px;letter-spacing:.04em;font-variant-numeric:tabular-nums;will-change:opacity}
+.dn-saat-nokta{width:8px;height:8px;border-radius:50%;background:#00D2FF;box-shadow:0 0 0 4px rgba(0,210,255,.18)}
+.dn-bolumler{position:relative;z-index:1;margin-top:-100vh;margin-top:-100svh;pointer-events:none}
+.dn-bolum{min-height:170vh;min-height:170svh}
+.dn-bolum .container-narrow{position:sticky;top:0;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;padding-bottom:24px}
+.dn-kart{pointer-events:auto;width:100%;max-width:34rem;border-radius:20px;padding:22px;
+  background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.65);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 20px 60px -20px rgba(10,18,32,.5)}
+.dn-kart.band-dark{background:rgba(10,18,32,.82);border-color:rgba(255,255,255,.08)}
+.dn-final{min-height:130vh;min-height:130svh}
+.dn-final .container-narrow{align-items:center}
 .dn-final .dn-kart{max-width:56rem}
-.dn-ipucu{display:none}
-.dn-tuval{position:absolute;inset:0}
-.dn-tuval::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(10,18,32,.38) 100%)}
-.dn-tuval canvas{opacity:0;transition:opacity .9s ease}
-.dn[data-hazir="1"] .dn-tuval canvas{opacity:1}
-@media (min-width:768px) and (prefers-reduced-motion:no-preference){
-  .dn:not([data-mod=sabit]) .dn-sahne{display:block;position:sticky;top:0;height:100vh;overflow:hidden;
-    background:linear-gradient(180deg,#5E7FB8 0%,#9FA9C6 55%,#F4B98A 100%)}
-  .dn:not([data-mod=sabit]) .dn-bolumler{margin-top:-100vh;position:relative;z-index:1;pointer-events:none}
-  .dn:not([data-mod=sabit]) .dn-bolum{min-height:165vh;padding:0}
-  .dn:not([data-mod=sabit]) .dn-bolum .container-narrow{position:sticky;top:0;min-height:100vh;display:flex;align-items:center}
-  .dn:not([data-mod=sabit]) .dn-final .container-narrow{justify-content:center}
-  .dn:not([data-mod=sabit]) .dn-kart{pointer-events:auto;box-shadow:0 20px 60px -20px rgba(10,18,32,.45)}
-  .dn:not([data-mod=sabit]) .dn-kart-acik{background:rgba(255,255,255,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-color:rgba(255,255,255,.6)}
-  .dn:not([data-mod=sabit]) .dn-kart.band-dark{background:rgba(10,18,32,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-  .dn:not([data-mod=sabit]) .dn-sabit{display:none}
-  .dn:not([data-mod=sabit]) .dn-ipucu{display:flex}
+.dn-ipucu{display:flex}
+@media (min-width:768px){
+  .dn-saat{top:calc(69px + 24px);right:32px;font-size:22px;padding:10px 18px}
+  .dn-bolum .container-narrow{align-items:center;padding-bottom:0}
+  .dn-kart{padding:28px}
 }
-.dn[data-yakala] .dn-bolumler{visibility:hidden}
+@media (prefers-reduced-motion:reduce){.dn-ipucu span{animation:none}}
 `;

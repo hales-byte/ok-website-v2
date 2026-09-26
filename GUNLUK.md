@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-09-26 — P2: Deneyim sayfası 3D'den gerçek fotoğraflara geçti (önizlemede)
+**Ne yapıldı:** Kodla çizilen 3D şehir tamamen kaldırıldı. Yerine tam ekran fotoğraflar geldi: aşağı kaydırdıkça fotoğraf yavaşça reklam ünitesine yaklaşıyor, sonra bir sonraki sahneye yumuşakça geçiyor; köşedeki saat 08:15'ten 17:30'a ilerliyor. Sahneler: durakta CLP, trafikte alınlık, öğlen billboard, iş çıkışında megalight ve LED. Telefonda da aynı şekilde çalışıyor.
+**Neden:** 3D görünüm markaya uymadı; gerçekçi fotoğraf daha güven verici ve sade.
+**Ne işe yaradı:** Sayfa hafifledi (3D kütüphanesi tamamen çıktı), sitenin diğer sayfaları yine hiç değişmedi. Ancak eldeki fotoğraflar yetersiz: sahadan çekilenlerde başka markaların reklamları var, marka görsellerimiz ise küçük boyutlu ve bazılarında yüzü seçilen yayalar var; alınlık fotoğrafı hiç yok.
+**Sırada:** 5 sahne fotoğrafının yüksek çözünürlükte yeniden üretilmesi (liste DURUM'da). Alınlık sahnesinin metni onay bekliyor.
+
 ### 2026-09-26 — P1: "Şehirde bir gün" — 3D deneyim sayfası (önizlemede, canlıya bağlı değil)
 **Ne yapıldı:** Sitede gizli bir deneme sayfası kuruldu (/deneyim). Aşağı kaydırdıkça bir şehirde gün geçiyor: sabah durakta CLP ("Doğru kitleye"), öğlen yol kenarında billboard ("Doğru lokasyonda"), akşam ışıkları yanan megalight ve içeriği değişen LED ekran ("Doğru zamanda"); sonunda kamera gökyüzüne çekiliyor, Türkiye haritası ve 48 il / 39.960 ünite rakamlarıyla "Teklif Al" çıkıyor. Ünitelerde yalnız beyaz zemin + cyan chevron var.
 **Neden:** Markayı rakip sitelerden ayıracak, "vay" dedirten bir anlatım denemek.
