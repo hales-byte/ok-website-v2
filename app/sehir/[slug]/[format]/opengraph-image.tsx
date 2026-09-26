@@ -24,14 +24,16 @@ function getDetay(slug: string, format: string) {
 export default async function Image({
   params,
 }: {
-  params: { slug: string; format: string };
+  params: Promise<{ slug: string; format: string }>;
 }) {
-  const formatMeta = getFormatByKey(params.format);
-  const detay = getDetay(params.slug, params.format);
+  // Next 16: params bir Promise — senkron okununca slug/format undefined kalıyordu.
+  const { slug, format } = await params;
+  const formatMeta = getFormatByKey(format);
+  const detay = getDetay(slug, format);
 
   // Veri yoksa default brand görseli
   const sehirAdi = detay?.sehir ?? "—";
-  const formatAdi = formatMeta?.name ?? params.format;
+  const formatAdi = formatMeta?.name ?? format;
   const lokasyonText = detay
     ? `${sayiTr(detay.adet)} reklam ünitesi`
     : "Türkiye OOH";

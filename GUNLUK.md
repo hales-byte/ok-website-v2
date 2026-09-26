@@ -14,12 +14,14 @@
 
 ---
 
-### 2026-09-26 — D1: Canlı denetim düzeltmeleri (onay bekliyor)
+### 2026-09-26 — D1: Canlı denetim düzeltmeleri (CANLI, `f30e4d8`)
 **Ne yapıldı:** Sitenin resmi adresi her yerde "www" ile yazılıyor; her sayfa WhatsApp/LinkedIn'de paylaşılınca artık görselli kart çıkarıyor. Yazım hataları, "48+ şehir", "LIGHTBOX", "led & dijital" gibi pürüzler düzeldi; İlk Kampanyanız sayfasından TL bütçe aralıkları kalktı. Şehir sayfasındaki "Yakındaki iller" artık gerçekten haritadaki komşuları gösteriyor (Balıkesir'de Manisa var, Gaziantep yok) ve şehrin tüm mecra sayfalarına link veriyor.
 **Neden:** Canlı denetimde Google'a iki farklı adres gidiyor, paylaşımlarda görsel düşüyor ve bazı metinler özensiz görünüyordu.
 **Ne işe yaradı:** Google tek adresi esas alacak; paylaşılan linkler profesyonel görünecek; ziyaretçi komşu illere ve tüm mecra sayfalarına tek tıkla geçebilecek. Ayrıca "sayfa önce Yükleniyor diye açılıyor" şikâyetinin sebebi bulundu (sitenin genel bekleme ekranı dosyası) — düzeltmesi ayrı karar.
 **Ek:** Hakan'ın isteğiyle İlk Kampanyanız sayfasındaki gizli bütçe bölümü tamamen silindi; sitedeki "şeffaf fiyat" ifadeleri "şeffaf teklif" oldu. Teklif formundaki bütçe seçenekleri olduğu gibi duruyor.
-**Sırada:** Değişiklikler önce önizleme adresine çıktı (canlı site etkilenmedi). Hakan gözle bakıp onaylayınca canlıya alınacak. Açık kararlar: bekleme ekranı kaldırılsın mı, teklif formu sunucuda iskeletle açılsın mı.
+**Yayın:** Hakan önizlemeyi onayladı, 26.09'da canlıya çıktı (`f30e4d8`); canlıda adres, paylaşım görseli, rakamlar ve www yönlendirmesi kontrol edildi.
+**Ek (aynı gün):** www'suz adres artık kalıcı yönlendirmeyle (308) www'ya gidiyor — Google için "asıl adres bu" sinyali netleşti. Şehir×mecra sayfalarının paylaşım görselinde şehir ve mecra adı yazmıyordu (eski hata); düzeltildi, görselde artık "Balıkesir · LED & Dijital Reklam · 38 reklam ünitesi" yazıyor.
+**Sırada:** Görsel düzeltmesi önizlemede; Hakan onaylayınca canlıya alınacak. Açık kararlar: bekleme ekranı kaldırılsın mı, teklif formu sunucuda iskeletle açılsın mı.
 
 ### 2026-09-18 — G9: Envanter haritası marka rengine geçti
 **Ne yapıldı:** `/envanter` sayfasındaki Türkiye haritası yedi ayrı renkte (mor, turuncu, yeşil, kehribar…) boyanıyordu; artık **tek renk ailesinde**: envanteri az olan il açık mavi, çok olan il koyu lacivert. Yani renk artık "nerede güçlüyüz" bilgisini veriyor. Sağdaki açıklama kutusu da bölge renk noktaları yerine **yoğunluk ölçeğini** gösteriyor (1–150 / 151–448 / 449–1.255 / 1.256+ ünite). Bölge filtre düğmeleri aynen duruyor. Bir de haritada bir ile tıklayınca çıkan kutu şeklindeki tarayıcı çerçevesi kapatıldı.
