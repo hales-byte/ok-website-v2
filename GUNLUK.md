@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-09-26 — L1: "Yükleniyor" ekranı denemesi (elendi)
+**Ne yapıldı:** Sayfaların önce "Yükleniyor" ile açılmasına yol açan dosya kaldırılırsa sitenin telefonda daha hızlı açılıp açılmadığı ölçüldü (3 sayfa, her biri 3 kez, kaldırmadan önce ve sonra).
+**Neden:** Hızlanma belirginse (en az %15) dosya kaldırılacaktı.
+**Ne işe yaradı:** Hızlanma ana sayfada yok, diğer iki sayfada ~%10 — eşiğin altında. Sayfa kayması sorunu çıkmadı ama kazanç risk almaya değmez; siteye hiçbir değişiklik yapılmadı. Asıl yavaşlık büyük başlık yazısının geç görünmesinden geliyor.
+**Sırada:** İstenirse başlık yazı tipinin yüklenmesi üzerine ayrı, ölçümlü bir deneme.
+
 ### 2026-09-26 — D1: Canlı denetim düzeltmeleri (CANLI, `f30e4d8`)
 **Ne yapıldı:** Sitenin resmi adresi her yerde "www" ile yazılıyor; her sayfa WhatsApp/LinkedIn'de paylaşılınca artık görselli kart çıkarıyor. Yazım hataları, "48+ şehir", "LIGHTBOX", "led & dijital" gibi pürüzler düzeldi; İlk Kampanyanız sayfasından TL bütçe aralıkları kalktı. Şehir sayfasındaki "Yakındaki iller" artık gerçekten haritadaki komşuları gösteriyor (Balıkesir'de Manisa var, Gaziantep yok) ve şehrin tüm mecra sayfalarına link veriyor.
 **Neden:** Canlı denetimde Google'a iki farklı adres gidiyor, paylaşımlarda görsel düşüyor ve bazı metinler özensiz görünüyordu.
@@ -21,7 +27,8 @@
 **Ek:** Hakan'ın isteğiyle İlk Kampanyanız sayfasındaki gizli bütçe bölümü tamamen silindi; sitedeki "şeffaf fiyat" ifadeleri "şeffaf teklif" oldu. Teklif formundaki bütçe seçenekleri olduğu gibi duruyor.
 **Yayın:** Hakan önizlemeyi onayladı, 26.09'da canlıya çıktı (`f30e4d8`); canlıda adres, paylaşım görseli, rakamlar ve www yönlendirmesi kontrol edildi.
 **Ek (aynı gün):** www'suz adres artık kalıcı yönlendirmeyle (308) www'ya gidiyor — Google için "asıl adres bu" sinyali netleşti. Şehir×mecra sayfalarının paylaşım görselinde şehir ve mecra adı yazmıyordu (eski hata); düzeltildi, görselde artık "Balıkesir · LED & Dijital Reklam · 38 reklam ünitesi" yazıyor.
-**Sırada:** Görsel düzeltmesi önizlemede; Hakan onaylayınca canlıya alınacak. Açık kararlar: bekleme ekranı kaldırılsın mı, teklif formu sunucuda iskeletle açılsın mı.
+**Yayın:** Görsel düzeltmesi (başlıktaki bitişik "DijitalReklam" boşluğu dahil) 26.09'da canlıya çıktı — canlı sürüm `bf86fe5`. Balıkesir LED ve Ankara Billboard görselleri canlıda kontrol edildi, doğru.
+**Sırada:** Açık kararlar: sayfaların önce "Yükleniyor" ile açılması (bekleme ekranı dosyası) kaldırılsın mı; teklif formu sunucuda iskeletle açılsın mı. Açık kararlar: bekleme ekranı kaldırılsın mı, teklif formu sunucuda iskeletle açılsın mı.
 
 ### 2026-09-18 — G9: Envanter haritası marka rengine geçti
 **Ne yapıldı:** `/envanter` sayfasındaki Türkiye haritası yedi ayrı renkte (mor, turuncu, yeşil, kehribar…) boyanıyordu; artık **tek renk ailesinde**: envanteri az olan il açık mavi, çok olan il koyu lacivert. Yani renk artık "nerede güçlüyüz" bilgisini veriyor. Sağdaki açıklama kutusu da bölge renk noktaları yerine **yoğunluk ölçeğini** gösteriyor (1–150 / 151–448 / 449–1.255 / 1.256+ ünite). Bölge filtre düğmeleri aynen duruyor. Bir de haritada bir ile tıklayınca çıkan kutu şeklindeki tarayıcı çerçevesi kapatıldı.
