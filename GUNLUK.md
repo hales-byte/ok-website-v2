@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-09-26 — P1: "Şehirde bir gün" — 3D deneyim sayfası (önizlemede, canlıya bağlı değil)
+**Ne yapıldı:** Sitede gizli bir deneme sayfası kuruldu (/deneyim). Aşağı kaydırdıkça bir şehirde gün geçiyor: sabah durakta CLP ("Doğru kitleye"), öğlen yol kenarında billboard ("Doğru lokasyonda"), akşam ışıkları yanan megalight ve içeriği değişen LED ekran ("Doğru zamanda"); sonunda kamera gökyüzüne çekiliyor, Türkiye haritası ve 48 il / 39.960 ünite rakamlarıyla "Teklif Al" çıkıyor. Ünitelerde yalnız beyaz zemin + cyan chevron var.
+**Neden:** Markayı rakip sitelerden ayıracak, "vay" dedirten bir anlatım denemek.
+**Ne işe yaradı:** Sayfa menüde ve Google'da görünmüyor; sitenin diğer sayfaları hiç ağırlaşmadı (ölçüldü, birebir aynı). 3D yalnız güçlü bilgisayarlarda açılıyor; telefonda, yavaş internette ve "hareketi azalt" ayarında aynı sahnelerin sabit görselleri gösteriliyor.
+**Sırada:** Hakan önizlemede bakacak. Beğenirse: nereye bağlanacağı (ana sayfa, kampanya linki, sunum) ayrı karar.
+
 ### 2026-09-26 — F1: Teklif formu dönen simge yerine formun ilk adımıyla açılıyor (önizlemede)
 **Ne yapıldı:** Teklif sayfası açılırken ortada dönen bir simge görünüyordu; artık formun ilk adımı (başlık, "Adım 1 / 6", Marka/Ajans/İlk kampanya kartları) hazır halde geliyor ve form devraldığında hiçbir şey yerinden oynamıyor.
 **Neden:** Sayfa açılırken boş ve kayan bir ekran güven vermiyor; ayrıca sayfa kayması ölçüsü masaüstünde sınırın üstündeydi (0,058).
