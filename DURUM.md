@@ -2,7 +2,22 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-09-26 · Claude Code (**L1 "Yükleniyor" denemesi ölçüldü → ELENDİ (LCP iyileşmesi %0–11 < %15).** **D1 + paylaşım görseli — CANLI, `bf86fe5`.** D1 `f30e4d8`, görsel `76d570a`+`bf86fe5`. Canlı = origin/v3 = `bcce651`. Önceki: G9 harita renk dili CANLI `48487b7`)
+**Son güncelleme:** 2026-09-26 · Claude Code (**L2 başlık/LCP denemesi → iki deneme de ELENDİ; gözlenen LCP <0,5 s, 4–5 s simülasyon tahmini.** **L1 "Yükleniyor" denemesi ölçüldü → ELENDİ (LCP iyileşmesi %0–11 < %15).** **D1 + paylaşım görseli — CANLI, `bf86fe5`.** D1 `f30e4d8`, görsel `76d570a`+`bf86fe5`. Canlı = origin/v3 = `bcce651`. Önceki: G9 harita renk dili CANLI `48487b7`)
+
+## L2 — telefonda başlığın geç görünmesi: teşhis + iki deneme (İKİSİ DE ELENDİ, kod değişmedi)
+- **Başlangıç:** D1/L1 kapanış notu v3'te (`eef6650`) ✓.
+- **Teşhis (Lighthouse 12.8.2 mobil, simüle yavaş 4G + 4× CPU):** LCP öğesi — `/` hero `<h1>`, `/envanter` `<h1>`, `/sehir/balikesir` hero altındaki giriş paragrafı (`<p class="text-lg…">`). Kırılım üç sayfada aynı: **TTFB ~450 ms (%10) · yükleme gecikmesi 0 · yükleme süresi 0 · render gecikmesi ~3,6–4,2 s (%90)** (metin öğesi, indirilecek görsel yok).
+  - Sunucu HTML'inde başlık **görünür**: ana sayfa h1 `ScrollReveal priority` içinde ama SSR'de `opacity:1`; `/envanter` ve il sayfasında başlıkta animasyon sarmalayıcısı yok. visibility/opacity:0 gizlemesi YOK.
+  - next/font: Inter + Montserrat (600/700), ikisi de `display: "swap"`, `latin + latin-ext` (Türkçe ğ/ş/İ için latin-ext şart), varsayılan `preload: true` → sayfa başına **4 woff2 önyüklemesi**. Lighthouse "font-display" denetimi geçiyor.
+  - **Asıl bulgu:** Lighthouse'un **gözlenen** (simülasyonsuz) LCP'si 0,07–0,45 s — başlık ilk boyamayla birlikte geliyor. 4–5 s, Lighthouse'un simülasyon tahmini: başlıktan önce istenen her kaynağı (~270–290 KB JS + 4 font) başlığın önüne koyuyor. Yani "başlık geç görünüyor" gerçek tarayıcıda gözlenmedi; skor simülasyon modelinden geliyor.
+- **Denemeler (scratchpad; A yeniden derlenip ölçüldü — L1'den kalan loading'siz build ilk ölçümde fark edildi, silinip tekrarlandı):** B1 = ana sayfa h1'in `ScrollReveal` sarmalayıcısı kaldırıldı (diğer animasyonlar aynen). B2 = yalnız font: Inter + Montserrat `preload: false` (derlenmiş HTML'de woff2 önyüklemesi 4 → 0). B2'nin ilk build'i font indirme aksaklığıyla düştü, ikinci denemede geçti.
+  | Sayfa | LCP A | LCP B1 | LCP B2 | CLS A / B1 / B2 | Perf A / B1 / B2 |
+  |---|---|---|---|---|---|
+  | / | 4,95 s | 4,91 s (%1) | 4,10 s (%17) | 0,011 / 0,011 / 0,006 | 82 / 82 / 85 |
+  | /envanter | 4,18 s | 5,20 s (−%24) | 4,53 s (−%8) | 0 / 0 / 0 | 86 / 81 / 82 |
+  | /sehir/balikesir | 4,11 s | 4,74 s (−%15) | 4,47 s (−%9) | 0 / 0 / 0,001 | 87 / 83 / 82 |
+- **Karar: İKİSİ DE ELENDİ.** B1 hiçbir sayfada iyileştirmedi. B2 yalnız ana sayfada %17, diğer iki sayfada kötüleşti. **Ölçüm gürültüsü kanıtı:** B1 `/envanter` ve il sayfasının kodunu hiç değiştirmediği halde o sayfalar %15–24 "kötüleşti" → bu düzenekte ±%20'lik fark gürültü; B2'nin tek sayfalık %17'si de bu aralıkta. Scratchpad geri alındı (page.tsx + layout.tsx gerçek repoyla birebir), repoya dokunulmadı, dal açılmadı.
+- **Öneri (karar Hakan):** simüle Lighthouse LCP'sini kovalamayı bırakıp **gerçek kullanıcı verisine** bakmak — Vercel Speed Insights zaten kurulu (panelden Enable edildiyse telefon LCP'si orada). Gerçek veride LCP > 2,5 s çıkarsa hedef JS miktarı (ana sayfa ~110 KB kullanılmayan JS), font değil.
 
 ## L1 — "Yükleniyor" ekranı ölçümlü deneme (ELENDİ, kod değişmedi)
 - **Soru:** kök `app/loading.tsx` kaldırılırsa mobil açılış hızlanır mı, CLS 0'da kalır mı? (D1 teşhisi: bu dosya yüzünden içerik HTML'de footer'dan sonra geliyor.)
@@ -333,3 +348,4 @@
 | 2026-09-18 | G9 harita renk dili | /envanter haritası **7 bölge gökkuşağından** marka cyan **yoğunluk rampasına** geçti (#7CE2FF→#075985, kovalar envanterin çeyrekliklerinden türer: 1–150/151–448/449–1.255/1.256+); saydamlık yalnız sönümleme, seçili il en son çizilir, efsane yoğunluk ölçeği + 'Envanter dışı il'; filtre çipleri 8 duruyor; il sayfası alt haritası aynı dile çekildi. Ek: fare odağındaki UA dikdörtgen halkası kapatıldı (`:focus-visible` ink kontur korundu). 3 dosya + 1 CSS kuralı; veriye dokunulmadı, check 23/23 ✓; **CANLI, commit `48487b7`** (ff-merge, boş tetikleyici gerekmedi) |
 | 2026-09-26 | D1 canlı denetim | Resmi adres www'ya tek sabitte toplandı + ortak SEO yardımcısı (paylaşım görseli artık her sayfada); 7 metin düzeltmesi (yazım, 48+, Lightbox, LED büyük harf, TL bantları); "Yakındaki iller" coğrafi, il mecra linkleri tam; D teşhis: tüm sayfalar statik, "Yükleniyor" kök loading.tsx'ten, teklif formu tamamen tarayıcıda; check ✓, build ✓ (yerel, iCloud dışı kopya); ek: gizli bütçe bölümü silindi + "şeffaf teklif"; **CANLI, commit `f30e4d8`** (ff-merge, tetikleyici gerekmedi); ek: www 307→**308**, il×mecra paylaşım görseli düzeltildi (şehir/mecra adı + boşluk) → **CANLI `bf86fe5`** |
 | 2026-09-26 | L1 loading.tsx ölçümü | Kök bekleme ekranı kaldırılınca mobil LCP / %0, /envanter %11, /sehir/balikesir %10 iyileşti; CLS ≤ 0,011. %15 eşiği tutmadı → **elendi**, kod değişmedi. LCP darboğazı hero başlığı (font) |
+| 2026-09-26 | L2 LCP teşhis + deneme | LCP öğesi başlık/giriş metni, %90 render gecikmesi; SSR'de gizleme yok; gözlenen LCP <0,5 s (4–5 s Lighthouse simülasyonu). B1 (hero animasyonu kaldırma) %1, B2 (font preload kapalı) yalnız / %17, diğerleri kötü; gürültü ±%20 → **ikisi de elendi**, kod değişmedi |

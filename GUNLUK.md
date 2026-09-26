@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-09-26 — L2: Telefonda başlığın geç görünmesi (iki deneme de elendi)
+**Ne yapıldı:** Telefonda ölçüm aracının "başlık 4–5 saniyede görünüyor" demesinin sebebi arandı ve iki düzeltme denendi: ana sayfa başlığındaki açılış animasyonunu kaldırmak ve yazı tiplerinin önceden yüklenmesini kapatmak.
+**Neden:** En az %15 hızlanma çıkarsa canlıya alınacaktı.
+**Ne işe yaradı:** Başlık aslında gizlenmiyor; aracın gerçek gözlemi başlığın yarım saniyenin altında göründüğünü söylüyor. 4–5 saniye, aracın yavaş telefonu taklit eden tahmini. Denemelerin hiçbiri tutarlı hızlanma getirmedi (biri bir sayfada iyi, iki sayfada kötü), ölçümün kendi oynaması ±%20 çıktı. Siteye hiçbir değişiklik yapılmadı.
+**Sırada:** Gerçek ziyaretçi verisine bakmak (Vercel Speed Insights) — orada sorun görünürse hedef, sayfaya yüklenen kod miktarı.
+
 ### 2026-09-26 — L1: "Yükleniyor" ekranı denemesi (elendi)
 **Ne yapıldı:** Sayfaların önce "Yükleniyor" ile açılmasına yol açan dosya kaldırılırsa sitenin telefonda daha hızlı açılıp açılmadığı ölçüldü (3 sayfa, her biri 3 kez, kaldırmadan önce ve sonra).
 **Neden:** Hızlanma belirginse (en az %15) dosya kaldırılacaktı.
