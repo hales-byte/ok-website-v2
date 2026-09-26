@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, MapPin, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { BOLGELER, getBolgeMeta, getBolgeOzet, erisimKisa } from "@/src/data/bolgeler";
 import { formatAdi, sayiTr, TOPLAM } from "@/src/data/envanter";
 import { getBolgeAciklama } from "@/src/data/content/bolge-aciklama";
@@ -25,17 +26,11 @@ export async function generateMetadata({
   const b = getBolgeOzet(slug);
   if (!b) notFound();
 
-  return {
+  return sayfaMeta({
     title: `${b.meta.ad} Bölgesi Açıkhava Reklam — ${b.iller.length} İl, ${sayiTr(b.toplamUnite)} Ünite`,
     description: `${b.meta.ad} bölgesinde ${b.iller.length} ilde ${sayiTr(b.toplamUnite)} reklam ünitesi, ${b.mecra.length} mecra türü. Aylık ${erisimKisa(b.toplamErisim)} erişim. Billboard, CLP, megalight ve dijital açıkhava — hızlı teklif.`,
-    alternates: { canonical: `https://objektifkriter.com.tr/bolge/${slug}` },
-    openGraph: {
-      title: `${b.meta.ad} Bölgesi Açıkhava Reklam — ${sayiTr(b.toplamUnite)} Ünite`,
-      description: `${b.meta.ad} bölgesinde ${b.iller.length} ilde ${sayiTr(b.toplamUnite)} reklam ünitesi. Hızlı teklif, foto-raporlu uygulama.`,
-      url: `https://objektifkriter.com.tr/bolge/${slug}`,
-      type: "website",
-    },
-  };
+    path: `/bolge/${slug}`,
+  });
 }
 
 export default async function BolgePage({

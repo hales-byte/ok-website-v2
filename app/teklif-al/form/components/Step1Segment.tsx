@@ -45,7 +45,7 @@ const segmentler: Array<{
       "İlk açıkhava kampanyamı planlıyorum, sıfırdan rehberlik istiyorum.",
     bullets: [
       "Brief yazma yardımı",
-      "Şeffaf fiyatlandırma",
+      "Şeffaf teklif",
       "Kolay anlaşılır süreç",
     ],
   },

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, MapPin, ChevronRight, Clock, Camera, Map } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import {
   getIl,
   getFormatlarByIl,
@@ -57,19 +58,11 @@ export async function generateMetadata({
   }
 
   const mecraSayisi = Object.keys(il.formatlar).length;
-  return {
+  return sayfaMeta({
     title: `${il.il} Açıkhava Reklam — ${sayiTr(il.toplam)} Reklam Ünitesi`,
     description: `${il.il}${lokatifEk(il.il)} ${sayiTr(il.toplam)} reklam ünitesi, ${mecraSayisi} mecra türü: billboard, CLP, megalight ve dijital açıkhava çözümleri. Aylık ${getIlErisimEtiketi(slug)} erişim. Hızlı teklif, profesyonel takip.`,
-    alternates: {
-      canonical: `https://objektifkriter.com.tr/sehir/${slug}`,
-    },
-    openGraph: {
-      title: `${il.il} Açıkhava Reklam — ${sayiTr(il.toplam)} Reklam Ünitesi`,
-      description: `${il.il}${lokatifEk(il.il)} ${mecraSayisi} mecra türünde ${sayiTr(il.toplam)} reklam ünitesi. Hızlı teklif, foto-raporlu uygulama.`,
-      url: `https://objektifkriter.com.tr/sehir/${slug}`,
-      type: "website",
-    },
-  };
+    path: `/sehir/${slug}`,
+  });
 }
 
 export default async function SehirPage({
@@ -92,7 +85,7 @@ export default async function SehirPage({
   const aciklama = getIlAciklama(slug);
   const sssMaddeler = getIlSSS(slug);
   const komsular = getKomsuIller(slug, 4);
-  const mecraSayfalari = getIlMecraSayfalari(slug, 2);
+  const mecraSayfalari = getIlMecraSayfalari(slug);
   const bolge = bolgeOfIl(slug);
   const teklifHref = `/teklif-al?sehir=${encodeURIComponent(sehir)}`;
   const sahaFotolari = getSehirFotolar(slug);

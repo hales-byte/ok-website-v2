@@ -14,6 +14,13 @@
 
 ---
 
+### 2026-09-26 — D1: Canlı denetim düzeltmeleri (onay bekliyor)
+**Ne yapıldı:** Sitenin resmi adresi her yerde "www" ile yazılıyor; her sayfa WhatsApp/LinkedIn'de paylaşılınca artık görselli kart çıkarıyor. Yazım hataları, "48+ şehir", "LIGHTBOX", "led & dijital" gibi pürüzler düzeldi; İlk Kampanyanız sayfasından TL bütçe aralıkları kalktı. Şehir sayfasındaki "Yakındaki iller" artık gerçekten haritadaki komşuları gösteriyor (Balıkesir'de Manisa var, Gaziantep yok) ve şehrin tüm mecra sayfalarına link veriyor.
+**Neden:** Canlı denetimde Google'a iki farklı adres gidiyor, paylaşımlarda görsel düşüyor ve bazı metinler özensiz görünüyordu.
+**Ne işe yaradı:** Google tek adresi esas alacak; paylaşılan linkler profesyonel görünecek; ziyaretçi komşu illere ve tüm mecra sayfalarına tek tıkla geçebilecek. Ayrıca "sayfa önce Yükleniyor diye açılıyor" şikâyetinin sebebi bulundu (sitenin genel bekleme ekranı dosyası) — düzeltmesi ayrı karar.
+**Ek:** Hakan'ın isteğiyle İlk Kampanyanız sayfasındaki gizli bütçe bölümü tamamen silindi; sitedeki "şeffaf fiyat" ifadeleri "şeffaf teklif" oldu. Teklif formundaki bütçe seçenekleri olduğu gibi duruyor.
+**Sırada:** Değişiklikler önce önizleme adresine çıktı (canlı site etkilenmedi). Hakan gözle bakıp onaylayınca canlıya alınacak. Açık kararlar: bekleme ekranı kaldırılsın mı, teklif formu sunucuda iskeletle açılsın mı.
+
 ### 2026-09-18 — G9: Envanter haritası marka rengine geçti
 **Ne yapıldı:** `/envanter` sayfasındaki Türkiye haritası yedi ayrı renkte (mor, turuncu, yeşil, kehribar…) boyanıyordu; artık **tek renk ailesinde**: envanteri az olan il açık mavi, çok olan il koyu lacivert. Yani renk artık "nerede güçlüyüz" bilgisini veriyor. Sağdaki açıklama kutusu da bölge renk noktaları yerine **yoğunluk ölçeğini** gösteriyor (1–150 / 151–448 / 449–1.255 / 1.256+ ünite). Bölge filtre düğmeleri aynen duruyor. Bir de haritada bir ile tıklayınca çıkan kutu şeklindeki tarayıcı çerçevesi kapatıldı.
 **Neden:** O yedi renk marka kitinde yoktu — sitenin tek "çok renkli" yüzeyi burasıydı ve kurumsal dilden kopuk duruyordu. Ayrıca renk hiçbir şey anlatmıyordu; bölge bilgisi zaten filtrede ve panelde yazıyor.

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TOPLAM, sayiTr, erisimEtiketi } from "@/src/data/envanter";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
@@ -26,25 +27,13 @@ import {
 // Ana sayfa: layout default'unun template'ine düşmemesi için title.absolute kullan.
 // Layout'un title.template'i "%s | Objektif Kriter" — homepage'te çift "Objektif Kriter"
 // olmaması için absolute ile override.
-export const metadata: Metadata = {
-  title: {
-    absolute: `Objektif Kriter — Türkiye OOH Reklam | ${TOPLAM.il} İl, ${sayiTr(TOPLAM.unite)} Reklam Ünitesi`,
-  },
+export const metadata: Metadata = sayfaMeta({
+  title: `Objektif Kriter — Türkiye OOH Reklam | ${TOPLAM.il} İl, ${sayiTr(TOPLAM.unite)} Reklam Ünitesi`,
+  absolute: true,
   description:
     `Doğru lokasyonda, doğru zamanda, doğru kitleye. Türkiye'nin ${TOPLAM.il} ilinde ${sayiTr(TOPLAM.unite)} reklam ünitesi ile billboard, CLP, megalight ve dijital OOH reklam çözümleri. 15 dakika içinde teklif.`,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    locale: "tr_TR",
-    url: "https://objektifkriter.com.tr",
-    siteName: "Objektif Kriter",
-    title: "Objektif Kriter — Türkiye OOH Reklam",
-    description:
-      `Doğru lokasyonda, doğru zamanda, doğru kitleye. ${TOPLAM.il} il, ${sayiTr(TOPLAM.unite)} reklam ünitesi. 15 dakika içinde teklif.`,
-  },
-};
+  path: "/",
+});
 
 function getStats() {
   // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
@@ -98,7 +87,7 @@ export default async function Home() {
       icon: IlkKampanyamIcon,
       etiket: "İlk Açıkhava Kampanyam",
       slogan: "İlk afişinizi birlikte sokağa çıkaralım.",
-      desc: "Brief'iniz olmasa da olur. Hedefinizi anlatın, ihtiyacınızı birlikte netleştirelim, sıfırdan planlayalım. Şeffaf fiyat, gerçek lokasyon, sürpriz fatura yok.",
+      desc: "Brief'iniz olmasa da olur. Hedefinizi anlatın, ihtiyacınızı birlikte netleştirelim, sıfırdan planlayalım. Şeffaf teklif, gerçek lokasyon, sürpriz fatura yok.",
       cta: "Sıfırdan başlayalım",
       href: "/ilk-kampanyaniz",
     },

@@ -11,25 +11,19 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { CustomerProof } from "@/components/CustomerProof";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { BriefModal } from "./BriefModal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Reklam Ajansları İçin OOH Tedarikçi",
   description:
     "Brief'iniz 15 dakikada teklife dönüşsün. Ajanslar için Türkiye geneli OOH envanter, white-label raporlama, ajansa özel koşullar ve hızlı teslimat.",
-  alternates: { canonical: "https://objektifkriter.com.tr/ajanslar" },
-  openGraph: {
-    title: "Reklam Ajansları İçin OOH Tedarikçi — Objektif Kriter",
-    description:
-      "Brief'iniz 15 dakikada teklife dönüşsün. Türkiye geneli OOH envanter, white-label raporlama ve ajansa özel koşullar.",
-    url: "https://objektifkriter.com.tr/ajanslar",
-    type: "website",
-  },
-};
+  path: "/ajanslar",
+});
 
 function getStats() {
   // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
@@ -211,7 +205,7 @@ export default async function AjanslarPage() {
                     {[
                       "Brief & teklif kanalı sadece ajans",
                       "White-label rapor müşteriye sizden",
-                      "İstisna: form Step 5'te direkt iletişim talep edilebilir",
+                      "İstisna: siz talep ederseniz müşterinizle doğrudan iletişime geçebiliriz",
                     ].map((item) => (
                       <li
                         key={item}

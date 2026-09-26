@@ -2,7 +2,8 @@ import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, MapPin, ChevronRight, Layers } from "lucide-react";
 import type { Metadata } from "next";
-import { getFormatByKey, getFormatLabel } from "@/lib/formats";
+import { getFormatByKey, getFormatLabel, mecraCumleIci } from "@/lib/formats";
+import { SITE_URL, sayfaMeta } from "@/lib/seo";
 import {
   getIl,
   getIlFormatAdet,
@@ -84,21 +85,15 @@ export async function generateMetadata({
   }
 
   const ek = lokatifEk(il.il);
-  const formatLow = formatMeta.name.toLowerCase();
+  const formatLow = mecraCumleIci(formatMeta.name);
 
-  return {
+  // Paylaşım görseli bu rotanın kendi opengraph-image dosyasından gelir.
+  return sayfaMeta({
     title: `${il.il} ${formatMeta.name} Reklam — ${sayiTr(adet)} Ünite`,
     description: `${il.il}${ek} ${formatLow} reklam: ${sayiTr(adet)} reklam ünitesi. ${formatMeta.tagline}. 15 dakikada teklif, hedeflenmiş lokasyon önerisi.`,
-    alternates: {
-      canonical: `https://objektifkriter.com.tr/sehir/${slug}/${format}`,
-    },
-    openGraph: {
-      title: `${il.il} ${formatMeta.name} Reklam`,
-      description: `${il.il} açıkhava reklam: ${sayiTr(adet)} ${formatLow} ünitesi. ${formatMeta.tagline}.`,
-      url: `https://objektifkriter.com.tr/sehir/${slug}/${format}`,
-      type: "website",
-    },
-  };
+    path: `/sehir/${slug}/${format}`,
+    kendiGorseli: true,
+  });
 }
 
 export default async function SehirFormatPage({
@@ -132,14 +127,14 @@ export default async function SehirFormatPage({
   const buFormatSira = formatIlleri.findIndex((x) => x.slug === slug) + 1;
 
   // JSON-LD: Service + BreadcrumbList — SEO rich-result için
-  const baseUrl = "https://objektifkriter.com.tr";
+  const baseUrl = SITE_URL;
   const pageUrl = `${baseUrl}/sehir/${slug}/${format}`;
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: `${sehir} ${formatMeta.name} Reklam`,
     serviceType: `${formatMeta.name} Açıkhava Reklam`,
-    description: `${sehir} ilinde ${formatMeta.name.toLowerCase()} reklam çözümleri — ${sayiTr(adet)} reklam ünitesi.`,
+    description: `${sehir} ilinde ${mecraCumleIci(formatMeta.name)} reklam çözümleri — ${sayiTr(adet)} reklam ünitesi.`,
     provider: {
       "@type": "Organization",
       name: "Objektif Kriter",
@@ -285,7 +280,7 @@ export default async function SehirFormatPage({
               </h2>
               <p className="mt-3 text-base text-[var(--color-text-secondary)]">
                 Kampanyanızı çoklu şehre taşımak ister misiniz? En geniş{" "}
-                {formatMeta.name.toLowerCase()} envanterine sahip diğer
+                {mecraCumleIci(formatMeta.name)} envanterine sahip diğer
                 şehirler:
               </p>
             </div>
@@ -357,7 +352,7 @@ export default async function SehirFormatPage({
               <span className="text-gradient">teklif</span> alın
             </h2>
             <p className="text-lg text-[var(--color-text-secondary)]">
-              Hedefinize ve bütçenize uygun {formatMeta.name.toLowerCase()}{" "}
+              Hedefinize ve bütçenize uygun {mecraCumleIci(formatMeta.name)}{" "}
               lokasyonlarını 15 dakika içinde önerelim.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">

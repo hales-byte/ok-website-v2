@@ -10,22 +10,16 @@ import {
   Users,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Hakkımızda",
   description:
     "Objektif Kriter — Türkiye genelinde aktif lokasyonlar ve binlerce reklam yüzü ile OOH reklam çözümleri sunan lokasyon odaklı bir ajans.",
-  alternates: { canonical: "https://objektifkriter.com.tr/hakkimizda" },
-  openGraph: {
-    title: "Hakkımızda — Objektif Kriter",
-    description:
-      "Türkiye genelinde aktif lokasyonlar ve binlerce reklam yüzüyle OOH reklam çözümleri sunan lokasyon odaklı bir ajans.",
-    url: "https://objektifkriter.com.tr/hakkimizda",
-    type: "website",
-  },
-};
+  path: "/hakkimizda",
+});
 
 function getStats() {
   // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)

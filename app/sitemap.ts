@@ -2,8 +2,7 @@ import type { MetadataRoute } from "next";
 import { CONTENT_REVISION, INVENTORY_REVISION } from "@/lib/site-meta";
 import { getKombinasyonlar, slugifyTr } from "@/src/data/envanter";
 import { getStandaloneIller, isStandalone, BOLGELER } from "@/src/data/bolgeler";
-
-const BASE_URL = "https://objektifkriter.com.tr";
+import { SITE_URL as BASE_URL } from "@/lib/seo";
 
 /**
  * Sitemap — tamamen statik, envanter.json'dan türetilir (Supabase kaldırıldı).

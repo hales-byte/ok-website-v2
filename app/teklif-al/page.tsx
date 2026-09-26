@@ -1,12 +1,14 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { TeklifWizard } from "./form/components/TeklifWizard";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Teklif Al",
   description:
     "OOH reklam kampanyanız için 15 dakika içinde özel lokasyon planı ve teklif. Şehir, mecra ve bütçenizi paylaşın.",
-};
+  path: "/teklif-al",
+});
 
 export default function TeklifAlPage() {
   return (

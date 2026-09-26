@@ -3,28 +3,21 @@ import {
   ArrowRight,
   Sparkles,
   HelpCircle,
-  Wallet,
   HeartHandshake,
   MessageCircle,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { CustomerProof } from "@/components/CustomerProof";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "İlk Açıkhava Kampanyanız",
   description:
-    "İlk açıkhava reklamınız mı? Brief'inizi olmasa da olur. Şeffaf fiyat, anlaşılır süreç, sıcak destek — birlikte planlayalım.",
-  alternates: { canonical: "https://objektifkriter.com.tr/ilk-kampanyaniz" },
-  openGraph: {
-    title: "İlk Açıkhava Kampanyanız — Objektif Kriter",
-    description:
-      "İlk açıkhava reklamınız mı? Şeffaf fiyat, anlaşılır süreç, sıcak destek — birlikte planlayalım.",
-    url: "https://objektifkriter.com.tr/ilk-kampanyaniz",
-    type: "website",
-  },
-};
+    "İlk açıkhava reklamınız mı? Brief'iniz olmasa da olur. Şeffaf teklif, anlaşılır süreç, sıcak destek — birlikte planlayalım.",
+  path: "/ilk-kampanyaniz",
+});
 
 const endiseler = [
   {
@@ -62,27 +55,6 @@ const adimlar = [
   },
 ];
 
-const fiyatBant = [
-  {
-    range: "5K – 15K TL",
-    title: "Mahalle / cadde paketi",
-    desc: "Birkaç CLP/Raket ya da Pole Banner kombinasyonu. Lokal müşteri çekmek için yeterli görünürlük.",
-    examples: "Kafe, lokal market, semt restoranı, butik mağaza",
-  },
-  {
-    range: "15K – 40K TL",
-    title: "Şehir geneli paket",
-    desc: "Billboard veya megalight ile geniş kapsama, opsiyonel CLP desteği. Şehir genelinde marka tanıtımı.",
-    examples: "Yeni açılan zincir, otomotiv galeri, eğitim kurumu, klinik",
-  },
-  {
-    range: "40K+ TL",
-    title: "Çoklu şehir / mecra kombinasyonu",
-    desc: "Birden fazla şehirde ve mecrada kampanya. Markanızı bölgesel/ulusal düzeye çıkartıyoruz.",
-    examples: "E-ticaret kampanyası, sezonluk lansman, marka konsolidasyon",
-  },
-];
-
 export default function IlkKampanyanizPage() {
   return (
     <>
@@ -103,7 +75,7 @@ export default function IlkKampanyanizPage() {
               <p className="text-lg md:text-xl text-[var(--color-text-secondary)] leading-relaxed max-w-3xl">
                 Açıkhava reklamı yaptırmak hiç de korkutucu değil. Brief&apos;iniz
                 olmasa da olur — hedefinizi anlatın, ihtiyacınızı birlikte
-                netleştirelim. Şeffaf fiyat, gerçek lokasyon, sürpriz fatura
+                netleştirelim. Şeffaf teklif, gerçek lokasyon, sürpriz fatura
                 yok.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-4">
@@ -167,52 +139,6 @@ export default function IlkKampanyanizPage() {
         </div>
       </section>
 
-      {/* BÜTÇE REHBERİ — geçici olarak gizli, canlıya alındıktan sonra revize edilip açılacak */}
-      <section className="hidden py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
-        <div className="container-narrow">
-          <ScrollReveal direction="up">
-            <div className="max-w-2xl mb-16">
-              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
-                <Wallet size={14} />
-                Bütçe rehberi
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                Hangi bütçeyle ne yapılır?
-              </h2>
-              <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-                Mertebeyi bilmek karar vermeyi rahatlatır. Tahmini bantlar —
-                kampanyanıza göre özel teklifle netleşir.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {fiyatBant.map((bant, i) => (
-              <ScrollReveal
-                key={bant.range}
-                direction="up"
-                delay={i * 120}
-                duration={700}
-              >
-                <div className="h-full p-8 rounded-2xl bg-[var(--color-bg)] border border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 transition-all flex flex-col">
-                  <div className="text-2xl md:text-3xl font-bold text-gradient mb-2">
-                    {bant.range}
-                  </div>
-                  <h3 className="text-lg font-semibold mb-3">{bant.title}</h3>
-                  <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4 flex-grow">
-                    {bant.desc}
-                  </p>
-                  <div className="text-xs text-[var(--color-text-muted)] pt-4 border-t border-[var(--color-border-subtle)]">
-                    <span className="font-medium">Tipik müşteri:</span>{" "}
-                    {bant.examples}
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* SÜREÇ */}
       <section className="py-24 border-t border-[var(--color-border-subtle)]">
         <div className="container-narrow">
@@ -264,7 +190,7 @@ export default function IlkKampanyanizPage() {
                 İlk adım kolay
               </div>
               <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                Önce konuşalım, formu sonra dolduruz
+                Önce konuşalım, formu sonra doldururuz
               </h2>
               <p className="text-lg text-[var(--color-text-secondary)]">
                 Mesai içi 15 dakika, mesai dışı en geç ertesi sabah dönüş

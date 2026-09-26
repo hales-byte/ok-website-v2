@@ -2,20 +2,14 @@ import Link from "next/link";
 import { TOPLAM } from "@/src/data/envanter";
 import { Mail, MapPin, ArrowRight, Clock } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "İletişim",
   description:
     "Objektif Kriter ile iletişime geçin. OOH reklam kampanyalarınız için 15 dakika içinde dönüş yapıyoruz.",
-  alternates: { canonical: "https://objektifkriter.com.tr/iletisim" },
-  openGraph: {
-    title: "İletişim — Objektif Kriter",
-    description:
-      "OOH reklam kampanyalarınız için bize ulaşın; mesai içinde 15 dakikada dönüş yapıyoruz.",
-    url: "https://objektifkriter.com.tr/iletisim",
-    type: "website",
-  },
-};
+  path: "/iletisim",
+});
 
 function getStats() {
   // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)
@@ -154,7 +148,7 @@ export default async function IletisimPage() {
               </div>
               <div className="text-lg font-semibold mb-3">İstanbul, Türkiye</div>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                Türkiye genelinde {stats.sehirSayisi}+ şehirde aktif
+                Türkiye genelinde {stats.sehirSayisi} ilde aktif
                 lokasyonlarımızla yanınızdayız.
               </p>
             </div>

@@ -205,3 +205,14 @@ export function getFormatLabel(key: string): string {
   // Bilinmeyen key'i temiz basmak için ilk harfi büyüt
   return key.charAt(0).toLocaleUpperCase("tr") + key.slice(1).toLocaleLowerCase("tr");
 }
+
+/**
+ * Cümle içi mecra adı: kelimeler küçülür, kısaltmalar (LED, CLP) büyük kalır.
+ * "LED & Dijital" → "LED & dijital", "CLP / Raket" → "CLP / raket".
+ */
+export function mecraCumleIci(ad: string): string {
+  return ad
+    .split(" ")
+    .map((k) => (k.length > 1 && k === k.toLocaleUpperCase("tr") ? k : k.toLocaleLowerCase("tr")))
+    .join(" ");
+}

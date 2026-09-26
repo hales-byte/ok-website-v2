@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { ArrowRight, Cookie } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { LegalIcerik } from "@/components/legal/LegalIcerik";
 import { CEREZ_POLITIKASI } from "@/src/data/content/legal/cerez-politikasi";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Çerez Politikası",
   description:
     "Objektif Kriter web sitesinde kullanılan çerezler ve benzeri teknolojiler hakkında bilgi.",
-};
+  path: "/cerez-politikasi",
+});
 
 export default function CerezPolitikasiPage() {
   const doc = CEREZ_POLITIKASI;

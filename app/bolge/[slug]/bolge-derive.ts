@@ -5,8 +5,8 @@
 import type { SSSMaddesi } from "@/src/data/content/sss";
 import { getBolgeOzet } from "@/src/data/bolgeler";
 import { sayiTr } from "@/src/data/envanter";
+import { SITE_URL as BASE_URL } from "@/lib/seo";
 
-const BASE_URL = "https://objektifkriter.com.tr";
 
 /** Bölge için Service + BreadcrumbList JSON-LD. */
 export function buildBolgeJsonLd(bolgeSlug: string) {

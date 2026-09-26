@@ -195,6 +195,7 @@ export const FORMAT_LABELS: Record<string, string> = {
   "SÜPER LED EKRAN": "Süper LED Ekran",
   "SİLİNDİR KULE": "Silindir Kule",
   "PRİZMA LED": "Prizma LED",
+  "LIGHTBOX": "Lightbox",
 };
 
 /** Envanter mecra adını görünen ada çevirir (bilinmeyene ham adı döner) */

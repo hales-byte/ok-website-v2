@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { CustomerProof } from "@/components/CustomerProof";
@@ -21,18 +22,12 @@ import {
   IS_BIRLIKLERI_LOGOLARI,
 } from "@/src/data/content/is-birlikleri";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Markalar İçin OOH Reklam Çözümleri",
   description:
     `Kurumsal markalar için Türkiye geneli OOH planlama. Stratejik medya, raporlanabilir kampanyalar, sektörel deneyim. ${TOPLAM.il} ilde ${sayiTr(TOPLAM.unite)} reklam ünitesi.`,
-  alternates: { canonical: "https://objektifkriter.com.tr/markalar" },
-  openGraph: {
-    title: "Markalar İçin OOH Reklam Çözümleri — Objektif Kriter",
-    description: `Kurumsal markalar için Türkiye geneli OOH planlama; ${TOPLAM.il} ilde ${sayiTr(TOPLAM.unite)} reklam ünitesi, raporlanabilir kampanyalar.`,
-    url: "https://objektifkriter.com.tr/markalar",
-    type: "website",
-  },
-};
+  path: "/markalar",
+});
 
 function getStats() {
   // TEK doğruluk kaynağı: src/data/envanter.json (Supabase kaldırıldı)

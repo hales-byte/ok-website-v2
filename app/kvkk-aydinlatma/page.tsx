@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { LegalIcerik } from "@/components/legal/LegalIcerik";
 import { KVKK_AYDINLATMA } from "@/src/data/content/legal/kvkk-aydinlatma";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "KVKK Aydınlatma Metni",
   description:
     "Objektif Kriter olarak kişisel verilerinizin işlenmesine ilişkin 6698 sayılı KVKK kapsamında aydınlatma metnimiz.",
-};
+  path: "/kvkk-aydinlatma",
+});
 
 export default function KvkkAydinlatmaPage() {
   const doc = KVKK_AYDINLATMA;

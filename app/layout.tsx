@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL, siteUrl } from "@/lib/seo";
 import { TOPLAM, sayiTr } from "@/src/data/envanter";
 import { Inter, Montserrat } from "next/font/google";
 import { Header } from "@/components/layout/Header";
@@ -24,7 +25,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://objektifkriter.com.tr"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Objektif Kriter — Türkiye OOH Reklam",
     template: "%s | Objektif Kriter",
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    url: "https://objektifkriter.com.tr",
+    url: SITE_URL,
     siteName: "Objektif Kriter",
     title: "Objektif Kriter — Türkiye OOH Reklam",
     description:
@@ -85,8 +86,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "Objektif Kriter",
-              url: "https://objektifkriter.com.tr",
-              logo: "https://objektifkriter.com.tr/logo.png",
+              url: SITE_URL,
+              logo: siteUrl("/logo.png"),
               description:
                 `Türkiye genelinde ${TOPLAM.il} ilde billboard, CLP, megalight, LED ve dijital OOH reklam çözümleri.`,
               contactPoint: {
@@ -116,10 +117,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "@id": "https://objektifkriter.com.tr/#localbusiness",
+              "@id": siteUrl("/#localbusiness"),
               name: "Objektif Kriter Reklamcılık ve Danışmanlık",
-              image: "https://objektifkriter.com.tr/logo.png",
-              url: "https://objektifkriter.com.tr",
+              image: siteUrl("/logo.png"),
+              url: SITE_URL,
               telephone: "+905529185864",
               email: "satis@objektifkriter.com.tr",
               priceRange: "$$",

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { DigerMecraGrid } from "@/components/DigerMecraGrid";
@@ -13,17 +14,12 @@ import {
   MECRALAR_CTA,
 } from "@/src/data/content/mecralar";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Mecralarımız — Tüm Açıkhava Reklam Mecraları",
-  description: `Billboard, CLP, pole banner, megalight, LED ve giantboard'un yanında alınlık, luna, megaboard, tramvay kaplama ve daha fazlası — ${TOPLAM.mecra} mecra türü, ${sayiTr(TOPLAM.unite)} reklam ünitesi tek envanterde.`,
-  alternates: { canonical: "https://objektifkriter.com.tr/mecralar" },
-  openGraph: {
-    title: "Mecralarımız — Objektif Kriter",
-    description: `${TOPLAM.mecra} mecra türü, ${sayiTr(TOPLAM.unite)} reklam ünitesi — Türkiye genelinde tek envanter.`,
-    url: "https://objektifkriter.com.tr/mecralar",
-    type: "website",
-  },
-};
+  description:
+    `Billboard, CLP, pole banner, megalight, LED ve giantboard'un yanında alınlık, luna, megaboard, tramvay kaplama ve daha fazlası — ${TOPLAM.mecra} mecra türü, ${sayiTr(TOPLAM.unite)} reklam ünitesi tek envanterde.`,
+  path: "/mecralar",
+});
 
 export default function MecralarPage() {
   return (

@@ -25,11 +25,11 @@ const ORAN = 16 / 10;
 /** Bbox'ın etrafına bırakılan pay (ilin sınırları kenara yapışmasın). */
 const PAY = 0.12;
 
-type Kutu = { x0: number; y0: number; x1: number; y1: number };
+export type Kutu = { x0: number; y0: number; x1: number; y1: number };
 
 /** Path (d) verisinden sınırlayıcı kutu. Veri yalnız M/L/C/z kullanır →
  *  tüm sayılar x,y çiftidir, ikişer okumak birebir doğrudur. */
-function bbox(d: string): Kutu {
+export function bbox(d: string): Kutu {
   const n = (d.match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number);
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   for (let i = 0; i + 1 < n.length; i += 2) {

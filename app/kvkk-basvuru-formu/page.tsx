@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { ArrowRight, FileText } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { LegalIcerik } from "@/components/legal/LegalIcerik";
 import { YazdirButonu } from "@/components/legal/YazdirButonu";
 import { KVKK_BASVURU_FORMU } from "@/src/data/content/legal/kvkk-basvuru-formu";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "İlgili Kişi Başvuru Formu",
   description:
     "KVKK m.11 kapsamındaki haklarınız için İlgili Kişi (Veri Sahibi) Başvuru Formu. Doldurup iletisim@objektifkriter.com.tr adresine iletebilirsiniz.",
-};
+  path: "/kvkk-basvuru-formu",
+});
 
 export default function KvkkBasvuruFormuPage() {
   const doc = KVKK_BASVURU_FORMU;

@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { ArrowRight, Lock } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { LegalIcerik } from "@/components/legal/LegalIcerik";
 import { GIZLILIK_POLITIKASI } from "@/src/data/content/legal/gizlilik-politikasi";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Gizlilik Politikası",
   description:
     "Objektif Kriter olarak ziyaretçilerimizin ve müşterilerimizin verilerini nasıl topladığımız, kullandığımız ve koruduğumuz.",
-};
+  path: "/gizlilik-politikasi",
+});
 
 export default function GizlilikPolitikasiPage() {
   const doc = GIZLILIK_POLITIKASI;

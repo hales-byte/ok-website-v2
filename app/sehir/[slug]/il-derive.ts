@@ -13,13 +13,10 @@ import {
   slugifyTr,
 } from "@/src/data/envanter";
 import type { SSSMaddesi } from "@/src/data/content/sss";
-import { SEHIRLER } from "@/lib/turkiye-sehirler";
+import { TR_IL_PATHS } from "@/src/data/tr-il-paths";
+import { bbox } from "./IlHarita";
 import { isStandalone } from "@/src/data/bolgeler";
-
-const BASE_URL = "https://objektifkriter.com.tr";
-
-/** İl adı → bölge (lib/turkiye-sehirler tek kaynak) */
-const BOLGE_BY_AD = new Map(SEHIRLER.map((s) => [s.ad, s.bolge]));
+import { SITE_URL as BASE_URL } from "@/lib/seo";
 
 export interface KomsuIl {
   slug: string;
@@ -27,29 +24,32 @@ export interface KomsuIl {
   toplam: number;
 }
 
+/** İl merkezi ≈ harita silüetinin sınır kutusu ortası (derleme anında, dış servis yok). */
+const MERKEZ = new Map(
+  TR_IL_PATHS.map((p) => {
+    const k = bbox(p.d);
+    return [p.id, { x: (k.x0 + k.x1) / 2, y: (k.y0 + k.y1) / 2 }];
+  })
+);
+
 /**
- * Aynı bölgeden, envanteri olan en büyük komşu iller (kendisi hariç).
+ * Coğrafi olarak en yakın iller (kendisi hariç), merkezler arası mesafeye göre.
  * SADECE standalone iller — taşınan illere link vermeyiz (301 zinciri olmasın).
- * Bölge eşi yetmezse en büyük standalone illerle tamamlanır (sayfa dolu kalsın).
  */
 export function getKomsuIller(slug: string, adet = 4): KomsuIl[] {
-  const il = getIl(slug);
-  if (!il) return [];
-  const bolge = BOLGE_BY_AD.get(il.il);
+  const merkez = MERKEZ.get(slug);
+  if (!getIl(slug) || !merkez) return [];
 
-  const hepsi = getIller()
-    .filter((i) => slugifyTr(i.il) !== slug && isStandalone(slugifyTr(i.il)))
-    .map((i) => ({ slug: slugifyTr(i.il), il: i.il, toplam: i.toplam }));
-
-  const ayniBolge = hepsi.filter((i) => BOLGE_BY_AD.get(i.il) === bolge);
-  const secilen = [...ayniBolge];
-  if (secilen.length < adet) {
-    for (const i of hepsi) {
-      if (secilen.length >= adet) break;
-      if (!secilen.some((s) => s.slug === i.slug)) secilen.push(i);
-    }
-  }
-  return secilen.slice(0, adet);
+  return getIller()
+    .flatMap((i) => {
+      const s = slugifyTr(i.il);
+      const m = MERKEZ.get(s);
+      if (s === slug || !isStandalone(s) || !m) return [];
+      return [{ slug: s, il: i.il, toplam: i.toplam, mesafe: Math.hypot(m.x - merkez.x, m.y - merkez.y) }];
+    })
+    .sort((a, b) => a.mesafe - b.mesafe)
+    .slice(0, adet)
+    .map(({ slug: s, il, toplam }) => ({ slug: s, il, toplam }));
 }
 
 export interface MecraLink {
@@ -58,19 +58,23 @@ export interface MecraLink {
   adet: number;
 }
 
-/** İlin sayfası olan (adet ≥ eşik) en büyük mecraları — iç link için. */
-export function getIlMecraSayfalari(slug: string, adet = 2): MecraLink[] {
-  return getFormatlarByIl(slug)
-    .filter(({ format, adet: a }) => {
-      const pageKey = FORMAT_PAGE_KEY[format];
-      return pageKey != null && a >= MIN_FORMAT_PAGE_UNITE;
-    })
-    .slice(0, adet)
-    .map(({ format, adet: a }) => ({
-      pageKey: FORMAT_PAGE_KEY[format] as string,
-      label: formatAdi(format),
-      adet: a,
-    }));
+/**
+ * İlin sayfası üretilen TÜM mecraları (adet ≥ eşik), adede göre azalan — iç link için.
+ * Kural generateStaticParams'la (getKombinasyonlar) aynı: sayfa anahtarı başına toplam.
+ */
+export function getIlMecraSayfalari(slug: string): MecraLink[] {
+  const agg = new Map<string, MecraLink>();
+  for (const { format, adet } of getFormatlarByIl(slug)) {
+    const pageKey = FORMAT_PAGE_KEY[format];
+    if (!pageKey) continue;
+    const onceki = agg.get(pageKey);
+    agg.set(pageKey, onceki
+      ? { ...onceki, adet: onceki.adet + adet }
+      : { pageKey, label: formatAdi(format), adet });
+  }
+  return [...agg.values()]
+    .filter((m) => m.adet >= MIN_FORMAT_PAGE_UNITE)
+    .sort((a, b) => b.adet - a.adet);
 }
 
 /** İl sayfası için Service + BreadcrumbList JSON-LD (rich result). */

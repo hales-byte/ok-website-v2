@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, Scale } from "lucide-react";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Kullanım Koşulları",
   description:
     "Objektif Kriter web sitesinin kullanım koşulları ve hizmet şartları.",
-};
+  path: "/kullanim-kosullari",
+});
 
 export default function KullanimKosullariPage() {
   return (

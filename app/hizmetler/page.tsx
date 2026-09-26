@@ -4,21 +4,16 @@ import { ArrowRight, Check, Clock } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { TOPLAM } from "@/src/data/envanter";
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import { ANA_MECRALAR, HAVALIMANI_LED } from "@/lib/formats";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Hizmetlerimiz",
   description:
     `CLP, billboard, pole banner, megalight, LED ve giantboard — ${TOPLAM.mecra} mecra türü içinden ana mecralarla markanız için doğru açıkhava çözümü.`,
-  alternates: { canonical: "https://objektifkriter.com.tr/hizmetler" },
-  openGraph: {
-    title: "Hizmetlerimiz — Objektif Kriter",
-    description: `CLP, billboard, pole banner, megalight, LED ve giantboard — ${TOPLAM.mecra} mecra türüyle markanız için doğru açıkhava çözümü.`,
-    url: "https://objektifkriter.com.tr/hizmetler",
-    type: "website",
-  },
-};
+  path: "/hizmetler",
+});
 
 export default function HizmetlerPage() {
   return (

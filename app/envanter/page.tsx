@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { sayfaMeta } from "@/lib/seo";
 import TurkiyeHaritasi, { type HaritaIl } from "./TurkiyeHaritasi";
 import { SEHIRLER } from "@/lib/turkiye-sehirler";
 import {
@@ -10,10 +11,12 @@ import {
 } from "@/src/data/envanter";
 import { isStandalone, bolgeOfIl } from "@/src/data/bolgeler";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = sayfaMeta({
   title: "Envanter — Türkiye Geneli Reklam Lokasyonları",
-  description: `Objektif Kriter envanteri: Türkiye genelinde ${TOPLAM.il} il, ${TOPLAM.mecra} mecra türü, ${sayiTr(TOPLAM.unite)} reklam ünitesi. Lokasyonları harita üzerinde keşfedin.`,
-};
+  description:
+    `Objektif Kriter envanteri: Türkiye genelinde ${TOPLAM.il} il, ${TOPLAM.mecra} mecra türü, ${sayiTr(TOPLAM.unite)} reklam ünitesi. Lokasyonları harita üzerinde keşfedin.`,
+  path: "/envanter",
+});
 
 /**
  * Envanter sayfası — tamamen statik (Supabase + Mapbox kaldırıldı).
