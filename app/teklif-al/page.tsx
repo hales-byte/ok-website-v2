@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { sayfaMeta } from "@/lib/seo";
 import { TeklifWizard } from "./form/components/TeklifWizard";
+import { WizardIskelet } from "./form/components/WizardIskelet";
 
 export const metadata: Metadata = sayfaMeta({
   title: "Teklif Al",
@@ -12,13 +13,9 @@ export const metadata: Metadata = sayfaMeta({
 
 export default function TeklifAlPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-[60vh] flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-[var(--color-border-subtle)] border-t-[var(--color-primary)] rounded-full animate-spin" />
-        </div>
-      }
-    >
+    // Form URL parametrelerini (useSearchParams) okuduğu için tarayıcıda çizilir;
+    // o sırada sunucuda basılmış 1. adım iskeleti görünür (sayfa statik kalır).
+    <Suspense fallback={<WizardIskelet />}>
       <TeklifWizard />
     </Suspense>
   );

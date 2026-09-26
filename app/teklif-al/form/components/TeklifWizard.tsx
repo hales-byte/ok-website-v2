@@ -23,7 +23,9 @@ import { TOTAL_STEPS } from "../types";
 import { submitTeklif } from "../submit-action";
 import { titleCaseTr } from "@/lib/turkiye-sehirler";
 import { getFormatByKey } from "@/lib/formats";
+import { getStepInfo } from "../step-info";
 import { WizardLayout } from "./WizardLayout";
+import { WizardIskelet } from "./WizardIskelet";
 import { ResumeBanner } from "./ResumeBanner";
 import { Step1Segment } from "./Step1Segment";
 import { Step2Sehirler } from "./Step2Sehirler";
@@ -249,12 +251,9 @@ export function TeklifWizard() {
   }, [state, handleSubmit]);
 
   // ─── RENDER ───
+  // Sunucu HTML'iyle aynı iskelet — hydration sırasında görünüm sıçramaz.
   if (!hydrated) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[var(--color-border-subtle)] border-t-[var(--color-primary)] rounded-full animate-spin" />
-      </div>
-    );
+    return <WizardIskelet />;
   }
 
   if (state.submitted) {
@@ -362,49 +361,6 @@ export function TeklifWizard() {
       </WizardLayout>
     </>
   );
-}
-
-// ═══════════════════════════════════════════════════════════
-function getStepInfo(step: number): { title: string; subtitle: string } {
-  switch (step) {
-    case 1:
-      return {
-        title: "Kim için kampanya?",
-        subtitle:
-          "Size en doğru deneyimi sunabilmemiz için kendinizi tanıtmanızı istiyoruz. Tek tıklama yeter.",
-      };
-    case 2:
-      return {
-        title: "Hangi şehirler?",
-        subtitle:
-          "Kampanyanızın görünürlük yapacağı şehirleri seçin. Birden fazla seçebilirsiniz.",
-      };
-    case 3:
-      return {
-        title: "Hangi üniteler?",
-        subtitle:
-          "İlgilendiğiniz reklam ünitelerini seçin. Henüz emin değilseniz \"Bana öner\" seçebilirsiniz.",
-      };
-    case 4:
-      return {
-        title: "Bütçe ve zaman?",
-        subtitle:
-          "Planlama için yaklaşık bir bütçe ve zaman aralığı. Her ikisinde de \"henüz net değil\" seçeneği var.",
-      };
-    case 5:
-      return {
-        title: "Sizinle nasıl iletişime geçelim?",
-        subtitle:
-          "15 dakika içinde geri dönüş yapacağız. Sadece zorunlu alanları doldurmanız yeterli.",
-      };
-    case 6:
-      return {
-        title: "Son adım",
-        subtitle: "Talebinizi gözden geçirin, KVKK onayını verip gönderin.",
-      };
-    default:
-      return { title: "", subtitle: "" };
-  }
 }
 
 function SuccessScreen() {

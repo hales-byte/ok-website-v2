@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { TOTAL_STEPS } from "../types";
 
@@ -38,6 +39,12 @@ export function WizardLayout({
   children,
 }: WizardLayoutProps) {
   const progress = (currentStep / TOTAL_STEPS) * 100;
+
+  // İlk açılışta içerik doğrudan görünür (sunucuda basılan iskeletin yerini
+  // sessizce alır); kayarak gelme animasyonu yalnız adım değişince oynar.
+  const [ilkAdim] = useState(currentStep);
+  const [adimDegisti, setAdimDegisti] = useState(false);
+  if (!adimDegisti && currentStep !== ilkAdim) setAdimDegisti(true);
 
   function handleResetClick() {
     const ok = window.confirm(
@@ -117,7 +124,7 @@ export function WizardLayout({
             )}
           </div>
 
-          <div key={currentStep} className="animate-slideInRight">
+          <div key={currentStep} className={adimDegisti ? "animate-slideInRight" : undefined}>
             {children}
           </div>
         </div>
