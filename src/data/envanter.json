@@ -1,9 +1,9 @@
 {
-  "guncelleme": "2026-09-17",
-  "kaynak": "OBJ_ENVANTER_objenv.xlsx (Hakan, 2026-09-17; Network Adeti hariç). V6: Manisa ve Nevşehir envantere girdi (48 il); Adana kaynakta eski detayına döndü (845→2.673, SİLİNDİR KULE mecrası geri geldi); LIGHTBOX yeni mecra → mecra türü 19→21; Manisa GIANTBOARD adedi kaynakta '*' (belirsiz) olduğundan sayılmadı.",
+  "guncelleme": "2026-10-08",
+  "kaynak": "OBJ_ENVANTER_objenv_1.xlsx (Hakan, 2026-10-08; Network Adeti hariç). V7: Giresun envanterden çıktı (48→47 il); Ordu'da yalnız CLP 560 ve Ordu-Giresun Havalimanı LED'leri kaldı (1.110→564) — kaynak Excel'de Ordu etiketi silinen satırla gittiği için sahipsiz kalan CLP satırı Hakan teyidiyle Ordu'ya yazıldı; Manisa GIANTBOARD adedi kaynakta '*' (belirsiz) olduğundan sayılmadı.",
   "toplam": {
-    "il": 48,
-    "unite": 39960
+    "il": 47,
+    "unite": 39400
   },
   "iller": [
     {
@@ -241,21 +241,6 @@
       }
     },
     {
-      "il": "Ordu",
-      "toplam": 1110,
-      "ilceler": [
-        "Ordu-Giresun Havalimanı"
-      ],
-      "formatlar": {
-        "CLP RAKET-DURAK": 560,
-        "BILLBOARD": 266,
-        "POLE BANNER": 250,
-        "MEGALIGHT": 22,
-        "MEGABOARD": 7,
-        "LED": 5
-      }
-    },
-    {
       "il": "Kars",
       "toplam": 860,
       "ilceler": [
@@ -347,6 +332,17 @@
         "POLE BANNER": 300,
         "CLP RAKET-DURAK": 222,
         "BILLBOARD": 78
+      }
+    },
+    {
+      "il": "Ordu",
+      "toplam": 564,
+      "ilceler": [
+        "Ordu-Giresun Havalimanı"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 560,
+        "LED": 4
       }
     },
     {
@@ -555,18 +551,6 @@
       ],
       "formatlar": {
         "BILLBOARD": 30
-      }
-    },
-    {
-      "il": "Giresun",
-      "toplam": 14,
-      "ilceler": [
-        "Piraziz"
-      ],
-      "formatlar": {
-        "BILLBOARD": 12,
-        "GIANTBOARD": 1,
-        "LED": 1
       }
     },
     {

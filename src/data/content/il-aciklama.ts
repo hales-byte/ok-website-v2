@@ -67,7 +67,7 @@ export const IL_ACIKLAMA: Record<string, string> = {
   rize:
     "Rize, çay ve yayla turizminin sahil şehri. CLP ve billboard ağırlıklı ağımız sahil yolu boyunca şehir merkezinin en çok görülen noktalarını kapsıyor. Rize planınızı bütçenize göre 15 dakikada hazırlıyoruz.",
   ordu:
-    "Ordu, fındık ve sahil turizminin Karadeniz şehri. Sahil yolu boyunca pole banner ağırlıklı ağımızla markanız her durakta yeni bir kitleyle buluşuyor. Ordu planınızı 15 dakikada çıkarıyoruz.",
+    "Ordu, fındık ve sahil turizminin Karadeniz şehri. Şehir içindeki CLP/raket ağımız markanızı durakların ve yaya akışının tam ortasına taşıyor; Ordu-Giresun Havalimanı'ndaki LED ekranlarla şehre gelen her yolcunun karşısındasınız. Ordu planınızı 15 dakikada çıkarıyoruz.",
 };
 
 /**

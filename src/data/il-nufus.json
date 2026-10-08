@@ -1,5 +1,5 @@
 {
-  "kaynak": "TÜİK ADNKS 31.12.2025 (Şubat 2026 bülteni) — Cowork derledi ve resmi bültenle çapraz doğruladı, 2026-07-04; V1 (2026-07-07): Aydın 1.172.107 eklendi (ADNKS 2025 serisi, resmi 2023 değeriyle çapraz kontrol), Edirne çıkarıldı (envanterden düştü); V3 (2026-07-20): Malatya çıkarıldı (envanterden düştü); V5 (2026-09-12): Bolu 327.173 ve Giresun 455.074 eklendi (ADNKS 2025, iki bağımsız kaynakla çapraz doğrulandı — envantere girdiler); V6 (2026-09-17): Manisa 1.477.756 ve Nevşehir 320.150 eklendi (ADNKS 2025, iki bağımsız kaynakla çapraz doğrulandı — envantere girdiler)",
+  "kaynak": "TÜİK ADNKS 31.12.2025 (Şubat 2026 bülteni) — Cowork derledi ve resmi bültenle çapraz doğruladı, 2026-07-04; V1 (2026-07-07): Aydın 1.172.107 eklendi (ADNKS 2025 serisi, resmi 2023 değeriyle çapraz kontrol), Edirne çıkarıldı (envanterden düştü); V3 (2026-07-20): Malatya çıkarıldı (envanterden düştü); V5 (2026-09-12): Bolu 327.173 ve Giresun 455.074 eklendi (ADNKS 2025, iki bağımsız kaynakla çapraz doğrulandı — envantere girdiler); V6 (2026-09-17): Manisa 1.477.756 ve Nevşehir 320.150 eklendi (ADNKS 2025, iki bağımsız kaynakla çapraz doğrulandı — envantere girdiler); V7 (2026-10-08): Giresun çıkarıldı (envanterden düştü)",
   "nufus": {
     "Adana": 2283609,
     "Adıyaman": 617821,
@@ -23,7 +23,6 @@
     "Erzurum": 736877,
     "Eskişehir": 927956,
     "Gaziantep": 2222415,
-    "Giresun": 455074,
     "Hatay": 1577531,
     "Iğdır": 205071,
     "Karabük": 249614,

@@ -2,8 +2,8 @@
 /**
  * ENVANTER DOĞRULAMA — npm run check:envanter
  * Tek doğruluk kaynağının iç tutarlılığını test eder:
- *   1. Toplam ünite = 39.960 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
- *   2. İl sayısı = 48
+ *   1. Toplam ünite = 39.400 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
+ *   2. İl sayısı = 47
  *   3. Ankara toplamı = 2.946
  *   4. Her ilin toplamı, format dağılımının toplamına eşit
  *   5. Mecra türü sayısı = 21
@@ -27,9 +27,9 @@ const uniteToplam = iller.reduce((s, i) => s + i.toplam, 0);
 const ankara = iller.find((i) => i.il === "Ankara");
 const mecralar = new Set(iller.flatMap((i) => Object.keys(i.formatlar)));
 
-check("Toplam ünite", uniteToplam, 39960);
+check("Toplam ünite", uniteToplam, 39400);
 check("json.toplam.unite alanı", data.toplam.unite, uniteToplam);
-check("İl sayısı", iller.length, 48);
+check("İl sayısı", iller.length, 47);
 check("json.toplam.il alanı", data.toplam.il, iller.length);
 check("Ankara toplamı", ankara?.toplam, 2946);
 check("Mecra türü sayısı", mecralar.size, 21);
@@ -59,7 +59,8 @@ check("Balıkesir LED (V4'te 31→38)", balikesir?.formatlar?.["LED"], 38);
 const bolu = iller.find((i) => i.il === "Bolu");
 const giresun = iller.find((i) => i.il === "Giresun");
 check("Bolu envanterde VAR (V5'te girdi)", bolu?.toplam, 39);
-check("Giresun envanterde VAR (V5'te girdi)", giresun?.toplam, 14);
+// V5'in "Giresun VAR (14)" nöbetçisi V7'de GEÇERSİZ — Giresun envanterden çıktı.
+check("Giresun envanterde YOK (V7'de çıktı)", giresun === undefined, true);
 // V5'in Adana(845) ve SİLİNDİR-KULE-YOK nöbetçileri V6'da GEÇERSİZ — yenileri aşağıda.
 
 // V6 (2026-09-17) güncelleme nöbetçileri:
@@ -77,6 +78,17 @@ check("SİLİNDİR KULE mecrası VAR (V6'da geri geldi)", adana?.formatlar?.["S�
 check("LIGHTBOX mecrası VAR (V6'da girdi)", manisa?.formatlar?.["LIGHTBOX"], 2);
 check("Afyonkarahisar toplamı (V6'da 366→353)", iller.find((i) => i.il === "Afyonkarahisar")?.toplam, 353);
 check("Van toplamı (V6'da 869→831)", iller.find((i) => i.il === "Van")?.toplam, 831);
+
+// V7 (2026-10-08) güncelleme nöbetçileri:
+//  · Giresun envanterden çıktı (48→47 il) — yukarıdaki Giresun satırı
+//  · Ordu'da yalnız CLP 560 + 4 havalimanı LED'i kaldı (1.110→564)
+//  · Kaynak Excel'de Ordu etiketi silinen satırla gittiği için CLP 560 satırı
+//    Samsun'un altına düşmüştü; Samsun'un 1.164'te kalması o yanlış atamaya karşı nöbetçi
+const ordu = iller.find((i) => i.il === "Ordu");
+const samsun = iller.find((i) => i.il === "Samsun");
+check("Ordu toplamı (V7'de 1.110→564)", ordu?.toplam, 564);
+check("Ordu'da yalnız CLP + LED (V7)", Object.keys(ordu?.formatlar ?? {}).sort().join(","), "CLP RAKET-DURAK,LED");
+check("Samsun toplamı (V7'de değişmedi — sahipsiz satır nöbetçisi)", samsun?.toplam, 1164);
 
 const bozukIller = iller.filter(
   (i) => Object.values(i.formatlar).reduce((s, a) => s + a, 0) !== i.toplam

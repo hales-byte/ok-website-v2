@@ -99,17 +99,11 @@ export const SEHIR_FOTOLAR: Record<string, SehirFoto[]> = {
     { dosya: "mersin-giantboard-02.webp", mecra: "Giantboard", w: 1600, h: 1204 },
     { dosya: "mersin-giantboard-03.webp", mecra: "Giantboard", w: 1600, h: 1204 },
   ],
-  // Ordu
-  "ordu": [
-    { dosya: "ordu-billboard-01.webp", mecra: "Billboard", w: 1600, h: 1200 },
-    { dosya: "ordu-billboard-02.webp", mecra: "Billboard", w: 1600, h: 1200 },
-    { dosya: "ordu-billboard-03.webp", mecra: "Billboard", w: 1600, h: 1200 },
-    { dosya: "ordu-giantboard-01.webp", mecra: "Giantboard", w: 1600, h: 1200 },
-    { dosya: "ordu-led-01.webp", mecra: "LED", w: 1600, h: 1200 },
-    { dosya: "ordu-megaboard-01.webp", mecra: "Megaboard", w: 1600, h: 1200 },
-    { dosya: "ordu-megalight-01.webp", mecra: "Megalight", w: 1600, h: 1200 },
-    { dosya: "ordu-megalight-02.webp", mecra: "Megalight", w: 1600, h: 1200 },
-  ],
+  // Ordu — V7 (2026-10-08): Ordu'da yalnız CLP + havalimanı LED'i kaldı. Eski 8 kare
+  // (billboard/giantboard/megaboard/megalight + sahil yolu sokak LED'i) artık Ordu
+  // envanterinde olmayan mecraları gösterdiği için şeritten çıkarıldı; dosyalar
+  // public/images/sehir/ordu/ altında duruyor — Ordu bu mecraları geri kazanırsa
+  // buraya geri eklenir. Liste boşken şerit kendini gizler.
   // Sakarya
   "sakarya": [
     { dosya: "sakarya-billboard-01.webp", mecra: "Billboard", w: 1600, h: 1200 },
