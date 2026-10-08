@@ -19,7 +19,7 @@ import { getIlAciklama } from "@/src/data/content/il-aciklama";
 import { getIlSSS } from "@/src/data/content/il-sss";
 import { FAQ } from "@/components/FAQ";
 import { getStandaloneIller, bolgeOfIl } from "@/src/data/bolgeler";
-import { getKomsuIller, getIlMecraSayfalari } from "./il-derive";
+import { getKomsuIller, getIlMecraSayfalari, ilMecraIfadesi } from "./il-derive";
 import { SahadanKareler } from "@/components/SahadanKareler";
 import { getSehirFotolar, SAHADAN_METIN } from "@/src/data/content/sehir-fotolar";
 import { SEHIR_NEDEN } from "@/src/data/content/sehir-neden";
@@ -57,10 +57,9 @@ export async function generateMetadata({
     notFound();
   }
 
-  const mecraSayisi = Object.keys(il.formatlar).length;
   return sayfaMeta({
     title: `${il.il} Açıkhava Reklam — ${sayiTr(il.toplam)} Reklam Ünitesi`,
-    description: `${il.il}${lokatifEk(il.il)} ${sayiTr(il.toplam)} reklam ünitesi, ${mecraSayisi} mecra türü: billboard, CLP, megalight ve dijital açıkhava çözümleri. Aylık ${getIlErisimEtiketi(slug)} erişim. Hızlı teklif, profesyonel takip.`,
+    description: `${il.il}${lokatifEk(il.il)} ${sayiTr(il.toplam)} reklam ünitesi, ${ilMecraIfadesi(slug)}. Aylık ${getIlErisimEtiketi(slug)} erişim. Hızlı teklif, profesyonel takip.`,
     path: `/sehir/${slug}`,
   });
 }

@@ -77,20 +77,37 @@ export function getIlMecraSayfalari(slug: string): MecraLink[] {
     .sort((a, b) => b.adet - a.adet);
 }
 
+/** İlin mecra ifadesi — meta açıklaması ve Service şeması ortak kullanır.
+ *  En büyük (en çok 3) mecra envanterden okunur: "2 mecra türü: CLP (Raket / Durak)
+ *  ve LED Ekran" · "9 mecra türü; başta CLP (Raket / Durak), Billboard ve Alınlık".
+ *  Eski sabit "billboard, CLP, megalight" kalıbı ilde olmayan mecraları da sayıyordu
+ *  (V7: Ordu'da yalnız CLP + LED kaldığında "2 mecra türü: billboard, CLP, megalight"
+ *  diye kendi kendini yalanlıyordu). */
+export function ilMecraIfadesi(slug: string): string {
+  const formatlar = getFormatlarByIl(slug);
+  const adlar = formatlar.slice(0, 3).map((f) => formatAdi(f.format));
+  const liste =
+    adlar.length <= 1
+      ? (adlar[0] ?? "")
+      : `${adlar.slice(0, -1).join(", ")} ve ${adlar[adlar.length - 1]}`;
+  return formatlar.length > 3
+    ? `${formatlar.length} mecra türü; başta ${liste}`
+    : `${formatlar.length} mecra türü: ${liste}`;
+}
+
 /** İl sayfası için Service + BreadcrumbList JSON-LD (rich result). */
 export function buildIlJsonLd(slug: string) {
   const il = getIl(slug);
   if (!il) return null;
   const sehir = il.il;
   const pageUrl = `${BASE_URL}/sehir/${slug}`;
-  const mecraSayisi = Object.keys(il.formatlar).length;
 
   const service = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: `${sehir} Açıkhava Reklam`,
     serviceType: "Açıkhava (OOH) Reklam",
-    description: `${sehir} ilinde ${sayiTr(il.toplam)} reklam ünitesi, ${mecraSayisi} mecra türü. Billboard, CLP, megalight ve dijital açıkhava çözümleri.`,
+    description: `${sehir} ilinde ${sayiTr(il.toplam)} reklam ünitesi, ${ilMecraIfadesi(slug)}.`,
     provider: { "@type": "Organization", name: "Objektif Kriter", url: BASE_URL },
     areaServed: {
       "@type": "City",
