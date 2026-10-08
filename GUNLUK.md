@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-10-08 — V7: Envanter güncellendi — Giresun çıktı, Ordu'da yalnız CLP kaldı (toplam 39.400)
+**Ne yapıldı:** Yeni envanter Excel'i işlendi ve canlıya alındı. Site artık **47 il · 21 mecra türü · 39.400 ünite · 44,4M aylık erişim** gösteriyor. Giresun envanterden çıktı; Ordu 1.110'dan 564'e indi (yalnız 560 CLP + havalimanındaki 4 LED kaldı).
+**Neden:** Excel'de Ordu'nun şehir adı silinen satırla birlikte gitmişti; olduğu gibi işlenseydi Ordu'nun 560 CLP'si Samsun'a yazılacak ve Samsun olduğundan büyük görünecekti. Hakan "Ordu'da sadece CLP kaldı" diye teyit etti, öyle işlendi.
+**Ne işe yaradı:** Ordu sayfası artık gerçeği anlatıyor: tanıtım metni CLP + havalimanı LED'ine göre yeniden yazıldı, orada artık olmayan billboard/megalight fotoğrafları kaldırıldı, Ordu'nun eski billboard/megalight sayfalarına gelen ziyaretçi Ordu sayfasına yönleniyor. Ayrıca Google'da görünen il açıklamaları artık her ilin gerçek mecralarını sayıyor (önceden her ile "billboard, CLP, megalight" yazıyordu). Canlıda tek tek doğrulandı; eski rakam sıfır.
+**Sırada:** Sunum ve Instagram görsellerindeki rakamlar 39.400 / 47 il'e çekilmeli; Manisa Giantboard adedi hâlâ bekleniyor.
+
 ### 2026-09-26 — F1: Teklif formu dönen simge yerine formun ilk adımıyla açılıyor (önizlemede)
 **Ne yapıldı:** Teklif sayfası açılırken ortada dönen bir simge görünüyordu; artık formun ilk adımı (başlık, "Adım 1 / 6", Marka/Ajans/İlk kampanya kartları) hazır halde geliyor ve form devraldığında hiçbir şey yerinden oynamıyor.
 **Neden:** Sayfa açılırken boş ve kayan bir ekran güven vermiyor; ayrıca sayfa kayması ölçüsü masaüstünde sınırın üstündeydi (0,058).
