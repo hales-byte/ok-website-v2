@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-11-05 — V8: Envantere Bingöl ve Niğde girdi (toplam 39.674)
+**Ne yapıldı:** Yeni envanter Excel'i işlendi ve canlıya alındı. Site artık **49 il · 21 mecra türü · 39.674 ünite · 45,1M aylık erişim** gösteriyor. Bingöl (120 billboard) ve Niğde (Bor'da 50 billboard, 100 CLP, 4 megalight) envantere girdi.
+**Neden:** Excel'e iki yeni il eklenmişti; geri kalan her satır aynıydı.
+**Ne işe yaradı:** İki il de haritada renklendi; envanterleri küçük olduğu için kendi sayfaları yerine Doğu Anadolu ve İç Anadolu bölge sayfalarında listeleniyor (aynı büyüklükteki diğer iller gibi). Bu adreslere doğrudan gelen ziyaretçi bölge sayfasına yönleniyor. Sitedeki tüm toplamlar ve Google açıklamaları kendiliğinden güncellendi.
+**Sırada:** Sunum ve Instagram görsellerindeki rakamlar 39.674 / 49 il'e çekilmeli; Manisa Giantboard adedi hâlâ bekleniyor.
+
 ### 2026-10-08 — V7: Envanter güncellendi — Giresun çıktı, Ordu'da yalnız CLP kaldı (toplam 39.400)
 **Ne yapıldı:** Yeni envanter Excel'i işlendi ve canlıya alındı. Site artık **47 il · 21 mecra türü · 39.400 ünite · 44,4M aylık erişim** gösteriyor. Giresun envanterden çıktı; Ordu 1.110'dan 564'e indi (yalnız 560 CLP + havalimanındaki 4 LED kaldı).
 **Neden:** Excel'de Ordu'nun şehir adı silinen satırla birlikte gitmişti; olduğu gibi işlenseydi Ordu'nun 560 CLP'si Samsun'a yazılacak ve Samsun olduğundan büyük görünecekti. Hakan "Ordu'da sadece CLP kaldı" diye teyit etti, öyle işlendi.
