@@ -16,6 +16,7 @@ import { CustomerProof } from "@/components/CustomerProof";
 import { Chevrons } from "@/components/Chevrons";
 import { SectionHeader } from "@/components/SectionHeader";
 import { LogoMarquee } from "@/components/LogoMarquee";
+import { HeroHarita } from "@/components/HeroHarita";
 import { FAQ } from "@/components/FAQ";
 import { SSS_BASLIK, SSS_LISTESI, sssJsonLd } from "@/src/data/content/sss";
 import {
@@ -133,7 +134,10 @@ export default async function Home() {
         </div>
 
         <div className="container-narrow w-full relative">
-          <div className="max-w-5xl space-y-10">
+          {/* G11: lg ve üstünde iki sütun — metin sol, il nabzı haritası sağ;
+              altında tek sütun, harita metnin altına iner. */}
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center">
+          <div className="max-w-5xl space-y-10 min-w-0">
             <ScrollReveal direction="up" delay={0} duration={1000} priority>
               <Chevrons count={6} width={280} />
             </ScrollReveal>
@@ -143,7 +147,7 @@ export default async function Home() {
               </div>
             </ScrollReveal>
             <ScrollReveal direction="up" delay={100} duration={1000} priority>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
+              <h1 className="text-5xl md:text-7xl lg:text-5xl xl:text-6xl font-bold leading-[1.05] tracking-tight">
                 <span className="text-gradient">Doğru lokasyonda</span>,
                 <br />
                 <span className="text-gradient">Doğru zamanda</span>,
@@ -184,6 +188,11 @@ export default async function Home() {
                 İlk kez mi açıkhava düşünüyorsun? <span className="text-[var(--color-text-secondary)]">WhatsApp ile yaz, baskı yapmadan konuşalım.</span>
               </p>
             </ScrollReveal>
+          </div>
+
+          <ScrollReveal direction="fade" delay={500} duration={1200} priority className="min-w-0">
+            <HeroHarita />
+          </ScrollReveal>
           </div>
         </div>
       </section>

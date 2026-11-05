@@ -16,6 +16,7 @@ import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, MapPin, X } from "lucide-react";
 import { TR_IL_PATHS, TR_HARITA_VIEWBOX } from "@/src/data/tr-il-paths";
+import { YOGUNLUK_RAMPA, yogunlukEsikleri, yogunlukKovasi } from "@/src/data/yogunluk";
 
 export interface HaritaIl {
   slug: string;
@@ -40,11 +41,8 @@ const BOLGELER = [
   "Güneydoğu Anadolu",
 ] as const;
 
-/** ENVANTER YOĞUNLUĞU RAMPASI — tamamı marka kiti cyan ailesinden.
- *  Açıktan koyuya: kit soft → kit mid → ara ton → primary-darker.
- *  En açık basamak bile belirgin cyan; "envanteri az il" soluk/silik
- *  görünmez, yalnız daha az doygun okunur. */
-const YOGUNLUK_RAMPA = ["#7CE2FF", "#38C7FA", "#0891B2", "#075985"] as const;
+/* ENVANTER YOĞUNLUĞU RAMPASI + eşik/kova mantığı: src/data/yogunluk.ts
+ * (G11'de ortaklaştırıldı — ana sayfa hero haritası aynı kaynağı okur). */
 
 /** Filtre dışında kalan envanterli il — kitin en açık tonu (pale). */
 const SONUK_RENK = "var(--color-cyan-pale)";
@@ -87,17 +85,10 @@ export default function TurkiyeHaritasi({ iller }: { iller: HaritaIl[] }) {
   /** Yoğunluk eşikleri — envanterin ÇEYREKLİKLERİNDEN türer, sabit sayı yok.
    *  Envanter büyüyüp küçülse de rampa kendini ayarlar; eşit değer yığılması
    *  varsa benzersizleştirme kova sayısını kendiliğinden düşürür. */
-  const esikler = useMemo(() => {
-    const veri = iller.map((i) => i.toplam).filter((n) => n > 0).sort((a, b) => a - b);
-    if (veri.length === 0) return [];
-    const ceyreklik = (p: number) => veri[Math.min(veri.length - 1, Math.floor(veri.length * p))];
-    return [ceyreklik(0.25), ceyreklik(0.5), ceyreklik(0.75)].filter(
-      (v, i, a) => i === 0 || v > a[i - 1]
-    );
-  }, [iller]);
+  const esikler = useMemo(() => yogunlukEsikleri(iller.map((i) => i.toplam)), [iller]);
 
   /** Ünite adedi → rampa basamağı (0 = en açık). */
-  const kova = (toplam: number) => esikler.filter((e) => toplam > e).length;
+  const kova = (toplam: number) => yogunlukKovasi(toplam, esikler);
 
   // Format seçenekleri — envanterdeki toplam adede göre azalan
   const formatSecenekleri = useMemo(() => {

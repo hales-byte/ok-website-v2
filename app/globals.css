@@ -464,6 +464,80 @@
   }
 }
 
+/* ─── G11: Ana sayfa hero haritası — il nabzı ───
+ * Bileşen: components/HeroHarita.tsx (server component, JS yok).
+ * Döngüye bağlı keyframe'ler (hero-nabiz-*) bileşenin kendi <style>'ında —
+ * yüzdeleri il sayısından hesaplanır; burada yalnız statik kurallar durur.
+ * --d (ilin gecikmesi) ve --cycle (döngü süresi) her öğeye inline verilir.
+ * Koyu zeminde yoğunluk nokta parlaklığıyla okunur (opacity inline, bileşende).
+ * prefers-reduced-motion: nabız + etiket kapanır, noktalar sabit yanar. */
+.hero-harita-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.hero-harita-kontur {
+  fill: rgba(0, 210, 255, 0.035);
+  stroke: rgba(124, 226, 255, 0.18);
+  stroke-width: 0.8;
+}
+.hero-harita-nokta {
+  fill: var(--color-cyan);
+}
+.hero-harita-halka {
+  fill: none;
+  stroke: var(--color-cyan);
+  stroke-width: 1.4;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hero-nabiz-halka var(--cycle) linear infinite;
+  animation-delay: var(--d);
+}
+.hero-harita-parla {
+  fill: var(--color-cyan-pale);
+  opacity: 0;
+  animation: hero-nabiz-parla var(--cycle) linear infinite;
+  animation-delay: var(--d);
+}
+.hero-harita-etiket {
+  opacity: 0;
+  animation: hero-nabiz-etiket var(--cycle) linear infinite;
+  animation-delay: var(--d);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.01em;
+  fill: #F8FAFC;
+  /* Koyu hale: yazı nokta/kontur üstüne düşse de okunur */
+  paint-order: stroke;
+  stroke: var(--color-ink);
+  stroke-width: 8px;
+  stroke-linejoin: round;
+}
+.hero-harita-etiket-sayi {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: 0;
+  fill: var(--color-cyan-soft);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-harita-halka,
+  .hero-harita-parla,
+  .hero-harita-etiket {
+    animation: none !important;
+  }
+  .hero-harita-halka,
+  .hero-harita-etiket {
+    display: none;
+  }
+  .hero-harita-parla {
+    opacity: 0.9;
+  }
+}
+
 /* --- Yazdırma: başvuru formu çıktısı --- */
 @media print {
   .print-gizle {

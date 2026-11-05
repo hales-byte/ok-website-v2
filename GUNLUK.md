@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-11-05 — G11: Ana sayfada iller haritada sırayla yanıyor
+**Ne yapıldı:** Ana sayfanın giriş bölümüne, metnin sağına sade bir Türkiye haritası geldi; envanterimizdeki her il bir ışık noktası. İller batıdan doğuya sırayla yanıyor, yanında ilin adı ve ünite sayısı beliriyor, sonra döngü başa dönüyor. Büyük envanterli il daha büyük ve parlak nokta.
+**Neden:** Hakan "illerimiz sitede etkileyici bir akış olarak görünsün" dedi; dört örnek arasından haritayı seçti. "49 il" rakamı tek başına kapsamayı anlatmıyordu; harita Erzurum'dan Kırklareli'ne nerede olduğumuzu gösteriyor.
+**Ne işe yaradı:** Harita tamamen envanter dosyasından besleniyor: il girince/çıkınca, sayılar değişince kendini güncelliyor, elle düzeltilecek hiçbir şey yok. /envanter sayfasındaki haritayla aynı yoğunluk ölçeğini kullanıyor. Sayfa hızına ve yerleşime dokunmadı (kayma yok), ek kod yüklemiyor. Havalimanında tek ekranı olan 5 il haritada nokta olarak duruyor ama "1 ünite" diye öne çıkmıyor.
+**Sırada:** Canlı teyit; sonra sunum/Instagram rakamları (39.674 / 49 il) ve Manisa Giantboard adedi.
+
 ### 2026-11-05 — V8: Envantere Bingöl ve Niğde girdi (toplam 39.674)
 **Ne yapıldı:** Yeni envanter Excel'i işlendi ve canlıya alındı. Site artık **49 il · 21 mecra türü · 39.674 ünite · 45,1M aylık erişim** gösteriyor. Bingöl (120 billboard) ve Niğde (Bor'da 50 billboard, 100 CLP, 4 megalight) envantere girdi.
 **Neden:** Excel'e iki yeni il eklenmişti; geri kalan her satır aynıydı.

@@ -7,6 +7,7 @@
  *   3. Ankara toplamı = 2.946
  *   4. Her ilin toplamı, format dağılımının toplamına eşit
  *   5. Mecra türü sayısı = 21
+ *   6. Her envanter ilinin harita silueti var (tr-il-paths id eşleşmesi — G11)
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -131,6 +132,23 @@ check(
 );
 console.log(`ℹ Nüfus toplamı: ${nufusToplam.toLocaleString("tr-TR")} → aylık erişim (Σ per-il): ${perIlErisim.toLocaleString("tr-TR")} (${(perIlErisim / 1e6).toLocaleString("tr-TR", { maximumFractionDigits: 1 })}M)`);
 
+// ── Harita kapsama kontrolü (G11) ──
+// Hem /envanter haritası hem ana sayfa hero haritası (HeroHarita) ili
+// tr-il-paths.ts'teki siluet id'siyle (slugifyTr) eşler. Envantere giren bir
+// ilin silueti yoksa haritalarda SESSİZCE düşer — burada yakalanır.
+const slugifyTr = (str) =>
+  str
+    .toLocaleLowerCase("tr")
+    .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+    .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+const siluetIdleri = new Set(
+  [...readFileSync(join(root, "src/data/tr-il-paths.ts"), "utf8").matchAll(/\bid:\s*"([^"]+)"/g)].map((m) => m[1])
+);
+const siluetsiz = iller.filter((i) => !siluetIdleri.has(slugifyTr(i.il)));
+check("Harita silueti olmayan envanter ili (hero + /envanter haritası)", siluetsiz.length, 0);
+if (siluetsiz.length) console.log("  Eksik:", siluetsiz.map((i) => i.il).join(", "));
+
 // ── Stub uyarısı (bilgi amaçlı, başarısız ETMEZ) ──
 // toplam ≤ 3 olan iller büyük olasılıkla eksik/placeholder envanter (örn. tek
 // havalimanı LED'i). İl sayfası revizyonunda bunlar bölge sayfasında toplanır;
@@ -149,7 +167,7 @@ if (stublar.length) {
  * SVG path / nüfus veri dosyaları taranmaz; bütçe etiketleri ("100.000 TL")
  * ve "15 dakika" gibi rakamlar kalıplara zaten uymaz. */
 const KOD_KOKLERI = ["app", "components", "src/data/content", "lib"];
-const TARANMAZ = new Set(["tr-il-paths.ts", "il-nufus.json"]);
+const TARANMAZ = new Set(["tr-il-paths.ts", "tr-kontur.ts", "il-nufus.json"]);
 const HARDCODE_KALIPLARI = [
   [/\b\d{1,3}\+?\s*il(de|den|in|e|i|'|\b)/, "il sayısı"],
   [/\b\d{1,3}\.\d{3}\s*(ünite|reklam ünitesi)/, "ünite sayısı"],
