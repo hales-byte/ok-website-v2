@@ -2,10 +2,10 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-11-05 · Claude (**G11 hero haritası "il nabzı" — önizleme dalında, yayına hazır; canlı SHA kapanış notunda.** Önceki: V8 envanter CANLI `84f841e` + `2675e36`.)
+**Son güncelleme:** 2026-11-05 · Claude (**G11 hero haritası "il nabzı" — CANLI, `9837087`.** Ana sayfa hero'da envanter illeri batıdan doğuya sırayla yanıyor; tamamen envanter.json'dan türer. Canlı = origin/v3 = `9837087` + bu kapanış notu. Önceki: V8 envanter CANLI `84f841e` + `2675e36`.)
 
 
-## G11 — ana sayfa hero haritası: "il nabzı" (Hakan kararı 05.11.2026)
+## G11 — ana sayfa hero haritası: "il nabzı" (CANLI, commit `9837087` — Hakan kararı 05.11.2026)
 - **Karar:** Hakan "envanterimizdeki illerin ana sayfada etkileyici bir akış/animasyon olarak görünmesi" fikrini değerlendirtti; dört canlı varyant (büyük tipografi şeridi · dönen il · harita nabzı · dikey pano) arasından **3 · Harita nabzı**'nı seçti ve "canlıya al, envanterle eşlenik olsun" dedi.
 - **Ne yapıldı:** Hero iki sütun oldu (lg+): sol metin, sağda sade Türkiye silueti. Envanterdeki her il bir nokta; iller **batıdan doğuya sırayla** yanıyor, yanında il adı + ünite sayısı beliriyor (her il 1,6 sn, döngü = il sayısı × 1,6). Nokta boyu ve parlaklığı yoğunluk basamağından. Telefonda harita metnin altına iner.
 - **ENVANTERLE EŞLENİK — elle yazılan hiçbir şey yok:** il listesi/ünite/toplam `envanter.json` · yoğunluk basamağı **`src/data/yogunluk.ts`** (YENİ ortak modül: `/envanter` haritasının çeyreklik eşik mantığı buraya taşındı, iki yüzey aynı fonksiyonu okur — davranış birebir) · nokta konumu **`lib/il-merkez.ts`** (YENİ: tr-il-paths siluetinden alan-ağırlıklı merkez, sunucuda bir kez hesaplanır; ayrı koordinat listesi tutulmaz) · siluet **`src/data/tr-kontur.ts`** (YENİ, ÜRETİLMİŞ: 81 ilin birleşiminden sade kontur ≈7 KB; üretici `scripts/tr-kontur-uret.py`, tek seferlik, shapely gerekir — tr-il-paths değişmedikçe koşturulmaz).
@@ -13,7 +13,7 @@
 - **Teknik:** `components/HeroHarita.tsx` **server component, JS yok** — animasyon salt CSS; döngüye bağlı keyframe yüzdeleri il sayısından hesaplanıp bileşenin kendi `<style>`'ında basılır, statik kurallar `globals.css` "G11" bloğunda. `prefers-reduced-motion`: nabız + etiket kapanır, noktalar sabit yanar. SVG `aspect-ratio` viewBox'tan inline → yer önceden ayrılı. **h1 boyutu lg+ için küçüldü** (`lg:text-5xl xl:text-6xl`, eski `lg:text-8xl`) — iki sütunda 3 satırda kalması için; md'de değişmedi.
 - **Nöbetçi:** `check-envanter.mjs`'e 30. kontrol: envanterdeki her ilin tr-il-paths silueti var mı (yeni il haritalarda sessizce düşmesin); `tr-kontur.ts` rakam taramasından muaf (path verisi).
 - **Doğrulama (sandbox, prod build + Playwright):** build ✓ (font şimi geri alındı) · check:envanter **30/30 ✓** · eslint temiz · 1440/1280/1024: h1 3 satır, harita sağ sütunda, **CLS 0,001** (1440'ta 1/4 açılışta 0,047 = F1 notundaki site geneli üst menü kayması, haritadan değil — kaynak izlendi) · telefon 390: CLS 0, harita metnin altında (fold altı) · aynı anda görünür etiket **maks 1** · konsol: yalnız yerel Speed Insights 404 (bilinen). HTML'e eklenen: SVG ≈32 KB ham / **+8 KB gzip** (RSC kopyası dahil).
-- **Yayın yolu:** `onizleme/g11-hero-harita` → Vercel önizleme → v3 ff → canlı teyit (www). Mac'e dokunulmadı.
+- **Yayın yolu:** `onizleme/g11-hero-harita` (önizleme `dpl_95aT…` READY, smoke: 49 nokta · 44 etiket · İzmir etiketi yok · bayat rakam yok) → v3 ff `9837087` → Vercel üretim derlemesini kendisi başlattı (`dpl_8h2Y…`, boş tetikleyici gerekmedi, promote yok) → **canlı teyit (05.11, `?v=` ekiyle, www.objektifkriter.com.tr, `data-dpl-id` = `dpl_8h2Y…`):** harita + 49 nokta + 44 etiket + Gaziantep 3.532 etiketi ✓ · aria "49 il" ✓ · başlık/sayaç 49 · 39.674 ✓ · 39.400 → 0 ✓. Mac'e dokunulmadı.
 - **Açık:** Manisa GIANTBOARD `*` · sunum/IG rakamları 39.674 / 49 il · uzak önizleme dalları silinemiyor (Mac'ten).
 
 ## V8 — envanter güncellemesi (CANLI, commit `84f841e`)
