@@ -2,8 +2,8 @@
 /**
  * ENVANTER DOĞRULAMA — npm run check:envanter
  * Tek doğruluk kaynağının iç tutarlılığını test eder:
- *   1. Toplam ünite = 39.400 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
- *   2. İl sayısı = 47
+ *   1. Toplam ünite = 39.674 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
+ *   2. İl sayısı = 49
  *   3. Ankara toplamı = 2.946
  *   4. Her ilin toplamı, format dağılımının toplamına eşit
  *   5. Mecra türü sayısı = 21
@@ -27,9 +27,9 @@ const uniteToplam = iller.reduce((s, i) => s + i.toplam, 0);
 const ankara = iller.find((i) => i.il === "Ankara");
 const mecralar = new Set(iller.flatMap((i) => Object.keys(i.formatlar)));
 
-check("Toplam ünite", uniteToplam, 39400);
+check("Toplam ünite", uniteToplam, 39674);
 check("json.toplam.unite alanı", data.toplam.unite, uniteToplam);
-check("İl sayısı", iller.length, 47);
+check("İl sayısı", iller.length, 49);
 check("json.toplam.il alanı", data.toplam.il, iller.length);
 check("Ankara toplamı", ankara?.toplam, 2946);
 check("Mecra türü sayısı", mecralar.size, 21);
@@ -89,6 +89,16 @@ const samsun = iller.find((i) => i.il === "Samsun");
 check("Ordu toplamı (V7'de 1.110→564)", ordu?.toplam, 564);
 check("Ordu'da yalnız CLP + LED (V7)", Object.keys(ordu?.formatlar ?? {}).sort().join(","), "CLP RAKET-DURAK,LED");
 check("Samsun toplamı (V7'de değişmedi — sahipsiz satır nöbetçisi)", samsun?.toplam, 1164);
+
+// V8 (2026-11-05) güncelleme nöbetçileri:
+//  · Bingöl (Billboard 120) ve Niğde (Bor: Billboard 50 · CLP 100 · Megalight 4) girdi (47→49 il)
+//  · ikisi de kesim çizgisi altında → bolge-config movedToBolge (dogu-anadolu / ic-anadolu)
+//  · kaynak Excel'deki etiketsiz Ordu CLP satırı hâlâ duruyor — yukarıdaki Ordu/Samsun nöbetçileri geçerli
+const bingol = iller.find((i) => i.il === "Bingöl");
+const nigde = iller.find((i) => i.il === "Niğde");
+check("Bingöl envanterde VAR (V8'de girdi)", bingol?.toplam, 120);
+check("Niğde envanterde VAR (V8'de girdi)", nigde?.toplam, 154);
+check("Niğde kapsama noktası Bor (V8)", (nigde?.ilceler ?? []).join(","), "Bor");
 
 const bozukIller = iller.filter(
   (i) => Object.values(i.formatlar).reduce((s, a) => s + a, 0) !== i.toplam

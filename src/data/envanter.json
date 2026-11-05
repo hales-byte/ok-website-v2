@@ -1,9 +1,9 @@
 {
-  "guncelleme": "2026-10-08",
-  "kaynak": "OBJ_ENVANTER_objenv_1.xlsx (Hakan, 2026-10-08; Network Adeti hariç). V7: Giresun envanterden çıktı (48→47 il); Ordu'da yalnız CLP 560 ve Ordu-Giresun Havalimanı LED'leri kaldı (1.110→564) — kaynak Excel'de Ordu etiketi silinen satırla gittiği için sahipsiz kalan CLP satırı Hakan teyidiyle Ordu'ya yazıldı; Manisa GIANTBOARD adedi kaynakta '*' (belirsiz) olduğundan sayılmadı.",
+  "guncelleme": "2026-11-05",
+  "kaynak": "OBJ_ENVANTER_objenv.xlsx (Hakan, 2026-11-05; Network Adeti hariç). V8: Bingöl (Billboard 120) ve Niğde (Bor: Billboard 50, CLP 100, Megalight 4) envantere girdi (47→49 il); başka satır değişmedi. Kaynak Excel'de V7'den kalan etiketsiz CLP-RAKET 560 satırı Hakan'ın 08.10 teyidiyle Ordu'ya yazılmaya devam ediyor; Manisa GIANTBOARD adedi kaynakta '*' (belirsiz) olduğundan sayılmadı.",
   "toplam": {
-    "il": 47,
-    "unite": 39400
+    "il": 49,
+    "unite": 39674
   },
   "iller": [
     {
@@ -484,6 +484,18 @@
       }
     },
     {
+      "il": "Niğde",
+      "toplam": 154,
+      "ilceler": [
+        "Bor"
+      ],
+      "formatlar": {
+        "CLP RAKET-DURAK": 100,
+        "BILLBOARD": 50,
+        "MEGALIGHT": 4
+      }
+    },
+    {
       "il": "Düzce",
       "toplam": 150,
       "ilceler": [
@@ -504,6 +516,14 @@
       "formatlar": {
         "BILLBOARD": 64,
         "CLP RAKET-DURAK": 64
+      }
+    },
+    {
+      "il": "Bingöl",
+      "toplam": 120,
+      "ilceler": [],
+      "formatlar": {
+        "BILLBOARD": 120
       }
     },
     {
