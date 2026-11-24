@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-11-24 — V9: Envanter güncellendi — Ankara'dan bir ekran çıktı, Samsun'a bir ekran girdi (toplam aynı: 39.674)
+**Ne yapıldı:** Yeni envanter Excel'i işlendi ve canlıya alındı. Ankara'daki Beşevler metro çıkışı dijital ekranı envanterden çıktı (Ankara 2.945), Samsun'a Uçan Sinema dijital ekranı girdi (Samsun 1.165). Toplamlar değişmedi: **49 il · 21 mecra türü · 39.674 ünite · 45,1M aylık erişim**.
+**Neden:** Excel'de yalnız bu iki satır değişmişti; geri kalan her satır aynıydı.
+**Ne işe yaradı:** Ankara ve Samsun sayfaları gerçek sayıyı gösteriyor; Ankara tanıtım metni artık envanterde olmayan Beşevler'i anmıyor. Samsun'a giren satırın gerçekten Samsun'a ait olduğu (Ordu'daki gibi sahipsiz kalmış bir satır olmadığı) tek tek kontrol edildi. Canlıda doğrulandı.
+**Sırada:** Ana sayfa akışının sadeleştirilmesi (önizlemede, Hakan onayı bekleyecek); Manisa Giantboard adedi hâlâ bekleniyor.
+
 ### 2026-11-05 — G11: Ana sayfada iller haritada sırayla yanıyor
 **Ne yapıldı:** Ana sayfanın giriş bölümüne, metnin sağına sade bir Türkiye haritası geldi; envanterimizdeki her il bir ışık noktası. İller batıdan doğuya sırayla yanıyor, yanında ilin adı ve ünite sayısı beliriyor, sonra döngü başa dönüyor. Büyük envanterli il daha büyük ve parlak nokta.
 **Neden:** Hakan "illerimiz sitede etkileyici bir akış olarak görünsün" dedi; dört örnek arasından haritayı seçti. "49 il" rakamı tek başına kapsamayı anlatmıyordu; harita Erzurum'dan Kırklareli'ne nerede olduğumuzu gösteriyor.
