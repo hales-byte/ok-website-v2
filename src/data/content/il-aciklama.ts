@@ -6,8 +6,9 @@
  * Metni OLMAYAN il için getIlAciklama() veriden zarif bir yedek üretir.
  *
  * NOT (lokasyon doğrulaması): metinlerdeki lokasyon adları güncel
- * envanter.json'a (V6) göre teyit edilir. V6'da Ankara ilceler'i kaynaktan
- * doldu; Güvenpark/AŞTİ/Beşevler/Keçiören/Yozgat Bulvarı metne geri alındı.
+ * envanter.json'a (V9) göre teyit edilir. V6'da Ankara ilceler'i kaynaktan
+ * doldu; Güvenpark/AŞTİ/Keçiören/Yozgat Bulvarı metinde. V9'da Beşevler
+ * envanterden çıktığı için metinden de çıkarıldı.
  * Ordu'da "Fatsa" envanterde hâlâ olmadığı için metinde yok. Manisa'nın
  * kapsama noktası yok — metni lokasyon adı içermez.
  */
@@ -23,7 +24,7 @@ import {
 /** İle özel, elle yazılmış giriş metinleri. Anahtar = il slug'ı ("izmir"). */
 export const IL_ACIKLAMA: Record<string, string> = {
   ankara:
-    "Ankara'da görünür olmak, başkentin nabzının attığı yerlerde olmak demek — Güvenpark ve Beşevler metro çıkışlarından AŞTİ'ye, Keçiören'den Yozgat Bulvarı'na, şehrin her gün kalabalıklaşan akışına kadar. Ağırlıklı CLP/raket ağımız ve lokasyon LED'lerimiz markanızı hem ana arterlerde hem insanların her gün durakladığı noktalarda tekrar tekrar göz hizasına getiriyor. Ankara planınızı bütçenize göre 15 dakikada çıkarıyor, asımdan foto-raporlu takibe süreci yönetiyoruz.",
+    "Ankara'da görünür olmak, başkentin nabzının attığı yerlerde olmak demek — Güvenpark metro çıkışından AŞTİ'ye, Keçiören'den Yozgat Bulvarı'na, şehrin her gün kalabalıklaşan akışına kadar. Ağırlıklı CLP/raket ağımız ve lokasyon LED'lerimiz markanızı hem ana arterlerde hem insanların her gün durakladığı noktalarda tekrar tekrar göz hizasına getiriyor. Ankara planınızı bütçenize göre 15 dakikada çıkarıyor, asımdan foto-raporlu takibe süreci yönetiyoruz.",
   gaziantep:
     "Gaziantep, Anadolu'nun en canlı sanayi ve ticaret şehirlerinden biri; envanterimiz de bunu yansıtıyor. Nizip'ten OSB'ye, Gaziantep Üniversitesi ve Primall–Era AVM akslarından havalimanı kavşağına kadar şehrin en yoğun geçiş noktalarında CLP, pole banner ve billboard karması sunuyoruz. Gaziantep planınızı 15 dakikada çıkarıyor, montaj ve foto-raporlu takibi biz üstleniyoruz.",
   mersin:

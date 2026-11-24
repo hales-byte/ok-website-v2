@@ -1,6 +1,6 @@
 {
-  "guncelleme": "2026-11-05",
-  "kaynak": "OBJ_ENVANTER_objenv.xlsx (Hakan, 2026-11-05; Network Adeti hariç). V8: Bingöl (Billboard 120) ve Niğde (Bor: Billboard 50, CLP 100, Megalight 4) envantere girdi (47→49 il); başka satır değişmedi. Kaynak Excel'de V7'den kalan etiketsiz CLP-RAKET 560 satırı Hakan'ın 08.10 teyidiyle Ordu'ya yazılmaya devam ediyor; Manisa GIANTBOARD adedi kaynakta '*' (belirsiz) olduğundan sayılmadı.",
+  "guncelleme": "2026-11-24",
+  "kaynak": "OBJ_ENVANTER_objenv_1.xlsx (Hakan, 2026-11-24; Network Adeti hariç). V9: Ankara'dan Beşevler metro çıkışı LED'i (1) çıktı, Samsun'a Uçan Sinema LED'i (1) girdi — toplam değişmedi; başka satır değişmedi. Kaynak Excel'de V7'den kalan etiketsiz CLP-RAKET 560 satırı Hakan'ın 08.10 teyidiyle Ordu'ya yazılmaya devam ediyor; Manisa GIANTBOARD adedi kaynakta '*' (belirsiz) olduğundan sayılmadı.",
   "toplam": {
     "il": 49,
     "unite": 39674
@@ -33,12 +33,11 @@
     },
     {
       "il": "Ankara",
-      "toplam": 2946,
+      "toplam": 2945,
       "ilceler": [
         "Güvenpark",
         "Soysal İş Merkezi",
         "Beytepe",
-        "Beşevler",
         "Yozgat Bulvarı",
         "Keçiören",
         "Kocatepe Kültür Merkezi",
@@ -53,7 +52,7 @@
         "MEGALIGHT": 64,
         "KULEBOARD": 26,
         "PARAPET": 26,
-        "LED": 14
+        "LED": 13
       }
     },
     {
@@ -228,7 +227,7 @@
     },
     {
       "il": "Samsun",
-      "toplam": 1164,
+      "toplam": 1165,
       "ilceler": [
         "Çarşamba Havalimanı"
       ],
@@ -237,7 +236,7 @@
         "BILLBOARD": 481,
         "MEGALIGHT": 16,
         "RAKET LED": 12,
-        "LED": 3
+        "LED": 4
       }
     },
     {

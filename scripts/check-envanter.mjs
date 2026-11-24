@@ -4,7 +4,7 @@
  * Tek doğruluk kaynağının iç tutarlılığını test eder:
  *   1. Toplam ünite = 39.674 (json.toplam.unite ile ve il toplamlarıyla eşleşir)
  *   2. İl sayısı = 49
- *   3. Ankara toplamı = 2.946
+ *   3. Ankara toplamı = 2.945
  *   4. Her ilin toplamı, format dağılımının toplamına eşit
  *   5. Mecra türü sayısı = 21
  *   6. Her envanter ilinin harita silueti var (tr-il-paths id eşleşmesi — G11)
@@ -32,7 +32,7 @@ check("Toplam ünite", uniteToplam, 39674);
 check("json.toplam.unite alanı", data.toplam.unite, uniteToplam);
 check("İl sayısı", iller.length, 49);
 check("json.toplam.il alanı", data.toplam.il, iller.length);
-check("Ankara toplamı", ankara?.toplam, 2946);
+check("Ankara toplamı", ankara?.toplam, 2945);
 check("Mecra türü sayısı", mecralar.size, 21);
 
 // V1 (2026-07-07) güncelleme nöbetçileri
@@ -89,7 +89,9 @@ const ordu = iller.find((i) => i.il === "Ordu");
 const samsun = iller.find((i) => i.il === "Samsun");
 check("Ordu toplamı (V7'de 1.110→564)", ordu?.toplam, 564);
 check("Ordu'da yalnız CLP + LED (V7)", Object.keys(ordu?.formatlar ?? {}).sort().join(","), "CLP RAKET-DURAK,LED");
-check("Samsun toplamı (V7'de değişmedi — sahipsiz satır nöbetçisi)", samsun?.toplam, 1164);
+// V9: Samsun'a Uçan Sinema LED'i (1) girdi → 1.165. Nöbetçi işlevi aynı: etiketsiz Ordu CLP 560
+// satırı Samsun'a yazılsaydı Samsun 1.725 olurdu.
+check("Samsun toplamı (V9: 1.165 — sahipsiz satır nöbetçisi)", samsun?.toplam, 1165);
 
 // V8 (2026-11-05) güncelleme nöbetçileri:
 //  · Bingöl (Billboard 120) ve Niğde (Bor: Billboard 50 · CLP 100 · Megalight 4) girdi (47→49 il)
@@ -100,6 +102,10 @@ const nigde = iller.find((i) => i.il === "Niğde");
 check("Bingöl envanterde VAR (V8'de girdi)", bingol?.toplam, 120);
 check("Niğde envanterde VAR (V8'de girdi)", nigde?.toplam, 154);
 check("Niğde kapsama noktası Bor (V8)", (nigde?.ilceler ?? []).join(","), "Bor");
+
+// V9 (2026-11-24): Ankara'dan Beşevler metro çıkışı LED'i çıktı (kapsama noktası da),
+// Samsun'a Uçan Sinema LED'i girdi. Toplam 39.674 değişmedi.
+check("Ankara kapsamasında Beşevler YOK (V9'da çıktı)", (ankara?.ilceler ?? []).includes("Beşevler"), false);
 
 const bozukIller = iller.filter(
   (i) => Object.values(i.formatlar).reduce((s, a) => s + a, 0) !== i.toplam

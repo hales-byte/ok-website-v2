@@ -5,8 +5,8 @@ import { getIl, getIlFormatAdet, sayiTr } from "@/src/data/envanter";
 /**
  * /sehir/[slug]/[format] sayfası için unique OG image (1200×630).
  * Şehir + format + lokasyon sayısı + reklam yüzü dinamik olarak görselde
- * yer alır. Sosyal paylaşımda ("Ankara'da Billboard reklam — 18 lokasyon
- * 2.946 yüz") rakip Wix sitelerinden anlamlı bir adım önde.
+ * yer alır. Sosyal paylaşımda ("<İl>'de <Mecra> reklam — N ünite"; rakamlar
+ * envanter.json'dan) rakip Wix sitelerinden anlamlı bir adım önde.
  */
 
 export const alt = "Şehir + mecra reklam çözümleri — Objektif Kriter";

@@ -7,7 +7,7 @@
 - Planlar: `docs/plan/` (master + teknik + görsel + operasyon). Görev numaraları (T1, G3, A5…) oradan gelir.
 
 ## TEK DOĞRULUK KAYNAĞI
-- `src/data/envanter.json` → **49 il · 21 mecra türü · 39.674 ünite** (V8 güncellemesi, 2026-11-05)
+- `src/data/envanter.json` → **49 il · 21 mecra türü · 39.674 ünite** (V9 güncellemesi, 2026-11-24 — toplam V8 ile aynı; Ankara 2.945, Samsun 1.165)
 - Rakam ASLA elle yazılmaz — her sayı bu dosyadan türetilir
 - Eski rakam görürsen sil, envanter.json'a bağla. Bayat setler: **39.400 / 47 il / 21 mecra / 44,4M** (V7) · 39.960 / 48 il / 21 mecra / 44,9M (V6) · 35.235 / 46 il / 19 mecra / 43,1M (V5) · 36.141 / 44 il / 20 mecra / 42,4M (V4) · 36.703 / 45 il (V1) · 35.919 · 36.134 · 36.699 · 39/18/35.861 · 47+/8/33.812+
 
@@ -21,7 +21,7 @@
 ## Komutlar
 - Doğrulama: `npm run build`
 - Deploy: `vercel --prod` (repo kökünden)
-- Veri kontrolü: `npm run check:envanter` (beklenen: toplam 39.674, il 49, mecra 21, Ankara 2.946, Ordu 564, Samsun 1.164, Bingöl 120, Niğde 154)
+- Veri kontrolü: `npm run check:envanter` (beklenen: toplam 39.674, il 49, mecra 21, Ankara 2.945, Ordu 564, Samsun 1.165, Bingöl 120, Niğde 154)
 
 ## SÜREKLİLİK PROTOKOLÜ — her oturumda zorunlu
 
