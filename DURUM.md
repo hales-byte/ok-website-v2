@@ -2,8 +2,19 @@
 > Projenin hafızası budur. Her oturum sonunda güncellenir; her oturum başında okunur.
 > Bir dosyaya bakıp "neredeyiz?" sorusunun cevabını 30 saniyede almak için.
 
-**Son güncelleme:** 2026-11-24 · Claude (**V9 envanter — CANLI, `ad5e6fc`.** Toplam 39.674 / 49 il değişmedi; Ankara 2.946→2.945 (Beşevler LED'i çıktı), Samsun 1.164→1.165 (Uçan Sinema LED'i girdi). Canlı = origin/v3 = `ad5e6fc` + bu kapanış notu. Önceki: G11 hero haritası CANLI `9837087`.)
+**Son güncelleme:** 2026-11-24 · Claude (**G12 ana sayfa akışı — ÖNİZLEMEDE, Hakan onayı bekliyor** (`onizleme/ana-sayfa-akis`). Öncesinde: **V9 envanter — CANLI, `ad5e6fc`.** Toplam 39.674 / 49 il değişmedi; Ankara 2.946→2.945 (Beşevler LED'i çıktı), Samsun 1.164→1.165 (Uçan Sinema LED'i girdi). Canlı = origin/v3 = `ad5e6fc` + bu kapanış notu. Önceki: G11 hero haritası CANLI `9837087`.)
 
+
+## G12 — ana sayfa akışı + Kurumsal menüsü (ÖNİZLEMEDE — Hakan onayı bekliyor, dal `onizleme/ana-sayfa-akis`)
+- **İstek (Hakan, 24.11):** "Ana sayfa akışını daha mantıklı bir hale getir. Gereksiz bölümleri yukarıda açılır menüye kaldırabilirsin."
+- **Yeni sıra:** Hero → Sayaçlar → **Mecra vitrini** (ne satıyoruz) → İş birlikleri / logo akışı (kimlerle) → 4 adımda yayında (nasıl) → Alt CTA. Eski sıra: Hero → Sayaçlar → Kim için biz? → İş birlikleri → Mecra vitrini → Süreç → SSS → Alt CTA.
+- **Menüye taşınan:** "Kim için biz?" 3 kartı → zaten var olan **Çözümler ▾** (aynı üç sayfa). **SSS** (9 soru + FAQPage işaretlemesi) → yeni **`/sss`** sayfası, üst menüde yeni **Kurumsal ▾** altında (Hakkımızda · Sıkça Sorulan Sorular · İletişim). Ana sayfa alt CTA'sının altında "Aklınızda soru mu var? Sıkça sorulan sorular" kısa yolu.
+- **Üst menü:** Hizmetler · Çözümler ▾ · Envanter · Kurumsal ▾ + Teklif Al (eski: Hizmetler · Çözümler ▾ · Envanter · Hakkımızda · İletişim). Tek seferde tek panel açık; dışa tık + Escape kapatır. Telefon menüsünde "Kurumsal" başlığı altında üç bağlantı; menü ekrandan uzunsa kendi içinde kayar.
+- **Metinler içerikte:** yeni `src/data/content/menu.ts` (Çözümler + Kurumsal bağlantı metinleri; Header ve Footer buradan okur) · `sss.ts`'e `/sss` meta + alt çağrı + kısa yol metni.
+- **Alt bilgi "Sayfalar":** üst menüyle aynı sıra — Hizmetler, Envanter, Markalar, Reklam Ajansları, İlk Açıkhava Kampanyam, Hakkımızda, SSS, İletişim. Sebep: "Kim için biz?" kalkınca üç çözüm sayfasının sunucuda basılan tek kalıcı bağlantısı burası (üst menü panelleri yalnız tıklanınca çizilir).
+- **Diğer:** sitemap'e `/sss` (öncelik 0,6). `components/icons/SegmentIcons.tsx` artık hiçbir yerde kullanılmıyor (silinmedi, zararsız).
+- **Doğrulama (sandbox, prod build + Playwright):** tsc ✓ · eslint temiz (yalnız `sss.ts`'te önceden kalan kullanılmayan `sayiTr` uyarısı) · check:envanter ✓ · build ✓ **138 sayfa** (137 + `/sss`; font şimi geri alındı) · sayfa boyu masaüstü 9.254 → **7.401 px (−%20)**, telefon 13.958 → **11.317 px (−%19)** · mecra vitrini başlangıcı masaüstü 3.169 → **1.213 px**, telefon 4.427 → **1.664 px** (5. ekrandan 2. ekrana) · menü testi: Kurumsal açılıyor, Çözümler'e geçince Kurumsal kapanıyor, Escape kapatıyor, SSS bağlantısı `/sss`'e gidiyor · `/sss`: 9 soru, FAQPage 1, canonical www/sss · ana sayfada FAQPage 0, "Kim için biz" 0, bayat rakam 0 · konsol: yalnız yerel Speed Insights 404 (bilinen).
+- **Görüntüler:** scratchpad `ana/` — `once-*`, `sonra-*`, `karsilastir-*`, `menu-*`, `sss-*`.
 
 ## V9 — envanter güncellemesi (CANLI, commit `ad5e6fc`)
 - **Kaynak:** Hakan 2026-11-24'te yeni `OBJ_ENVANTER_objenv_1.xlsx` verdi. V8 Excel'iyle ham satır karşılaştırması: **yalnız 2 satır değişmiş** — Ankara bloğundan "Beşevler metro çıkışı" LED (1) satırı çıkmış; Samsun bloğuna "Uçan Sinema" LED (1) satırı girmiş. Başka hiçbir satır değişmemiş.

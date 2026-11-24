@@ -3,6 +3,9 @@
  * Kaynak: ok-iframe canlı sitesindeki 9 soru (G6'da taşındı, 2026-07-05).
  * Rakamlar elle yazılmaz — TOPLAM modülünden türetilir.
  * NOT: Angarya A2'de bu sorular gerçek müşteri sorularıyla güncellenecek.
+ * 2026-11-24: SSS ana sayfadan kendi sayfasına (/sss) taşındı; ana sayfada
+ * yalnız alt CTA'nın altında kısa yol bağlantısı kaldı. FAQPage JSON-LD de
+ * /sss'e taşındı (aynı soru-cevap tek sayfada işaretlenir).
  */
 import { TOPLAM, sayiTr } from "@/src/data/envanter";
 
@@ -16,6 +19,23 @@ export const SSS_BASLIK = {
   baslik: "Sıkça Sorulan Sorular",
   altMetin:
     "Açıkhava kampanyalarınız hakkında en sık karşılaştığımız sorular ve cevapları.",
+};
+
+/** /sss sayfasının arama motoru metni ve alt çağrısı */
+export const SSS_SAYFA = {
+  metaBaslik: "Sıkça Sorulan Sorular",
+  metaAciklama: `Açıkhava reklamında rezervasyon, kampanya süresi, baskı ve uygulama, raporlama ve ödeme koşulları — ${TOPLAM.il} ilde hizmet veren Objektif Kriter'den kısa cevaplar.`,
+  altCta: {
+    baslik: "Sorunuzun cevabı burada yok mu?",
+    metin:
+      "Bize yazın; sektörünüze ve bütçenize uygun lokasyon önerilerini 15 dakika içinde iletelim.",
+  },
+};
+
+/** Ana sayfa alt CTA'sının altındaki kısa yol (SSS artık /sss'te) */
+export const SSS_KISA_YOL = {
+  oncesi: "Aklınızda soru mu var?",
+  link: "Sıkça sorulan sorular",
 };
 
 export const SSS_LISTESI: SSSMaddesi[] = [

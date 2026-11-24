@@ -7,18 +7,12 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { CountUp } from "@/components/CountUp";
 import { FormatShowcase } from "@/components/FormatShowcase";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
-import {
-  MarkalarIcon,
-  AjanslarIcon,
-  IlkKampanyamIcon,
-} from "@/components/icons/SegmentIcons";
 import { CustomerProof } from "@/components/CustomerProof";
 import { Chevrons } from "@/components/Chevrons";
 import { SectionHeader } from "@/components/SectionHeader";
 import { LogoMarquee } from "@/components/LogoMarquee";
 import { HeroHarita } from "@/components/HeroHarita";
-import { FAQ } from "@/components/FAQ";
-import { SSS_BASLIK, SSS_LISTESI, sssJsonLd } from "@/src/data/content/sss";
+import { SSS_KISA_YOL } from "@/src/data/content/sss";
 import {
   IS_BIRLIKLERI,
   IS_BIRLIKLERI_LOGOLARI,
@@ -67,35 +61,15 @@ const surec = [
 export default async function Home() {
   const stats = getStats();
 
-  const segmentler = [
-    {
-      icon: MarkalarIcon,
-      etiket: "Markalar",
-      slogan: `Markanızın izi ${stats.sehirSayisi} ilde, doğru sokakta.`,
-      desc: "Stratejik medya planlaması, raporlanabilir kampanya yönetimi. Sektörel deneyimle desteklenen lokasyon önerileriyle markanızın görünürlüğünü Anadolu'nun her köşesine taşıyoruz.",
-      cta: "Marka için detaylar",
-      href: "/markalar",
-    },
-    {
-      icon: AjanslarIcon,
-      etiket: "Reklam Ajansları",
-      slogan: "Brief'iniz 15 dakikada teklife dönsün.",
-      desc: "Hızlı geri dönüş, esnek satın alma, detaylı lokasyon listeleri. Ajansınızın açıkhava operasyonlarındaki güvenilir iş ortağıyız.",
-      cta: "Ajanslar için detaylar",
-      href: "/ajanslar",
-    },
-    {
-      icon: IlkKampanyamIcon,
-      etiket: "İlk Açıkhava Kampanyam",
-      slogan: "İlk afişinizi birlikte sokağa çıkaralım.",
-      desc: "Brief'iniz olmasa da olur. Hedefinizi anlatın, ihtiyacınızı birlikte netleştirelim, sıfırdan planlayalım. Şeffaf teklif, gerçek lokasyon, sürpriz fatura yok.",
-      cta: "Sıfırdan başlayalım",
-      href: "/ilk-kampanyaniz",
-    },
-  ];
-
   return (
     <>
+      {/*
+       * AKIŞ (2026-11-24, Hakan: "ana sayfa akışını mantıklı hale getir"):
+       * Hero → Sayaçlar → Mecra vitrini (ne satıyoruz) → İş birlikleri (kimlerle)
+       * → 4 adımda yayında (nasıl) → Alt CTA. "Kim için biz?" kartları ana
+       * sayfadan çıktı — aynı üç yol üst menüde "Çözümler" altında. SSS kendi
+       * sayfasına (/sss) taşındı; üst menüde "Kurumsal" altında, alt CTA'da kısa yol.
+       */}
       {/* HERO — koyu bant (band-dark) + cyan mesh gradient */}
       <section className="band-dark relative min-h-[92vh] flex items-center pt-12 pb-20 overflow-hidden">
         <div
@@ -252,68 +226,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 3 KART SEGMENT */}
-      <section className="py-24">
-        <div className="container-narrow">
-          <ScrollReveal direction="up">
-            <div className="max-w-2xl mb-16">
-              <div className="text-xs uppercase tracking-widest text-[var(--color-text-muted)] mb-3">
-                Kim için biz?
-              </div>
-              <h2 className="text-3xl md:text-5xl font-bold leading-tight">
-                Her marka kendi yolunu çizer — biz lokasyonunu kuruyoruz.
-              </h2>
-              <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-                Kurumsal markalar, reklam ajansları ve sokağa ilk adımını atan
-                girişimler — her birinin hikâyesi farklı, ama hepsi aynı şeyi
-                arıyor: doğru anda, doğru insanın gözüne değen bir mesaj.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {segmentler.map((segment, i) => {
-              const Icon = segment.icon;
-              return (
-                <ScrollReveal
-                  key={segment.etiket}
-                  direction="up"
-                  delay={i * 120}
-                  duration={700}
-                >
-                  <div className="group h-full p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border-subtle)] hover:border-[var(--color-primary)]/40 hover:shadow-xl transition-all duration-300 flex flex-col">
-                    <div className="w-14 h-14 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center mb-6 group-hover:bg-[var(--color-primary)]/20 transition-colors">
-                      <Icon
-                        size={28}
-                        className="text-[var(--color-primary)]"
-                      />
-                    </div>
-                    <div className="text-xs uppercase tracking-widest font-semibold text-[var(--color-primary-deep)] mb-3">
-                      {segment.etiket}
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-bold leading-tight mb-4 text-[var(--color-text-primary)]">
-                      {segment.slogan}
-                    </h3>
-                    <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-6 flex-grow">
-                      {segment.desc}
-                    </p>
-                    <Link
-                      href={segment.href}
-                      className="text-sm text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-medium inline-flex items-center gap-2 group/link"
-                    >
-                      {segment.cta}
-                      <ArrowRight
-                        size={14}
-                        className="group-hover/link:translate-x-1 transition-transform"
-                      />
-                    </Link>
-                  </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* STICKY SCROLL MECRA SHOWCASE — 6 ana mecra + Diğer mecralarımız kartı (→ /mecralar) */}
+      <FormatShowcase />
 
       {/* GÜÇLÜ İŞ BİRLİKLERİ — logo duvarı (G3) */}
       <section className="relative overflow-hidden py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
@@ -365,17 +279,15 @@ export default async function Home() {
               hover'da durur, reduced-motion'da statik ızgara */}
           {/* V5 (2026-09-12, Hakan kararı): logo akışının altındaki
               "X markanın tamamı → /markalar" bağlantısı kaldırıldı.
-              Bu bölümde yalnız logo akışı kalır. /markalar segment sayfası,
-              menüdeki yeri ve ana sayfadaki segment kartı DOKUNULMADAN durur.
+              Bu bölümde yalnız logo akışı kalır. /markalar segment sayfası
+              ve menüdeki yeri DOKUNULMADAN durur (ana sayfadaki segment
+              kartları 2026-11-24'te kaldırıldı — üst menü "Çözümler"de).
               V5-düzeltme: V5'te bağlantı bloğuyla birlikte LogoMarquee de
               yanlışlıkla silinmişti; geri kondu. Bu satır BU BÖLÜMÜN TEK
               İÇERİĞİ — silinmemeli. */}
           <LogoMarquee logolar={IS_BIRLIKLERI_LOGOLARI} />
         </div>
       </section>
-
-      {/* STICKY SCROLL MECRA SHOWCASE — 6 ana mecra + Diğer mecralarımız kartı (→ /mecralar) */}
-      <FormatShowcase />
 
       {/* SOSYAL KANIT — lib/customers.ts boş ise otomatik gizlenir */}
       <CustomerProof />
@@ -425,28 +337,6 @@ export default async function Home() {
        * Bkz: docs/roadmap.md.
        */}
 
-      {/* SSS (G6) — içerik: src/data/content/sss.ts */}
-      <section className="py-24 border-t border-[var(--color-border-subtle)]">
-        <div className="container-narrow">
-          <ScrollReveal direction="up">
-            <SectionHeader
-              eyebrow={SSS_BASLIK.eyebrow}
-              title={SSS_BASLIK.baslik}
-              subtitle={SSS_BASLIK.altMetin}
-            />
-          </ScrollReveal>
-          <ScrollReveal direction="up" delay={120}>
-            <div className="mt-10">
-              <FAQ maddeler={SSS_LISTESI} />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(sssJsonLd()) }}
-      />
-
       {/* ALT CTA */}
       <section className="py-24 border-t border-[var(--color-border-subtle)] bg-[var(--color-surface)]/40">
         <div className="container-narrow">
@@ -475,6 +365,15 @@ export default async function Home() {
                   WhatsApp ile yaz
                 </a>
               </div>
+              <p className="text-sm text-[var(--color-text-muted)]">
+                {SSS_KISA_YOL.oncesi}{" "}
+                <Link
+                  href="/sss"
+                  className="font-medium text-[var(--color-primary-deep)] underline-offset-4 hover:underline"
+                >
+                  {SSS_KISA_YOL.link}
+                </Link>
+              </p>
             </div>
           </ScrollReveal>
         </div>

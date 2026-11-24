@@ -3,12 +3,17 @@ import { RAKAM_METNI } from "@/src/data/envanter";
 import { BOLGELER } from "@/src/data/bolgeler";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { COZUMLER_MENU, KURUMSAL_MENU } from "@/src/data/content/menu";
 
+// Üst menüyle aynı sıra (2026-11-24): Hizmetler · Envanter · Çözümler'in üç
+// sayfası · Kurumsal'ın üç sayfası. Ana sayfadaki "Kim için biz?" kartları
+// kalkınca üç çözüm sayfasının sunucuda basılan tek kalıcı bağlantısı burası
+// (üst menüdeki açılır paneller yalnız tıklanınca çizilir).
 const navLinks = [
   { label: "Hizmetler", href: "/hizmetler" },
   { label: "Envanter", href: "/envanter" },
-  { label: "Hakkımızda", href: "/hakkimizda" },
-  { label: "İletişim", href: "/iletisim" },
+  ...COZUMLER_MENU.ogeler.map(({ label, href }) => ({ label, href })),
+  ...KURUMSAL_MENU.ogeler.map(({ label, href }) => ({ label, href })),
 ];
 
 const mecraLinks = [

@@ -14,6 +14,12 @@
 
 ---
 
+### 2026-11-24 — G12: Ana sayfa sadeleşti, SSS kendi sayfasına taşındı (önizlemede)
+**Ne yapıldı:** Ana sayfa artık şu sırayla akıyor: giriş → rakamlar → mecralarımız → çalıştığımız markalar → 4 adımda yayında → teklif çağrısı. "Kim için biz?" kartları ana sayfadan çıktı (aynı üç sayfa üst menüde "Çözümler" altında duruyor), Sıkça Sorulan Sorular kendi sayfasına taşındı ve üst menüye "Kurumsal" adında yeni bir açılır menü geldi (Hakkımızda · SSS · İletişim).
+**Neden:** Ziyaretçi ne sattığımızı görmeden önce telefonda 5 ekran kaydırıyordu; ürün (mecralar) aşağıda kalmıştı.
+**Ne işe yaradı:** Mecralar telefonda 5. ekrandan 2. ekrana çıktı, sayfa yaklaşık %20 kısaldı; hiçbir içerik silinmedi, hepsine menüden ulaşılıyor. Üst menü 5 bağlantıdan 4 başlığa indi.
+**Sırada:** Hakan önizlemeyi onaylarsa canlıya alınır.
+
 ### 2026-11-24 — V9: Envanter güncellendi — Ankara'dan bir ekran çıktı, Samsun'a bir ekran girdi (toplam aynı: 39.674)
 **Ne yapıldı:** Yeni envanter Excel'i işlendi ve canlıya alındı. Ankara'daki Beşevler metro çıkışı dijital ekranı envanterden çıktı (Ankara 2.945), Samsun'a Uçan Sinema dijital ekranı girdi (Samsun 1.165). Toplamlar değişmedi: **49 il · 21 mecra türü · 39.674 ünite · 45,1M aylık erişim**.
 **Neden:** Excel'de yalnız bu iki satır değişmişti; geri kalan her satır aynıydı.
